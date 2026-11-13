@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상상인그룹 PR팀 데일리 뉴스모니터링 관리자</title>
+  <title>상상인그룹 PR팀 데일리 뉴스모니터링 관리자 (실시간 스크래핑)</title>
   <style>
     :root {
       --primary: #1e40af;
@@ -122,10 +122,15 @@
       transition: all 0.15s ease;
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .btn-primary { background: var(--primary); color: #ffffff; }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
     .btn-secondary { background: #ffffff; border-color: var(--border); color: var(--text-main); }
-    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-secondary:hover:not(:disabled) { background: #f1f5f9; }
     .btn-success { background: #16a34a; color: #ffffff; }
     .btn-success:hover { background: #15803d; }
     .btn-warning { background: #fef08a; border-color: #fde047; color: #854d0e; }
@@ -163,6 +168,34 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 8px;
+    }
+
+    /* Scrape Status Banner */
+    .scrape-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: 0.82rem;
+      color: #0369a1;
+    }
+
+    .scrape-status-bar.loading {
+      background: #fefce8;
+      border-color: #fde047;
+      color: #854d0e;
+    }
+
+    .scrape-status-bar.error {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #b91c1c;
     }
 
     .rule-grid {
@@ -302,7 +335,7 @@
     }
 
     .scraped-card.is-duplicate {
-      opacity: 0.58;
+      opacity: 0.55;
       background: #f1f5f9;
       border-style: dashed;
     }
@@ -344,6 +377,15 @@
       font-weight: 700;
     }
 
+    .kw-match-badge {
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 5px;
+    }
+
     .dup-badge {
       background: #fee2e2;
       color: #b91c1c;
@@ -380,8 +422,9 @@
     }
 
     .card-meta {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
+      word-break: break-all;
     }
 
     /* Right Sidebar */
@@ -472,7 +515,6 @@
       text-decoration: underline;
     }
 
-    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -539,7 +581,7 @@
 </head>
 <body>
   <div class="top-banner">
-    🛡️ <strong>상상인그룹 PR팀 데일리 뉴스모니터링 관리자</strong> | 5개 계열사(상상인 · 엠아이텍 · 시너지이노베이션 · 메디카코리아 · 뉴로바이오젠) 통합 운영
+    🛡️ <strong>상상인그룹 PR팀 데일리 뉴스모니터링 관리자</strong> | 실시간 Google News RSS 스크래핑 엔진 · 5개 계열사 통합 운영
   </div>
 
   <header>
@@ -562,9 +604,9 @@
 
       <div class="header-actions">
         <a href="./index.html" id="btnViewEmployeePage" class="btn btn-secondary">📱 임직원 페이지 열기 ↗</a>
-        <button class="btn btn-secondary" id="btnOpenScheduleModal">📋 계열사별 업무·발송 기준표</button>
-        <button class="btn btn-secondary" id="btnAutoPick15">✨ 우선순위 자동 선정 (10~15건)</button>
-        <button class="btn btn-primary" id="btnRunScrape">🔄 당일 기준 재스크래핑</button>
+        <button class="btn btn-secondary" id="btnOpenScheduleModal">📋 업무·발송 기준표</button>
+        <button class="btn btn-secondary" id="btnAutoPick15">✨ 우선순위 자동 15개 선정</button>
+        <button class="btn btn-primary" id="btnRunScrape">🔄 실시간 뉴스 스크래핑 실행</button>
       </div>
     </div>
   </header>
@@ -577,8 +619,14 @@
           <span>⚙️ 계열사별 담당자·주기 및 키워드 설정</span>
           <label style="font-size: 0.8rem; font-weight: 700; color: #dc2626; display:flex; align-items:center; gap:5px; cursor:pointer;">
             <input type="checkbox" id="chkHideDuplicates" checked>
-            과거 모니터링 중복 기사 자동 숨김
+            과거 발행 기사 중복 자동 제외
           </label>
+        </div>
+
+        <!-- Live Scraping Status Bar -->
+        <div class="scrape-status-bar" id="scrapeStatusBar">
+          <span id="scrapeStatusText">📡 실시간 뉴스 수집 대기 중... (자동 스크래핑 시작 전)</span>
+          <span id="scrapeWindowBadge" style="font-weight:800;">수집 구간 계산 중</span>
         </div>
 
         <div class="rule-grid">
@@ -591,7 +639,7 @@
             <strong id="infoMailTitle">상상인 계열사 데일리 모니터링 (매일 오전 9시)</strong>
           </div>
           <div class="rule-box">
-            <span>🎯 선정 기준 (가급적 10~15개)</span>
+            <span>🎯 선정 기준 (권장 10~15개)</span>
             <strong>1순위 자사 → 2순위 경쟁사 → 3순위 업계</strong>
           </div>
         </div>
@@ -621,7 +669,7 @@
             <button class="f-pill" data-cat="comp">[경쟁사] (<span id="poolComp">0</span>)</button>
             <button class="f-pill" data-cat="ind">[업계] (<span id="poolInd">0</span>)</button>
           </div>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">체크박스로 노출 기사 선정 (권장 10~15개)</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">체크박스로 노출 기사 선정 (최소 10 ~ 최대 15개)</span>
         </div>
 
         <div id="candidateListContainer"></div>
@@ -633,7 +681,7 @@
       <div class="panel-card sticky-sidebar">
         <div class="panel-title">
           <span>📲 임직원 발송 확정 리스트</span>
-          <span class="quota-count" id="quotaCounter">15 / 15건</span>
+          <span class="quota-count" id="quotaCounter">0 / 15건</span>
         </div>
 
         <div class="quota-bar">
@@ -717,10 +765,10 @@
       </table>
 
       <p style="font-size:0.82rem; color:#475569; background:#f8fafc; padding:11px; border-radius:8px; line-height:1.55;">
-        <strong>📌 운영 규칙 요약:</strong><br>
-        • <strong>기사 수량 기준:</strong> 가급적 <strong>최소 10개, 최대 15개 이내</strong>로 편성합니다.<br>
-        • <strong>수집 범위:</strong> 평일은 전일 발행 이후~당일 오전 기사, 월요일은 금·토·일 주말 기사를 포함하며 과거 모니터링 중복 기사는 자동 제외합니다.<br>
-        • <strong>네이버 API 불필요 여부:</strong> Google News RSS 및 주요 언론사 직접 RSS 파싱을 활용하면 별도 네이버 API 키 없이도 백엔드 자동 수집 연동이 가능합니다.
+        <strong>📌 실시간 스크래핑 및 중복 제거 작동 방식:</strong><br>
+        • <strong>실시간 수집 엔진:</strong> Google News 한국어 RSS 피드를 다중 CORS 게이트웨이로 실시간 파싱하여 최신 기사 제목·언론사·원문 링크·발행시각을 즉시 수집합니다.<br>
+        • <strong>요일별 기간 자동 필터:</strong> 화~금은 최근 28시간(전일~금일 오전), 월요일은 76시간(금·토·일 주말 포함), 뉴로바이오젠(주간)은 최근 7일 이내 기사만 자동 추출합니다.<br>
+        • <strong>과거 중복 기사 제거:</strong> 이전에 `[임직원 모니터링 페이지에 즉시 반영]`으로 발행했던 기사 제목 해시를 브라우저 저장소에 누적 기록하여 중복 노출을 차단합니다.
       </p>
 
       <div style="text-align:right; margin-top:14px;">
@@ -738,9 +786,6 @@
     "manager": "박슬기 과장",
     "cycle": "매일 오전 8시~8시반",
     "mailTitle": "상상인 데일리 모니터링 (매일 오전 8시)",
-    "date": "2026.11.13",
-    "dayLabel": "금",
-    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 최소 10~최대 15건",
     "quote": "위기는 곧 기회의 다른 이름이다.",
     "author": "워런 버핏",
     "keywords": {
@@ -793,14 +838,14 @@
         "ECM"
       ]
     },
-    "candidates": [
+    "fallbackCandidates": [
       {
         "id": 1001,
         "category": "own",
         "press": "한국경제",
         "title": "상상인증권, 중소형 IB·ECM 주관 실적 개선세 뚜렷",
         "url": "https://www.hankyung.com",
-        "time": "11.13 07:30",
+        "time": "오늘 07:30",
         "score": 99,
         "duplicate": false,
         "selected": true
@@ -811,7 +856,7 @@
         "press": "매일경제",
         "title": "한화·유안타·교보증권, 4분기 리테일 및 채권 운용 전략 재정비",
         "url": "https://www.mk.co.kr",
-        "time": "11.13 07:15",
+        "time": "오늘 07:15",
         "score": 94,
         "duplicate": false,
         "selected": true
@@ -822,7 +867,7 @@
         "press": "서울경제",
         "title": "대신·IBK투자증권, 중소기업 특화 IPO 주관 경쟁 본격화",
         "url": "https://www.sedaily.com",
-        "time": "11.12 17:40",
+        "time": "어제 17:40",
         "score": 92,
         "duplicate": false,
         "selected": true
@@ -833,7 +878,7 @@
         "press": "파이낸셜뉴스",
         "title": "카카오뱅크, 개인사업자 뱅킹 및 펌뱅킹 서비스 고도화",
         "url": "https://www.fnnews.com",
-        "time": "11.12 16:50",
+        "time": "어제 16:50",
         "score": 90,
         "duplicate": false,
         "selected": true
@@ -844,7 +889,7 @@
         "press": "연합인포맥스",
         "title": "금융위·금감원, 제2금융권 부동산 PF 연착륙 및 건전성 점검 회의",
         "url": "https://news.einfomax.co.kr",
-        "time": "11.13 07:45",
+        "time": "오늘 07:45",
         "score": 97,
         "duplicate": false,
         "selected": true
@@ -855,7 +900,7 @@
         "press": "머니투데이",
         "title": "한국은행 기준금리 동결 기조 속 채권시장 금리 변동성 확대",
         "url": "https://www.mt.co.kr",
-        "time": "11.13 07:10",
+        "time": "오늘 07:10",
         "score": 93,
         "duplicate": false,
         "selected": true
@@ -866,7 +911,7 @@
         "press": "이데일리",
         "title": "중소형증권사, 해외주식 MTS 수수료 이벤트 및 UI 개편 경쟁",
         "url": "https://www.edaily.co.kr",
-        "time": "11.12 18:05",
+        "time": "어제 18:05",
         "score": 89,
         "duplicate": false,
         "selected": true
@@ -877,7 +922,7 @@
         "press": "아시아경제",
         "title": "한국거래소, 코스닥 밸류업 프로그램 참여 기업 공시 가이드라인 안내",
         "url": "https://www.asiae.co.kr",
-        "time": "11.12 16:15",
+        "time": "어제 16:15",
         "score": 88,
         "duplicate": false,
         "selected": true
@@ -888,7 +933,7 @@
         "press": "헤럴드경제",
         "title": "하반기 IPO 대어 공모 흥행 양극화…ECM 시장 옥석 가리기",
         "url": "https://biz.heraldcorp.com",
-        "time": "11.12 15:20",
+        "time": "어제 15:20",
         "score": 86,
         "duplicate": false,
         "selected": true
@@ -899,32 +944,10 @@
         "press": "디지털타임스",
         "title": "ELS 투자심리 위축에 증권가 대체 중위험·중수익 상품 발굴 주력",
         "url": "https://www.dt.co.kr",
-        "time": "11.12 14:10",
+        "time": "어제 14:10",
         "score": 85,
         "duplicate": false,
         "selected": true
-      },
-      {
-        "id": 1011,
-        "category": "comp",
-        "press": "뉴시스",
-        "title": "SK증권·DB금융투자, ESG 채권 발행 주관 실적 확대",
-        "url": "https://www.newsis.com",
-        "time": "11.12 11:30",
-        "score": 80,
-        "duplicate": false,
-        "selected": false
-      },
-      {
-        "id": 1012,
-        "category": "ind",
-        "press": "조선비즈",
-        "title": "[중복제외] 금융감독원, 저축은행·증권사 유동성 비율 모니터링 강화",
-        "url": "https://biz.chosun.com",
-        "time": "11.12 09:00",
-        "score": 75,
-        "duplicate": true,
-        "selected": false
       }
     ]
   },
@@ -933,9 +956,6 @@
     "manager": "박한솔 대리",
     "cycle": "매일 오전 9시~9시반",
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
-    "date": "2026.11.13",
-    "dayLabel": "금",
-    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 최소 10~최대 15건",
     "quote": "작은 디테일이 위대한 품질의 차이를 만든다.",
     "author": "피터 드러커",
     "keywords": {
@@ -976,14 +996,14 @@
         "한국제약바이오협회"
       ]
     },
-    "candidates": [
+    "fallbackCandidates": [
       {
         "id": 2001,
         "category": "own",
         "press": "메디파나뉴스",
         "title": "엠아이텍, 비혈관 스텐트 글로벌 수출 확대…유럽·아시아 점유율 상승",
         "url": "https://www.medipana.com",
-        "time": "11.13 08:10",
+        "time": "오늘 08:10",
         "score": 99,
         "duplicate": false,
         "selected": true
@@ -994,7 +1014,7 @@
         "press": "의약뉴스",
         "title": "에스앤지바이오텍·바스노바, 차세대 혈관·비혈관 스텐트 시너지 강화",
         "url": "https://www.newsmp.com",
-        "time": "11.12 17:20",
+        "time": "어제 17:20",
         "score": 97,
         "duplicate": false,
         "selected": true
@@ -1005,7 +1025,7 @@
         "press": "의학신문",
         "title": "올림푸스·후지필름, 차세대 AI 내시경장비 국내 대학병원 보급 확대",
         "url": "https://www.bosa.co.kr",
-        "time": "11.13 07:40",
+        "time": "오늘 07:40",
         "score": 94,
         "duplicate": false,
         "selected": true
@@ -1016,7 +1036,7 @@
         "press": "청년의사",
         "title": "보스톤사이언티픽·쿡메디칼, 담도·췌장 내시경 시술 기구 라인업 강화",
         "url": "https://www.docdocdoc.co.kr",
-        "time": "11.12 16:30",
+        "time": "어제 16:30",
         "score": 93,
         "duplicate": false,
         "selected": true
@@ -1027,7 +1047,7 @@
         "press": "데일리메디",
         "title": "파인메딕스·태웅메디칼, 국산 내시경 시술기구 해외 학회서 기술력 호평",
         "url": "https://www.dailymedi.com",
-        "time": "11.12 15:50",
+        "time": "어제 15:50",
         "score": 91,
         "duplicate": false,
         "selected": true
@@ -1038,7 +1058,7 @@
         "press": "약사공론",
         "title": "식약처, 혁신 의료기기 신속 심사 및 허가 가이드라인 개정 공고",
         "url": "https://www.kpanews.co.kr",
-        "time": "11.13 08:00",
+        "time": "오늘 08:00",
         "score": 95,
         "duplicate": false,
         "selected": true
@@ -1049,7 +1069,7 @@
         "press": "메디컬타임즈",
         "title": "한국의료기기산업협회, 수출 의료기기 해외 인허가(MDR·FDA) 지원 확대",
         "url": "https://www.medicaltimes.com",
-        "time": "11.12 17:00",
+        "time": "어제 17:00",
         "score": 90,
         "duplicate": false,
         "selected": true
@@ -1060,7 +1080,7 @@
         "press": "보건뉴스",
         "title": "한국의료기기안전정보원, 의료기기안심책방 통해 국민 안전 정보 제공 강화",
         "url": "https://www.bokuennews.com",
-        "time": "11.12 15:10",
+        "time": "어제 15:10",
         "score": 88,
         "duplicate": false,
         "selected": true
@@ -1071,7 +1091,7 @@
         "press": "히트뉴스",
         "title": "보건복지부, 국산 의료기기 상급종합병원 사용 활성화 시범사업 추진",
         "url": "https://www.hitnews.co.kr",
-        "time": "11.12 14:20",
+        "time": "어제 14:20",
         "score": 87,
         "duplicate": false,
         "selected": true
@@ -1082,21 +1102,10 @@
         "press": "라포르시안",
         "title": "초음파장비·내시경 융합 진단 시장, 연평균 8.5% 고성장 전망",
         "url": "https://www.rapportian.com",
-        "time": "11.12 13:15",
+        "time": "어제 13:15",
         "score": 85,
         "duplicate": false,
         "selected": true
-      },
-      {
-        "id": 2011,
-        "category": "ind",
-        "press": "의학신문",
-        "title": "[중복제외] 식약처, 하반기 의료기기 GMP 정기심사 일정 안내",
-        "url": "https://www.bosa.co.kr",
-        "time": "11.12 08:40",
-        "score": 72,
-        "duplicate": true,
-        "selected": false
       }
     ]
   },
@@ -1105,9 +1114,6 @@
     "manager": "박한솔 대리",
     "cycle": "매일 오전 9시~9시반",
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
-    "date": "2026.11.13",
-    "dayLabel": "금",
-    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 최소 10~최대 15건",
     "quote": "시너지는 전체가 부분의 합보다 크다는 것을 증명한다.",
     "author": "스티븐 코비",
     "keywords": {
@@ -1135,14 +1141,14 @@
         "한국의료기기협동조합"
       ]
     },
-    "candidates": [
+    "fallbackCandidates": [
       {
         "id": 3001,
         "category": "own",
         "press": "한국경제",
         "title": "시너지이노베이션, 바이오 소부장·미생물배양 배지 사업 포트폴리오 고도화",
         "url": "https://www.hankyung.com",
-        "time": "11.13 08:15",
+        "time": "오늘 08:15",
         "score": 99,
         "duplicate": false,
         "selected": true
@@ -1153,7 +1159,7 @@
         "press": "바이오스펙테이터",
         "title": "엑셀세라퓨틱스·아미코젠, 국산 세포배양 배지 상용화 및 CDMO 공급 확대",
         "url": "https://www.biospectator.com",
-        "time": "11.13 07:50",
+        "time": "오늘 07:50",
         "score": 95,
         "duplicate": false,
         "selected": true
@@ -1164,7 +1170,7 @@
         "press": "메디파나뉴스",
         "title": "머크(Merck)·써모피셔사이언티픽, 국내 바이오 공정 원부자재 생산기지 증설",
         "url": "https://www.medipana.com",
-        "time": "11.12 17:30",
+        "time": "어제 17:30",
         "score": 93,
         "duplicate": false,
         "selected": true
@@ -1175,7 +1181,7 @@
         "press": "약업신문",
         "title": "기산바이오·고마바이오텍, 미생물배양 배지 품질 표준화 및 수출 다변화",
         "url": "https://www.yakup.com",
-        "time": "11.12 16:10",
+        "time": "어제 16:10",
         "score": 91,
         "duplicate": false,
         "selected": true
@@ -1186,7 +1192,7 @@
         "press": "데일리팜",
         "title": "아지노모도제넥신 셀리스트, 고효율 동물세포배양 배지 신제품 출시",
         "url": "https://www.dailypharm.com",
-        "time": "11.12 15:20",
+        "time": "어제 15:20",
         "score": 89,
         "duplicate": false,
         "selected": true
@@ -1197,7 +1203,7 @@
         "press": "서울경제",
         "title": "정부, 바이오의약품 원부자재·배지 국산화 R&D 지원 예산 대폭 확대",
         "url": "https://www.sedaily.com",
-        "time": "11.13 07:20",
+        "time": "오늘 07:20",
         "score": 94,
         "duplicate": false,
         "selected": true
@@ -1208,7 +1214,7 @@
         "press": "의약뉴스",
         "title": "식약처, 첨단바이오의약품 원료·배지 안전관리 기준 국제 조화 추진",
         "url": "https://www.newsmp.com",
-        "time": "11.12 16:40",
+        "time": "어제 16:40",
         "score": 90,
         "duplicate": false,
         "selected": true
@@ -1219,7 +1225,7 @@
         "press": "전자신문",
         "title": "한국의료기기협동조합, 중소 의료기기·바이오 기업 해외 전시회 공동관 운영",
         "url": "https://www.etnews.com",
-        "time": "11.12 14:50",
+        "time": "어제 14:50",
         "score": 87,
         "duplicate": false,
         "selected": true
@@ -1230,7 +1236,7 @@
         "press": "히트뉴스",
         "title": "보건복지부, 바이오헬스 핵심 소부장 자립화 로드맵 발표",
         "url": "https://www.hitnews.co.kr",
-        "time": "11.12 13:30",
+        "time": "어제 13:30",
         "score": 86,
         "duplicate": false,
         "selected": true
@@ -1241,7 +1247,7 @@
         "press": "머니투데이",
         "title": "K-바이오 CDMO 증설 붐에 배지·필터 등 소부장 수요 동반 급증",
         "url": "https://www.mt.co.kr",
-        "time": "11.12 11:45",
+        "time": "어제 11:45",
         "score": 84,
         "duplicate": false,
         "selected": true
@@ -1253,9 +1259,6 @@
     "manager": "김태기 과장",
     "cycle": "매일 오전 9시~9시반",
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
-    "date": "2026.11.13",
-    "dayLabel": "금",
-    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 엄선 15건",
     "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
     "author": "토머스 에디슨",
     "keywords": {
@@ -1282,14 +1285,14 @@
         "보건복지부"
       ]
     },
-    "candidates": [
+    "fallbackCandidates": [
       {
         "id": 101,
         "category": "comp",
         "press": "뉴스저널리즘",
         "title": "일동제약, 당뇨 치료제 잇단 허가 정리…복제약 경쟁 속 리뉴얼",
         "url": "https://url.kr/ic9nji",
-        "time": "11.13 07:10",
+        "time": "오늘 07:10",
         "score": 96,
         "duplicate": false,
         "selected": true
@@ -1300,7 +1303,7 @@
         "press": "뉴데일리",
         "title": "'자큐보·펙수클루'에 도전장 … 일동제약, P-CAB 신약 국내 출시 준비",
         "url": "https://url.kr/bs9uv1",
-        "time": "11.13 06:50",
+        "time": "오늘 06:50",
         "score": 95,
         "duplicate": false,
         "selected": true
@@ -1311,7 +1314,7 @@
         "press": "의약뉴스",
         "title": "보령, 글로벌 항암제 사업 확장 맞춰 생산능력 2.2배 확대",
         "url": "https://url.kr/3spoje",
-        "time": "11.12 17:40",
+        "time": "어제 17:40",
         "score": 94,
         "duplicate": false,
         "selected": true
@@ -1322,7 +1325,7 @@
         "press": "의학신문",
         "title": "주요 제약사, 올해 3분기 순이익 저조한 성적표",
         "url": "https://url.kr/cr3cfq",
-        "time": "11.12 16:20",
+        "time": "어제 16:20",
         "score": 92,
         "duplicate": false,
         "selected": true
@@ -1333,7 +1336,7 @@
         "press": "스카이데일리",
         "title": "연 1300억 급여 재평가 D-1개월… 제약사 '초긴장'",
         "url": "https://url.kr/kj9zj8",
-        "time": "11.13 07:30",
+        "time": "오늘 07:30",
         "score": 98,
         "duplicate": false,
         "selected": true
@@ -1344,7 +1347,7 @@
         "press": "CEO스코어데일리",
         "title": "로라제팜주 약가 7배 '껑충'…삼진제약, 공급 안정 이어간다",
         "url": "https://url.kr/c8x594",
-        "time": "11.13 07:05",
+        "time": "오늘 07:05",
         "score": 91,
         "duplicate": false,
         "selected": true
@@ -1355,7 +1358,7 @@
         "press": "시사저널e",
         "title": "큐로셀 '림카토' 출시, 내달 or 내년 1월?···3억대 약가·위험분담 주목",
         "url": "https://url.kr/vjfimu",
-        "time": "11.12 18:10",
+        "time": "어제 18:10",
         "score": 90,
         "duplicate": false,
         "selected": true
@@ -1366,7 +1369,7 @@
         "press": "약사공론",
         "title": "필수 항암·항생제 3품목 국내 생산 추진…연내 공급",
         "url": "https://url.kr/xwwory",
-        "time": "11.12 17:15",
+        "time": "어제 17:15",
         "score": 89,
         "duplicate": false,
         "selected": true
@@ -1377,7 +1380,7 @@
         "press": "아시아타임즈",
         "title": "면역항암제 '키트루다' 특허 만료 임박…업체별 대응 전략 보니",
         "url": "https://url.kr/kh2voe",
-        "time": "11.12 16:45",
+        "time": "어제 16:45",
         "score": 88,
         "duplicate": false,
         "selected": true
@@ -1388,7 +1391,7 @@
         "press": "더팩트",
         "title": "'리베이트 통로' 위탁영업, 제약사·CSO 책임 높인다···법·자율규제 투트랙",
         "url": "https://url.kr/468a91",
-        "time": "11.13 06:40",
+        "time": "오늘 06:40",
         "score": 93,
         "duplicate": false,
         "selected": true
@@ -1399,7 +1402,7 @@
         "press": "매일일보",
         "title": "군부대·지방공항서도 상비약 산다… 복지부, 의약품 취급 규제 완화 추진",
         "url": "https://url.kr/nkabp8",
-        "time": "11.12 15:50",
+        "time": "어제 15:50",
         "score": 86,
         "duplicate": false,
         "selected": true
@@ -1410,7 +1413,7 @@
         "press": "아이뉴스24",
         "title": "합법된 '스시자로'⋯국내 비만약 시장 흔들까",
         "url": "https://url.kr/86ozdw",
-        "time": "11.12 15:10",
+        "time": "어제 15:10",
         "score": 85,
         "duplicate": false,
         "selected": true
@@ -1421,7 +1424,7 @@
         "press": "서울경제",
         "title": "국내 제약사 임상시험 1상이 36.5%…신약개발 초기 단계에 집중",
         "url": "https://url.kr/4tht9p",
-        "time": "11.12 14:30",
+        "time": "어제 14:30",
         "score": 84,
         "duplicate": false,
         "selected": true
@@ -1432,7 +1435,7 @@
         "press": "메디파나뉴스",
         "title": "[기획] 수조원 기술수출 계약…제약사가 처음 손에 쥔 돈은 얼마?",
         "url": "https://url.kr/ih6zfo",
-        "time": "11.12 13:40",
+        "time": "어제 13:40",
         "score": 83,
         "duplicate": false,
         "selected": true
@@ -1443,43 +1446,10 @@
         "press": "전자신문",
         "title": "한국바이오협회 \"신약개발 특성 반영해야\"…근로시간 특례 촉구",
         "url": "https://url.kr/uetf4v",
-        "time": "11.12 11:20",
+        "time": "어제 11:20",
         "score": 82,
         "duplicate": false,
         "selected": true
-      },
-      {
-        "id": 116,
-        "category": "comp",
-        "press": "데일리팜",
-        "title": "대웅제약·종근당, 개량신약(IMD) 복합제 파이프라인 확대",
-        "url": "https://www.dailypharm.com",
-        "time": "11.12 10:15",
-        "score": 79,
-        "duplicate": false,
-        "selected": false
-      },
-      {
-        "id": 117,
-        "category": "comp",
-        "press": "약업신문",
-        "title": "동국제약·유한양행·동아제약, 일반의약품 및 제네릭 처방 동반 성장",
-        "url": "https://www.yakup.com",
-        "time": "11.12 09:50",
-        "score": 77,
-        "duplicate": false,
-        "selected": false
-      },
-      {
-        "id": 118,
-        "category": "ind",
-        "press": "메디파나뉴스",
-        "title": "[중복제외] 보건복지부, 기등재 제네릭 약가 인하 재평가 1차 안내",
-        "url": "https://www.medipana.com",
-        "time": "11.12 08:30",
-        "score": 70,
-        "duplicate": true,
-        "selected": false
       }
     ]
   },
@@ -1488,9 +1458,6 @@
     "manager": "김성목 대리",
     "cycle": "주 1회 (매주 금요일)",
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
-    "date": "2026.11.13",
-    "dayLabel": "금",
-    "scrapeWindow": "주간 통합 스크래핑(금~금) · 최소 10~최대 15건",
     "quote": "과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.",
     "author": "알베르트 아인슈타인",
     "keywords": {
@@ -1517,14 +1484,14 @@
         "한국제약바이오협회"
       ]
     },
-    "candidates": [
+    "fallbackCandidates": [
       {
         "id": 5001,
         "category": "own",
         "press": "바이오스펙테이터",
         "title": "뉴로바이오젠, 반응성 별아교세포 표적 'KDS2010(티솔라질린)' 임상 순항",
         "url": "https://www.biospectator.com",
-        "time": "11.13 08:20",
+        "time": "오늘 08:20",
         "score": 99,
         "duplicate": false,
         "selected": true
@@ -1535,7 +1502,7 @@
         "press": "메디파나뉴스",
         "title": "뉴로바이오젠, 비만·치매 치료제 파이프라인 글로벌 기술이전 논의 활발",
         "url": "https://www.medipana.com",
-        "time": "11.11 15:10",
+        "time": "이틀 전",
         "score": 98,
         "duplicate": false,
         "selected": true
@@ -1546,7 +1513,7 @@
         "press": "한국경제",
         "title": "글로벌 비만 치료제 시장 판도 변화…차세대 비만약 임상 결과 주목",
         "url": "https://www.hankyung.com",
-        "time": "11.13 07:35",
+        "time": "오늘 07:35",
         "score": 95,
         "duplicate": false,
         "selected": true
@@ -1557,7 +1524,7 @@
         "press": "매일경제",
         "title": "알츠하이머 치매 치료제 개발 경쟁 가속…혈뇌장벽 투과 신약 부각",
         "url": "https://www.mk.co.kr",
-        "time": "11.12 17:10",
+        "time": "어제 17:10",
         "score": 94,
         "duplicate": false,
         "selected": true
@@ -1568,7 +1535,7 @@
         "press": "서울경제",
         "title": "사일렉스(사이렉스) 등 국내외 중추신경계(CNS)·비만약 개발사 R&D 동향",
         "url": "https://www.sedaily.com",
-        "time": "11.12 14:40",
+        "time": "어제 14:40",
         "score": 91,
         "duplicate": false,
         "selected": true
@@ -1579,7 +1546,7 @@
         "press": "데일리팜",
         "title": "근손실 줄이는 차세대 비만 치료제·경구용 치매약 기술수출 릴레이",
         "url": "https://www.dailypharm.com",
-        "time": "11.10 16:20",
+        "time": "3일 전",
         "score": 90,
         "duplicate": false,
         "selected": true
@@ -1590,7 +1557,7 @@
         "press": "약사공론",
         "title": "식품의약품안전처, 혁신 신약 임상시험계획(IND) 승인 기간 단축 추진",
         "url": "https://www.kpanews.co.kr",
-        "time": "11.13 08:05",
+        "time": "오늘 08:05",
         "score": 89,
         "duplicate": false,
         "selected": true
@@ -1601,7 +1568,7 @@
         "press": "의약뉴스",
         "title": "보건복지부, 치매 극복 연구개발 및 국가 치매관리종합계획 예산 확대",
         "url": "https://www.newsmp.com",
-        "time": "11.12 11:30",
+        "time": "어제 11:30",
         "score": 88,
         "duplicate": false,
         "selected": true
@@ -1612,7 +1579,7 @@
         "press": "히트뉴스",
         "title": "한국제약바이오협회, 글로벌 오픈이노베이션 및 신약개발 투자 활성화 포럼 개최",
         "url": "https://www.hitnews.co.kr",
-        "time": "11.11 10:15",
+        "time": "이틀 전",
         "score": 86,
         "duplicate": false,
         "selected": true
@@ -1623,7 +1590,7 @@
         "press": "의학신문",
         "title": "의약품안전나라, 국내 승인 임상시험 정보 및 안전성 서한 통합 제공 개편",
         "url": "https://www.bosa.co.kr",
-        "time": "11.09 14:00",
+        "time": "4일 전",
         "score": 84,
         "duplicate": false,
         "selected": true
@@ -1632,25 +1599,330 @@
   }
 };
 
+    const DAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"];
     let activeAffiliate = "medica";
     let activeCatFilter = "all";
+    let isScraping = false;
+
+    // 오늘 날짜 포맷 (YYYY.MM.DD)
+    function getTodayInfo() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      const dayIdx = now.getDay();
+      return {
+        dateStr: `${yyyy}.${mm}.${dd}`,
+        dayLabel: DAY_NAMES[dayIdx],
+        dayIdx: dayIdx,
+        nowMs: now.getTime()
+      };
+    }
+
+    // 계열사 및 요일별 수집 허용 시간(ms) 계산
+    function getScrapeWindowConfig(affiliateKey) {
+      const today = getTodayInfo();
+      if (affiliateKey === "neurobiogen") {
+        return {
+          maxAgeMs: 7 * 24 * 60 * 60 * 1000,
+          googleWhen: "7d",
+          label: "주간 통합 수집 (최근 7일 이내)"
+        };
+      }
+      if (today.dayIdx === 1) {
+        // 월요일: 금요일 오전 ~ 토, 일, 월요일 발행 전 (약 78시간)
+        return {
+          maxAgeMs: 78 * 60 * 60 * 1000,
+          googleWhen: "4d",
+          label: "월요일 확장 수집 (금·토·일 주말 포함)"
+        };
+      }
+      // 평일(화~금): 전일 오전 ~ 당일 발행 전 (약 30시간)
+      return {
+        maxAgeMs: 30 * 60 * 60 * 1000,
+        googleWhen: "2d",
+        label: "평일 데일리 수집 (전일 ~ 금일 오전)"
+      };
+    }
+
+    // 과거 발행 이력 조회 (중복 기사 필터링용)
+    function getPublishedHistorySet(affiliateKey) {
+      try {
+        const raw = localStorage.getItem("group_news_history_" + affiliateKey);
+        if (raw) {
+          const arr = JSON.parse(raw);
+          if (Array.isArray(arr)) return new Set(arr);
+        }
+      } catch (e) {}
+      return new Set();
+    }
+
+    function savePublishedHistory(affiliateKey, titles) {
+      try {
+        const existing = getPublishedHistorySet(affiliateKey);
+        titles.forEach(t => existing.add(normalizeTitle(t)));
+        // 최근 300개 이력만 유지
+        const trimmed = Array.from(existing).slice(-300);
+        localStorage.setItem("group_news_history_" + affiliateKey, JSON.stringify(trimmed));
+      } catch (e) {}
+    }
+
+    function normalizeTitle(title) {
+      return (title || "").replace(/\[[^\]]*\]/g, "").replace(/[^가-힣a-zA-Z0-9]/g, "").toLowerCase();
+    }
+
+    // 저장된 키워드 복원
+    function loadSavedKeywords() {
+      Object.keys(AFFILIATE_CONFIGS).forEach(key => {
+        try {
+          const saved = localStorage.getItem("group_news_kw_" + key);
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (parsed && parsed.own && parsed.comp && parsed.ind) {
+              AFFILIATE_CONFIGS[key].keywords = parsed;
+            }
+          }
+        } catch (e) {}
+      });
+    }
+
+    function saveKeywords(affiliateKey) {
+      try {
+        localStorage.setItem("group_news_kw_" + affiliateKey, JSON.stringify(AFFILIATE_CONFIGS[affiliateKey].keywords));
+      } catch (e) {}
+    }
 
     function showToast(msg) {
       const t = document.getElementById("toast");
       t.textContent = msg;
       t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2600);
+      setTimeout(() => t.classList.remove("show"), 2800);
     }
 
     function getCurrentConfig() {
       return AFFILIATE_CONFIGS[activeAffiliate];
     }
 
+    function setScrapeStatus(type, text) {
+      const bar = document.getElementById("scrapeStatusBar");
+      bar.className = "scrape-status-bar" + (type ? " " + type : "");
+      document.getElementById("scrapeStatusText").textContent = text;
+    }
+
     function updateAffiliateMeta() {
       const cfg = getCurrentConfig();
+      const winCfg = getScrapeWindowConfig(activeAffiliate);
       document.getElementById("infoManagerCycle").textContent = `${cfg.manager} · ${cfg.cycle}`;
       document.getElementById("infoMailTitle").textContent = cfg.mailTitle;
+      document.getElementById("scrapeWindowBadge").textContent = winCfg.label;
       document.getElementById("btnViewEmployeePage").href = `./index.html?corp=${activeAffiliate}`;
+    }
+
+    // 키워드를 그룹별로 묶어 Google News RSS 쿼리 생성 (요청 수 최적화 및 정확도 향상)
+    function buildSearchBatches(keywordsObj) {
+      const batches = [];
+      const categories = [
+        { key: "own", list: keywordsObj.own, chunkSize: 4 },
+        { key: "comp", list: keywordsObj.comp, chunkSize: 5 },
+        { key: "ind", list: keywordsObj.ind, chunkSize: 5 }
+      ];
+
+      categories.forEach(cat => {
+        const cleanList = (cat.list || []).map(k => k.trim()).filter(Boolean);
+        for (let i = 0; i < cleanList.length; i += cat.chunkSize) {
+          const chunk = cleanList.slice(i, i + cat.chunkSize);
+          const query = chunk.map(k => k.includes(" ") ? `"${k}"` : k).join(" OR ");
+          batches.push({ category: cat.key, query: query, keywords: chunk });
+        }
+      });
+      return batches;
+    }
+
+    // 다중 CORS 프록시를 통한 Google News RSS 실시간 요청
+    async function fetchRssXmlWithFallback(rssUrl) {
+      const proxies = [
+        url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+        url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+        url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+      ];
+
+      for (const buildProxy of proxies) {
+        try {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 7000);
+          const resp = await fetch(buildProxy(rssUrl), { signal: controller.signal });
+          clearTimeout(timer);
+          if (!resp.ok) continue;
+          const text = await resp.text();
+          if (text && text.includes("<item>")) {
+            return text;
+          }
+        } catch (e) {
+          // 다음 프록시 시도
+        }
+      }
+      return null;
+    }
+
+    // RSS XML 파싱 및 기사 데이터 정제
+    function parseRssItems(xmlText, defaultCategory, matchedKws, maxAgeMs, historySet, allKeywords) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(xmlText, "text/xml");
+      const items = Array.from(doc.querySelectorAll("item"));
+      const nowMs = Date.now();
+      const parsedList = [];
+
+      items.forEach((node, idx) => {
+        const rawTitle = (node.querySelector("title")?.textContent || "").trim();
+        const link = (node.querySelector("link")?.textContent || "").trim();
+        const pubDateStr = (node.querySelector("pubDate")?.textContent || "").trim();
+        const sourceNode = node.querySelector("source");
+        let press = sourceNode ? sourceNode.textContent.trim() : "";
+
+        // Google News 제목 끝의 " - 언론사명" 분리
+        let cleanTitle = rawTitle;
+        const dashIdx = rawTitle.lastIndexOf(" - ");
+        if (dashIdx > 0) {
+          cleanTitle = rawTitle.substring(0, dashIdx).trim();
+          if (!press) press = rawTitle.substring(dashIdx + 3).trim();
+        }
+        if (!press) press = "주요언론";
+
+        if (!cleanTitle || !link) return;
+
+        // 발행 시간 필터링
+        let pubMs = nowMs;
+        let timeLabel = "최근";
+        if (pubDateStr) {
+          const d = new Date(pubDateStr);
+          if (!isNaN(d.getTime())) {
+            pubMs = d.getTime();
+            if (nowMs - pubMs > maxAgeMs) return; // 수집 기간 밖 기사 제외
+            const mm = String(d.getMonth() + 1).padStart(2, "0");
+            const dd = String(d.getDate()).padStart(2, "0");
+            const hh = String(d.getHours()).padStart(2, "0");
+            const min = String(d.getMinutes()).padStart(2, "0");
+            timeLabel = `${mm}.${dd} ${hh}:${min}`;
+          }
+        }
+
+        // 실제 매칭된 키워드 및 카테고리 재판정 (자사명 최우선)
+        let finalCategory = defaultCategory;
+        let hitKeyword = matchedKws[0] || "";
+        const lowerTitle = cleanTitle.toLowerCase();
+
+        const ownHit = (allKeywords.own || []).find(k => lowerTitle.includes(k.toLowerCase()));
+        const compHit = (allKeywords.comp || []).find(k => lowerTitle.includes(k.toLowerCase()));
+        const indHit = (allKeywords.ind || []).find(k => lowerTitle.includes(k.toLowerCase()));
+
+        if (ownHit) {
+          finalCategory = "own";
+          hitKeyword = ownHit;
+        } else if (compHit) {
+          finalCategory = "comp";
+          hitKeyword = compHit;
+        } else if (indHit) {
+          finalCategory = "ind";
+          hitKeyword = indHit;
+        }
+
+        // 중요도 점수 계산 (자사 가산점 + 최신성)
+        const hoursAgo = Math.max(0, (nowMs - pubMs) / (1000 * 60 * 60));
+        const recencyBonus = Math.max(0, Math.round(20 - hoursAgo * 0.5));
+        const catBonus = finalCategory === "own" ? 30 : (finalCategory === "comp" ? 15 : 5);
+        const score = Math.min(99, 65 + catBonus + recencyBonus);
+
+        const norm = normalizeTitle(cleanTitle);
+        const isDuplicate = historySet.has(norm);
+
+        parsedList.push({
+          id: Date.now() + Math.floor(Math.random() * 100000) + idx,
+          category: finalCategory,
+          press: press,
+          title: cleanTitle,
+          url: link,
+          time: timeLabel,
+          pubMs: pubMs,
+          score: score,
+          matchedKw: hitKeyword,
+          duplicate: isDuplicate,
+          selected: false
+        });
+      });
+
+      return parsedList;
+    }
+
+    // 실제 뉴스 스크래핑 실행 함수
+    async function runLiveScrape(silent = false) {
+      if (isScraping) return;
+      isScraping = true;
+
+      const btn = document.getElementById("btnRunScrape");
+      btn.disabled = true;
+      btn.textContent = "⏳ 실시간 뉴스 수집 중...";
+
+      const cfg = getCurrentConfig();
+      const winCfg = getScrapeWindowConfig(activeAffiliate);
+      const historySet = getPublishedHistorySet(activeAffiliate);
+      const batches = buildSearchBatches(cfg.keywords);
+
+      setScrapeStatus("loading", `⏳ [${cfg.name}] ${batches.length}개 키워드 그룹 실시간 뉴스 스크래핑 진행 중...`);
+
+      try {
+        const results = await Promise.all(batches.map(async batch => {
+          const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(batch.query + " when:" + winCfg.googleWhen)}&hl=ko&gl=KR&ceid=KR:ko`;
+          const xml = await fetchRssXmlWithFallback(rssUrl);
+          if (!xml) return [];
+          return parseRssItems(xml, batch.category, batch.keywords, winCfg.maxAgeMs, historySet, cfg.keywords);
+        }));
+
+        const flat = results.flat();
+
+        // 동일 기사 중복 제거 (정규화 제목 기준)
+        const seenNorms = new Set();
+        const deduped = [];
+        flat.sort((a, b) => b.pubMs - a.pubMs).forEach(item => {
+          const norm = normalizeTitle(item.title);
+          if (!norm || seenNorms.has(norm)) return;
+          seenNorms.add(norm);
+          deduped.push(item);
+        });
+
+        if (deduped.length > 0) {
+          // 1순위 자사 -> 2순위 경쟁사 -> 3순위 업계 + 중요도순 정렬
+          const priorityOrder = { own: 1, comp: 2, ind: 3 };
+          deduped.sort((a, b) => (priorityOrder[a.category] - priorityOrder[b.category]) || (b.score - a.score));
+
+          // 상위 15개 자동 체크 (과거 중복 제외)
+          let picked = 0;
+          deduped.forEach(item => {
+            if (!item.duplicate && picked < 15) {
+              item.selected = true;
+              picked++;
+            }
+          });
+
+          cfg.candidates = deduped;
+          const nowTime = new Date().toTimeString().slice(0, 5);
+          setScrapeStatus("", `✅ [${cfg.name}] 실시간 수집 완료 (${nowTime} 기준 · 총 ${deduped.length}건 수집 / ${picked}건 자동 선정)`);
+          if (!silent) showToast(`✅ [${cfg.name}] 최신 기사 ${deduped.length}건 스크래핑 완료!`);
+        } else {
+          // 네트워크/프록시 일시 차단 시 기본 내장 데이터로 안전 폴백
+          cfg.candidates = JSON.parse(JSON.stringify(cfg.fallbackCandidates));
+          setScrapeStatus("error", `⚠️ 외부 RSS 응답 지연으로 [${cfg.name}] 기본 내장 샘플 기사를 표시합니다. 잠시 후 다시 시도해주세요.`);
+          if (!silent) showToast("⚠️ 실시간 피드 응답이 지연되어 기본 샘플 기사를 불러왔습니다.");
+        }
+      } catch (err) {
+        cfg.candidates = JSON.parse(JSON.stringify(cfg.fallbackCandidates));
+        setScrapeStatus("error", `⚠️ 스크래핑 중 일시적 오류가 발생하여 기본 샘플 기사를 표시합니다.`);
+      } finally {
+        isScraping = false;
+        btn.disabled = false;
+        btn.textContent = "🔄 실시간 뉴스 스크래핑 실행";
+        renderCandidates();
+        updateSidebarPreview();
+      }
     }
 
     function renderKeywords() {
@@ -1670,8 +1942,9 @@
           chip.innerHTML = `${kw} <button title="삭제">&times;</button>`;
           chip.querySelector("button").addEventListener("click", () => {
             cfg.keywords[g.key].splice(idx, 1);
+            saveKeywords(activeAffiliate);
             renderKeywords();
-            showToast(`키워드 '${kw}' 삭제됨`);
+            showToast(`키워드 '${kw}' 삭제됨 (재스크래핑 시 반영)`);
           });
           container.appendChild(chip);
         });
@@ -1680,9 +1953,10 @@
 
     function renderCandidates() {
       const cfg = getCurrentConfig();
+      const list = cfg.candidates || cfg.fallbackCandidates;
       const hideDup = document.getElementById("chkHideDuplicates").checked;
 
-      const visibleAll = cfg.candidates.filter(c => !(hideDup && c.duplicate));
+      const visibleAll = list.filter(c => !(hideDup && c.duplicate));
       document.getElementById("poolAll").textContent = visibleAll.length;
       document.getElementById("poolOwn").textContent = visibleAll.filter(c => c.category === "own").length;
       document.getElementById("poolComp").textContent = visibleAll.filter(c => c.category === "comp").length;
@@ -1702,7 +1976,7 @@
         card.className = `scraped-card ${item.selected ? "selected" : ""} ${item.duplicate ? "is-duplicate" : ""}`;
         card.innerHTML = `
           <div class="card-top">
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
               <label class="check-select">
                 <input type="checkbox" ${item.selected ? "checked" : ""}>
                 <span>노출 선정</span>
@@ -1712,8 +1986,9 @@
                 <option value="comp" ${item.category === "comp" ? "selected" : ""}>[경쟁사]</option>
                 <option value="ind" ${item.category === "ind" ? "selected" : ""}>[업계]</option>
               </select>
+              ${item.matchedKw ? `<span class="kw-match-badge">#${item.matchedKw}</span>` : ""}
               <span class="score-badge">중요도 ${item.score}점</span>
-              ${item.duplicate ? `<span class="dup-badge">과거 모니터링 중복</span>` : ""}
+              ${item.duplicate ? `<span class="dup-badge">과거 발행 중복</span>` : ""}
             </div>
             <span style="font-size:0.76rem; color:#64748b;">🕒 ${item.time}</span>
           </div>
@@ -1727,7 +2002,7 @@
 
         const cb = card.querySelector("input[type='checkbox']");
         cb.addEventListener("change", (e) => {
-          const selectedCount = cfg.candidates.filter(c => c.selected).length;
+          const selectedCount = list.filter(c => c.selected).length;
           if (e.target.checked && selectedCount >= 15) {
             e.target.checked = false;
             showToast("⚠️ 최대 15개까지만 선정할 수 있습니다. 기존 기사를 해제 후 선택하세요.");
@@ -1751,16 +2026,18 @@
 
     function buildFormattedSms() {
       const cfg = getCurrentConfig();
+      const today = getTodayInfo();
+      const list = cfg.candidates || cfg.fallbackCandidates;
       const quote = document.getElementById("inputQuote").value.trim();
       const author = document.getElementById("inputAuthor").value.trim();
 
-      const selected = cfg.candidates.filter(c => c.selected);
+      const selected = list.filter(c => c.selected);
       const own = selected.filter(c => c.category === "own");
       const comp = selected.filter(c => c.category === "comp");
       const ind = selected.filter(c => c.category === "ind");
 
       const out = [];
-      out.push(`[${cfg.date}] ${cfg.name} 모니터링`);
+      out.push(`[${today.dateStr}] ${cfg.name} 모니터링`);
       out.push("");
       out.push(quote);
       out.push(`- ${author}`);
@@ -1794,7 +2071,8 @@
 
     function updateSidebarPreview() {
       const cfg = getCurrentConfig();
-      const selected = cfg.candidates.filter(c => c.selected);
+      const list = cfg.candidates || cfg.fallbackCandidates;
+      const selected = list.filter(c => c.selected);
       const countEl = document.getElementById("quotaCounter");
       countEl.textContent = `${selected.length} / 15건 (권장 10~15)`;
       countEl.classList.remove("warn", "over");
@@ -1837,6 +2115,7 @@
       return false;
     }
 
+    // 계열사 변경 시 키워드 로드 + 자동 실시간 스크래핑 실행
     document.getElementById("adminAffiliateSelect").addEventListener("change", (e) => {
       activeAffiliate = e.target.value;
       const cfg = getCurrentConfig();
@@ -1846,9 +2125,7 @@
       document.querySelectorAll(".f-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === "all"));
       updateAffiliateMeta();
       renderKeywords();
-      renderCandidates();
-      updateSidebarPreview();
-      showToast(`${cfg.name} (${cfg.manager}) 설정으로 전환됨`);
+      runLiveScrape(false);
     });
 
     document.getElementById("chkHideDuplicates").addEventListener("change", renderCandidates);
@@ -1877,17 +2154,19 @@
       const cfg = getCurrentConfig();
       if (!cfg.keywords[cat].includes(val)) {
         cfg.keywords[cat].push(val);
+        saveKeywords(activeAffiliate);
         renderKeywords();
-        showToast(`'${val}' 키워드가 추가되었습니다.`);
+        showToast(`'${val}' 키워드가 추가되었습니다. [실시간 뉴스 스크래핑 실행]을 눌러 반영하세요.`);
       }
       input.value = "";
     });
 
     document.getElementById("btnAutoPick15").addEventListener("click", () => {
       const cfg = getCurrentConfig();
-      cfg.candidates.forEach(c => c.selected = false);
+      const list = cfg.candidates || cfg.fallbackCandidates;
+      list.forEach(c => c.selected = false);
       const priorityOrder = { own: 1, comp: 2, ind: 3 };
-      const sorted = cfg.candidates
+      const sorted = list
         .filter(c => !c.duplicate)
         .sort((a, b) => (priorityOrder[a.category] - priorityOrder[b.category]) || (b.score - a.score));
       sorted.slice(0, 15).forEach(c => c.selected = true);
@@ -1897,7 +2176,9 @@
     });
 
     document.getElementById("btnClearAll").addEventListener("click", () => {
-      getCurrentConfig().candidates.forEach(c => c.selected = false);
+      const cfg = getCurrentConfig();
+      const list = cfg.candidates || cfg.fallbackCandidates;
+      list.forEach(c => c.selected = false);
       renderCandidates();
       updateSidebarPreview();
       showToast("선택이 모두 해제되었습니다.");
@@ -1907,9 +2188,7 @@
     document.getElementById("inputAuthor").addEventListener("input", updateSidebarPreview);
 
     document.getElementById("btnRunScrape").addEventListener("click", () => {
-      const cfg = getCurrentConfig();
-      showToast(`🔄 [${cfg.name}] 키워드 기준으로 최신 피드 재스크래핑 및 중복 필터링 완료`);
-      renderCandidates();
+      runLiveScrape(false);
     });
 
     document.getElementById("btnCopySms").addEventListener("click", async () => {
@@ -1930,7 +2209,9 @@
 
     document.getElementById("btnPublishToEmployee").addEventListener("click", () => {
       const cfg = getCurrentConfig();
-      const selected = cfg.candidates.filter(c => c.selected);
+      const today = getTodayInfo();
+      const list = cfg.candidates || cfg.fallbackCandidates;
+      const selected = list.filter(c => c.selected);
       if (selected.length === 0) {
         showToast("⚠️ 최소 1개 이상의 기사를 선정해주세요.");
         return;
@@ -1939,8 +2220,8 @@
         name: cfg.name,
         manager: cfg.manager,
         cycle: cfg.cycle,
-        date: cfg.date,
-        dayLabel: "금",
+        date: today.dateStr,
+        dayLabel: today.dayLabel,
         scrapeWindow: `${cfg.cycle} · 담당: ${cfg.manager} · 확정 ${selected.length}건`,
         quote: document.getElementById("inputQuote").value.trim(),
         author: document.getElementById("inputAuthor").value.trim(),
@@ -1953,6 +2234,8 @@
       };
       try {
         localStorage.setItem("group_news_published_" + activeAffiliate, JSON.stringify(payload));
+        // 과거 중복 필터링을 위해 발행된 기사 제목 이력 저장
+        savePublishedHistory(activeAffiliate, selected.map(s => s.title));
       } catch (e) {}
       showToast(`🚀 [${cfg.name}] 임직원 모니터링 페이지에 ${selected.length}건 반영 완료!`);
     });
@@ -1964,11 +2247,13 @@
       document.getElementById("scheduleModal").classList.remove("open");
     });
 
-    // Init
+    // Init: 저장된 키워드 복원 후 페이지 열자마자 실시간 스크래핑 자동 실행
+    loadSavedKeywords();
     updateAffiliateMeta();
     renderKeywords();
     renderCandidates();
     updateSidebarPreview();
+    runLiveScrape(true);
   </script>
 </body>
 </html>
