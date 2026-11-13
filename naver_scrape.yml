@@ -1,0 +1,48 @@
+name: Daily Naver News Scrape
+
+on:
+  schedule:
+    # UTC 기준: 22:35 UTC = KST 07:35 (상상인 8시 발행 전), 23:35 UTC = KST 08:35 (계열사 9시 발행 전)
+    # 월~금 평일 실행 (일요일 밤 22:35 UTC = 월요일 아침 07:35 KST ~ 목요일 밤 23:35 UTC = 금요일 아침 08:35 KST)
+    - cron: '35 22 * * 0-4'
+    - cron: '35 23 * * 0-4'
+  workflow_dispatch:
+    inputs:
+      affiliate:
+        description: '특정 계열사만 수집 (all 입력 시 전체 5개 계열사)'
+        required: false
+        default: 'all'
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Naver API News Scraper
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          TARGET_AFFILIATE: ${{ github.event.inputs.affiliate || 'all' }}
+        run: python scrape_naver.py
+
+      - name: Commit and push scraped news JSON
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add scraped_pool.json published_data.json
+          if git diff --staged --quiet; then
+            echo "No changes in scraped news."
+          else
+            git commit -m "chore: update daily naver scraped news [skip ci]"
+            git push
+          fi
