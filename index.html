@@ -1408,25 +1408,55 @@
       setTimeout(() => t.classList.remove("show"), 2600);
     }
 
-    let serverPublishedCache = {};
+    let remotePublishedMap = {};
 
-    async function fetchServerPublished(corpKey) {
+    async function loadRemotePublished() {
       try {
-        const res = await fetch("/api/published/" + corpKey);
+        const res = await fetch(`./published_data.json?t=${Date.now()}`);
         if (res.ok) {
-          const json = await res.json();
-          if (json.status === "ok" && json.data && Array.isArray(json.data.articles)) {
-            serverPublishedCache[corpKey] = json.data;
+          const data = await res.json();
+          if (data && data.published) {
+            remotePublishedMap = data.published;
             renderPage();
-    fetchServerPublished(currentAffiliateKey);
+    loadRemotePublished();
+            return;
+          }
+        }
+      } catch (e) {}
+
+      // 아직 발행된 published_data.json이 없으면 scraped_pool.json의 자동 선정 기사를 표시
+      try {
+        const resPool = await fetch(`./scraped_pool.json?t=${Date.now()}`);
+        if (resPool.ok) {
+          const pool = await resPool.json();
+          if (pool && pool.affiliates) {
+            Object.keys(pool.affiliates).forEach(k => {
+              const info = pool.affiliates[k];
+              const base = AFFILIATE_DATA[k];
+              if (base && info && Array.isArray(info.articles) && info.articles.length > 0) {
+                const picked = info.articles.filter(a => a.selected);
+                if (picked.length > 0) {
+                  remotePublishedMap[k] = {
+                    name: base.name,
+                    date: (info.scrapedAt || base.date).slice(0, 10).replace(/-/g, "."),
+                    dayLabel: base.dayLabel,
+                    scrapeWindow: `${base.cycle} · 자동 수집 ${picked.length}건`,
+                    quote: base.quote,
+                    author: base.author,
+                    articles: picked
+                  };
+                }
+              }
+            });
+            renderPage();
           }
         }
       } catch (e) {}
     }
 
     function getActiveData() {
-      if (serverPublishedCache[currentAffiliateKey]) {
-        return serverPublishedCache[currentAffiliateKey];
+      if (remotePublishedMap[currentAffiliateKey]) {
+        return remotePublishedMap[currentAffiliateKey];
       }
       try {
         const publishedRaw = localStorage.getItem("group_news_published_" + currentAffiliateKey);
@@ -1598,7 +1628,6 @@
       document.querySelectorAll(".cat-tab").forEach(t => t.classList.toggle("active", t.dataset.filter === "all"));
       document.getElementById("copyFallbackBox").classList.remove("open");
       renderPage();
-    fetchServerPublished(currentAffiliateKey);
       showToast(`${getActiveData().name} 모니터링으로 전환되었습니다.`);
     });
 
@@ -1608,7 +1637,6 @@
         document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
         renderPage();
-    fetchServerPublished(currentAffiliateKey);
       });
     });
 
@@ -1643,7 +1671,6 @@
     });
 
     renderPage();
-    fetchServerPublished(currentAffiliateKey);
   </script>
 </body>
 </html>
