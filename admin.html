@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>그룹 계열사 데일리 뉴스 스크리핑 & 큐레이션 관리자</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-hover: #1e3a8a;
+      --primary-light: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --own-color: #dc2626;
+      --own-bg: #fef2f2;
+      --comp-color: #ea580c;
+      --comp-bg: #fff7ed;
+      --ind-color: #16a34a;
+      --ind-bg: #f0fdf4;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* Top Notice */
+    .top-banner {
+      background: linear-gradient(90deg, #0f172a, #1e3a8a);
+      color: #ffffff;
+      padding: 9px 16px;
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    /* Sticky Header */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .brand h1 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .affiliate-switcher {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #93c5fd;
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary { background: var(--primary); color: #ffffff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #ffffff; border-color: var(--border); color: var(--text-main); }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-success { background: #16a34a; color: #ffffff; }
+    .btn-success:hover { background: #15803d; }
+    .btn-warning { background: #fef08a; border-color: #fde047; color: #854d0e; }
+
+    /* Main Layout */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 18px 60px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+    }
+
+    @media (max-width: 980px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Column: Scraping & Screening */
+    .panel-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Schedule & Deduplication Status Bar */
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .rule-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+    }
+
+    .rule-box span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .rule-box strong {
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* Keyword Manager */
+    .kw-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .kw-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .kw-group-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      min-width: 62px;
+      text-align: center;
+    }
+    .lbl-own { background: var(--own-bg); color: var(--own-color); }
+    .lbl-comp { background: var(--comp-bg); color: var(--comp-color); }
+    .lbl-ind { background: var(--ind-bg); color: var(--ind-color); }
+
+    .kw-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .kw-chip button {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .kw-chip button:hover { color: #ef4444; }
+
+    .kw-add-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .kw-add-row select, .kw-add-row input {
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.84rem;
+    }
+
+    /* Filter & Scraped List */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .f-pill {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .f-pill.active {
+      background: #1e293b;
+      color: #ffffff;
+      border-color: #1e293b;
+    }
+
+    .scraped-card {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: #ffffff;
+      transition: all 0.15s ease;
+    }
+
+    .scraped-card.selected {
+      border-color: #2563eb;
+      background: #f8faff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+    }
+
+    .scraped-card.is-duplicate {
+      opacity: 0.58;
+      background: #f1f5f9;
+      border-style: dashed;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .check-select {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #1e40af;
+      background: #eff6ff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .check-select input {
+      width: 16px;
+      height: 16px;
+      accent-color: #2563eb;
+    }
+
+    .cat-select-inline {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .dup-badge {
+      background: #fee2e2;
+      color: #b91c1c;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+
+    .score-badge {
+      background: #fef9c3;
+      color: #854d0e;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .card-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .card-title a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .card-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Right Column: Selected 15 Queue & SMS/Mobile Preview */
+    .sticky-sidebar {
+      position: sticky;
+      top: 76px;
+    }
+
+    .quota-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+
+    .quota-count {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #1e3a8a;
+    }
+
+    .quota-count.over {
+      color: #dc2626;
+    }
+
+    .quote-editor {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .quote-editor label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .quote-editor textarea, .quote-editor input {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+    }
+
+    .sms-preview-box {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 10px;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      max-height: 360px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Modal for Scraping Architecture Guide */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 14px;
+      max-width: 640px;
+      width: 100%;
+      padding: 22px;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-box h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #1e3a8a;
+    }
+
+    .arch-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin: 12px 0;
+    }
+    .arch-table th, .arch-table td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .arch-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.2s ease;
+      z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="top-banner">
+    🛡️ <strong>그룹 계열사 데일리 뉴스모니터링 관리자(스크리닝)</strong> | 평일(월~금) 자동 수집 · 주말 통합 수집 · 과거 중복 기사 자동 제외 엔진 가동
+  </div>
+
+  <header>
+    <div class="nav-wrap">
+      <div class="brand">
+        <div class="brand-icon">📡</div>
+        <div>
+          <h1>
+            NewsRadar Admin
+            <select class="affiliate-switcher" id="adminAffiliateSelect">
+              <option value="medica" selected>메디카코리아 (Medica Korea)</option>
+              <option value="affiliate_b">그룹 계열사 B (바이오)</option>
+              <option value="affiliate_c">그룹 계열사 C (헬스케어)</option>
+            </select>
+          </h1>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-secondary" id="btnOpenArchModal">💡 네이버 API 없이 스크래핑 가능 여부 안내</button>
+        <button class="btn btn-secondary" id="btnAutoPick15">✨ 중요도순 자동 15개 선정</button>
+        <button class="btn btn-primary" id="btnRunScrape">🔄 당일 기준 뉴스 재스크래핑</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left: Scraping Rules, Keywords, Candidate Pool -->
+    <div>
+      <!-- Schedule & Keyword Rule Card -->
+      <section class="panel-card">
+        <div class="panel-title">
+          <span>⚙️ 계열사별 스크래핑 기준 및 키워드 설정</span>
+          <label style="font-size: 0.8rem; font-weight: 700; color: #dc2626; display:flex; align-items:center; gap:5px; cursor:pointer;">
+            <input type="checkbox" id="chkHideDuplicates" checked>
+            과거 모니터링 중복 기사 자동 숨김
+          </label>
+        </div>
+
+        <div class="rule-grid">
+          <div class="rule-box">
+            <span>📅 발행 요일 & 수집 구간</span>
+            <strong id="scrapeRangeText">금요일 발행 (목요일 09:00 ~ 금요일 발행 전)</strong>
+          </div>
+          <div class="rule-box">
+            <span>🎯 선정 정원 & 우선순위</span>
+            <strong>총 15건 (1순위: 자사명 → 2순위: 경쟁사 → 3순위: 업계)</strong>
+          </div>
+          <div class="rule-box">
+            <span>🔌 수집 방식 (API/피드)</span>
+            <strong>Google News RSS + 언론사 피드 (네이버 API 불필요)</strong>
+          </div>
+        </div>
+
+        <div class="kw-section">
+          <div class="kw-group" id="kwGroupOwn"></div>
+          <div class="kw-group" id="kwGroupComp"></div>
+          <div class="kw-group" id="kwGroupInd"></div>
+
+          <div class="kw-add-row">
+            <select id="newKwCategory">
+              <option value="own">[자사] 키워드</option>
+              <option value="comp">[경쟁사] 키워드</option>
+              <option value="ind">[업계] 키워드</option>
+            </select>
+            <input type="text" id="newKwInput" placeholder="추가할 키워드 입력 (예: 보령, 약가재평가)">
+            <button class="btn btn-secondary" id="btnAddKw">+ 키워드 추가</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Candidate Articles Screening List -->
+      <section class="panel-card">
+        <div class="filter-bar">
+          <div class="filter-pills">
+            <button class="f-pill active" data-cat="all">전체 후보 (<span id="poolAll">0</span>)</button>
+            <button class="f-pill" data-cat="own">[자사] (<span id="poolOwn">0</span>)</button>
+            <button class="f-pill" data-cat="comp">[경쟁사] (<span id="poolComp">0</span>)</button>
+            <button class="f-pill" data-cat="ind">[업계] (<span id="poolInd">0</span>)</button>
+          </div>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">체크박스를 선택하여 우측 15건 리스트에 편성</span>
+        </div>
+
+        <div id="candidateListContainer"></div>
+      </section>
+    </div>
+
+    <!-- Right: Curated 15 Preview & Publish -->
+    <aside>
+      <div class="panel-card sticky-sidebar">
+        <div class="panel-title">
+          <span>📲 임직원 발송 확정 리스트</span>
+          <span class="quota-count" id="quotaCounter">15 / 15건</span>
+        </div>
+
+        <div class="quota-bar">
+          <span style="font-size:0.8rem; font-weight:700; color:#1e40af;">구성: 자사 <b id="selOwn">0</b> · 경쟁사 <b id="selComp">0</b> · 업계 <b id="selInd">0</b></span>
+          <button class="btn btn-secondary" id="btnClearAll" style="padding:4px 8px; font-size:0.75rem;">전체 해제</button>
+        </div>
+
+        <div class="quote-editor">
+          <label>💬 상단 오늘의 명언 설정</label>
+          <textarea id="inputQuote" rows="2">나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.</textarea>
+          <input type="text" id="inputAuthor" value="토머스 에디슨" placeholder="인물명">
+        </div>
+
+        <div style="font-size:0.78rem; font-weight:800; color:var(--text-muted); margin-bottom:6px;">
+          👁️ 문자/카톡 발송 포맷 실시간 미리보기
+        </div>
+        <div class="sms-preview-box" id="smsPreviewBox"></div>
+
+        <div class="sidebar-btns">
+          <button class="btn btn-success" id="btnPublishToEmployee" style="justify-content:center; padding:11px;">
+            🚀 임직원 모니터링 페이지에 즉시 반영(발행)
+          </button>
+          <button class="btn btn-warning" id="btnCopySms" style="justify-content:center; padding:10px;">
+            📋 문자 발송용 텍스트 복사
+          </button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Architecture Explanation Modal -->
+  <div class="modal-overlay" id="archModal">
+    <div class="modal-box">
+      <h3>💡 네이버 API 연동 없이 뉴스 스크래핑이 가능한가요?</h3>
+      <p style="font-size:0.86rem; color:#334155; line-height:1.6;">
+        <strong>네, 네이버 검색 API를 연동하지 않고도 충분히 자동 스크래핑 구축이 가능합니다.</strong> 실무에서는 아래 3가지 방식 중 사내 서버 환경에 맞춰 선택합니다.
+      </p>
+
+      <table class="arch-table">
+        <thead>
+          <tr>
+            <th>수집 방식</th>
+            <th>네이버 API 필요 여부</th>
+            <th>특징 및 실무 장단점</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Google News RSS 피드 파싱</strong><br>(가장 추천 · 무료/무제한)</td>
+            <td>❌ 불필요</td>
+            <td>키워드별 RSS URL(<code>news.google.com/rss/search?q=키워드</code>)을 서버(Python/Node)에서 주기 호출. API 키 발급·일일 한도 제한이 없고, 주요 제약전문지(데일리팜·의약뉴스·메디파나 등) 기사가 모두 수집됨.</td>
+          </tr>
+          <tr>
+            <td><strong>2. 주요 제약·경제 언론사 직접 RSS / 크롤링</strong></td>
+            <td>❌ 불필요</td>
+            <td>의약뉴스, 약사공론, 메디파나뉴스, 매일경제 등 타겟 매체 RSS 및 웹 페이지를 스케줄러(Cron)로 수집.</td>
+          </tr>
+          <tr>
+            <td><strong>3. 네이버 검색 API</strong><br>(기존 방식)</td>
+            <td>⭕ 필요 (일 25,000건 무료)</td>
+            <td>국내 매체 커버리지가 가장 넓고 빠름. 다만 네이버 정책상 <code>openapi.naver.com</code>은 브라우저 직접 호출(CORS)이 차단되므로 반드시 백엔드 프록시 서버가 필요함.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size:0.82rem; color:#475569; background:#f8fafc; padding:10px; border-radius:8px; line-height:1.5;">
+        <strong>📌 핵심 운영 로직 반영 사항:</strong><br>
+        • <strong>월요일 수집 확장:</strong> 요일이 월요일(<code>getDay() === 1</code>)인 경우 자동으로 금요일 오전 ~ 월요일 발행 전(72시간) 기사를 스크래핑합니다.<br>
+        • <strong>과거 중복 제거:</strong> 기사의 정규화된 제목(특수문자 제거 후 유사도 비교) 및 원문 URL 해시를 DB에 저장하여 직전 모니터링에 노출된 기사는 자동 필터링합니다.
+      </p>
+
+      <div style="text-align:right; margin-top:14px;">
+        <button class="btn btn-primary" id="btnCloseArchModal">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">알림</div>
+
+  <script>
+    const AFFILIATE_CONFIGS = {
+      medica: {
+        name: "메디카코리아",
+        date: "2026.11.13",
+        quote: "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+        author: "토머스 에디슨",
+        keywords: {
+          own: ["메디카코리아"],
+          comp: ["일동제약", "보령", "삼진제약", "대웅제약", "유한양행"],
+          ind: ["급여 재평가", "약가", "식약처", "항암제", "CSO", "위탁영업", "임상시험", "바이오협회"]
+        },
+        candidates: [
+          // 후보군 18건 (선정 15건 + 미선정 2건 + 과거 중복 1건)
+          { id: 101, category: "comp", press: "뉴스저널리즘", title: "일동제약, 당뇨 치료제 잇단 허가 정리…복제약 경쟁 속 리뉴얼", url: "https://url.kr/ic9nji", time: "11.13 07:10", score: 96, duplicate: false, selected: true },
+          { id: 102, category: "comp", press: "뉴데일리", title: "'자큐보·펙수클루'에 도전장 … 일동제약, P-CAB 신약 국내 출시 준비", url: "https://url.kr/bs9uv1", time: "11.13 06:50", score: 95, duplicate: false, selected: true },
+          { id: 103, category: "comp", press: "의약뉴스", title: "보령, 글로벌 항암제 사업 확장 맞춰 생산능력 2.2배 확대", url: "https://url.kr/3spoje", time: "11.12 17:40", score: 94, duplicate: false, selected: true },
+          { id: 104, category: "comp", press: "의학신문", title: "주요 제약사, 올해 3분기 순이익 저조한 성적표", url: "https://url.kr/cr3cfq", time: "11.12 16:20", score: 92, duplicate: false, selected: true },
+          { id: 105, category: "ind", press: "스카이데일리", title: "연 1300억 급여 재평가 D-1개월… 제약사 '초긴장'", url: "https://url.kr/kj9zj8", time: "11.13 07:30", score: 98, duplicate: false, selected: true },
+          { id: 106, category: "ind", press: "CEO스코어데일리", title: "로라제팜주 약가 7배 '껑충'…삼진제약, 공급 안정 이어간다", url: "https://url.kr/c8x594", time: "11.13 07:05", score: 91, duplicate: false, selected: true },
+          { id: 107, category: "ind", press: "시사저널e", title: "큐로셀 '림카토' 출시, 내달 or 내년 1월?···3억대 약가·위험분담 주목", url: "https://url.kr/vjfimu", time: "11.12 18:10", score: 90, duplicate: false, selected: true },
+          { id: 108, category: "ind", press: "약사공론", title: "필수 항암·항생제 3품목 국내 생산 추진…연내 공급", url: "https://url.kr/xwwory", time: "11.12 17:15", score: 89, duplicate: false, selected: true },
+          { id: 109, category: "ind", press: "아시아타임즈", title: "면역항암제 '키트루다' 특허 만료 임박…업체별 대응 전략 보니", url: "https://url.kr/kh2voe", time: "11.12 16:45", score: 88, duplicate: false, selected: true },
+          { id: 110, category: "ind", press: "더팩트", title: "'리베이트 통로' 위탁영업, 제약사·CSO 책임 높인다···법·자율규제 투트랙", url: "https://url.kr/468a91", time: "11.13 06:40", score: 93, duplicate: false, selected: true },
+          { id: 111, category: "ind", press: "매일일보", title: "군부대·지방공항서도 상비약 산다… 복지부, 의약품 취급 규제 완화 추진", url: "https://url.kr/nkabp8", time: "11.12 15:50", score: 86, duplicate: false, selected: true },
+          { id: 112, category: "ind", press: "아이뉴스24", title: "합법된 '스시자로'⋯국내 비만약 시장 흔들까", url: "https://url.kr/86ozdw", time: "11.12 15:10", score: 85, duplicate: false, selected: true },
+          { id: 113, category: "ind", press: "서울경제", title: "국내 제약사 임상시험 1상이 36.5%…신약개발 초기 단계에 집중", url: "https://url.kr/4tht9p", time: "11.12 14:30", score: 84, duplicate: false, selected: true },
+          { id: 114, category: "ind", press: "메디파나뉴스", title: "[기획] 수조원 기술수출 계약…제약사가 처음 손에 쥔 돈은 얼마?", url: "https://url.kr/ih6zfo", time: "11.12 13:40", score: 83, duplicate: false, selected: true },
+          { id: 115, category: "ind", press: "전자신문", title: "한국바이오협회 \"신약개발 특성 반영해야\"…근로시간 특례 촉구", url: "https://url.kr/uetf4v", time: "11.12 11:20", score: 82, duplicate: false, selected: true },
+          // 추가 후보 (미선택 상태)
+          { id: 116, category: "comp", press: "데일리팜", title: "대웅제약, 나보타 글로벌 수출국 70개국 돌파", url: "https://www.dailypharm.com", time: "11.12 10:15", score: 79, duplicate: false, selected: false },
+          { id: 117, category: "ind", press: "헬스조선", title: "겨울철 호흡기 질환 증가에 감기약 원료 수급 점검", url: "https://health.chosun.com", time: "11.12 09:50", score: 76, duplicate: false, selected: false },
+          // 과거 중복 기사 예시
+          { id: 118, category: "ind", press: "메디파나뉴스", title: "[중복제외] 복지부, 하반기 약가 재평가 대상 품목 1차 안내", url: "https://www.medipana.com", time: "11.12 08:30", score: 70, duplicate: true, selected: false }
+        ]
+      },
+      affiliate_b: {
+        name: "그룹 계열사 B (바이오)",
+        date: "2026.11.13",
+        quote: "혁신은 리더와 추종자를 구분하는 잣대다.",
+        author: "스티브 잡스",
+        keywords: {
+          own: ["계열사 B"],
+          comp: ["삼성바이오로직스", "셀트리온"],
+          ind: ["CDMO", "바이오시밀러", "생물보안법"]
+        },
+        candidates: [
+          { id: 201, category: "own", press: "한국경제", title: "그룹 계열사 B, 차세대 바이오의약품 CMO 수주 계약 체결", url: "https://www.hankyung.com", time: "11.13 07:20", score: 99, duplicate: false, selected: true },
+          { id: 202, category: "comp", press: "매일경제", title: "삼성바이오·셀트리온, 4분기 글로벌 수주 잔고 역대 최대", url: "https://www.mk.co.kr", time: "11.12 16:00", score: 90, duplicate: false, selected: true },
+          { id: 203, category: "ind", press: "전자신문", title: "정부, 바이오 소부장 국산화 R&D 예산 20% 증액 확정", url: "https://www.etnews.com", time: "11.12 14:10", score: 85, duplicate: false, selected: true }
+        ]
+      },
+      affiliate_c: {
+        name: "그룹 계열사 C (헬스케어)",
+        date: "2026.11.13",
+        quote: "가장 큰 위험은 아무런 위험도 감수하지 않는 것이다.",
+        author: "마크 저커버그",
+        keywords: {
+          own: ["계열사 C"],
+          comp: ["카카오헬스케어", "눔코리아"],
+          ind: ["디지털헬스케어", "건강기능식품", "원격의료"]
+        },
+        candidates: [
+          { id: 301, category: "own", press: "아이뉴스24", title: "그룹 계열사 C, 시니어 맞춤형 디지털 헬스케어 플랫폼 론칭", url: "https://www.inews24.com", time: "11.13 07:00", score: 98, duplicate: false, selected: true },
+          { id: 302, category: "ind", press: "서울경제", title: "건기식·디지털 헬스케어 융합 시장, 내년 10조원 돌파 전망", url: "https://www.sedaily.com", time: "11.12 15:30", score: 87, duplicate: false, selected: true }
+        ]
+      }
+    };
+
+    let activeAffiliate = "medica";
+    let activeCatFilter = "all";
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2500);
+    }
+
+    function getCurrentConfig() {
+      return AFFILIATE_CONFIGS[activeAffiliate];
+    }
+
+    function updateScrapeScheduleNotice() {
+      const now = new Date();
+      const day = now.getDay(); // 0: 일, 1: 월 ... 5: 금
+      const el = document.getElementById("scrapeRangeText");
+      if (day === 1) {
+        el.textContent = "월요일 확장 수집 (금요일 오전 ~ 토·일 주말 ~ 월요일 발행 전)";
+      } else {
+        el.textContent = "평일 데일리 수집 (전일 발행 이후 ~ 당일 발행 전 기사)";
+      }
+    }
+
+    function renderKeywords() {
+      const cfg = getCurrentConfig();
+      const groups = [
+        { key: "own", label: "[자사]", cls: "lbl-own", elId: "kwGroupOwn" },
+        { key: "comp", label: "[경쟁사]", cls: "lbl-comp", elId: "kwGroupComp" },
+        { key: "ind", label: "[업계]", cls: "lbl-ind", elId: "kwGroupInd" }
+      ];
+
+      groups.forEach(g => {
+        const container = document.getElementById(g.elId);
+        container.innerHTML = `<span class="kw-group-label ${g.cls}">${g.label}</span>`;
+        cfg.keywords[g.key].forEach((kw, idx) => {
+          const chip = document.createElement("span");
+          chip.className = "kw-chip";
+          chip.innerHTML = `${kw} <button title="삭제">&times;</button>`;
+          chip.querySelector("button").addEventListener("click", () => {
+            cfg.keywords[g.key].splice(idx, 1);
+            renderKeywords();
+            showToast(`키워드 '${kw}' 삭제됨`);
+          });
+          container.appendChild(chip);
+        });
+      });
+    }
+
+    function renderCandidates() {
+      const cfg = getCurrentConfig();
+      const hideDup = document.getElementById("chkHideDuplicates").checked;
+
+      const visibleAll = cfg.candidates.filter(c => !(hideDup && c.duplicate));
+      document.getElementById("poolAll").textContent = visibleAll.length;
+      document.getElementById("poolOwn").textContent = visibleAll.filter(c => c.category === "own").length;
+      document.getElementById("poolComp").textContent = visibleAll.filter(c => c.category === "comp").length;
+      document.getElementById("poolInd").textContent = visibleAll.filter(c => c.category === "ind").length;
+
+      const filtered = visibleAll.filter(c => activeCatFilter === "all" || c.category === activeCatFilter);
+      const container = document.getElementById("candidateListContainer");
+      container.innerHTML = "";
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="padding:32px; text-align:center; color:#94a3b8; font-size:0.88rem;">해당 카테고리에 수집된 기사가 없습니다.</div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement("div");
+        card.className = `scraped-card ${item.selected ? "selected" : ""} ${item.duplicate ? "is-duplicate" : ""}`;
+        card.innerHTML = `
+          <div class="card-top">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <label class="check-select">
+                <input type="checkbox" ${item.selected ? "checked" : ""}>
+                <span>노출 선정</span>
+              </label>
+              <select class="cat-select-inline">
+                <option value="own" ${item.category === "own" ? "selected" : ""}>[자사]</option>
+                <option value="comp" ${item.category === "comp" ? "selected" : ""}>[경쟁사]</option>
+                <option value="ind" ${item.category === "ind" ? "selected" : ""}>[업계]</option>
+              </select>
+              <span class="score-badge">중요도 ${item.score}점</span>
+              ${item.duplicate ? `<span class="dup-badge">과거 모니터링 중복</span>` : ""}
+            </div>
+            <span style="font-size:0.76rem; color:#64748b;">🕒 ${item.time}</span>
+          </div>
+          <div class="card-title">
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer">[${item.press}] ${item.title}</a>
+          </div>
+          <div class="card-meta">
+            <span>🔗 ${item.url}</span>
+          </div>
+        `;
+
+        const cb = card.querySelector("input[type='checkbox']");
+        cb.addEventListener("change", (e) => {
+          const selectedCount = cfg.candidates.filter(c => c.selected).length;
+          if (e.target.checked && selectedCount >= 15) {
+            e.target.checked = false;
+            showToast("⚠️ 최대 15개까지만 선정할 수 있습니다. 기존 기사를 해제 후 선택하세요.");
+            return;
+          }
+          item.selected = e.target.checked;
+          renderCandidates();
+          updateSidebarPreview();
+        });
+
+        const catSel = card.querySelector(".cat-select-inline");
+        catSel.addEventListener("change", (e) => {
+          item.category = e.target.value;
+          renderCandidates();
+          updateSidebarPreview();
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    function buildFormattedSms() {
+      const cfg = getCurrentConfig();
+      const quote = document.getElementById("inputQuote").value.trim();
+      const author = document.getElementById("inputAuthor").value.trim();
+
+      const selected = cfg.candidates.filter(c => c.selected);
+      const own = selected.filter(c => c.category === "own");
+      const comp = selected.filter(c => c.category === "comp");
+      const ind = selected.filter(c => c.category === "ind");
+
+      let out = [];
+      out.push(`[${cfg.date}] ${cfg.name} 모니터링`);
+      out.push("");
+      out.push(quote);
+      out.push(`- ${author}`);
+      out.push("");
+
+      out.push("[자사]");
+      if (own.length === 0) {
+        out.push("없음");
+        out.push("");
+      } else {
+        own.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(a.url); out.push(""); });
+      }
+
+      out.push("[경쟁사]");
+      if (comp.length === 0) {
+        out.push("없음");
+        out.push("");
+      } else {
+        comp.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(a.url); out.push(""); });
+      }
+
+      out.push("[업계]");
+      if (ind.length === 0) {
+        out.push("없음");
+      } else {
+        ind.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(a.url); out.push(""); });
+      }
+
+      return out.join("\n").trim();
+    }
+
+    function updateSidebarPreview() {
+      const cfg = getCurrentConfig();
+      const selected = cfg.candidates.filter(c => c.selected);
+      const countEl = document.getElementById("quotaCounter");
+      countEl.textContent = `${selected.length} / 15건`;
+      countEl.classList.toggle("over", selected.length > 15);
+
+      document.getElementById("selOwn").textContent = selected.filter(c => c.category === "own").length;
+      document.getElementById("selComp").textContent = selected.filter(c => c.category === "comp").length;
+      document.getElementById("selInd").textContent = selected.filter(c => c.category === "ind").length;
+
+      document.getElementById("smsPreviewBox").textContent = buildFormattedSms();
+    }
+
+    // Event Bindings
+    document.getElementById("adminAffiliateSelect").addEventListener("change", (e) => {
+      activeAffiliate = e.target.value;
+      const cfg = getCurrentConfig();
+      document.getElementById("inputQuote").value = cfg.quote;
+      document.getElementById("inputAuthor").value = cfg.author;
+      activeCatFilter = "all";
+      document.querySelectorAll(".f-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === "all"));
+      renderKeywords();
+      renderCandidates();
+      updateSidebarPreview();
+      showToast(`${cfg.name} 관리자 화면으로 전환됨`);
+    });
+
+    document.getElementById("chkHideDuplicates").addEventListener("change", renderCandidates);
+
+    document.querySelectorAll(".f-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        activeCatFilter = pill.dataset.cat;
+        document.querySelectorAll(".f-pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        renderCandidates();
+      });
+    });
+
+    document.getElementById("newKwInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("btnAddKw").click();
+      }
+    });
+
+    document.getElementById("btnAddKw").addEventListener("click", () => {
+      const cat = document.getElementById("newKwCategory").value;
+      const input = document.getElementById("newKwInput");
+      const val = input.value.trim();
+      if (!val) return;
+      const cfg = getCurrentConfig();
+      if (!cfg.keywords[cat].includes(val)) {
+        cfg.keywords[cat].push(val);
+        renderKeywords();
+        showToast(`'${val}' 키워드가 추가되었습니다.`);
+      }
+      input.value = "";
+    });
+
+    document.getElementById("btnAutoPick15").addEventListener("click", () => {
+      const cfg = getCurrentConfig();
+      cfg.candidates.forEach(c => c.selected = false);
+      // 1순위: 자사 -> 2순위: 경쟁사 -> 3순위: 업계 (중복 제외, 중요도순 최대 15건)
+      const priorityOrder = { own: 1, comp: 2, ind: 3 };
+      const sorted = cfg.candidates
+        .filter(c => !c.duplicate)
+        .sort((a, b) => (priorityOrder[a.category] - priorityOrder[b.category]) || (b.score - a.score));
+      sorted.slice(0, 15).forEach(c => c.selected = true);
+      renderCandidates();
+      updateSidebarPreview();
+      showToast("자사 우선 및 중요도 기준으로 15건이 자동 선정되었습니다.");
+    });
+
+    document.getElementById("btnClearAll").addEventListener("click", () => {
+      getCurrentConfig().candidates.forEach(c => c.selected = false);
+      renderCandidates();
+      updateSidebarPreview();
+      showToast("선택이 모두 해제되었습니다.");
+    });
+
+    document.getElementById("inputQuote").addEventListener("input", updateSidebarPreview);
+    document.getElementById("inputAuthor").addEventListener("input", updateSidebarPreview);
+
+    document.getElementById("btnRunScrape").addEventListener("click", () => {
+      showToast("🔄 설정된 키워드로 최신 뉴스 피드를 재스크래핑하고 중복 기사를 필터링했습니다.");
+      renderCandidates();
+    });
+
+    async function copyToClipboardRobust(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (err) {}
+      }
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "0";
+        ta.style.left = "0";
+        ta.style.width = "2em";
+        ta.style.height = "2em";
+        ta.style.opacity = "0";
+        ta.style.fontSize = "16px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) return true;
+      } catch (e) {}
+      return false;
+    }
+
+    document.getElementById("btnCopySms").addEventListener("click", async () => {
+      const text = buildFormattedSms();
+      const ok = await copyToClipboardRobust(text);
+      if (ok) {
+        showToast("📋 문자 발송용 텍스트가 복사되었습니다!");
+      } else {
+        const box = document.getElementById("smsPreviewBox");
+        const range = document.createRange();
+        range.selectNodeContents(box);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        showToast("⚠️ 보안 환경 제한으로 미리보기 영역이 전체 선택되었습니다. Ctrl+C(또는 길게 눌러 복사) 해주세요.");
+      }
+    });
+
+    document.getElementById("btnPublishToEmployee").addEventListener("click", () => {
+      const cfg = getCurrentConfig();
+      const selected = cfg.candidates.filter(c => c.selected);
+      if (selected.length === 0) {
+        showToast("⚠️ 최소 1개 이상의 기사를 선정해주세요.");
+        return;
+      }
+      const payload = {
+        name: cfg.name,
+        date: cfg.date,
+        dayLabel: "금",
+        scrapeWindow: `전일 ~ 금일 오전 스크래핑 · 확정 ${selected.length}건`,
+        quote: document.getElementById("inputQuote").value.trim(),
+        author: document.getElementById("inputAuthor").value.trim(),
+        articles: selected.map(s => ({
+          category: s.category,
+          press: s.press,
+          title: s.title,
+          url: s.url
+        }))
+      };
+      try {
+        localStorage.setItem("group_news_published_" + activeAffiliate, JSON.stringify(payload));
+      } catch (e) {}
+      showToast(`🚀 [${cfg.name}] 임직원 모니터링 페이지에 ${selected.length}건 반영 완료!`);
+    });
+
+    document.getElementById("btnOpenArchModal").addEventListener("click", () => {
+      document.getElementById("archModal").classList.add("open");
+    });
+    document.getElementById("btnCloseArchModal").addEventListener("click", () => {
+      document.getElementById("archModal").classList.remove("open");
+    });
+
+    // Init
+    updateScrapeScheduleNotice();
+    renderKeywords();
+    renderCandidates();
+    updateSidebarPreview();
+  </script>
+</body>
+</html>
