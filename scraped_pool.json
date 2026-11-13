@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13 15:33:14 KST",
+  "updatedAt": "2026-11-13 15:33:47 KST",
   "keywords": {
     "sangsangin": [
       "유준원",
@@ -141,9 +141,9 @@
       "articles": []
     },
     "mitech": {
-      "scrapedAt": "2026-11-13 15:08:48 KST",
+      "scrapedAt": "2026-11-13 15:33:47 KST",
+      "dateRange": "2026.11.12 ~ 2026.11.13",
       "count": 0,
-      "picked": 0,
       "articles": []
     },
     "synergy": {
