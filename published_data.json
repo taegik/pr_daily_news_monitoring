@@ -137,8 +137,8 @@
       "date": "2026.11.13",
       "dayLabel": "금",
       "scrapeWindow": "매일 오전 9시~9시반 · 담당: 박한솔 대리 · 확정 1건",
-      "quote": "작은 디테일이 위대한 품질의 차이를 만든다.",
-      "author": "피터 드러커",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
       "articles": [
         {
           "category": "ind",
@@ -147,6 +147,47 @@
           "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFAtZS1LcVdMcGxnQW8xZ2p5X2ZEVHFEUXZUS0RfVWc4dTdNTUFuUU9XN2Z0VVpxc1FDcWJETUNzOWsxVVN1MDFxbFFwMjVWTkVPZlc2VEc1OE9kbHpyUXhOM0FrSXdmZzNfUFVwVE1lR0pveGw0c2U40gF3QVVfeXFMUC1lLUtxV0xwbGdBbzFnanlfZkRUcURRdlRLRF9VZzh1N01NQW5RT1c3ZnRVWnFzUUNxYkRNQ3M5azFVU3UwMXFsUXAyNVZORU9mVzZURzU4T2RsenJReE4zQWtJd2ZnM19QVXBUTWVHSm94bDRzZTg?oc=5"
         }
       ]
+    },
+    "sangsangin": {
+      "affiliate": "sangsangin",
+      "name": "상상인",
+      "manager": "박슬기 과장",
+      "cycle": "매일 오전 8시~8시반",
+      "date": "2026.11.13",
+      "dayLabel": "금",
+      "scrapeWindow": "매일 오전 8시~8시반 · 담당: 박슬기 과장",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": []
+    },
+    "synergy": {
+      "affiliate": "synergy",
+      "name": "시너지이노베이션",
+      "manager": "박한솔 대리",
+      "cycle": "매일 오전 9시~9시반",
+      "date": "2026.11.13",
+      "dayLabel": "금",
+      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 박한솔 대리",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": []
+    },
+    "neurobiogen": {
+      "affiliate": "neurobiogen",
+      "name": "뉴로바이오젠",
+      "manager": "김성목 대리",
+      "cycle": "주 1회 (매주 금요일)",
+      "date": "2026.11.13",
+      "dayLabel": "금",
+      "scrapeWindow": "주 1회 (매주 금요일) · 담당: 김성목 대리",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": []
     }
+  },
+  "common": {
+    "date": "2026.11.13",
+    "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+    "author": "토머스 에디슨"
   }
 }
