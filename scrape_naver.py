@@ -4,6 +4,7 @@ import json
 import time
 import urllib.request
 import urllib.parse
+import urllib.error
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
@@ -236,12 +237,24 @@ def get_date_bounds(affiliate_key, now_dt, start_str, end_str):
 
 def fetch_naver_news(query, client_id, client_secret, display=30):
     encoded = urllib.parse.quote(query)
-    url = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
-    req = urllib.request.Request(url)
-    req.add_header("X-Naver-Client-Id", client_id)
-    req.add_header("X-Naver-Client-Secret", client_secret)
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        return json.loads(resp.read().decode('utf-8')).get('items', [])
+    # 1차: 일반 네이버 개발자센터 (developers.naver.com)
+    url_dev = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
+    req_dev = urllib.request.Request(url_dev)
+    req_dev.add_header("X-Naver-Client-Id", client_id)
+    req_dev.add_header("X-Naver-Client-Secret", client_secret)
+    try:
+        with urllib.request.urlopen(req_dev, timeout=10) as resp:
+            return json.loads(resp.read().decode('utf-8')).get('items', [])
+    except urllib.error.HTTPError as e:
+        if e.code != 401:
+            raise
+        # 2차: 네이버 클라우드 플랫폼 / NAVER API HUB (ncloud.com) 자동 폴백
+        url_ncp = f"https://naveropenapi.apigw.ntruss.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
+        req_ncp = urllib.request.Request(url_ncp)
+        req_ncp.add_header("X-NCP-APIGW-API-KEY-ID", client_id)
+        req_ncp.add_header("X-NCP-APIGW-API-KEY", client_secret)
+        with urllib.request.urlopen(req_ncp, timeout=10) as resp2:
+            return json.loads(resp2.read().decode('utf-8')).get('items', [])
 
 def main():
     client_id = os.environ.get("NAVER_CLIENT_ID", "").strip()
