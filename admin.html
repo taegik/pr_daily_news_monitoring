@@ -135,12 +135,16 @@
     .btn-warning { background: #fef08a; border-color: #fde047; color: #854d0e; }
 
     main {
-      max-width: 1360px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 20px 18px 60px;
       display: grid;
-      grid-template-columns: 1fr 410px;
+      grid-template-columns: minmax(0, 1fr) 390px;
       gap: 20px;
+    }
+
+    main > div, main > aside {
+      min-width: 0;
     }
 
     @media (max-width: 1060px) {
@@ -530,11 +534,12 @@
     }
 
     .card-title {
-      font-size: 0.97rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 5px;
-      line-height: 1.42;
+      margin-bottom: 8px;
+      line-height: 1.48;
+      word-break: keep-all;
     }
 
     .card-title a {
@@ -546,14 +551,33 @@
       text-decoration: underline;
     }
 
-    .card-meta {
+    .card-footer-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      flex-wrap: wrap;
-      font-size: 0.75rem;
+      padding-top: 8px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.77rem;
       color: var(--text-muted);
+    }
+
+    .btn-read-origin {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-decoration: none;
+      border: 1px solid #bfdbfe;
+      transition: all 0.12s ease;
+    }
+    .btn-read-origin:hover {
+      background: #dbeafe;
     }
 
     /* Pagination Bar */
@@ -770,6 +794,44 @@
   </style>
 </head>
 <body>
+  <!-- Admin Direct Access Password Gate -->
+  <div id="adminGateOverlay" style="position:fixed;inset:0;background:#0f172a;display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+    <div style="background:#ffffff;border-radius:14px;padding:26px;max-width:360px;width:100%;box-shadow:0 20px 25px -5px rgba(0,0,0,0.3);">
+      <h3 style="font-size:1.1rem;font-weight:800;color:#0f172a;margin-bottom:6px;">🔒 상상인그룹 PR팀 관리자 인증</h3>
+      <p style="font-size:0.82rem;color:#64748b;margin-bottom:14px;">관리자 페이지 접근을 위해 비밀번호를 입력하세요.</p>
+      <input type="password" id="gatePwInput" placeholder="비밀번호 입력" style="width:100%;padding:10px 12px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.95rem;font-weight:700;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+        <a href="./index.html" style="font-size:0.8rem;color:#64748b;text-decoration:none;">← 임직원 페이지로</a>
+        <button type="button" id="gatePwBtn" class="btn btn-primary" style="padding:9px 18px;">접속하기</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const gate = document.getElementById("adminGateOverlay");
+      const inp = document.getElementById("gatePwInput");
+      if (sessionStorage.getItem("pr_admin_unlocked") === "true") {
+        gate.style.display = "none";
+        return;
+      }
+      function checkGate() {
+        if (inp.value === "PR332!") {
+          sessionStorage.setItem("pr_admin_unlocked", "true");
+          gate.style.display = "none";
+        } else {
+          alert("비밀번호가 일치하지 않습니다.");
+          inp.value = "";
+          inp.focus();
+        }
+      }
+      document.getElementById("gatePwBtn").addEventListener("click", checkGate);
+      inp.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") { e.preventDefault(); checkGate(); }
+      });
+      setTimeout(() => inp.focus(), 50);
+    })();
+  </script>
+
   <div class="top-banner">
     🛡️ <strong>상상인그룹 PR팀 뉴스모니터링 관리자</strong> | 키워드별 기사 필터링 · 공신력/키워드 밀도 기반 스마트 순위 정렬
   </div>
@@ -1783,8 +1845,9 @@
           <div class="card-title">
             <a href="${item.url}" target="_blank" rel="noopener noreferrer">[${item.press}] ${item.title}</a>
           </div>
-          <div class="card-meta">
-            <span>🔗 ${item.url}</span>
+          <div class="card-footer-row">
+            <span>📰 ${item.press} · 🕒 ${item.time}</span>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn-read-origin">기사 원문 보기 ↗</a>
           </div>
         `;
 
@@ -1871,7 +1934,7 @@
       });
     }
 
-    function buildFormattedSms() {
+    function buildFormattedSms(maskUrlForPreview = false) {
       const cfg = getCurrentConfig();
       const pubDateStr = document.getElementById("inputPublishDateStr").value.trim() || getTodayInfo().dateStr;
       const list = cfg.candidates || cfg.fallbackCandidates;
@@ -1883,6 +1946,8 @@
       const comp = selected.filter(c => c.category === "comp");
       const ind = selected.filter(c => c.category === "ind");
 
+      const formatUrl = (u) => maskUrlForPreview ? "🔗 (원문 링크 포함됨)" : u;
+
       const out = [];
       out.push(`[${pubDateStr}] ${cfg.name} 모니터링`);
       out.push("");
@@ -1892,15 +1957,15 @@
 
       out.push("[자사]");
       if (own.length === 0) { out.push("없음"); out.push(""); }
-      else { own.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(a.url); out.push(""); }); }
+      else { own.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(formatUrl(a.url)); out.push(""); }); }
 
       out.push("[경쟁사]");
       if (comp.length === 0) { out.push("없음"); out.push(""); }
-      else { comp.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(a.url); out.push(""); }); }
+      else { comp.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(formatUrl(a.url)); out.push(""); }); }
 
       out.push("[업계]");
       if (ind.length === 0) { out.push("없음"); }
-      else { ind.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(a.url); out.push(""); }); }
+      else { ind.forEach(a => { out.push(`[${a.press}] ${a.title}`); out.push(formatUrl(a.url)); out.push(""); }); }
 
       return out.join("\n").trim();
     }
@@ -1920,7 +1985,7 @@
       document.getElementById("selInd").textContent = selected.filter(c => c.category === "ind").length;
 
       renderSelectedOrganizer(selected);
-      document.getElementById("smsPreviewBox").textContent = buildFormattedSms();
+      document.getElementById("smsPreviewBox").textContent = buildFormattedSms(true);
     }
 
     // Event Listeners
