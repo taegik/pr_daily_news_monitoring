@@ -1481,47 +1481,7 @@
           const data = await res.json();
           if (data && data.published) {
             remotePublishedMap = data.published;
-            // 관리자 페이지 비밀번호 인증 (PR332!)
-    const ADMIN_PASSCODE = "PR332!";
-    const adminPwModal = document.getElementById("adminPwModal");
-    const inputAdminPw = document.getElementById("inputAdminPw");
-
-    document.getElementById("btnOpenAdminAuth").addEventListener("click", () => {
-      if (sessionStorage.getItem("pr_admin_unlocked") === "true") {
-        window.location.href = "./admin.html";
-        return;
-      }
-      inputAdminPw.value = "";
-      adminPwModal.classList.add("open");
-      setTimeout(() => inputAdminPw.focus(), 50);
-    });
-
-    document.getElementById("btnCancelAdminPw").addEventListener("click", () => {
-      adminPwModal.classList.remove("open");
-    });
-
-    function verifyAdminPassword() {
-      if (inputAdminPw.value === ADMIN_PASSCODE) {
-        sessionStorage.setItem("pr_admin_unlocked", "true");
-        adminPwModal.classList.remove("open");
-        window.location.href = "./admin.html";
-      } else {
-        showToast("❌ 비밀번호가 일치하지 않습니다.");
-        inputAdminPw.value = "";
-        inputAdminPw.focus();
-      }
-    }
-
-    document.getElementById("btnConfirmAdminPw").addEventListener("click", verifyAdminPassword);
-    inputAdminPw.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        verifyAdminPassword();
-      }
-    });
-
-    renderPage();
-    loadRemotePublished();
+            renderPage();
             return;
           }
         }
@@ -1740,36 +1700,47 @@
       });
     });
 
-    document.getElementById("btnCopySmsFormat").addEventListener("click", async () => {
-      const text = generateSmsText();
-      const btn = document.getElementById("btnCopySmsFormat");
-      const fallbackBox = document.getElementById("copyFallbackBox");
-      const fallbackTextarea = document.getElementById("copyFallbackTextarea");
+    // 관리자 페이지 비밀번호 인증 (PR332!)
+    const ADMIN_PASSCODE = "PR332!";
+    const adminPwModal = document.getElementById("adminPwModal");
+    const inputAdminPw = document.getElementById("inputAdminPw");
 
-      const success = await copyToClipboardRobust(text);
+    document.getElementById("btnOpenAdminAuth").addEventListener("click", () => {
+      if (sessionStorage.getItem("pr_admin_unlocked") === "true") {
+        window.location.href = "./admin.html";
+        return;
+      }
+      inputAdminPw.value = "";
+      adminPwModal.classList.add("open");
+      setTimeout(() => inputAdminPw.focus(), 50);
+    });
 
-      if (success) {
-        btn.classList.add("copied");
-        btn.textContent = "✅ 복사 완료! 카톡/문자에 바로 붙여넣으세요";
-        showToast("문자/카톡 발송용 원문이 클립보드에 복사되었습니다!");
-        setTimeout(() => {
-          btn.classList.remove("copied");
-          btn.textContent = "📋 문자/카톡 발송용 원문 텍스트 복사";
-        }, 2500);
+    document.getElementById("btnCancelAdminPw").addEventListener("click", () => {
+      adminPwModal.classList.remove("open");
+    });
+
+    function verifyAdminPassword() {
+      if (inputAdminPw.value === ADMIN_PASSCODE) {
+        sessionStorage.setItem("pr_admin_unlocked", "true");
+        adminPwModal.classList.remove("open");
+        window.location.href = "./admin.html";
       } else {
-        fallbackTextarea.value = text;
-        fallbackBox.classList.add("open");
-        fallbackTextarea.focus();
-        fallbackTextarea.select();
-        fallbackTextarea.setSelectionRange(0, fallbackTextarea.value.length);
-        showToast("아래 박스 텍스트를 길게 눌러 '복사'를 선택해주세요.");
+        showToast("❌ 비밀번호가 일치하지 않습니다.");
+        inputAdminPw.value = "";
+        inputAdminPw.focus();
+      }
+    }
+
+    document.getElementById("btnConfirmAdminPw").addEventListener("click", verifyAdminPassword);
+    inputAdminPw.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        verifyAdminPassword();
       }
     });
 
-    document.getElementById("btnCloseFallback").addEventListener("click", () => {
-    });
-
     renderPage();
+    loadRemotePublished();
   </script>
 </body>
 </html>
