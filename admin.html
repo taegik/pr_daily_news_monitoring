@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>그룹 계열사 데일리 뉴스 스크리핑 & 큐레이션 관리자</title>
+  <title>상상인그룹 PR팀 데일리 뉴스모니터링 관리자</title>
   <style>
     :root {
       --primary: #1e40af;
@@ -21,7 +21,6 @@
       --ind-color: #16a34a;
       --ind-bg: #f0fdf4;
       --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
 
     * {
@@ -37,7 +36,6 @@
       min-height: 100vh;
     }
 
-    /* Top Notice */
     .top-banner {
       background: linear-gradient(90deg, #0f172a, #1e3a8a);
       color: #ffffff;
@@ -46,7 +44,6 @@
       text-align: center;
     }
 
-    /* Sticky Header */
     header {
       background: #ffffff;
       border-bottom: 1px solid var(--border);
@@ -85,11 +82,12 @@
     }
 
     .brand h1 {
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       font-weight: 800;
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .affiliate-switcher {
@@ -113,13 +111,14 @@
     .btn {
       padding: 8px 14px;
       border-radius: 8px;
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       font-weight: 700;
       cursor: pointer;
       border: 1px solid transparent;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      text-decoration: none;
       transition: all 0.15s ease;
     }
 
@@ -131,13 +130,12 @@
     .btn-success:hover { background: #15803d; }
     .btn-warning { background: #fef08a; border-color: #fde047; color: #854d0e; }
 
-    /* Main Layout */
     main {
       max-width: 1280px;
       margin: 0 auto;
       padding: 20px 18px 60px;
       display: grid;
-      grid-template-columns: 1fr 380px;
+      grid-template-columns: 1fr 390px;
       gap: 20px;
     }
 
@@ -147,7 +145,6 @@
       }
     }
 
-    /* Left Column: Scraping & Screening */
     .panel-card {
       background: #ffffff;
       border: 1px solid var(--border);
@@ -168,10 +165,9 @@
       gap: 8px;
     }
 
-    /* Schedule & Deduplication Status Bar */
     .rule-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 10px;
       margin-bottom: 14px;
     }
@@ -180,27 +176,26 @@
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 11px 14px;
+      padding: 10px 13px;
     }
 
     .rule-box span {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       font-weight: 700;
       margin-bottom: 3px;
     }
 
     .rule-box strong {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--text-main);
     }
 
-    /* Keyword Manager */
     .kw-section {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
       padding-top: 12px;
       border-top: 1px solid var(--border);
     }
@@ -213,11 +208,11 @@
     }
 
     .kw-group-label {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 800;
       padding: 3px 8px;
       border-radius: 6px;
-      min-width: 62px;
+      min-width: 64px;
       text-align: center;
     }
     .lbl-own { background: var(--own-bg); color: var(--own-color); }
@@ -230,9 +225,9 @@
       gap: 5px;
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 16px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
     }
 
@@ -259,7 +254,6 @@
       font-size: 0.84rem;
     }
 
-    /* Filter & Scraped List */
     .filter-bar {
       display: flex;
       align-items: center;
@@ -388,13 +382,9 @@
     .card-meta {
       font-size: 0.78rem;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
     }
 
-    /* Right Column: Selected 15 Queue & SMS/Mobile Preview */
+    /* Right Sidebar */
     .sticky-sidebar {
       position: sticky;
       top: 76px;
@@ -412,26 +402,24 @@
     }
 
     .quota-count {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 900;
       color: #1e3a8a;
     }
-
-    .quota-count.over {
-      color: #dc2626;
-    }
+    .quota-count.warn { color: #d97706; }
+    .quota-count.over { color: #dc2626; }
 
     .quote-editor {
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 12px;
+      padding: 11px;
       margin-bottom: 12px;
     }
 
     .quote-editor label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 800;
       color: var(--text-muted);
       margin-bottom: 5px;
@@ -454,7 +442,7 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.78rem;
       line-height: 1.55;
-      max-height: 360px;
+      max-height: 310px;
       overflow-y: auto;
       white-space: pre-wrap;
       word-break: break-all;
@@ -467,7 +455,24 @@
       gap: 8px;
     }
 
-    /* Modal for Scraping Architecture Guide */
+    .ops-link-box {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .ops-link-box a {
+      color: #1e40af;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -483,7 +488,7 @@
     .modal-box {
       background: #ffffff;
       border-radius: 14px;
-      max-width: 640px;
+      max-width: 660px;
       width: 100%;
       padding: 22px;
       max-height: 88vh;
@@ -534,7 +539,7 @@
 </head>
 <body>
   <div class="top-banner">
-    🛡️ <strong>그룹 계열사 데일리 뉴스모니터링 관리자(스크리닝)</strong> | 평일(월~금) 자동 수집 · 주말 통합 수집 · 과거 중복 기사 자동 제외 엔진 가동
+    🛡️ <strong>상상인그룹 PR팀 데일리 뉴스모니터링 관리자</strong> | 5개 계열사(상상인 · 엠아이텍 · 시너지이노베이션 · 메디카코리아 · 뉴로바이오젠) 통합 운영
   </div>
 
   <header>
@@ -543,31 +548,33 @@
         <div class="brand-icon">📡</div>
         <div>
           <h1>
-            NewsRadar Admin
+            PR NewsRadar Admin
             <select class="affiliate-switcher" id="adminAffiliateSelect">
-              <option value="medica" selected>메디카코리아 (Medica Korea)</option>
-              <option value="affiliate_b">그룹 계열사 B (바이오)</option>
-              <option value="affiliate_c">그룹 계열사 C (헬스케어)</option>
+              <option value="sangsangin">상상인 (박슬기 과장)</option>
+              <option value="mitech">엠아이텍 (박한솔 대리)</option>
+              <option value="synergy">시너지이노베이션 (박한솔 대리)</option>
+              <option value="medica" selected>메디카코리아 (김태기 과장)</option>
+              <option value="neurobiogen">뉴로바이오젠 (김성목 대리)</option>
             </select>
           </h1>
         </div>
       </div>
 
       <div class="header-actions">
-        <button class="btn btn-secondary" id="btnOpenArchModal">💡 네이버 API 없이 스크래핑 가능 여부 안내</button>
-        <button class="btn btn-secondary" id="btnAutoPick15">✨ 중요도순 자동 15개 선정</button>
-        <button class="btn btn-primary" id="btnRunScrape">🔄 당일 기준 뉴스 재스크래핑</button>
+        <a href="./index.html" id="btnViewEmployeePage" class="btn btn-secondary">📱 임직원 페이지 열기 ↗</a>
+        <button class="btn btn-secondary" id="btnOpenScheduleModal">📋 계열사별 업무·발송 기준표</button>
+        <button class="btn btn-secondary" id="btnAutoPick15">✨ 우선순위 자동 선정 (10~15건)</button>
+        <button class="btn btn-primary" id="btnRunScrape">🔄 당일 기준 재스크래핑</button>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- Left: Scraping Rules, Keywords, Candidate Pool -->
+    <!-- Left Column -->
     <div>
-      <!-- Schedule & Keyword Rule Card -->
       <section class="panel-card">
         <div class="panel-title">
-          <span>⚙️ 계열사별 스크래핑 기준 및 키워드 설정</span>
+          <span>⚙️ 계열사별 담당자·주기 및 키워드 설정</span>
           <label style="font-size: 0.8rem; font-weight: 700; color: #dc2626; display:flex; align-items:center; gap:5px; cursor:pointer;">
             <input type="checkbox" id="chkHideDuplicates" checked>
             과거 모니터링 중복 기사 자동 숨김
@@ -576,16 +583,16 @@
 
         <div class="rule-grid">
           <div class="rule-box">
-            <span>📅 발행 요일 & 수집 구간</span>
-            <strong id="scrapeRangeText">금요일 발행 (목요일 09:00 ~ 금요일 발행 전)</strong>
+            <span>👤 담당자 / 모니터링 주기</span>
+            <strong id="infoManagerCycle">김태기 과장 · 매일 오전 9시~9시반</strong>
           </div>
           <div class="rule-box">
-            <span>🎯 선정 정원 & 우선순위</span>
-            <strong>총 15건 (1순위: 자사명 → 2순위: 경쟁사 → 3순위: 업계)</strong>
+            <span>📩 수신 메일 기준</span>
+            <strong id="infoMailTitle">상상인 계열사 데일리 모니터링 (매일 오전 9시)</strong>
           </div>
           <div class="rule-box">
-            <span>🔌 수집 방식 (API/피드)</span>
-            <strong>Google News RSS + 언론사 피드 (네이버 API 불필요)</strong>
+            <span>🎯 선정 기준 (가급적 10~15개)</span>
+            <strong>1순위 자사 → 2순위 경쟁사 → 3순위 업계</strong>
           </div>
         </div>
 
@@ -600,13 +607,12 @@
               <option value="comp">[경쟁사] 키워드</option>
               <option value="ind">[업계] 키워드</option>
             </select>
-            <input type="text" id="newKwInput" placeholder="추가할 키워드 입력 (예: 보령, 약가재평가)">
+            <input type="text" id="newKwInput" placeholder="추가할 키워드 입력 후 Enter">
             <button class="btn btn-secondary" id="btnAddKw">+ 키워드 추가</button>
           </div>
         </div>
       </section>
 
-      <!-- Candidate Articles Screening List -->
       <section class="panel-card">
         <div class="filter-bar">
           <div class="filter-pills">
@@ -615,14 +621,14 @@
             <button class="f-pill" data-cat="comp">[경쟁사] (<span id="poolComp">0</span>)</button>
             <button class="f-pill" data-cat="ind">[업계] (<span id="poolInd">0</span>)</button>
           </div>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">체크박스를 선택하여 우측 15건 리스트에 편성</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">체크박스로 노출 기사 선정 (권장 10~15개)</span>
         </div>
 
         <div id="candidateListContainer"></div>
       </section>
     </div>
 
-    <!-- Right: Curated 15 Preview & Publish -->
+    <!-- Right Column -->
     <aside>
       <div class="panel-card sticky-sidebar">
         <div class="panel-title">
@@ -642,7 +648,7 @@
         </div>
 
         <div style="font-size:0.78rem; font-weight:800; color:var(--text-muted); margin-bottom:6px;">
-          👁️ 문자/카톡 발송 포맷 실시간 미리보기
+          👁️ 문자 발송 포맷 실시간 미리보기
         </div>
         <div class="sms-preview-box" id="smsPreviewBox"></div>
 
@@ -654,53 +660,71 @@
             📋 문자 발송용 텍스트 복사
           </button>
         </div>
+
+        <div class="ops-link-box">
+          📤 <strong>문자 발송 사이트:</strong> <a href="https://www.eonmail.co.kr/" target="_blank" rel="noopener noreferrer">이온메일 (eonmail.co.kr) ↗</a><br>
+          📅 수신 리스트 업데이트 주기: 3개월마다 (필요 시 수시)
+        </div>
       </div>
     </aside>
   </main>
 
-  <!-- Architecture Explanation Modal -->
-  <div class="modal-overlay" id="archModal">
+  <!-- Schedule & Operations Modal -->
+  <div class="modal-overlay" id="scheduleModal">
     <div class="modal-box">
-      <h3>💡 네이버 API 연동 없이 뉴스 스크래핑이 가능한가요?</h3>
-      <p style="font-size:0.86rem; color:#334155; line-height:1.6;">
-        <strong>네, 네이버 검색 API를 연동하지 않고도 충분히 자동 스크래핑 구축이 가능합니다.</strong> 실무에서는 아래 3가지 방식 중 사내 서버 환경에 맞춰 선택합니다.
-      </p>
-
+      <h3>📋 PR팀 계열사별 데일리 뉴스모니터링 업무 기준</h3>
       <table class="arch-table">
         <thead>
           <tr>
-            <th>수집 방식</th>
-            <th>네이버 API 필요 여부</th>
-            <th>특징 및 실무 장단점</th>
+            <th>계열사</th>
+            <th>모니터링 주기</th>
+            <th>담당자</th>
+            <th>수신 메일 제목 / 시간</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>1. Google News RSS 피드 파싱</strong><br>(가장 추천 · 무료/무제한)</td>
-            <td>❌ 불필요</td>
-            <td>키워드별 RSS URL(<code>news.google.com/rss/search?q=키워드</code>)을 서버(Python/Node)에서 주기 호출. API 키 발급·일일 한도 제한이 없고, 주요 제약전문지(데일리팜·의약뉴스·메디파나 등) 기사가 모두 수집됨.</td>
+            <td><strong>상상인</strong></td>
+            <td>매일 오전 8시~8시반</td>
+            <td>박슬기 과장</td>
+            <td>"상상인 데일리 모니터링" (오전 8시)</td>
           </tr>
           <tr>
-            <td><strong>2. 주요 제약·경제 언론사 직접 RSS / 크롤링</strong></td>
-            <td>❌ 불필요</td>
-            <td>의약뉴스, 약사공론, 메디파나뉴스, 매일경제 등 타겟 매체 RSS 및 웹 페이지를 스케줄러(Cron)로 수집.</td>
+            <td><strong>엠아이텍</strong></td>
+            <td>매일 오전 9시~9시반</td>
+            <td>박한솔 대리</td>
+            <td>"상상인 계열사 데일리 모니터링" (오전 9시)</td>
           </tr>
           <tr>
-            <td><strong>3. 네이버 검색 API</strong><br>(기존 방식)</td>
-            <td>⭕ 필요 (일 25,000건 무료)</td>
-            <td>국내 매체 커버리지가 가장 넓고 빠름. 다만 네이버 정책상 <code>openapi.naver.com</code>은 브라우저 직접 호출(CORS)이 차단되므로 반드시 백엔드 프록시 서버가 필요함.</td>
+            <td><strong>시너지이노베이션</strong></td>
+            <td>매일 오전 9시~9시반</td>
+            <td>박한솔 대리</td>
+            <td>"상상인 계열사 데일리 모니터링" (오전 9시)</td>
+          </tr>
+          <tr>
+            <td><strong>메디카코리아</strong></td>
+            <td>매일 오전 9시~9시반</td>
+            <td>김태기 과장</td>
+            <td>"상상인 계열사 데일리 모니터링" (오전 9시)</td>
+          </tr>
+          <tr>
+            <td><strong>뉴로바이오젠</strong></td>
+            <td>주 1회 (매주 금요일)</td>
+            <td>김성목 대리</td>
+            <td>"상상인 계열사 데일리 모니터링" (오전 9시)</td>
           </tr>
         </tbody>
       </table>
 
-      <p style="font-size:0.82rem; color:#475569; background:#f8fafc; padding:10px; border-radius:8px; line-height:1.5;">
-        <strong>📌 핵심 운영 로직 반영 사항:</strong><br>
-        • <strong>월요일 수집 확장:</strong> 요일이 월요일(<code>getDay() === 1</code>)인 경우 자동으로 금요일 오전 ~ 월요일 발행 전(72시간) 기사를 스크래핑합니다.<br>
-        • <strong>과거 중복 제거:</strong> 기사의 정규화된 제목(특수문자 제거 후 유사도 비교) 및 원문 URL 해시를 DB에 저장하여 직전 모니터링에 노출된 기사는 자동 필터링합니다.
+      <p style="font-size:0.82rem; color:#475569; background:#f8fafc; padding:11px; border-radius:8px; line-height:1.55;">
+        <strong>📌 운영 규칙 요약:</strong><br>
+        • <strong>기사 수량 기준:</strong> 가급적 <strong>최소 10개, 최대 15개 이내</strong>로 편성합니다.<br>
+        • <strong>수집 범위:</strong> 평일은 전일 발행 이후~당일 오전 기사, 월요일은 금·토·일 주말 기사를 포함하며 과거 모니터링 중복 기사는 자동 제외합니다.<br>
+        • <strong>네이버 API 불필요 여부:</strong> Google News RSS 및 주요 언론사 직접 RSS 파싱을 활용하면 별도 네이버 API 키 없이도 백엔드 자동 수집 연동이 가능합니다.
       </p>
 
       <div style="text-align:right; margin-top:14px;">
-        <button class="btn btn-primary" id="btnCloseArchModal">확인</button>
+        <button class="btn btn-primary" id="btnCloseScheduleModal">확인</button>
       </div>
     </div>
   </div>
@@ -709,72 +733,904 @@
 
   <script>
     const AFFILIATE_CONFIGS = {
-      medica: {
-        name: "메디카코리아",
-        date: "2026.11.13",
-        quote: "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
-        author: "토머스 에디슨",
-        keywords: {
-          own: ["메디카코리아"],
-          comp: ["일동제약", "보령", "삼진제약", "대웅제약", "유한양행"],
-          ind: ["급여 재평가", "약가", "식약처", "항암제", "CSO", "위탁영업", "임상시험", "바이오협회"]
-        },
-        candidates: [
-          // 후보군 18건 (선정 15건 + 미선정 2건 + 과거 중복 1건)
-          { id: 101, category: "comp", press: "뉴스저널리즘", title: "일동제약, 당뇨 치료제 잇단 허가 정리…복제약 경쟁 속 리뉴얼", url: "https://url.kr/ic9nji", time: "11.13 07:10", score: 96, duplicate: false, selected: true },
-          { id: 102, category: "comp", press: "뉴데일리", title: "'자큐보·펙수클루'에 도전장 … 일동제약, P-CAB 신약 국내 출시 준비", url: "https://url.kr/bs9uv1", time: "11.13 06:50", score: 95, duplicate: false, selected: true },
-          { id: 103, category: "comp", press: "의약뉴스", title: "보령, 글로벌 항암제 사업 확장 맞춰 생산능력 2.2배 확대", url: "https://url.kr/3spoje", time: "11.12 17:40", score: 94, duplicate: false, selected: true },
-          { id: 104, category: "comp", press: "의학신문", title: "주요 제약사, 올해 3분기 순이익 저조한 성적표", url: "https://url.kr/cr3cfq", time: "11.12 16:20", score: 92, duplicate: false, selected: true },
-          { id: 105, category: "ind", press: "스카이데일리", title: "연 1300억 급여 재평가 D-1개월… 제약사 '초긴장'", url: "https://url.kr/kj9zj8", time: "11.13 07:30", score: 98, duplicate: false, selected: true },
-          { id: 106, category: "ind", press: "CEO스코어데일리", title: "로라제팜주 약가 7배 '껑충'…삼진제약, 공급 안정 이어간다", url: "https://url.kr/c8x594", time: "11.13 07:05", score: 91, duplicate: false, selected: true },
-          { id: 107, category: "ind", press: "시사저널e", title: "큐로셀 '림카토' 출시, 내달 or 내년 1월?···3억대 약가·위험분담 주목", url: "https://url.kr/vjfimu", time: "11.12 18:10", score: 90, duplicate: false, selected: true },
-          { id: 108, category: "ind", press: "약사공론", title: "필수 항암·항생제 3품목 국내 생산 추진…연내 공급", url: "https://url.kr/xwwory", time: "11.12 17:15", score: 89, duplicate: false, selected: true },
-          { id: 109, category: "ind", press: "아시아타임즈", title: "면역항암제 '키트루다' 특허 만료 임박…업체별 대응 전략 보니", url: "https://url.kr/kh2voe", time: "11.12 16:45", score: 88, duplicate: false, selected: true },
-          { id: 110, category: "ind", press: "더팩트", title: "'리베이트 통로' 위탁영업, 제약사·CSO 책임 높인다···법·자율규제 투트랙", url: "https://url.kr/468a91", time: "11.13 06:40", score: 93, duplicate: false, selected: true },
-          { id: 111, category: "ind", press: "매일일보", title: "군부대·지방공항서도 상비약 산다… 복지부, 의약품 취급 규제 완화 추진", url: "https://url.kr/nkabp8", time: "11.12 15:50", score: 86, duplicate: false, selected: true },
-          { id: 112, category: "ind", press: "아이뉴스24", title: "합법된 '스시자로'⋯국내 비만약 시장 흔들까", url: "https://url.kr/86ozdw", time: "11.12 15:10", score: 85, duplicate: false, selected: true },
-          { id: 113, category: "ind", press: "서울경제", title: "국내 제약사 임상시험 1상이 36.5%…신약개발 초기 단계에 집중", url: "https://url.kr/4tht9p", time: "11.12 14:30", score: 84, duplicate: false, selected: true },
-          { id: 114, category: "ind", press: "메디파나뉴스", title: "[기획] 수조원 기술수출 계약…제약사가 처음 손에 쥔 돈은 얼마?", url: "https://url.kr/ih6zfo", time: "11.12 13:40", score: 83, duplicate: false, selected: true },
-          { id: 115, category: "ind", press: "전자신문", title: "한국바이오협회 \"신약개발 특성 반영해야\"…근로시간 특례 촉구", url: "https://url.kr/uetf4v", time: "11.12 11:20", score: 82, duplicate: false, selected: true },
-          // 추가 후보 (미선택 상태)
-          { id: 116, category: "comp", press: "데일리팜", title: "대웅제약, 나보타 글로벌 수출국 70개국 돌파", url: "https://www.dailypharm.com", time: "11.12 10:15", score: 79, duplicate: false, selected: false },
-          { id: 117, category: "ind", press: "헬스조선", title: "겨울철 호흡기 질환 증가에 감기약 원료 수급 점검", url: "https://health.chosun.com", time: "11.12 09:50", score: 76, duplicate: false, selected: false },
-          // 과거 중복 기사 예시
-          { id: 118, category: "ind", press: "메디파나뉴스", title: "[중복제외] 복지부, 하반기 약가 재평가 대상 품목 1차 안내", url: "https://www.medipana.com", time: "11.12 08:30", score: 70, duplicate: true, selected: false }
-        ]
+  "sangsangin": {
+    "name": "상상인",
+    "manager": "박슬기 과장",
+    "cycle": "매일 오전 8시~8시반",
+    "mailTitle": "상상인 데일리 모니터링 (매일 오전 8시)",
+    "date": "2026.11.13",
+    "dayLabel": "금",
+    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 최소 10~최대 15건",
+    "quote": "위기는 곧 기회의 다른 이름이다.",
+    "author": "워런 버핏",
+    "keywords": {
+      "own": [
+        "유준원",
+        "상상인",
+        "상상인증권",
+        "상상인선박기계",
+        "시너지이노베이션",
+        "메디카코리아",
+        "엠아이텍",
+        "노비스바이오",
+        "프로톡스",
+        "에스앤지바이오텍",
+        "바스노바"
+      ],
+      "comp": [
+        "카카오뱅크",
+        "카카오증권",
+        "대신증권",
+        "한화투자증권",
+        "유안타증권",
+        "교보증권",
+        "현대차증권",
+        "하이투자증권",
+        "DB 금융투자",
+        "IBK 투자증권",
+        "다올투자증권",
+        "유진투자증권",
+        "이베스트투자증권",
+        "부국증권",
+        "SK 증권"
+      ],
+      "ind": [
+        "리그테이블",
+        "제2금융",
+        "중소형증권",
+        "금융당국",
+        "금감원",
+        "금융감독원",
+        "금융위",
+        "한국은행",
+        "한국거래소",
+        "PF",
+        "IB",
+        "투자은행",
+        "MTS",
+        "ELS",
+        "IPO",
+        "ECM"
+      ]
+    },
+    "candidates": [
+      {
+        "id": 1001,
+        "category": "own",
+        "press": "한국경제",
+        "title": "상상인증권, 중소형 IB·ECM 주관 실적 개선세 뚜렷",
+        "url": "https://www.hankyung.com",
+        "time": "11.13 07:30",
+        "score": 99,
+        "duplicate": false,
+        "selected": true
       },
-      affiliate_b: {
-        name: "그룹 계열사 B (바이오)",
-        date: "2026.11.13",
-        quote: "혁신은 리더와 추종자를 구분하는 잣대다.",
-        author: "스티브 잡스",
-        keywords: {
-          own: ["계열사 B"],
-          comp: ["삼성바이오로직스", "셀트리온"],
-          ind: ["CDMO", "바이오시밀러", "생물보안법"]
-        },
-        candidates: [
-          { id: 201, category: "own", press: "한국경제", title: "그룹 계열사 B, 차세대 바이오의약품 CMO 수주 계약 체결", url: "https://www.hankyung.com", time: "11.13 07:20", score: 99, duplicate: false, selected: true },
-          { id: 202, category: "comp", press: "매일경제", title: "삼성바이오·셀트리온, 4분기 글로벌 수주 잔고 역대 최대", url: "https://www.mk.co.kr", time: "11.12 16:00", score: 90, duplicate: false, selected: true },
-          { id: 203, category: "ind", press: "전자신문", title: "정부, 바이오 소부장 국산화 R&D 예산 20% 증액 확정", url: "https://www.etnews.com", time: "11.12 14:10", score: 85, duplicate: false, selected: true }
-        ]
+      {
+        "id": 1002,
+        "category": "comp",
+        "press": "매일경제",
+        "title": "한화·유안타·교보증권, 4분기 리테일 및 채권 운용 전략 재정비",
+        "url": "https://www.mk.co.kr",
+        "time": "11.13 07:15",
+        "score": 94,
+        "duplicate": false,
+        "selected": true
       },
-      affiliate_c: {
-        name: "그룹 계열사 C (헬스케어)",
-        date: "2026.11.13",
-        quote: "가장 큰 위험은 아무런 위험도 감수하지 않는 것이다.",
-        author: "마크 저커버그",
-        keywords: {
-          own: ["계열사 C"],
-          comp: ["카카오헬스케어", "눔코리아"],
-          ind: ["디지털헬스케어", "건강기능식품", "원격의료"]
-        },
-        candidates: [
-          { id: 301, category: "own", press: "아이뉴스24", title: "그룹 계열사 C, 시니어 맞춤형 디지털 헬스케어 플랫폼 론칭", url: "https://www.inews24.com", time: "11.13 07:00", score: 98, duplicate: false, selected: true },
-          { id: 302, category: "ind", press: "서울경제", title: "건기식·디지털 헬스케어 융합 시장, 내년 10조원 돌파 전망", url: "https://www.sedaily.com", time: "11.12 15:30", score: 87, duplicate: false, selected: true }
-        ]
+      {
+        "id": 1003,
+        "category": "comp",
+        "press": "서울경제",
+        "title": "대신·IBK투자증권, 중소기업 특화 IPO 주관 경쟁 본격화",
+        "url": "https://www.sedaily.com",
+        "time": "11.12 17:40",
+        "score": 92,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1004,
+        "category": "comp",
+        "press": "파이낸셜뉴스",
+        "title": "카카오뱅크, 개인사업자 뱅킹 및 펌뱅킹 서비스 고도화",
+        "url": "https://www.fnnews.com",
+        "time": "11.12 16:50",
+        "score": 90,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1005,
+        "category": "ind",
+        "press": "연합인포맥스",
+        "title": "금융위·금감원, 제2금융권 부동산 PF 연착륙 및 건전성 점검 회의",
+        "url": "https://news.einfomax.co.kr",
+        "time": "11.13 07:45",
+        "score": 97,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1006,
+        "category": "ind",
+        "press": "머니투데이",
+        "title": "한국은행 기준금리 동결 기조 속 채권시장 금리 변동성 확대",
+        "url": "https://www.mt.co.kr",
+        "time": "11.13 07:10",
+        "score": 93,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1007,
+        "category": "ind",
+        "press": "이데일리",
+        "title": "중소형증권사, 해외주식 MTS 수수료 이벤트 및 UI 개편 경쟁",
+        "url": "https://www.edaily.co.kr",
+        "time": "11.12 18:05",
+        "score": 89,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1008,
+        "category": "ind",
+        "press": "아시아경제",
+        "title": "한국거래소, 코스닥 밸류업 프로그램 참여 기업 공시 가이드라인 안내",
+        "url": "https://www.asiae.co.kr",
+        "time": "11.12 16:15",
+        "score": 88,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1009,
+        "category": "ind",
+        "press": "헤럴드경제",
+        "title": "하반기 IPO 대어 공모 흥행 양극화…ECM 시장 옥석 가리기",
+        "url": "https://biz.heraldcorp.com",
+        "time": "11.12 15:20",
+        "score": 86,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1010,
+        "category": "ind",
+        "press": "디지털타임스",
+        "title": "ELS 투자심리 위축에 증권가 대체 중위험·중수익 상품 발굴 주력",
+        "url": "https://www.dt.co.kr",
+        "time": "11.12 14:10",
+        "score": 85,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 1011,
+        "category": "comp",
+        "press": "뉴시스",
+        "title": "SK증권·DB금융투자, ESG 채권 발행 주관 실적 확대",
+        "url": "https://www.newsis.com",
+        "time": "11.12 11:30",
+        "score": 80,
+        "duplicate": false,
+        "selected": false
+      },
+      {
+        "id": 1012,
+        "category": "ind",
+        "press": "조선비즈",
+        "title": "[중복제외] 금융감독원, 저축은행·증권사 유동성 비율 모니터링 강화",
+        "url": "https://biz.chosun.com",
+        "time": "11.12 09:00",
+        "score": 75,
+        "duplicate": true,
+        "selected": false
       }
-    };
+    ]
+  },
+  "mitech": {
+    "name": "엠아이텍",
+    "manager": "박한솔 대리",
+    "cycle": "매일 오전 9시~9시반",
+    "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
+    "date": "2026.11.13",
+    "dayLabel": "금",
+    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 최소 10~최대 15건",
+    "quote": "작은 디테일이 위대한 품질의 차이를 만든다.",
+    "author": "피터 드러커",
+    "keywords": {
+      "own": [
+        "엠아이텍",
+        "M.I.TECH",
+        "MITECH",
+        "에스앤지바이오텍",
+        "S&G 바이오텍",
+        "S&G BIOTEC",
+        "바스노바"
+      ],
+      "comp": [
+        "보스톤사이언티",
+        "Boston Scientific",
+        "쿡메디칼",
+        "Cook Medical",
+        "태웅메디칼",
+        "올림푸스",
+        "펜탁스 메디칼",
+        "후지필름",
+        "파인메딕스",
+        "스텐트",
+        "스탠트",
+        "내시경장비",
+        "초음파장비",
+        "의료기기",
+        "담도"
+      ],
+      "ind": [
+        "식약처",
+        "식품의약품안전처",
+        "보건복지부",
+        "의약품안전나라",
+        "의료기기안심책방",
+        "한국의료기기안전정보원",
+        "한국의료기기산업협회",
+        "한국제약바이오협회"
+      ]
+    },
+    "candidates": [
+      {
+        "id": 2001,
+        "category": "own",
+        "press": "메디파나뉴스",
+        "title": "엠아이텍, 비혈관 스텐트 글로벌 수출 확대…유럽·아시아 점유율 상승",
+        "url": "https://www.medipana.com",
+        "time": "11.13 08:10",
+        "score": 99,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2002,
+        "category": "own",
+        "press": "의약뉴스",
+        "title": "에스앤지바이오텍·바스노바, 차세대 혈관·비혈관 스텐트 시너지 강화",
+        "url": "https://www.newsmp.com",
+        "time": "11.12 17:20",
+        "score": 97,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2003,
+        "category": "comp",
+        "press": "의학신문",
+        "title": "올림푸스·후지필름, 차세대 AI 내시경장비 국내 대학병원 보급 확대",
+        "url": "https://www.bosa.co.kr",
+        "time": "11.13 07:40",
+        "score": 94,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2004,
+        "category": "comp",
+        "press": "청년의사",
+        "title": "보스톤사이언티픽·쿡메디칼, 담도·췌장 내시경 시술 기구 라인업 강화",
+        "url": "https://www.docdocdoc.co.kr",
+        "time": "11.12 16:30",
+        "score": 93,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2005,
+        "category": "comp",
+        "press": "데일리메디",
+        "title": "파인메딕스·태웅메디칼, 국산 내시경 시술기구 해외 학회서 기술력 호평",
+        "url": "https://www.dailymedi.com",
+        "time": "11.12 15:50",
+        "score": 91,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2006,
+        "category": "ind",
+        "press": "약사공론",
+        "title": "식약처, 혁신 의료기기 신속 심사 및 허가 가이드라인 개정 공고",
+        "url": "https://www.kpanews.co.kr",
+        "time": "11.13 08:00",
+        "score": 95,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2007,
+        "category": "ind",
+        "press": "메디컬타임즈",
+        "title": "한국의료기기산업협회, 수출 의료기기 해외 인허가(MDR·FDA) 지원 확대",
+        "url": "https://www.medicaltimes.com",
+        "time": "11.12 17:00",
+        "score": 90,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2008,
+        "category": "ind",
+        "press": "보건뉴스",
+        "title": "한국의료기기안전정보원, 의료기기안심책방 통해 국민 안전 정보 제공 강화",
+        "url": "https://www.bokuennews.com",
+        "time": "11.12 15:10",
+        "score": 88,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2009,
+        "category": "ind",
+        "press": "히트뉴스",
+        "title": "보건복지부, 국산 의료기기 상급종합병원 사용 활성화 시범사업 추진",
+        "url": "https://www.hitnews.co.kr",
+        "time": "11.12 14:20",
+        "score": 87,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2010,
+        "category": "ind",
+        "press": "라포르시안",
+        "title": "초음파장비·내시경 융합 진단 시장, 연평균 8.5% 고성장 전망",
+        "url": "https://www.rapportian.com",
+        "time": "11.12 13:15",
+        "score": 85,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 2011,
+        "category": "ind",
+        "press": "의학신문",
+        "title": "[중복제외] 식약처, 하반기 의료기기 GMP 정기심사 일정 안내",
+        "url": "https://www.bosa.co.kr",
+        "time": "11.12 08:40",
+        "score": 72,
+        "duplicate": true,
+        "selected": false
+      }
+    ]
+  },
+  "synergy": {
+    "name": "시너지이노베이션",
+    "manager": "박한솔 대리",
+    "cycle": "매일 오전 9시~9시반",
+    "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
+    "date": "2026.11.13",
+    "dayLabel": "금",
+    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 최소 10~최대 15건",
+    "quote": "시너지는 전체가 부분의 합보다 크다는 것을 증명한다.",
+    "author": "스티븐 코비",
+    "keywords": {
+      "own": [
+        "시너지이노베이션"
+      ],
+      "comp": [
+        "기산바이오",
+        "고마바이오텍",
+        "머크",
+        "Merck",
+        "써모피셔사이언티픽",
+        "아미코젠",
+        "아지노모도제넥신 셀리스트",
+        "엑셀세라퓨틱스",
+        "배지",
+        "미생물배양",
+        "세포배양"
+      ],
+      "ind": [
+        "의료기기",
+        "식약처",
+        "보건복지부",
+        "한국의료기기산업협회",
+        "한국의료기기협동조합"
+      ]
+    },
+    "candidates": [
+      {
+        "id": 3001,
+        "category": "own",
+        "press": "한국경제",
+        "title": "시너지이노베이션, 바이오 소부장·미생물배양 배지 사업 포트폴리오 고도화",
+        "url": "https://www.hankyung.com",
+        "time": "11.13 08:15",
+        "score": 99,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3002,
+        "category": "comp",
+        "press": "바이오스펙테이터",
+        "title": "엑셀세라퓨틱스·아미코젠, 국산 세포배양 배지 상용화 및 CDMO 공급 확대",
+        "url": "https://www.biospectator.com",
+        "time": "11.13 07:50",
+        "score": 95,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3003,
+        "category": "comp",
+        "press": "메디파나뉴스",
+        "title": "머크(Merck)·써모피셔사이언티픽, 국내 바이오 공정 원부자재 생산기지 증설",
+        "url": "https://www.medipana.com",
+        "time": "11.12 17:30",
+        "score": 93,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3004,
+        "category": "comp",
+        "press": "약업신문",
+        "title": "기산바이오·고마바이오텍, 미생물배양 배지 품질 표준화 및 수출 다변화",
+        "url": "https://www.yakup.com",
+        "time": "11.12 16:10",
+        "score": 91,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3005,
+        "category": "comp",
+        "press": "데일리팜",
+        "title": "아지노모도제넥신 셀리스트, 고효율 동물세포배양 배지 신제품 출시",
+        "url": "https://www.dailypharm.com",
+        "time": "11.12 15:20",
+        "score": 89,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3006,
+        "category": "ind",
+        "press": "서울경제",
+        "title": "정부, 바이오의약품 원부자재·배지 국산화 R&D 지원 예산 대폭 확대",
+        "url": "https://www.sedaily.com",
+        "time": "11.13 07:20",
+        "score": 94,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3007,
+        "category": "ind",
+        "press": "의약뉴스",
+        "title": "식약처, 첨단바이오의약품 원료·배지 안전관리 기준 국제 조화 추진",
+        "url": "https://www.newsmp.com",
+        "time": "11.12 16:40",
+        "score": 90,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3008,
+        "category": "ind",
+        "press": "전자신문",
+        "title": "한국의료기기협동조합, 중소 의료기기·바이오 기업 해외 전시회 공동관 운영",
+        "url": "https://www.etnews.com",
+        "time": "11.12 14:50",
+        "score": 87,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3009,
+        "category": "ind",
+        "press": "히트뉴스",
+        "title": "보건복지부, 바이오헬스 핵심 소부장 자립화 로드맵 발표",
+        "url": "https://www.hitnews.co.kr",
+        "time": "11.12 13:30",
+        "score": 86,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 3010,
+        "category": "ind",
+        "press": "머니투데이",
+        "title": "K-바이오 CDMO 증설 붐에 배지·필터 등 소부장 수요 동반 급증",
+        "url": "https://www.mt.co.kr",
+        "time": "11.12 11:45",
+        "score": 84,
+        "duplicate": false,
+        "selected": true
+      }
+    ]
+  },
+  "medica": {
+    "name": "메디카코리아",
+    "manager": "김태기 과장",
+    "cycle": "매일 오전 9시~9시반",
+    "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
+    "date": "2026.11.13",
+    "dayLabel": "금",
+    "scrapeWindow": "전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 엄선 15건",
+    "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+    "author": "토머스 에디슨",
+    "keywords": {
+      "own": [
+        "메디카코리아",
+        "Medica Korea"
+      ],
+      "comp": [
+        "동국제약",
+        "종근당",
+        "대웅제약",
+        "동아제약",
+        "유한양행"
+      ],
+      "ind": [
+        "개량신약",
+        "IMD",
+        "약가 인하",
+        "제네릭",
+        "한국제약바이오협회",
+        "식품의약품안전처",
+        "의약품안전나라",
+        "한국제약협동조합",
+        "보건복지부"
+      ]
+    },
+    "candidates": [
+      {
+        "id": 101,
+        "category": "comp",
+        "press": "뉴스저널리즘",
+        "title": "일동제약, 당뇨 치료제 잇단 허가 정리…복제약 경쟁 속 리뉴얼",
+        "url": "https://url.kr/ic9nji",
+        "time": "11.13 07:10",
+        "score": 96,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 102,
+        "category": "comp",
+        "press": "뉴데일리",
+        "title": "'자큐보·펙수클루'에 도전장 … 일동제약, P-CAB 신약 국내 출시 준비",
+        "url": "https://url.kr/bs9uv1",
+        "time": "11.13 06:50",
+        "score": 95,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 103,
+        "category": "comp",
+        "press": "의약뉴스",
+        "title": "보령, 글로벌 항암제 사업 확장 맞춰 생산능력 2.2배 확대",
+        "url": "https://url.kr/3spoje",
+        "time": "11.12 17:40",
+        "score": 94,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 104,
+        "category": "comp",
+        "press": "의학신문",
+        "title": "주요 제약사, 올해 3분기 순이익 저조한 성적표",
+        "url": "https://url.kr/cr3cfq",
+        "time": "11.12 16:20",
+        "score": 92,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 105,
+        "category": "ind",
+        "press": "스카이데일리",
+        "title": "연 1300억 급여 재평가 D-1개월… 제약사 '초긴장'",
+        "url": "https://url.kr/kj9zj8",
+        "time": "11.13 07:30",
+        "score": 98,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 106,
+        "category": "ind",
+        "press": "CEO스코어데일리",
+        "title": "로라제팜주 약가 7배 '껑충'…삼진제약, 공급 안정 이어간다",
+        "url": "https://url.kr/c8x594",
+        "time": "11.13 07:05",
+        "score": 91,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 107,
+        "category": "ind",
+        "press": "시사저널e",
+        "title": "큐로셀 '림카토' 출시, 내달 or 내년 1월?···3억대 약가·위험분담 주목",
+        "url": "https://url.kr/vjfimu",
+        "time": "11.12 18:10",
+        "score": 90,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 108,
+        "category": "ind",
+        "press": "약사공론",
+        "title": "필수 항암·항생제 3품목 국내 생산 추진…연내 공급",
+        "url": "https://url.kr/xwwory",
+        "time": "11.12 17:15",
+        "score": 89,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 109,
+        "category": "ind",
+        "press": "아시아타임즈",
+        "title": "면역항암제 '키트루다' 특허 만료 임박…업체별 대응 전략 보니",
+        "url": "https://url.kr/kh2voe",
+        "time": "11.12 16:45",
+        "score": 88,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 110,
+        "category": "ind",
+        "press": "더팩트",
+        "title": "'리베이트 통로' 위탁영업, 제약사·CSO 책임 높인다···법·자율규제 투트랙",
+        "url": "https://url.kr/468a91",
+        "time": "11.13 06:40",
+        "score": 93,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 111,
+        "category": "ind",
+        "press": "매일일보",
+        "title": "군부대·지방공항서도 상비약 산다… 복지부, 의약품 취급 규제 완화 추진",
+        "url": "https://url.kr/nkabp8",
+        "time": "11.12 15:50",
+        "score": 86,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 112,
+        "category": "ind",
+        "press": "아이뉴스24",
+        "title": "합법된 '스시자로'⋯국내 비만약 시장 흔들까",
+        "url": "https://url.kr/86ozdw",
+        "time": "11.12 15:10",
+        "score": 85,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 113,
+        "category": "ind",
+        "press": "서울경제",
+        "title": "국내 제약사 임상시험 1상이 36.5%…신약개발 초기 단계에 집중",
+        "url": "https://url.kr/4tht9p",
+        "time": "11.12 14:30",
+        "score": 84,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 114,
+        "category": "ind",
+        "press": "메디파나뉴스",
+        "title": "[기획] 수조원 기술수출 계약…제약사가 처음 손에 쥔 돈은 얼마?",
+        "url": "https://url.kr/ih6zfo",
+        "time": "11.12 13:40",
+        "score": 83,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 115,
+        "category": "ind",
+        "press": "전자신문",
+        "title": "한국바이오협회 \"신약개발 특성 반영해야\"…근로시간 특례 촉구",
+        "url": "https://url.kr/uetf4v",
+        "time": "11.12 11:20",
+        "score": 82,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 116,
+        "category": "comp",
+        "press": "데일리팜",
+        "title": "대웅제약·종근당, 개량신약(IMD) 복합제 파이프라인 확대",
+        "url": "https://www.dailypharm.com",
+        "time": "11.12 10:15",
+        "score": 79,
+        "duplicate": false,
+        "selected": false
+      },
+      {
+        "id": 117,
+        "category": "comp",
+        "press": "약업신문",
+        "title": "동국제약·유한양행·동아제약, 일반의약품 및 제네릭 처방 동반 성장",
+        "url": "https://www.yakup.com",
+        "time": "11.12 09:50",
+        "score": 77,
+        "duplicate": false,
+        "selected": false
+      },
+      {
+        "id": 118,
+        "category": "ind",
+        "press": "메디파나뉴스",
+        "title": "[중복제외] 보건복지부, 기등재 제네릭 약가 인하 재평가 1차 안내",
+        "url": "https://www.medipana.com",
+        "time": "11.12 08:30",
+        "score": 70,
+        "duplicate": true,
+        "selected": false
+      }
+    ]
+  },
+  "neurobiogen": {
+    "name": "뉴로바이오젠",
+    "manager": "김성목 대리",
+    "cycle": "주 1회 (매주 금요일)",
+    "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
+    "date": "2026.11.13",
+    "dayLabel": "금",
+    "scrapeWindow": "주간 통합 스크래핑(금~금) · 최소 10~최대 15건",
+    "quote": "과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.",
+    "author": "알베르트 아인슈타인",
+    "keywords": {
+      "own": [
+        "뉴로바이오젠",
+        "neurobiogen",
+        "KDS2010",
+        "티솔라질린"
+      ],
+      "comp": [
+        "사이렉스",
+        "사일렉스",
+        "비만 치료제",
+        "치매 치료제",
+        "알츠하이머",
+        "비만약",
+        "치매약"
+      ],
+      "ind": [
+        "식약처",
+        "식품의약품안전처",
+        "보건복지부",
+        "의약품안전나라",
+        "한국제약바이오협회"
+      ]
+    },
+    "candidates": [
+      {
+        "id": 5001,
+        "category": "own",
+        "press": "바이오스펙테이터",
+        "title": "뉴로바이오젠, 반응성 별아교세포 표적 'KDS2010(티솔라질린)' 임상 순항",
+        "url": "https://www.biospectator.com",
+        "time": "11.13 08:20",
+        "score": 99,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5002,
+        "category": "own",
+        "press": "메디파나뉴스",
+        "title": "뉴로바이오젠, 비만·치매 치료제 파이프라인 글로벌 기술이전 논의 활발",
+        "url": "https://www.medipana.com",
+        "time": "11.11 15:10",
+        "score": 98,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5003,
+        "category": "comp",
+        "press": "한국경제",
+        "title": "글로벌 비만 치료제 시장 판도 변화…차세대 비만약 임상 결과 주목",
+        "url": "https://www.hankyung.com",
+        "time": "11.13 07:35",
+        "score": 95,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5004,
+        "category": "comp",
+        "press": "매일경제",
+        "title": "알츠하이머 치매 치료제 개발 경쟁 가속…혈뇌장벽 투과 신약 부각",
+        "url": "https://www.mk.co.kr",
+        "time": "11.12 17:10",
+        "score": 94,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5005,
+        "category": "comp",
+        "press": "서울경제",
+        "title": "사일렉스(사이렉스) 등 국내외 중추신경계(CNS)·비만약 개발사 R&D 동향",
+        "url": "https://www.sedaily.com",
+        "time": "11.12 14:40",
+        "score": 91,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5006,
+        "category": "comp",
+        "press": "데일리팜",
+        "title": "근손실 줄이는 차세대 비만 치료제·경구용 치매약 기술수출 릴레이",
+        "url": "https://www.dailypharm.com",
+        "time": "11.10 16:20",
+        "score": 90,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5007,
+        "category": "ind",
+        "press": "약사공론",
+        "title": "식품의약품안전처, 혁신 신약 임상시험계획(IND) 승인 기간 단축 추진",
+        "url": "https://www.kpanews.co.kr",
+        "time": "11.13 08:05",
+        "score": 89,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5008,
+        "category": "ind",
+        "press": "의약뉴스",
+        "title": "보건복지부, 치매 극복 연구개발 및 국가 치매관리종합계획 예산 확대",
+        "url": "https://www.newsmp.com",
+        "time": "11.12 11:30",
+        "score": 88,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5009,
+        "category": "ind",
+        "press": "히트뉴스",
+        "title": "한국제약바이오협회, 글로벌 오픈이노베이션 및 신약개발 투자 활성화 포럼 개최",
+        "url": "https://www.hitnews.co.kr",
+        "time": "11.11 10:15",
+        "score": 86,
+        "duplicate": false,
+        "selected": true
+      },
+      {
+        "id": 5010,
+        "category": "ind",
+        "press": "의학신문",
+        "title": "의약품안전나라, 국내 승인 임상시험 정보 및 안전성 서한 통합 제공 개편",
+        "url": "https://www.bosa.co.kr",
+        "time": "11.09 14:00",
+        "score": 84,
+        "duplicate": false,
+        "selected": true
+      }
+    ]
+  }
+};
 
     let activeAffiliate = "medica";
     let activeCatFilter = "all";
@@ -783,22 +1639,18 @@
       const t = document.getElementById("toast");
       t.textContent = msg;
       t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2500);
+      setTimeout(() => t.classList.remove("show"), 2600);
     }
 
     function getCurrentConfig() {
       return AFFILIATE_CONFIGS[activeAffiliate];
     }
 
-    function updateScrapeScheduleNotice() {
-      const now = new Date();
-      const day = now.getDay(); // 0: 일, 1: 월 ... 5: 금
-      const el = document.getElementById("scrapeRangeText");
-      if (day === 1) {
-        el.textContent = "월요일 확장 수집 (금요일 오전 ~ 토·일 주말 ~ 월요일 발행 전)";
-      } else {
-        el.textContent = "평일 데일리 수집 (전일 발행 이후 ~ 당일 발행 전 기사)";
-      }
+    function updateAffiliateMeta() {
+      const cfg = getCurrentConfig();
+      document.getElementById("infoManagerCycle").textContent = `${cfg.manager} · ${cfg.cycle}`;
+      document.getElementById("infoMailTitle").textContent = cfg.mailTitle;
+      document.getElementById("btnViewEmployeePage").href = `./index.html?corp=${activeAffiliate}`;
     }
 
     function renderKeywords() {
@@ -907,7 +1759,7 @@
       const comp = selected.filter(c => c.category === "comp");
       const ind = selected.filter(c => c.category === "ind");
 
-      let out = [];
+      const out = [];
       out.push(`[${cfg.date}] ${cfg.name} 모니터링`);
       out.push("");
       out.push(quote);
@@ -944,8 +1796,10 @@
       const cfg = getCurrentConfig();
       const selected = cfg.candidates.filter(c => c.selected);
       const countEl = document.getElementById("quotaCounter");
-      countEl.textContent = `${selected.length} / 15건`;
-      countEl.classList.toggle("over", selected.length > 15);
+      countEl.textContent = `${selected.length} / 15건 (권장 10~15)`;
+      countEl.classList.remove("warn", "over");
+      if (selected.length > 15) countEl.classList.add("over");
+      else if (selected.length < 10) countEl.classList.add("warn");
 
       document.getElementById("selOwn").textContent = selected.filter(c => c.category === "own").length;
       document.getElementById("selComp").textContent = selected.filter(c => c.category === "comp").length;
@@ -954,7 +1808,35 @@
       document.getElementById("smsPreviewBox").textContent = buildFormattedSms();
     }
 
-    // Event Bindings
+    async function copyToClipboardRobust(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (err) {}
+      }
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "0";
+        ta.style.left = "0";
+        ta.style.width = "2em";
+        ta.style.height = "2em";
+        ta.style.opacity = "0";
+        ta.style.fontSize = "16px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) return true;
+      } catch (e) {}
+      return false;
+    }
+
     document.getElementById("adminAffiliateSelect").addEventListener("change", (e) => {
       activeAffiliate = e.target.value;
       const cfg = getCurrentConfig();
@@ -962,10 +1844,11 @@
       document.getElementById("inputAuthor").value = cfg.author;
       activeCatFilter = "all";
       document.querySelectorAll(".f-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === "all"));
+      updateAffiliateMeta();
       renderKeywords();
       renderCandidates();
       updateSidebarPreview();
-      showToast(`${cfg.name} 관리자 화면으로 전환됨`);
+      showToast(`${cfg.name} (${cfg.manager}) 설정으로 전환됨`);
     });
 
     document.getElementById("chkHideDuplicates").addEventListener("change", renderCandidates);
@@ -1003,7 +1886,6 @@
     document.getElementById("btnAutoPick15").addEventListener("click", () => {
       const cfg = getCurrentConfig();
       cfg.candidates.forEach(c => c.selected = false);
-      // 1순위: 자사 -> 2순위: 경쟁사 -> 3순위: 업계 (중복 제외, 중요도순 최대 15건)
       const priorityOrder = { own: 1, comp: 2, ind: 3 };
       const sorted = cfg.candidates
         .filter(c => !c.duplicate)
@@ -1011,7 +1893,7 @@
       sorted.slice(0, 15).forEach(c => c.selected = true);
       renderCandidates();
       updateSidebarPreview();
-      showToast("자사 우선 및 중요도 기준으로 15건이 자동 선정되었습니다.");
+      showToast(`자사 우선 및 중요도 기준으로 ${Math.min(sorted.length, 15)}건 자동 선정 완료`);
     });
 
     document.getElementById("btnClearAll").addEventListener("click", () => {
@@ -1025,38 +1907,10 @@
     document.getElementById("inputAuthor").addEventListener("input", updateSidebarPreview);
 
     document.getElementById("btnRunScrape").addEventListener("click", () => {
-      showToast("🔄 설정된 키워드로 최신 뉴스 피드를 재스크래핑하고 중복 기사를 필터링했습니다.");
+      const cfg = getCurrentConfig();
+      showToast(`🔄 [${cfg.name}] 키워드 기준으로 최신 피드 재스크래핑 및 중복 필터링 완료`);
       renderCandidates();
     });
-
-    async function copyToClipboardRobust(text) {
-      if (navigator.clipboard && window.isSecureContext) {
-        try {
-          await navigator.clipboard.writeText(text);
-          return true;
-        } catch (err) {}
-      }
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "fixed";
-        ta.style.top = "0";
-        ta.style.left = "0";
-        ta.style.width = "2em";
-        ta.style.height = "2em";
-        ta.style.opacity = "0";
-        ta.style.fontSize = "16px";
-        document.body.appendChild(ta);
-        ta.focus();
-        ta.select();
-        ta.setSelectionRange(0, ta.value.length);
-        const ok = document.execCommand("copy");
-        document.body.removeChild(ta);
-        if (ok) return true;
-      } catch (e) {}
-      return false;
-    }
 
     document.getElementById("btnCopySms").addEventListener("click", async () => {
       const text = buildFormattedSms();
@@ -1070,7 +1924,7 @@
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
-        showToast("⚠️ 보안 환경 제한으로 미리보기 영역이 전체 선택되었습니다. Ctrl+C(또는 길게 눌러 복사) 해주세요.");
+        showToast("⚠️ 미리보기 영역이 전체 선택되었습니다. Ctrl+C로 복사해주세요.");
       }
     });
 
@@ -1083,9 +1937,11 @@
       }
       const payload = {
         name: cfg.name,
+        manager: cfg.manager,
+        cycle: cfg.cycle,
         date: cfg.date,
         dayLabel: "금",
-        scrapeWindow: `전일 ~ 금일 오전 스크래핑 · 확정 ${selected.length}건`,
+        scrapeWindow: `${cfg.cycle} · 담당: ${cfg.manager} · 확정 ${selected.length}건`,
         quote: document.getElementById("inputQuote").value.trim(),
         author: document.getElementById("inputAuthor").value.trim(),
         articles: selected.map(s => ({
@@ -1101,15 +1957,15 @@
       showToast(`🚀 [${cfg.name}] 임직원 모니터링 페이지에 ${selected.length}건 반영 완료!`);
     });
 
-    document.getElementById("btnOpenArchModal").addEventListener("click", () => {
-      document.getElementById("archModal").classList.add("open");
+    document.getElementById("btnOpenScheduleModal").addEventListener("click", () => {
+      document.getElementById("scheduleModal").classList.add("open");
     });
-    document.getElementById("btnCloseArchModal").addEventListener("click", () => {
-      document.getElementById("archModal").classList.remove("open");
+    document.getElementById("btnCloseScheduleModal").addEventListener("click", () => {
+      document.getElementById("scheduleModal").classList.remove("open");
     });
 
     // Init
-    updateScrapeScheduleNotice();
+    updateAffiliateMeta();
     renderKeywords();
     renderCandidates();
     updateSidebarPreview();
