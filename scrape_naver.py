@@ -5,6 +5,7 @@ import time
 import urllib.request
 import urllib.parse
 import urllib.error
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
@@ -135,7 +136,7 @@ def get_date_bounds(now_dt, start_str, end_str):
     start_dt = now_dt - timedelta(days=7)
     return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')} (최근 7일)"
 
-def fetch_naver_news(query, client_id, client_secret, display=30):
+def fetch_naver_news(query, client_id, client_secret, display=30, log_detail=False):
     encoded = urllib.parse.quote(query)
     # 1순위: 네이버 클라우드 플랫폼 NAVER API HUB (search/v1/news.json)
     url_hub = f"https://naveropenapi.apigw.ntruss.com/search/v1/news.json?query={encoded}&display={display}&sort=date"
@@ -144,17 +145,68 @@ def fetch_naver_news(query, client_id, client_secret, display=30):
     req_hub.add_header("X-NCP-APIGW-API-KEY", client_secret)
     try:
         with urllib.request.urlopen(req_hub, timeout=10) as resp:
-            return json.loads(resp.read().decode('utf-8')).get('items', [])
-    except urllib.error.HTTPError as e:
-        if e.code not in (401, 403, 404):
-            raise
-        # 2순위: 일반 네이버 개발자센터 폴백
+            return json.loads(resp.read().decode('utf-8')).get('items', []), "NAVER_HUB"
+    except urllib.error.HTTPError as e1:
+        err_body1 = ""
+        try:
+            err_body1 = e1.read().decode('utf-8', errors='ignore')
+        except Exception:
+            pass
+        if log_detail:
+            print(f"[DEBUG] NAVER API HUB 응답 ({e1.code}): {err_body1}")
+
+        # 2순위: 일반 네이버 개발자센터 (openapi.naver.com)
         url_dev = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
         req_dev = urllib.request.Request(url_dev)
         req_dev.add_header("X-Naver-Client-Id", client_id)
         req_dev.add_header("X-Naver-Client-Secret", client_secret)
-        with urllib.request.urlopen(req_dev, timeout=10) as resp2:
-            return json.loads(resp2.read().decode('utf-8')).get('items', [])
+        try:
+            with urllib.request.urlopen(req_dev, timeout=10) as resp2:
+                return json.loads(resp2.read().decode('utf-8')).get('items', []), "NAVER_DEV"
+        except urllib.error.HTTPError as e2:
+            err_body2 = ""
+            try:
+                err_body2 = e2.read().decode('utf-8', errors='ignore')
+            except Exception:
+                pass
+            if log_detail:
+                print(f"[DEBUG] NAVER DEV 응답 ({e2.code}): {err_body2}")
+            raise RuntimeError(f"Naver API 인증 실패 (HUB:{e1.code}, DEV:{e2.code})")
+
+def fetch_google_rss_fallback(query, start_dt, end_dt):
+    # 네이버 API 인증 실패 시 GitHub 서버에서 직접 Google News 한국어 RSS 수집 (CORS/방화벽 없음)
+    after_str = (start_dt - timedelta(days=1)).strftime('%Y-%m-%d')
+    before_str = (end_dt + timedelta(days=1)).strftime('%Y-%m-%d')
+    full_q = f'{query} after:{after_str} before:{before_str}'
+    encoded = urllib.parse.quote(full_q)
+    rss_url = f"https://news.google.com/rss/search?q={encoded}&hl=ko&gl=KR&ceid=KR:ko"
+    req = urllib.request.Request(rss_url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        xml_data = resp.read().decode('utf-8')
+
+    root = ET.fromstring(xml_data)
+    items_out = []
+    for item in root.findall('.//item'):
+        raw_title = (item.findtext('title') or '').strip()
+        link = (item.findtext('link') or '').strip()
+        pub_date = (item.findtext('pubDate') or '').strip()
+        source_el = item.find('source')
+        press = source_el.text.strip() if (source_el is not None and source_el.text) else ''
+
+        clean_t = raw_title
+        dash_idx = raw_title.rfind(' - ')
+        if dash_idx > 0:
+            clean_t = raw_title[:dash_idx].strip()
+            if not press:
+                press = raw_title[dash_idx + 3:].strip()
+
+        items_out.append({
+            'title': clean_t,
+            'originallink': link,
+            'pubDate': pub_date,
+            'customPress': press or '주요언론'
+        })
+    return items_out
 
 def main():
     client_id = os.environ.get("NAVER_CLIENT_ID", "").strip()
@@ -162,9 +214,6 @@ def main():
     target = os.environ.get("TARGET_AFFILIATE", "all").strip()
     start_str = os.environ.get("START_DATE", "").strip()
     end_str = os.environ.get("END_DATE", "").strip()
-
-    if not client_id or not client_secret:
-        raise RuntimeError("NAVER_CLIENT_ID 또는 NAVER_CLIENT_SECRET 시크릿이 설정되지 않았습니다.")
 
     now_dt = datetime.now(KST)
     pool_data = load_json(POOL_FILE, {"updatedAt": "", "keywords": DEFAULT_KEYWORDS, "affiliates": {}})
@@ -177,6 +226,7 @@ def main():
 
     history_map = pub_data.get("history", {})
     affiliates_out = pool_data.get("affiliates", {})
+    naver_auth_failed = False
 
     for aff_key, kw_list in active_keywords.items():
         if target != "all" and target != aff_key:
@@ -186,13 +236,26 @@ def main():
         start_dt, end_dt, range_label = get_date_bounds(now_dt, start_str, end_str)
         collected = []
         seen_norms = set()
+        used_source = "NAVER API"
 
-        for kw in kw_list:
-            try:
-                items = fetch_naver_news(kw, client_id, client_secret, display=30)
-            except Exception as e:
-                print(f"[WARN] {aff_key} - {kw} 호출 실패: {e}")
-                continue
+        for idx, kw in enumerate(kw_list):
+            items = []
+            if client_id and client_secret and not naver_auth_failed:
+                try:
+                    items, src = fetch_naver_news(kw, client_id, client_secret, display=30, log_detail=(idx == 0))
+                    used_source = src
+                except Exception as e:
+                    if idx == 0:
+                        print(f"[WARN] 네이버 API 인증 오류로 Google News RSS 백업 수집기로 자동 전환합니다: {e}")
+                    naver_auth_failed = True
+
+            if not items and (naver_auth_failed or not client_id):
+                try:
+                    items = fetch_google_rss_fallback(kw, start_dt, end_dt)
+                    used_source = "Google News RSS"
+                except Exception as e2:
+                    print(f"[WARN] {aff_key} - {kw} 백업 수집 실패: {e2}")
+                    continue
 
             for item in items:
                 title = clean_html(item.get('title', ''))
@@ -223,10 +286,12 @@ def main():
                 if kw_list and kw_list[0].lower() in title.lower():
                     initial_cat = "own"
 
+                press_name = item.get('customPress') or extract_press(orig_link)
+
                 collected.append({
                     "id": int(time.time() * 1000) + len(collected),
                     "category": initial_cat,
-                    "press": extract_press(orig_link),
+                    "press": press_name,
                     "title": title,
                     "url": orig_link,
                     "pubDateISO": pub_iso,
@@ -236,17 +301,17 @@ def main():
                     "duplicate": norm in history_set,
                     "selected": False
                 })
-            time.sleep(0.07)
+            time.sleep(0.08)
 
         collected.sort(key=lambda x: -x['pubTs'])
 
         affiliates_out[aff_key] = {
-            "scrapedAt": now_dt.strftime('%Y-%m-%d %H:%M:%S KST'),
+            "scrapedAt": f"{now_dt.strftime('%Y-%m-%d %H:%M:%S KST')} ({used_source})",
             "dateRange": range_label,
             "count": len(collected),
             "articles": collected
         }
-        print(f"[OK] {aff_key} ({range_label}): 총 {len(collected)}건 수집")
+        print(f"[OK] {aff_key} ({range_label} / {used_source}): 총 {len(collected)}건 수집")
 
     pool_data["updatedAt"] = now_dt.strftime('%Y-%m-%d %H:%M:%S KST')
     pool_data["keywords"] = active_keywords
