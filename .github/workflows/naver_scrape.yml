@@ -1,1 +1,46 @@
+name: Daily Naver News Scrape
 
+on:
+  schedule:
+    - cron: '35 22 * * 0-4'
+    - cron: '35 23 * * 0-4'
+  workflow_dispatch:
+    inputs:
+      affiliate:
+        description: 'Target affiliate (all or specific key)'
+        required: false
+        default: 'all'
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Naver API News Scraper
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          TARGET_AFFILIATE: ${{ github.event.inputs.affiliate || 'all' }}
+        run: python scrape_naver.py
+
+      - name: Commit and push scraped news JSON
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add scraped_pool.json published_data.json
+          if git diff --staged --quiet; then
+            echo "No changes in scraped news."
+          else
+            git commit -m "chore: update daily naver scraped news [skip ci]"
+            git push
+          fi
