@@ -312,22 +312,21 @@
     .news-link-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding-top: 8px;
+      justify-content: flex-end;
+      padding-top: 9px;
       border-top: 1px solid #f1f5f9;
-      font-size: 0.76rem;
-      color: var(--text-sub);
-    }
-
-    .short-url {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      color: #64748b;
-      font-size: 0.75rem;
     }
 
     .read-arrow {
-      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      font-weight: 800;
       color: var(--primary-accent);
+      background: var(--primary-light);
+      padding: 5px 12px;
+      border-radius: 8px;
     }
 
     /* Bottom Action Bar */
@@ -412,6 +411,70 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+
+    /* Admin Password Modal */
+    .pw-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 200;
+    }
+    .pw-modal-overlay.open { display: flex; }
+    .pw-modal-box {
+      background: #ffffff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 340px;
+      padding: 22px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+    }
+    .pw-modal-box h3 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .pw-modal-box p {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 14px;
+    }
+    .pw-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .pw-input:focus { border-color: #2563eb; }
+    .pw-btns {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .pw-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+    }
+    .pw-btn-primary {
+      background: #1e3a8a;
+      color: #ffffff;
+      border-color: #1e3a8a;
+    }
   </style>
 </head>
 <body>
@@ -427,11 +490,10 @@
             <option value="medica" selected>메디카코리아</option>
             <option value="neurobiogen">뉴로바이오젠</option>
           </select>
-          <a href="./admin.html" class="admin-link-btn" title="관리자 페이지 이동">관리자 ↗</a>
+          <button type="button" id="btnOpenAdminAuth" class="admin-link-btn" title="관리자 페이지 이동">관리자 ↗</button>
         </div>
       </div>
       <h1 class="main-title" id="headerMainTitle">[2026.11.13] 메디카코리아 모니터링</h1>
-      <p class="sub-info" id="headerSubInfo">전일(11.12) ~ 금일(11.13) 오전 스크래핑 · 엄선 15건</p>
     </header>
 
     <section class="quote-card" aria-label="오늘의 한마디">
@@ -450,20 +512,22 @@
     <main id="sectionsContainer"></main>
 
     <div class="bottom-tools">
-      <button type="button" class="btn-copy-sms" id="btnCopySmsFormat">📋 문자/카톡 발송용 원문 텍스트 복사</button>
-
-      <div class="copy-fallback-box" id="copyFallbackBox">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.78rem;font-weight:700;color:#1e3a8a;">
-          <span>📄 복사된 원문 미리보기 (길게 눌러 복사)</span>
-          <button type="button" id="btnCloseFallback" style="background:none;border:none;color:#64748b;font-weight:700;cursor:pointer;">닫기 ✕</button>
-        </div>
-        <textarea class="copy-fallback-textarea" id="copyFallbackTextarea" readonly></textarea>
-      </div>
-
-      <p class="footer-note">
+      <p class="footer-note" style="margin-top:0;">
         상상인그룹 PR팀 데일리 뉴스모니터링 (권장 10~15건)<br>
         과거 모니터링과 중복된 기사는 자동 제외되었습니다.
       </p>
+    </div>
+  </div>
+
+  <div class="pw-modal-overlay" id="adminPwModal">
+    <div class="pw-modal-box">
+      <h3>🔒 관리자 페이지 인증</h3>
+      <p>PR팀 관리자 비밀번호를 입력해주세요.</p>
+      <input type="password" id="inputAdminPw" class="pw-input" placeholder="비밀번호 입력" autocomplete="off">
+      <div class="pw-btns">
+        <button type="button" class="pw-btn" id="btnCancelAdminPw">취소</button>
+        <button type="button" class="pw-btn pw-btn-primary" id="btnConfirmAdminPw">확인</button>
+      </div>
     </div>
   </div>
 
@@ -1417,7 +1481,46 @@
           const data = await res.json();
           if (data && data.published) {
             remotePublishedMap = data.published;
-            renderPage();
+            // 관리자 페이지 비밀번호 인증 (PR332!)
+    const ADMIN_PASSCODE = "PR332!";
+    const adminPwModal = document.getElementById("adminPwModal");
+    const inputAdminPw = document.getElementById("inputAdminPw");
+
+    document.getElementById("btnOpenAdminAuth").addEventListener("click", () => {
+      if (sessionStorage.getItem("pr_admin_unlocked") === "true") {
+        window.location.href = "./admin.html";
+        return;
+      }
+      inputAdminPw.value = "";
+      adminPwModal.classList.add("open");
+      setTimeout(() => inputAdminPw.focus(), 50);
+    });
+
+    document.getElementById("btnCancelAdminPw").addEventListener("click", () => {
+      adminPwModal.classList.remove("open");
+    });
+
+    function verifyAdminPassword() {
+      if (inputAdminPw.value === ADMIN_PASSCODE) {
+        sessionStorage.setItem("pr_admin_unlocked", "true");
+        adminPwModal.classList.remove("open");
+        window.location.href = "./admin.html";
+      } else {
+        showToast("❌ 비밀번호가 일치하지 않습니다.");
+        inputAdminPw.value = "";
+        inputAdminPw.focus();
+      }
+    }
+
+    document.getElementById("btnConfirmAdminPw").addEventListener("click", verifyAdminPassword);
+    inputAdminPw.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        verifyAdminPassword();
+      }
+    });
+
+    renderPage();
     loadRemotePublished();
             return;
           }
@@ -1475,7 +1578,6 @@
       document.title = `[${data.date}] ${data.name} 모니터링`;
       document.getElementById("displayDateBadge").textContent = `📅 ${data.date} (${data.dayLabel || '금'})`;
       document.getElementById("headerMainTitle").textContent = `[${data.date}] ${data.name} 모니터링`;
-      document.getElementById("headerSubInfo").textContent = data.scrapeWindow;
       document.getElementById("quoteText").textContent = `“${data.quote}”`;
       document.getElementById("quoteAuthor").textContent = `- ${data.author}`;
 
@@ -1520,7 +1622,6 @@
                 </div>
                 <div class="news-headline">${item.title}</div>
                 <div class="news-link-row">
-                  <span class="short-url">${item.url}</span>
                   <span class="read-arrow">기사 원문 보기 →</span>
                 </div>
               </a>
@@ -1626,7 +1727,6 @@
       currentAffiliateKey = e.target.value;
       currentFilter = "all";
       document.querySelectorAll(".cat-tab").forEach(t => t.classList.toggle("active", t.dataset.filter === "all"));
-      document.getElementById("copyFallbackBox").classList.remove("open");
       renderPage();
       showToast(`${getActiveData().name} 모니터링으로 전환되었습니다.`);
     });
@@ -1667,7 +1767,6 @@
     });
 
     document.getElementById("btnCloseFallback").addEventListener("click", () => {
-      document.getElementById("copyFallbackBox").classList.remove("open");
     });
 
     renderPage();
