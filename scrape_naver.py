@@ -1,4 +1,4 @@
-hub_py_code = '''import os
+import os
 import re
 import json
 import time
@@ -258,9 +258,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-'''
-
-with open("scrape_naver_hub.py", "w", encoding="utf-8") as f:
-    f.write(hub_py_code)
-
-print("Generated scrape_naver_hub.py successfully.")
