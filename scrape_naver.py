@@ -11,168 +11,138 @@ KST = timezone(timedelta(hours=9))
 POOL_FILE = 'scraped_pool.json'
 PUBLISHED_FILE = 'published_data.json'
 
-AFFILIATE_KEYWORDS = {
-  "sangsangin": {
-    "own": [
-      "유준원",
-      "상상인",
-      "상상인증권",
-      "상상인선박기계",
-      "시너지이노베이션",
-      "메디카코리아",
-      "엠아이텍",
-      "노비스바이오",
-      "프로톡스",
-      "에스앤지바이오텍",
-      "바스노바"
-    ],
-    "comp": [
-      "카카오뱅크",
-      "카카오증권",
-      "대신증권",
-      "한화투자증권",
-      "유안타증권",
-      "교보증권",
-      "현대차증권",
-      "하이투자증권",
-      "DB 금융투자",
-      "IBK 투자증권",
-      "다올투자증권",
-      "유진투자증권",
-      "이베스트투자증권",
-      "부국증권",
-      "SK 증권"
-    ],
-    "ind": [
-      "리그테이블",
-      "제2금융",
-      "중소형증권",
-      "금융당국",
-      "금감원",
-      "금융감독원",
-      "금융위",
-      "한국은행",
-      "한국거래소",
-      "PF",
-      "IB",
-      "투자은행",
-      "MTS",
-      "ELS",
-      "IPO",
-      "ECM"
-    ]
-  },
-  "mitech": {
-    "own": [
-      "엠아이텍",
-      "M.I.TECH",
-      "MITECH",
-      "에스앤지바이오텍",
-      "S&G 바이오텍",
-      "S&G BIOTEC",
-      "바스노바"
-    ],
-    "comp": [
-      "보스톤사이언티",
-      "Boston Scientific",
-      "쿡메디칼",
-      "Cook Medical",
-      "태웅메디칼",
-      "올림푸스",
-      "펜탁스 메디칼",
-      "후지필름",
-      "파인메딕스",
-      "스텐트",
-      "스탠트",
-      "내시경장비",
-      "초음파장비",
-      "의료기기",
-      "담도"
-    ],
-    "ind": [
-      "식약처",
-      "식품의약품안전처",
-      "보건복지부",
-      "의약품안전나라",
-      "의료기기안심책방",
-      "한국의료기기안전정보원",
-      "한국의료기기산업협회",
-      "한국제약바이오협회"
-    ]
-  },
-  "synergy": {
-    "own": [
-      "시너지이노베이션"
-    ],
-    "comp": [
-      "기산바이오",
-      "고마바이오텍",
-      "머크",
-      "Merck",
-      "써모피셔사이언티픽",
-      "아미코젠",
-      "아지노모도제넥신 셀리스트",
-      "엑셀세라퓨틱스",
-      "배지",
-      "미생물배양",
-      "세포배양"
-    ],
-    "ind": [
-      "의료기기",
-      "식약처",
-      "보건복지부",
-      "한국의료기기산업협회",
-      "한국의료기기협동조합"
-    ]
-  },
-  "medica": {
-    "own": [
-      "메디카코리아",
-      "Medica Korea"
-    ],
-    "comp": [
-      "동국제약",
-      "종근당",
-      "대웅제약",
-      "동아제약",
-      "유한양행"
-    ],
-    "ind": [
-      "개량신약",
-      "IMD",
-      "약가 인하",
-      "제네릭",
-      "한국제약바이오협회",
-      "식품의약품안전처",
-      "의약품안전나라",
-      "한국제약협동조합",
-      "보건복지부"
-    ]
-  },
-  "neurobiogen": {
-    "own": [
-      "뉴로바이오젠",
-      "neurobiogen",
-      "KDS2010",
-      "티솔라질린"
-    ],
-    "comp": [
-      "사이렉스",
-      "사일렉스",
-      "비만 치료제",
-      "치매 치료제",
-      "알츠하이머",
-      "비만약",
-      "치매약"
-    ],
-    "ind": [
-      "식약처",
-      "식품의약품안전처",
-      "보건복지부",
-      "의약품안전나라",
-      "한국제약바이오협회"
-    ]
-  }
+DEFAULT_KEYWORDS = {
+  "sangsangin": [
+    "유준원",
+    "상상인",
+    "상상인증권",
+    "상상인선박기계",
+    "시너지이노베이션",
+    "메디카코리아",
+    "엠아이텍",
+    "노비스바이오",
+    "프로톡스",
+    "에스앤지바이오텍",
+    "바스노바",
+    "카카오뱅크",
+    "카카오증권",
+    "대신증권",
+    "한화투자증권",
+    "유안타증권",
+    "교보증권",
+    "현대차증권",
+    "하이투자증권",
+    "DB 금융투자",
+    "IBK 투자증권",
+    "다올투자증권",
+    "유진투자증권",
+    "이베스트투자증권",
+    "부국증권",
+    "SK 증권",
+    "리그테이블",
+    "제2금융",
+    "중소형증권",
+    "금융당국",
+    "금감원",
+    "금융감독원",
+    "금융위",
+    "한국은행",
+    "한국거래소",
+    "PF",
+    "IB",
+    "투자은행",
+    "MTS",
+    "ELS",
+    "IPO",
+    "ECM"
+  ],
+  "mitech": [
+    "엠아이텍",
+    "M.I.TECH",
+    "MITECH",
+    "에스앤지바이오텍",
+    "S&G 바이오텍",
+    "S&G BIOTEC",
+    "바스노바",
+    "보스톤사이언티",
+    "Boston Scientific",
+    "쿡메디칼",
+    "Cook Medical",
+    "태웅메디칼",
+    "올림푸스",
+    "펜탁스 메디칼",
+    "후지필름",
+    "파인메딕스",
+    "스텐트",
+    "스탠트",
+    "내시경장비",
+    "초음파장비",
+    "의료기기",
+    "담도",
+    "식약처",
+    "식품의약품안전처",
+    "보건복지부",
+    "의약품안전나라",
+    "의료기기안심책방",
+    "한국의료기기안전정보원",
+    "한국의료기기산업협회",
+    "한국제약바이오협회"
+  ],
+  "synergy": [
+    "시너지이노베이션",
+    "기산바이오",
+    "고마바이오텍",
+    "머크",
+    "Merck",
+    "써모피셔사이언티픽",
+    "아미코젠",
+    "아지노모도제넥신 셀리스트",
+    "엑셀세라퓨틱스",
+    "배지",
+    "미생물배양",
+    "세포배양",
+    "의료기기",
+    "식약처",
+    "보건복지부",
+    "한국의료기기산업협회",
+    "한국의료기기협동조합"
+  ],
+  "medica": [
+    "메디카코리아",
+    "Medica Korea",
+    "동국제약",
+    "종근당",
+    "대웅제약",
+    "동아제약",
+    "유한양행",
+    "개량신약",
+    "IMD",
+    "약가 인하",
+    "제네릭",
+    "한국제약바이오협회",
+    "식품의약품안전처",
+    "의약품안전나라",
+    "한국제약협동조합",
+    "보건복지부"
+  ],
+  "neurobiogen": [
+    "뉴로바이오젠",
+    "neurobiogen",
+    "KDS2010",
+    "티솔라질린",
+    "사이렉스",
+    "사일렉스",
+    "비만 치료제",
+    "치매 치료제",
+    "알츠하이머",
+    "비만약",
+    "치매약",
+    "식약처",
+    "식품의약품안전처",
+    "보건복지부",
+    "의약품안전나라",
+    "한국제약바이오협회"
+  ]
 }
 
 DOMAIN_PRESS_MAP = {
@@ -225,14 +195,46 @@ def extract_press(url):
     except Exception:
         return '주요언론'
 
-def get_window_seconds(affiliate_key, now_dt):
-    if affiliate_key == 'neurobiogen':
-        return 7 * 24 * 3600  # 주 1회 (금요일)
-    if now_dt.weekday() == 0:
-        return 78 * 3600      # 월요일: 금·토·일 주말 포함
-    return 30 * 3600          # 평일: 전일~당일 오전
+def flatten_keywords(kw_entry):
+    # 리스트면 그대로 반환, 과거 dict 형태(own/comp/ind)면 통합 리스트로 변환
+    if isinstance(kw_entry, list):
+        return [k.strip() for k in kw_entry if k and k.strip()]
+    if isinstance(kw_entry, dict):
+        merged = []
+        for k in ['own', 'comp', 'ind']:
+            merged.extend(kw_entry.get(k, []))
+        return list(dict.fromkeys([x.strip() for x in merged if x and x.strip()]))
+    return []
 
-def fetch_naver_news(query, client_id, client_secret, display=25):
+def get_date_bounds(affiliate_key, now_dt, start_str, end_str):
+    # 사용자가 시작일/종료일을 직접 지정한 경우 해당 날짜 범위(00:00:00 ~ 23:59:59 KST) 적용
+    start_dt = None
+    end_dt = None
+    if start_str:
+        try:
+            d = datetime.strptime(start_str.strip(), '%Y-%m-%d')
+            start_dt = datetime(d.year, d.month, d.day, 0, 0, 0, tzinfo=KST)
+        except Exception:
+            pass
+    if end_str:
+        try:
+            d = datetime.strptime(end_str.strip(), '%Y-%m-%d')
+            end_dt = datetime(d.year, d.month, d.day, 23, 59, 59, tzinfo=KST)
+        except Exception:
+            pass
+
+    if start_dt or end_dt:
+        if not start_dt:
+            start_dt = end_dt - timedelta(days=3)
+        if not end_dt:
+            end_dt = now_dt
+        return start_dt, end_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {end_dt.strftime('%Y.%m.%d')}"
+
+    # 미지정 시 기본 범위 (최근 7일 넉넉히 수집 후 관리자 화면에서 필터링 가능)
+    start_dt = now_dt - timedelta(days=7)
+    return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')} (최근 7일)"
+
+def fetch_naver_news(query, client_id, client_secret, display=30):
     encoded = urllib.parse.quote(query)
     url = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
     req = urllib.request.Request(url)
@@ -245,111 +247,96 @@ def main():
     client_id = os.environ.get("NAVER_CLIENT_ID", "").strip()
     client_secret = os.environ.get("NAVER_CLIENT_SECRET", "").strip()
     target = os.environ.get("TARGET_AFFILIATE", "all").strip()
+    start_str = os.environ.get("START_DATE", "").strip()
+    end_str = os.environ.get("END_DATE", "").strip()
 
     if not client_id or not client_secret:
         raise RuntimeError("NAVER_CLIENT_ID 또는 NAVER_CLIENT_SECRET 시크릿이 설정되지 않았습니다.")
 
     now_dt = datetime.now(KST)
-    pool_data = load_json(POOL_FILE, {"updatedAt": "", "keywords": AFFILIATE_KEYWORDS, "affiliates": {}})
+    pool_data = load_json(POOL_FILE, {"updatedAt": "", "keywords": DEFAULT_KEYWORDS, "affiliates": {}})
     pub_data = load_json(PUBLISHED_FILE, {"history": {}, "published": {}})
 
-    # 관리자가 웹에서 저장한 최신 키워드가 있으면 우선 사용
-    active_keywords = pool_data.get("keywords") or AFFILIATE_KEYWORDS
-    for k in AFFILIATE_KEYWORDS:
-        if k not in active_keywords:
-            active_keywords[k] = AFFILIATE_KEYWORDS[k]
+    saved_kw = pool_data.get("keywords") or {}
+    active_keywords = {}
+    for k in DEFAULT_KEYWORDS:
+        active_keywords[k] = flatten_keywords(saved_kw.get(k)) if k in saved_kw else DEFAULT_KEYWORDS[k]
 
     history_map = pub_data.get("history", {})
     affiliates_out = pool_data.get("affiliates", {})
 
-    for aff_key, kw_map in active_keywords.items():
+    for aff_key, kw_list in active_keywords.items():
         if target != "all" and target != aff_key:
             continue
 
         history_set = set(history_map.get(aff_key, []))
-        max_age_sec = get_window_seconds(aff_key, now_dt)
+        start_dt, end_dt, range_label = get_date_bounds(aff_key, now_dt, start_str, end_str)
         collected = []
         seen_norms = set()
 
-        for cat_key in ['own', 'comp', 'ind']:
-            kw_list = [k.strip() for k in kw_map.get(cat_key, []) if k.strip()]
-            for kw in kw_list:
-                try:
-                    items = fetch_naver_news(kw, client_id, client_secret, display=20)
-                except Exception as e:
-                    print(f"[WARN] {aff_key} - {kw} 호출 실패: {e}")
+        for kw in kw_list:
+            try:
+                items = fetch_naver_news(kw, client_id, client_secret, display=30)
+            except Exception as e:
+                print(f"[WARN] {aff_key} - {kw} 호출 실패: {e}")
+                continue
+
+            for item in items:
+                title = clean_html(item.get('title', ''))
+                orig_link = item.get('originallink') or item.get('link') or ''
+                pub_raw = item.get('pubDate', '')
+
+                if not title or not orig_link:
                     continue
 
-                for item in items:
-                    title = clean_html(item.get('title', ''))
-                    orig_link = item.get('originallink') or item.get('link') or ''
-                    pub_raw = item.get('pubDate', '')
-
-                    if not title or not orig_link:
+                try:
+                    pub_dt = parsedate_to_datetime(pub_raw).astimezone(KST)
+                    if pub_dt < start_dt or pub_dt > end_dt:
                         continue
+                    time_label = pub_dt.strftime('%Y.%m.%d %H:%M')
+                    pub_iso = pub_dt.isoformat()
+                    pub_ts = pub_dt.timestamp()
+                except Exception:
+                    time_label = now_dt.strftime('%Y.%m.%d %H:%M')
+                    pub_iso = now_dt.isoformat()
+                    pub_ts = now_dt.timestamp()
 
-                    try:
-                        pub_dt = parsedate_to_datetime(pub_raw).astimezone(KST)
-                        age_sec = (now_dt - pub_dt).total_seconds()
-                        if age_sec > max_age_sec or age_sec < -3600:
-                            continue
-                        time_label = pub_dt.strftime('%m.%d %H:%M')
-                        pub_ts = pub_dt.timestamp()
-                    except Exception:
-                        time_label = "최근"
-                        pub_ts = now_dt.timestamp()
-                        age_sec = 3600
+                norm = normalize_title(title)
+                if not norm or norm in seen_norms:
+                    continue
+                seen_norms.add(norm)
 
-                    norm = normalize_title(title)
-                    if not norm or norm in seen_norms:
-                        continue
-                    seen_norms.add(norm)
+                # 기본 카테고리 초기값은 'ind'(업계)로 두고 관리자가 자유롭게 자사/경쟁사/업계 지정 가능
+                # 단, 첫 1~2개 핵심 자사명이 제목에 포함된 경우 편의를 위해 'own' 초기 제안
+                initial_cat = "ind"
+                if kw_list and kw_list[0].lower() in title.lower():
+                    initial_cat = "own"
 
-                    lower_title = title.lower()
-                    final_cat = cat_key
-                    hit_kw = kw
-                    for own_k in kw_map.get('own', []):
-                        if own_k.lower() in lower_title:
-                            final_cat = 'own'
-                            hit_kw = own_k
-                            break
+                collected.append({
+                    "id": int(time.time() * 1000) + len(collected),
+                    "category": initial_cat,
+                    "press": extract_press(orig_link),
+                    "title": title,
+                    "url": orig_link,
+                    "pubDateISO": pub_iso,
+                    "time": time_label,
+                    "pubTs": pub_ts,
+                    "matchedKw": kw,
+                    "duplicate": norm in history_set,
+                    "selected": False
+                })
+            time.sleep(0.07)
 
-                    hours_ago = max(0, age_sec / 3600.0)
-                    recency_bonus = max(0, round(20 - hours_ago * 0.5))
-                    cat_bonus = 30 if final_cat == 'own' else (15 if final_cat == 'comp' else 5)
-                    score = min(99, 65 + cat_bonus + recency_bonus)
-
-                    collected.append({
-                        "id": int(time.time() * 1000) + len(collected),
-                        "category": final_cat,
-                        "press": extract_press(orig_link),
-                        "title": title,
-                        "url": orig_link,
-                        "time": time_label,
-                        "pubTs": pub_ts,
-                        "score": score,
-                        "matchedKw": hit_kw,
-                        "duplicate": norm in history_set,
-                        "selected": False
-                    })
-                time.sleep(0.08)
-
-        prio = {'own': 1, 'comp': 2, 'ind': 3}
-        collected.sort(key=lambda x: (prio[x['category']], -x['score'], -x['pubTs']))
-
-        picked = 0
-        for item in collected:
-            if not item['duplicate'] and picked < 15:
-                item['selected'] = True
-                picked += 1
+        # 최신순 정렬
+        collected.sort(key=lambda x: -x['pubTs'])
 
         affiliates_out[aff_key] = {
             "scrapedAt": now_dt.strftime('%Y-%m-%d %H:%M:%S KST'),
+            "dateRange": range_label,
             "count": len(collected),
-            "picked": picked,
             "articles": collected
         }
-        print(f"[OK] {aff_key}: 총 {len(collected)}건 수집, {picked}건 자동 선정")
+        print(f"[OK] {aff_key} ({range_label}): 총 {len(collected)}건 수집")
 
     pool_data["updatedAt"] = now_dt.strftime('%Y-%m-%d %H:%M:%S KST')
     pool_data["keywords"] = active_keywords

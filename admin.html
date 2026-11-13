@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상상인그룹 PR팀 뉴스모니터링 관리자 (GitHub 연동)</title>
+  <title>상상인그룹 PR팀 뉴스모니터링 관리자 (맞춤 스크래핑 & 큐레이션)</title>
   <style>
     :root {
       --primary: #1e40af;
@@ -16,10 +16,13 @@
       --border: #e2e8f0;
       --own-color: #dc2626;
       --own-bg: #fef2f2;
+      --own-border: #fca5a5;
       --comp-color: #ea580c;
       --comp-bg: #fff7ed;
+      --comp-border: #fdba74;
       --ind-color: #16a34a;
       --ind-bg: #f0fdf4;
+      --ind-border: #86efac;
       --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
@@ -53,7 +56,7 @@
     }
 
     .nav-wrap {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 12px 18px;
       display: flex;
@@ -132,15 +135,15 @@
     .btn-warning { background: #fef08a; border-color: #fde047; color: #854d0e; }
 
     main {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 20px 18px 60px;
       display: grid;
-      grid-template-columns: 1fr 390px;
+      grid-template-columns: 1fr 400px;
       gap: 20px;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1024px) {
       main { grid-template-columns: 1fr; }
     }
 
@@ -164,6 +167,43 @@
       gap: 8px;
     }
 
+    /* Date Range Scraper Box */
+    .date-scrape-box {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .date-inputs-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .date-inputs-wrap label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .date-inputs-wrap input[type="date"] {
+      padding: 6px 10px;
+      border: 1px solid #93c5fd;
+      border-radius: 7px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      background: #ffffff;
+      color: var(--text-main);
+    }
+
     .status-bar {
       display: flex;
       align-items: center;
@@ -173,9 +213,9 @@
       background: #f0fdf4;
       border: 1px solid #86efac;
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 9px 14px;
       margin-bottom: 14px;
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: #166534;
     }
 
@@ -185,70 +225,31 @@
       color: #854d0e;
     }
 
-    .rule-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .rule-box {
+    /* Unified Keyword Pool */
+    .kw-pool-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px;
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 13px;
+      margin-bottom: 10px;
+      max-height: 150px;
+      overflow-y: auto;
     }
-
-    .rule-box span {
-      display: block;
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      font-weight: 700;
-      margin-bottom: 3px;
-    }
-
-    .rule-box strong {
-      font-size: 0.85rem;
-      color: var(--text-main);
-    }
-
-    .kw-section {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-
-    .kw-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .kw-group-label {
-      font-size: 0.76rem;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 6px;
-      min-width: 64px;
-      text-align: center;
-    }
-    .lbl-own { background: var(--own-bg); color: var(--own-color); }
-    .lbl-comp { background: var(--comp-bg); color: var(--comp-color); }
-    .lbl-ind { background: var(--ind-bg); color: var(--ind-color); }
 
     .kw-chip {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: #f1f5f9;
+      background: #ffffff;
       border: 1px solid #cbd5e1;
-      padding: 3px 9px;
+      padding: 4px 10px;
       border-radius: 16px;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 600;
+      color: #1e293b;
     }
 
     .kw-chip button {
@@ -264,23 +265,25 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-top: 4px;
     }
 
-    .kw-add-row select, .kw-add-row input {
-      padding: 7px 10px;
+    .kw-add-row input {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.84rem;
+      font-size: 0.85rem;
     }
 
+    /* Filter & Bulk Category Action Bar */
     .filter-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .filter-pills {
@@ -306,6 +309,15 @@
       border-color: #1e293b;
     }
 
+    .search-filter-input {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      min-width: 210px;
+    }
+
+    /* Scraped Article Card with Segmented Category Buttons */
     .scraped-card {
       border: 1.5px solid var(--border);
       border-radius: 12px;
@@ -333,21 +345,29 @@
       justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
+    }
+
+    .card-left-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .check-select {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       cursor: pointer;
       font-size: 0.84rem;
       font-weight: 800;
       color: #1e40af;
       background: #eff6ff;
-      padding: 4px 10px;
-      border-radius: 6px;
+      padding: 5px 11px;
+      border-radius: 7px;
       border: 1px solid #bfdbfe;
+      user-select: none;
     }
 
     .check-select input {
@@ -356,12 +376,43 @@
       accent-color: #2563eb;
     }
 
-    .cat-select-inline {
-      padding: 4px 8px;
-      border-radius: 6px;
+    /* 원클릭 카테고리 구분 버튼 그룹 (자사 / 경쟁사 / 업계) */
+    .cat-btn-group {
+      display: inline-flex;
+      border-radius: 7px;
+      overflow: hidden;
       border: 1px solid #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .cat-choice-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 10px;
       font-size: 0.78rem;
-      font-weight: 700;
+      font-weight: 800;
+      color: #64748b;
+      cursor: pointer;
+      border-right: 1px solid #e2e8f0;
+      transition: all 0.12s ease;
+    }
+    .cat-choice-btn:last-child { border-right: none; }
+    .cat-choice-btn:hover { background: #e2e8f0; }
+
+    .cat-choice-btn.active-own {
+      background: var(--own-bg);
+      color: var(--own-color);
+      box-shadow: inset 0 0 0 1.5px var(--own-border);
+    }
+    .cat-choice-btn.active-comp {
+      background: var(--comp-bg);
+      color: var(--comp-color);
+      box-shadow: inset 0 0 0 1.5px var(--comp-border);
+    }
+    .cat-choice-btn.active-ind {
+      background: var(--ind-bg);
+      color: var(--ind-color);
+      box-shadow: inset 0 0 0 1.5px var(--ind-border);
     }
 
     .kw-match-badge {
@@ -369,22 +420,13 @@
       color: #3730a3;
       font-size: 0.73rem;
       font-weight: 700;
-      padding: 3px 7px;
+      padding: 3px 8px;
       border-radius: 5px;
     }
 
     .dup-badge {
       background: #fee2e2;
       color: #b91c1c;
-      font-size: 0.74rem;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 5px;
-    }
-
-    .score-badge {
-      background: #fef9c3;
-      color: #854d0e;
       font-size: 0.74rem;
       font-weight: 800;
       padding: 3px 8px;
@@ -414,6 +456,7 @@
       word-break: break-all;
     }
 
+    /* Right Sidebar: Selected Queue & Live Preview */
     .sticky-sidebar {
       position: sticky;
       top: 76px;
@@ -438,40 +481,91 @@
     .quota-count.warn { color: #d97706; }
     .quota-count.over { color: #dc2626; }
 
+    /* Selected Queue Organizer (관리자가 선택한 기사 순서/구분 바로 조정) */
+    .selected-organizer {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 12px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .org-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+      font-size: 0.78rem;
+    }
+    .org-item:last-child { margin-bottom: 0; }
+
+    .org-title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .org-mini-select {
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .org-remove-btn {
+      background: none;
+      border: none;
+      color: #ef4444;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+
     .quote-editor {
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 11px;
+      padding: 10px;
       margin-bottom: 12px;
     }
 
     .quote-editor label {
       display: block;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--text-muted);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .quote-editor textarea, .quote-editor input {
       width: 100%;
-      padding: 7px 10px;
+      padding: 6px 9px;
       border: 1px solid #cbd5e1;
       border-radius: 6px;
-      font-size: 0.82rem;
-      margin-bottom: 6px;
+      font-size: 0.81rem;
+      margin-bottom: 5px;
     }
 
     .sms-preview-box {
       background: #0f172a;
       color: #f8fafc;
       border-radius: 10px;
-      padding: 14px;
+      padding: 12px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.78rem;
-      line-height: 1.55;
-      max-height: 310px;
+      font-size: 0.76rem;
+      line-height: 1.5;
+      max-height: 220px;
       overflow-y: auto;
       white-space: pre-wrap;
       word-break: break-all;
@@ -485,14 +579,13 @@
     }
 
     .ops-link-box {
-      margin-top: 12px;
-      padding: 10px 12px;
+      margin-top: 10px;
+      padding: 9px 12px;
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.77rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
-      line-height: 1.5;
     }
 
     .ops-link-box a {
@@ -570,7 +663,7 @@
 </head>
 <body>
   <div class="top-banner">
-    🛡️ <strong>상상인그룹 PR팀 데일리 뉴스모니터링 관리자</strong> | GitHub Actions + 네이버 검색 API 실시간 연동 시스템
+    🛡️ <strong>상상인그룹 PR팀 뉴스모니터링 관리자</strong> | 날짜 직접 지정 스크래핑 · 통합 키워드 검색 · 자사/경쟁사/업계 수동 커스터마이징
   </div>
 
   <header>
@@ -594,8 +687,6 @@
       <div class="header-actions">
         <button class="btn btn-secondary" id="btnOpenGhModal">🔑 GitHub 연동 토큰 설정</button>
         <a href="./index.html" id="btnViewEmployeePage" class="btn btn-secondary">📱 임직원 페이지 ↗</a>
-        <button class="btn btn-secondary" id="btnAutoPick15">✨ 자동 15개 선정</button>
-        <button class="btn btn-primary" id="btnTriggerScrape">🔄 지금 네이버 뉴스 수집 요청</button>
       </div>
     </div>
   </header>
@@ -603,13 +694,29 @@
   <main>
     <!-- Left Column -->
     <div>
+      <!-- 1. 날짜 직접 지정 스크래핑 + 통합 키워드 관리 -->
       <section class="panel-card">
         <div class="panel-title">
-          <span>⚙️ 계열사별 담당자·주기 및 키워드 설정</span>
+          <span>📅 수집 날짜 지정 및 통합 키워드 관리</span>
           <label style="font-size: 0.8rem; font-weight: 700; color: #dc2626; display:flex; align-items:center; gap:5px; cursor:pointer;">
             <input type="checkbox" id="chkHideDuplicates" checked>
-            과거 발행 기사 중복 자동 제외
+            과거 발행 기사 중복 숨김
           </label>
+        </div>
+
+        <!-- 날짜 직접 선택 바 -->
+        <div class="date-scrape-box">
+          <div class="date-inputs-wrap">
+            <label for="scrapeStartDate">🗓️ 수집 기간:</label>
+            <input type="date" id="scrapeStartDate">
+            <span style="font-weight:800; color:#1e3a8a;">~</span>
+            <input type="date" id="scrapeEndDate">
+            <button type="button" class="btn btn-secondary" id="btnPresetYesterdayToday" style="padding:6px 10px; font-size:0.78rem;">어제~오늘</button>
+            <button type="button" class="btn btn-secondary" id="btnPresetWeekend" style="padding:6px 10px; font-size:0.78rem;">주말포함(금~월)</button>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-primary" id="btnTriggerScrape">🔍 지정 날짜로 네이버 뉴스 스크래핑</button>
+          </div>
         </div>
 
         <div class="status-bar warn" id="syncStatusBar">
@@ -617,55 +724,36 @@
           <button class="btn btn-secondary" id="btnReloadPool" style="padding:4px 10px; font-size:0.76rem;">새로고침</button>
         </div>
 
-        <div class="rule-grid">
-          <div class="rule-box">
-            <span>👤 담당자 / 모니터링 주기</span>
-            <strong id="infoManagerCycle">김태기 과장 · 매일 오전 9시~9시반</strong>
-          </div>
-          <div class="rule-box">
-            <span>📩 수신 메일 기준</span>
-            <strong id="infoMailTitle">상상인 계열사 데일리 모니터링 (매일 오전 9시)</strong>
-          </div>
-          <div class="rule-box">
-            <span>🎯 선정 기준 (권장 10~15개)</span>
-            <strong>1순위 자사 → 2순위 경쟁사 → 3순위 업계</strong>
-          </div>
+        <div style="font-size:0.8rem; font-weight:800; color:var(--text-muted); margin-bottom:6px;">
+          🏷️ 모니터링 검색 키워드 (자사/경쟁사/업계 구분 없이 통합 검색 후 아래에서 기사별 구분 지정)
         </div>
+        <div class="kw-pool-wrap" id="unifiedKwPool"></div>
 
-        <div class="kw-section">
-          <div class="kw-group" id="kwGroupOwn"></div>
-          <div class="kw-group" id="kwGroupComp"></div>
-          <div class="kw-group" id="kwGroupInd"></div>
-
-          <div class="kw-add-row">
-            <select id="newKwCategory">
-              <option value="own">[자사] 키워드</option>
-              <option value="comp">[경쟁사] 키워드</option>
-              <option value="ind">[업계] 키워드</option>
-            </select>
-            <input type="text" id="newKwInput" placeholder="추가할 키워드 입력 후 Enter">
-            <button class="btn btn-secondary" id="btnAddKw">+ 키워드 추가</button>
-            <button class="btn btn-secondary" id="btnSaveKwToGithub" style="color:#1e40af; border-color:#93c5fd;">💾 키워드 변경사항 저장소 반영</button>
-          </div>
+        <div class="kw-add-row">
+          <input type="text" id="newKwInput" placeholder="추가할 검색 키워드 입력 (쉼표로 여러 개 동시 추가 가능, 예: 메디카코리아, 약가인하, 보령)">
+          <button class="btn btn-secondary" id="btnAddKw">+ 키워드 추가</button>
+          <button class="btn btn-secondary" id="btnSaveKwToGithub" style="color:#1e40af; border-color:#93c5fd;">💾 키워드 저장소 반영</button>
         </div>
       </section>
 
+      <!-- 2. 스크래핑된 전체 기사 목록 & 관리자의 카테고리 지정 -->
       <section class="panel-card">
         <div class="filter-bar">
           <div class="filter-pills">
-            <button class="f-pill active" data-cat="all">전체 후보 (<span id="poolAll">0</span>)</button>
-            <button class="f-pill" data-cat="own">[자사] (<span id="poolOwn">0</span>)</button>
-            <button class="f-pill" data-cat="comp">[경쟁사] (<span id="poolComp">0</span>)</button>
-            <button class="f-pill" data-cat="ind">[업계] (<span id="poolInd">0</span>)</button>
+            <button class="f-pill active" data-cat="all">전체 기사 (<span id="poolAll">0</span>)</button>
+            <button class="f-pill" data-cat="selected">선택됨 (<span id="poolSelected">0</span>)</button>
+            <button class="f-pill" data-cat="own">[자사] 지정 (<span id="poolOwn">0</span>)</button>
+            <button class="f-pill" data-cat="comp">[경쟁사] 지정 (<span id="poolComp">0</span>)</button>
+            <button class="f-pill" data-cat="ind">[업계] 지정 (<span id="poolInd">0</span>)</button>
           </div>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">체크박스로 노출 기사 선정 (최소 10 ~ 최대 15개)</span>
+          <input type="text" class="search-filter-input" id="searchArticleInput" placeholder="🔎 수집 기사 내 제목/언론사 필터...">
         </div>
 
         <div id="candidateListContainer"></div>
       </section>
     </div>
 
-    <!-- Right Column -->
+    <!-- Right Column: 선택 기사 구분 정리 & 발송 확정 -->
     <aside>
       <div class="panel-card sticky-sidebar">
         <div class="panel-title">
@@ -674,17 +762,28 @@
         </div>
 
         <div class="quota-bar">
-          <span style="font-size:0.8rem; font-weight:700; color:#1e40af;">구성: 자사 <b id="selOwn">0</b> · 경쟁사 <b id="selComp">0</b> · 업계 <b id="selInd">0</b></span>
+          <span style="font-size:0.8rem; font-weight:700; color:#1e40af;">자사 <b id="selOwn">0</b> · 경쟁사 <b id="selComp">0</b> · 업계 <b id="selInd">0</b></span>
           <button class="btn btn-secondary" id="btnClearAll" style="padding:4px 8px; font-size:0.75rem;">전체 해제</button>
         </div>
 
-        <div class="quote-editor">
-          <label>💬 상단 오늘의 명언 설정</label>
-          <textarea id="inputQuote" rows="2">나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.</textarea>
-          <input type="text" id="inputAuthor" value="토머스 에디슨" placeholder="인물명">
+        <!-- 선택된 기사 목록 및 빠른 구분 변경 -->
+        <div style="font-size:0.76rem; font-weight:800; color:var(--text-muted); margin-bottom:5px;">
+          📌 선택된 기사 구분 관리 (드롭다운으로 자사/경쟁사/업계 변경)
+        </div>
+        <div class="selected-organizer" id="selectedOrganizerBox">
+          <div style="text-align:center; color:#94a3b8; font-size:0.78rem; padding:14px 0;">좌측 목록에서 기사를 체크하면 여기에 담깁니다.</div>
         </div>
 
-        <div style="font-size:0.78rem; font-weight:800; color:var(--text-muted); margin-bottom:6px;">
+        <div class="quote-editor">
+          <label>💬 발행일 및 오늘의 명언 설정</label>
+          <div style="display:flex; gap:6px; margin-bottom:5px;">
+            <input type="text" id="inputPublishDateStr" placeholder="YYYY.MM.DD" style="width:45%; margin-bottom:0; font-weight:700;">
+            <input type="text" id="inputAuthor" value="토머스 에디슨" placeholder="명언 인물명" style="width:55%; margin-bottom:0;">
+          </div>
+          <textarea id="inputQuote" rows="2" style="margin-bottom:0;">나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.</textarea>
+        </div>
+
+        <div style="font-size:0.76rem; font-weight:800; color:var(--text-muted); margin-bottom:5px;">
           👁️ 문자 발송 포맷 실시간 미리보기
         </div>
         <div class="sms-preview-box" id="smsPreviewBox"></div>
@@ -708,9 +807,9 @@
   <!-- GitHub PAT Modal -->
   <div class="modal-overlay" id="ghModal">
     <div class="modal-box">
-      <h3>🔑 GitHub 저장소 연동 설정 (전 직원 실시간 반영용)</h3>
+      <h3>🔑 GitHub 저장소 연동 설정</h3>
       <p style="font-size:0.82rem; color:#475569; margin-bottom:14px; line-height:1.55;">
-        관리자 페이지에서 확정한 기사를 모든 임직원 스마트폰(<code>index.html</code>)에 즉시 반영하고, 수동 스크래핑을 실행하려면 <strong>GitHub Personal Access Token (repo 권한)</strong>을 1회 등록해주세요.
+        날짜 지정 네이버 뉴스 스크래핑 실행 및 전 직원 페이지(<code>index.html</code>) 즉시 발행을 위해 <strong>GitHub Personal Access Token (repo 권한)</strong>을 등록해주세요.
       </p>
       <div class="form-group">
         <label>GitHub 저장소 (소유자/저장소명)</label>
@@ -738,56 +837,50 @@
     "mailTitle": "상상인 데일리 모니터링 (매일 오전 8시)",
     "quote": "위기는 곧 기회의 다른 이름이다.",
     "author": "워런 버핏",
-    "keywords": {
-      "own": [
-        "유준원",
-        "상상인",
-        "상상인증권",
-        "상상인선박기계",
-        "시너지이노베이션",
-        "메디카코리아",
-        "엠아이텍",
-        "노비스바이오",
-        "프로톡스",
-        "에스앤지바이오텍",
-        "바스노바"
-      ],
-      "comp": [
-        "카카오뱅크",
-        "카카오증권",
-        "대신증권",
-        "한화투자증권",
-        "유안타증권",
-        "교보증권",
-        "현대차증권",
-        "하이투자증권",
-        "DB 금융투자",
-        "IBK 투자증권",
-        "다올투자증권",
-        "유진투자증권",
-        "이베스트투자증권",
-        "부국증권",
-        "SK 증권"
-      ],
-      "ind": [
-        "리그테이블",
-        "제2금융",
-        "중소형증권",
-        "금융당국",
-        "금감원",
-        "금융감독원",
-        "금융위",
-        "한국은행",
-        "한국거래소",
-        "PF",
-        "IB",
-        "투자은행",
-        "MTS",
-        "ELS",
-        "IPO",
-        "ECM"
-      ]
-    },
+    "keywords": [
+      "유준원",
+      "상상인",
+      "상상인증권",
+      "상상인선박기계",
+      "시너지이노베이션",
+      "메디카코리아",
+      "엠아이텍",
+      "노비스바이오",
+      "프로톡스",
+      "에스앤지바이오텍",
+      "바스노바",
+      "카카오뱅크",
+      "카카오증권",
+      "대신증권",
+      "한화투자증권",
+      "유안타증권",
+      "교보증권",
+      "현대차증권",
+      "하이투자증권",
+      "DB 금융투자",
+      "IBK 투자증권",
+      "다올투자증권",
+      "유진투자증권",
+      "이베스트투자증권",
+      "부국증권",
+      "SK 증권",
+      "리그테이블",
+      "제2금융",
+      "중소형증권",
+      "금융당국",
+      "금감원",
+      "금융감독원",
+      "금융위",
+      "한국은행",
+      "한국거래소",
+      "PF",
+      "IB",
+      "투자은행",
+      "MTS",
+      "ELS",
+      "IPO",
+      "ECM"
+    ],
     "fallbackCandidates": [
       {
         "id": 1001,
@@ -795,7 +888,8 @@
         "press": "한국경제",
         "title": "상상인증권, 중소형 IB·ECM 주관 실적 개선세 뚜렷",
         "url": "https://www.hankyung.com",
-        "time": "오늘 07:30",
+        "pubDateISO": "2026-11-13T07:30:00+09:00",
+        "time": "2026.11.13 07:30",
         "score": 99,
         "matchedKw": "상상인증권",
         "duplicate": false,
@@ -807,7 +901,8 @@
         "press": "매일경제",
         "title": "한화·유안타·교보증권, 4분기 리테일 및 채권 운용 전략 재정비",
         "url": "https://www.mk.co.kr",
-        "time": "오늘 07:15",
+        "pubDateISO": "2026-11-13T07:15:00+09:00",
+        "time": "2026.11.13 07:15",
         "score": 94,
         "matchedKw": "한화투자증권",
         "duplicate": false,
@@ -822,44 +917,38 @@
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
     "quote": "작은 디테일이 위대한 품질의 차이를 만든다.",
     "author": "피터 드러커",
-    "keywords": {
-      "own": [
-        "엠아이텍",
-        "M.I.TECH",
-        "MITECH",
-        "에스앤지바이오텍",
-        "S&G 바이오텍",
-        "S&G BIOTEC",
-        "바스노바"
-      ],
-      "comp": [
-        "보스톤사이언티",
-        "Boston Scientific",
-        "쿡메디칼",
-        "Cook Medical",
-        "태웅메디칼",
-        "올림푸스",
-        "펜탁스 메디칼",
-        "후지필름",
-        "파인메딕스",
-        "스텐트",
-        "스탠트",
-        "내시경장비",
-        "초음파장비",
-        "의료기기",
-        "담도"
-      ],
-      "ind": [
-        "식약처",
-        "식품의약품안전처",
-        "보건복지부",
-        "의약품안전나라",
-        "의료기기안심책방",
-        "한국의료기기안전정보원",
-        "한국의료기기산업협회",
-        "한국제약바이오협회"
-      ]
-    },
+    "keywords": [
+      "엠아이텍",
+      "M.I.TECH",
+      "MITECH",
+      "에스앤지바이오텍",
+      "S&G 바이오텍",
+      "S&G BIOTEC",
+      "바스노바",
+      "보스톤사이언티",
+      "Boston Scientific",
+      "쿡메디칼",
+      "Cook Medical",
+      "태웅메디칼",
+      "올림푸스",
+      "펜탁스 메디칼",
+      "후지필름",
+      "파인메딕스",
+      "스텐트",
+      "스탠트",
+      "내시경장비",
+      "초음파장비",
+      "의료기기",
+      "담도",
+      "식약처",
+      "식품의약품안전처",
+      "보건복지부",
+      "의약품안전나라",
+      "의료기기안심책방",
+      "한국의료기기안전정보원",
+      "한국의료기기산업협회",
+      "한국제약바이오협회"
+    ],
     "fallbackCandidates": [
       {
         "id": 2001,
@@ -867,7 +956,8 @@
         "press": "메디파나뉴스",
         "title": "엠아이텍, 비혈관 스텐트 글로벌 수출 확대…유럽·아시아 점유율 상승",
         "url": "https://www.medipana.com",
-        "time": "오늘 08:10",
+        "pubDateISO": "2026-11-13T08:10:00+09:00",
+        "time": "2026.11.13 08:10",
         "score": 99,
         "matchedKw": "엠아이텍",
         "duplicate": false,
@@ -882,31 +972,25 @@
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
     "quote": "시너지는 전체가 부분의 합보다 크다는 것을 증명한다.",
     "author": "스티븐 코비",
-    "keywords": {
-      "own": [
-        "시너지이노베이션"
-      ],
-      "comp": [
-        "기산바이오",
-        "고마바이오텍",
-        "머크",
-        "Merck",
-        "써모피셔사이언티픽",
-        "아미코젠",
-        "아지노모도제넥신 셀리스트",
-        "엑셀세라퓨틱스",
-        "배지",
-        "미생물배양",
-        "세포배양"
-      ],
-      "ind": [
-        "의료기기",
-        "식약처",
-        "보건복지부",
-        "한국의료기기산업협회",
-        "한국의료기기협동조합"
-      ]
-    },
+    "keywords": [
+      "시너지이노베이션",
+      "기산바이오",
+      "고마바이오텍",
+      "머크",
+      "Merck",
+      "써모피셔사이언티픽",
+      "아미코젠",
+      "아지노모도제넥신 셀리스트",
+      "엑셀세라퓨틱스",
+      "배지",
+      "미생물배양",
+      "세포배양",
+      "의료기기",
+      "식약처",
+      "보건복지부",
+      "한국의료기기산업협회",
+      "한국의료기기협동조합"
+    ],
     "fallbackCandidates": [
       {
         "id": 3001,
@@ -914,7 +998,8 @@
         "press": "한국경제",
         "title": "시너지이노베이션, 바이오 소부장·미생물배양 배지 사업 포트폴리오 고도화",
         "url": "https://www.hankyung.com",
-        "time": "오늘 08:15",
+        "pubDateISO": "2026-11-13T08:15:00+09:00",
+        "time": "2026.11.13 08:15",
         "score": 99,
         "matchedKw": "시너지이노베이션",
         "duplicate": false,
@@ -929,30 +1014,24 @@
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
     "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
     "author": "토머스 에디슨",
-    "keywords": {
-      "own": [
-        "메디카코리아",
-        "Medica Korea"
-      ],
-      "comp": [
-        "동국제약",
-        "종근당",
-        "대웅제약",
-        "동아제약",
-        "유한양행"
-      ],
-      "ind": [
-        "개량신약",
-        "IMD",
-        "약가 인하",
-        "제네릭",
-        "한국제약바이오협회",
-        "식품의약품안전처",
-        "의약품안전나라",
-        "한국제약협동조합",
-        "보건복지부"
-      ]
-    },
+    "keywords": [
+      "메디카코리아",
+      "Medica Korea",
+      "동국제약",
+      "종근당",
+      "대웅제약",
+      "동아제약",
+      "유한양행",
+      "개량신약",
+      "IMD",
+      "약가 인하",
+      "제네릭",
+      "한국제약바이오협회",
+      "식품의약품안전처",
+      "의약품안전나라",
+      "한국제약협동조합",
+      "보건복지부"
+    ],
     "fallbackCandidates": [
       {
         "id": 101,
@@ -960,7 +1039,8 @@
         "press": "데일리팜",
         "title": "대웅제약·종근당, 개량신약(IMD) 복합제 파이프라인 확대",
         "url": "https://www.dailypharm.com",
-        "time": "오늘 07:10",
+        "pubDateISO": "2026-11-13T07:10:00+09:00",
+        "time": "2026.11.13 07:10",
         "score": 96,
         "matchedKw": "대웅제약",
         "duplicate": false,
@@ -975,30 +1055,24 @@
     "mailTitle": "상상인 계열사 데일리 모니터링 (매일 오전 9시)",
     "quote": "과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.",
     "author": "알베르트 아인슈타인",
-    "keywords": {
-      "own": [
-        "뉴로바이오젠",
-        "neurobiogen",
-        "KDS2010",
-        "티솔라질린"
-      ],
-      "comp": [
-        "사이렉스",
-        "사일렉스",
-        "비만 치료제",
-        "치매 치료제",
-        "알츠하이머",
-        "비만약",
-        "치매약"
-      ],
-      "ind": [
-        "식약처",
-        "식품의약품안전처",
-        "보건복지부",
-        "의약품안전나라",
-        "한국제약바이오협회"
-      ]
-    },
+    "keywords": [
+      "뉴로바이오젠",
+      "neurobiogen",
+      "KDS2010",
+      "티솔라질린",
+      "사이렉스",
+      "사일렉스",
+      "비만 치료제",
+      "치매 치료제",
+      "알츠하이머",
+      "비만약",
+      "치매약",
+      "식약처",
+      "식품의약품안전처",
+      "보건복지부",
+      "의약품안전나라",
+      "한국제약바이오협회"
+    ],
     "fallbackCandidates": [
       {
         "id": 5001,
@@ -1006,7 +1080,8 @@
         "press": "바이오스펙테이터",
         "title": "뉴로바이오젠, 반응성 별아교세포 표적 'KDS2010(티솔라질린)' 임상 순항",
         "url": "https://www.biospectator.com",
-        "time": "오늘 08:20",
+        "pubDateISO": "2026-11-13T08:20:00+09:00",
+        "time": "2026.11.13 08:20",
         "score": 99,
         "matchedKw": "뉴로바이오젠",
         "duplicate": false,
@@ -1019,7 +1094,15 @@
     const DAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"];
     let activeAffiliate = "medica";
     let activeCatFilter = "all";
+    let searchKeywordFilter = "";
     let scrapedPoolData = null;
+
+    function formatDateInput(dateObj) {
+      const yyyy = dateObj.getFullYear();
+      const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const dd = String(dateObj.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    }
 
     function getTodayInfo() {
       const now = new Date();
@@ -1030,6 +1113,15 @@
         dateStr: `${yyyy}.${mm}.${dd}`,
         dayLabel: DAY_NAMES[now.getDay()]
       };
+    }
+
+    function initDateInputs() {
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      document.getElementById("scrapeStartDate").value = formatDateInput(yesterday);
+      document.getElementById("scrapeEndDate").value = formatDateInput(today);
+      document.getElementById("inputPublishDateStr").value = getTodayInfo().dateStr;
     }
 
     function showToast(msg) {
@@ -1056,10 +1148,16 @@
       document.getElementById("syncStatusText").textContent = text;
     }
 
+    function flattenKeywords(kwData) {
+      if (Array.isArray(kwData)) return kwData;
+      if (kwData && typeof kwData === "object") {
+        return Array.from(new Set([...(kwData.own || []), ...(kwData.comp || []), ...(kwData.ind || [])]));
+      }
+      return [];
+    }
+
     function updateAffiliateMeta() {
       const cfg = getCurrentConfig();
-      document.getElementById("infoManagerCycle").textContent = `${cfg.manager} · ${cfg.cycle}`;
-      document.getElementById("infoMailTitle").textContent = cfg.mailTitle;
       document.getElementById("btnViewEmployeePage").href = `./index.html?corp=${activeAffiliate}`;
     }
 
@@ -1072,7 +1170,9 @@
           scrapedPoolData = data;
           if (data.keywords) {
             Object.keys(data.keywords).forEach(k => {
-              if (AFFILIATE_CONFIGS[k]) AFFILIATE_CONFIGS[k].keywords = data.keywords[k];
+              if (AFFILIATE_CONFIGS[k]) {
+                AFFILIATE_CONFIGS[k].keywords = flattenKeywords(data.keywords[k]);
+              }
             });
           }
           if (data.affiliates) {
@@ -1084,25 +1184,26 @@
           }
           const affInfo = data.affiliates?.[activeAffiliate];
           if (affInfo && affInfo.scrapedAt) {
-            setSyncStatus(false, `✅ 네이버 API 자동 수집 완료 (${affInfo.scrapedAt} · 후보 ${affInfo.count}건)`);
+            const rangeTxt = affInfo.dateRange ? ` · 기간: ${affInfo.dateRange}` : "";
+            setSyncStatus(false, `✅ 수집 완료 (${affInfo.scrapedAt}${rangeTxt} · 전체 ${affInfo.count}건)`);
           } else {
-            setSyncStatus(true, "⚠️ 아직 수집된 데이터가 없습니다. 우측 상단 [🔄 지금 네이버 뉴스 수집 요청]을 눌러주세요.");
+            setSyncStatus(true, "⚠️ 수집된 데이터가 없습니다. 날짜를 선택 후 [🔍 지정 날짜로 네이버 뉴스 스크래핑]을 눌러주세요.");
           }
           renderKeywords();
           renderCandidates();
           updateSidebarPreview();
-          if (showNotice) showToast("✅ 최신 수집 기사 목록을 새로고침했습니다.");
+          if (showNotice) showToast("✅ 최신 수집 기사 목록을 불러왔습니다.");
           return;
         }
       } catch (e) {}
 
-      setSyncStatus(true, "⚠️ scraped_pool.json 파일이 아직 생성되지 않았습니다. GitHub Actions를 1회 실행해주세요.");
+      setSyncStatus(true, "⚠️ scraped_pool.json이 아직 없습니다. 날짜를 지정하고 [🔍 지정 날짜로 네이버 뉴스 스크래핑]을 실행해주세요.");
       renderKeywords();
       renderCandidates();
       updateSidebarPreview();
     }
 
-    // GitHub API로 파일 읽기/쓰기 유틸리티 (UTF-8 한글 안전 인코딩)
+    // GitHub API 유틸리티
     function utf8ToBase64(str) {
       const bytes = new TextEncoder().encode(str);
       let bin = "";
@@ -1155,7 +1256,7 @@
       return await res.json();
     }
 
-    // GitHub Actions 수동 수집 트리거
+    // 날짜 직접 지정하여 네이버 뉴스 스크래핑 실행 (GitHub Actions workflow_dispatch)
     document.getElementById("btnTriggerScrape").addEventListener("click", async () => {
       const gh = getGhSettings();
       if (!gh.token) {
@@ -1164,9 +1265,21 @@
         return;
       }
 
+      const startDate = document.getElementById("scrapeStartDate").value;
+      const endDate = document.getElementById("scrapeEndDate").value;
+
+      if (!startDate || !endDate) {
+        showToast("⚠️ 시작일과 종료일을 모두 선택해주세요.");
+        return;
+      }
+      if (startDate > endDate) {
+        showToast("⚠️ 시작일이 종료일보다 늦을 수 없습니다.");
+        return;
+      }
+
       const btn = document.getElementById("btnTriggerScrape");
       btn.disabled = true;
-      btn.textContent = "⏳ 수집 로봇 호출 중...";
+      btn.textContent = "⏳ 수집 요청 중...";
 
       try {
         const res = await fetch(`https://api.github.com/repos/${gh.repo}/actions/workflows/naver_scrape.yml/dispatches`, {
@@ -1178,30 +1291,34 @@
           },
           body: JSON.stringify({
             ref: "main",
-            inputs: { affiliate: "all" }
+            inputs: {
+              affiliate: activeAffiliate,
+              start_date: startDate,
+              end_date: endDate
+            }
           })
         });
 
         if (!res.ok) {
-          throw new Error(`워크플로우 실행 실패 (${res.status}) - 파일 경로(.github/workflows/naver_scrape.yml)와 토큰 권한을 확인하세요.`);
+          throw new Error(`워크플로우 실행 실패 (${res.status}) - 토큰 권한 및 naver_scrape.yml 파일을 확인하세요.`);
         }
 
-        setSyncStatus(true, "⏳ GitHub Actions가 네이버 API에서 최신 기사를 수집 중입니다. 약 25초 후 자동 새로고침됩니다...");
-        showToast("🚀 네이버 API 수집 요청 완료! 약 25초 뒤 자동 갱신됩니다.");
+        setSyncStatus(true, `⏳ [${getCurrentConfig().name}] ${startDate} ~ ${endDate} 기간 네이버 API 수집 중... (약 25초 후 자동 새로고침)`);
+        showToast(`🚀 ${startDate} ~ ${endDate} 수집 시작! 약 25초 뒤 자동 반영됩니다.`);
 
         setTimeout(() => {
           loadScrapedPool(true);
           btn.disabled = false;
-          btn.textContent = "🔄 지금 네이버 뉴스 수집 요청";
+          btn.textContent = "🔍 지정 날짜로 네이버 뉴스 스크래핑";
         }, 25000);
       } catch (e) {
         showToast(`❌ ${e.message}`);
         btn.disabled = false;
-        btn.textContent = "🔄 지금 네이버 뉴스 수집 요청";
+        btn.textContent = "🔍 지정 날짜로 네이버 뉴스 스크래핑";
       }
     });
 
-    // 키워드 변경사항 저장소(scraped_pool.json)에 반영
+    // 통합 키워드 저장소 반영
     document.getElementById("btnSaveKwToGithub").addEventListener("click", async () => {
       const gh = getGhSettings();
       if (!gh.token) {
@@ -1224,13 +1341,13 @@
         Object.keys(AFFILIATE_CONFIGS).forEach(k => allKw[k] = AFFILIATE_CONFIGS[k].keywords);
         currentPool.keywords = allKw;
 
-        await githubPutFile(gh.repo, gh.token, "scraped_pool.json", currentPool, "chore: update monitoring keywords");
-        showToast("💾 키워드 설정이 GitHub 저장소에 반영되었습니다!");
+        await githubPutFile(gh.repo, gh.token, "scraped_pool.json", currentPool, "chore: update unified monitoring keywords");
+        showToast("💾 통합 키워드가 저장소에 저장되었습니다! 다음 스크래핑부터 반영됩니다.");
       } catch (e) {
         showToast(`❌ 키워드 저장 실패: ${e.message}`);
       } finally {
         btn.disabled = false;
-        btn.textContent = "💾 키워드 변경사항 저장소 반영";
+        btn.textContent = "💾 키워드 저장소 반영";
       }
     });
 
@@ -1238,6 +1355,7 @@
     document.getElementById("btnPublishToGithub").addEventListener("click", async () => {
       const cfg = getCurrentConfig();
       const today = getTodayInfo();
+      const pubDateStr = document.getElementById("inputPublishDateStr").value.trim() || today.dateStr;
       const list = cfg.candidates || cfg.fallbackCandidates;
       const selected = list.filter(c => c.selected);
 
@@ -1251,7 +1369,7 @@
         name: cfg.name,
         manager: cfg.manager,
         cycle: cfg.cycle,
-        date: today.dateStr,
+        date: pubDateStr,
         dayLabel: today.dayLabel,
         scrapeWindow: `${cfg.cycle} · 담당: ${cfg.manager} · 확정 ${selected.length}건`,
         quote: document.getElementById("inputQuote").value.trim(),
@@ -1264,14 +1382,13 @@
         }))
       };
 
-      // 로컬 스토리지 백업 저장
       try {
         localStorage.setItem("group_news_published_" + activeAffiliate, JSON.stringify(payload));
       } catch (e) {}
 
       const gh = getGhSettings();
       if (!gh.token) {
-        showToast("⚠️ 토큰이 미등록되어 현재 브라우저에만 반영되었습니다. 전 직원 공유를 위해 토큰을 등록하세요.");
+        showToast("⚠️ 토큰 미등록으로 현재 브라우저에만 반영되었습니다.");
         document.getElementById("ghModal").classList.add("open");
         return;
       }
@@ -1291,7 +1408,6 @@
 
         pubJson.published[activeAffiliate] = payload;
 
-        // 과거 중복 차단을 위한 정규화 제목 이력 누적
         const normList = new Set(pubJson.history[activeAffiliate] || []);
         selected.forEach(s => {
           const norm = s.title.replace(/\[[^\]]*\]/g, "").replace(/[^가-힣a-zA-Z0-9]/g, "").toLowerCase();
@@ -1299,8 +1415,8 @@
         });
         pubJson.history[activeAffiliate] = Array.from(normList).slice(-500);
 
-        await githubPutFile(gh.repo, gh.token, "published_data.json", pubJson, `publish: ${cfg.name} daily news (${today.dateStr})`);
-        showToast(`🚀 [${cfg.name}] 전 직원 페이지 발행 완료! (약 30초 후 모든 임직원 스마트폰에 반영)`);
+        await githubPutFile(gh.repo, gh.token, "published_data.json", pubJson, `publish: ${cfg.name} daily news (${pubDateStr})`);
+        showToast(`🚀 [${cfg.name}] 전 직원 페이지 발행 완료!`);
       } catch (e) {
         showToast(`❌ 발행 오류: ${e.message}`);
       } finally {
@@ -1311,26 +1427,18 @@
 
     function renderKeywords() {
       const cfg = getCurrentConfig();
-      const groups = [
-        { key: "own", label: "[자사]", cls: "lbl-own", elId: "kwGroupOwn" },
-        { key: "comp", label: "[경쟁사]", cls: "lbl-comp", elId: "kwGroupComp" },
-        { key: "ind", label: "[업계]", cls: "lbl-ind", elId: "kwGroupInd" }
-      ];
-
-      groups.forEach(g => {
-        const container = document.getElementById(g.elId);
-        container.innerHTML = `<span class="kw-group-label ${g.cls}">${g.label}</span>`;
-        cfg.keywords[g.key].forEach((kw, idx) => {
-          const chip = document.createElement("span");
-          chip.className = "kw-chip";
-          chip.innerHTML = `${kw} <button title="삭제">&times;</button>`;
-          chip.querySelector("button").addEventListener("click", () => {
-            cfg.keywords[g.key].splice(idx, 1);
-            renderKeywords();
-            showToast(`키워드 '${kw}' 삭제됨 (우측 [💾 키워드 변경사항 저장소 반영] 클릭 시 영구 저장)`);
-          });
-          container.appendChild(chip);
+      const container = document.getElementById("unifiedKwPool");
+      container.innerHTML = "";
+      cfg.keywords.forEach((kw, idx) => {
+        const chip = document.createElement("span");
+        chip.className = "kw-chip";
+        chip.innerHTML = `#${kw} <button title="삭제">&times;</button>`;
+        chip.querySelector("button").addEventListener("click", () => {
+          cfg.keywords.splice(idx, 1);
+          renderKeywords();
+          showToast(`'${kw}' 삭제됨 ([💾 키워드 저장소 반영] 클릭 시 영구 저장)`);
         });
+        container.appendChild(chip);
       });
     }
 
@@ -1340,17 +1448,29 @@
       const hideDup = document.getElementById("chkHideDuplicates").checked;
 
       const visibleAll = list.filter(c => !(hideDup && c.duplicate));
-      document.getElementById("poolAll").textContent = visibleAll.length;
-      document.getElementById("poolOwn").textContent = visibleAll.filter(c => c.category === "own").length;
-      document.getElementById("poolComp").textContent = visibleAll.filter(c => c.category === "comp").length;
-      document.getElementById("poolInd").textContent = visibleAll.filter(c => c.category === "ind").length;
+      const selectedAll = visibleAll.filter(c => c.selected);
 
-      const filtered = visibleAll.filter(c => activeCatFilter === "all" || c.category === activeCatFilter);
+      document.getElementById("poolAll").textContent = visibleAll.length;
+      document.getElementById("poolSelected").textContent = selectedAll.length;
+      document.getElementById("poolOwn").textContent = selectedAll.filter(c => c.category === "own").length;
+      document.getElementById("poolComp").textContent = selectedAll.filter(c => c.category === "comp").length;
+      document.getElementById("poolInd").textContent = selectedAll.filter(c => c.category === "ind").length;
+
+      const filtered = visibleAll.filter(c => {
+        if (activeCatFilter === "selected" && !c.selected) return false;
+        if (["own", "comp", "ind"].includes(activeCatFilter) && (!c.selected || c.category !== activeCatFilter)) return false;
+        if (searchKeywordFilter) {
+          const q = searchKeywordFilter.toLowerCase();
+          return (c.title || "").toLowerCase().includes(q) || (c.press || "").toLowerCase().includes(q) || (c.matchedKw || "").toLowerCase().includes(q);
+        }
+        return true;
+      });
+
       const container = document.getElementById("candidateListContainer");
       container.innerHTML = "";
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="padding:32px; text-align:center; color:#94a3b8; font-size:0.88rem;">표시할 후보 기사가 없습니다.</div>`;
+        container.innerHTML = `<div style="padding:32px; text-align:center; color:#94a3b8; font-size:0.88rem;">표시할 기사가 없습니다.</div>`;
         return;
       }
 
@@ -1359,18 +1479,17 @@
         card.className = `scraped-card ${item.selected ? "selected" : ""} ${item.duplicate ? "is-duplicate" : ""}`;
         card.innerHTML = `
           <div class="card-top">
-            <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+            <div class="card-left-controls">
               <label class="check-select">
                 <input type="checkbox" ${item.selected ? "checked" : ""}>
-                <span>노출 선정</span>
+                <span>노출 선택</span>
               </label>
-              <select class="cat-select-inline">
-                <option value="own" ${item.category === "own" ? "selected" : ""}>[자사]</option>
-                <option value="comp" ${item.category === "comp" ? "selected" : ""}>[경쟁사]</option>
-                <option value="ind" ${item.category === "ind" ? "selected" : ""}>[업계]</option>
-              </select>
+              <div class="cat-btn-group" role="group" aria-label="기사 구분 지정">
+                <button type="button" class="cat-choice-btn ${item.category === "own" ? "active-own" : ""}" data-set-cat="own">자사</button>
+                <button type="button" class="cat-choice-btn ${item.category === "comp" ? "active-comp" : ""}" data-set-cat="comp">경쟁사</button>
+                <button type="button" class="cat-choice-btn ${item.category === "ind" ? "active-ind" : ""}" data-set-cat="ind">업계</button>
+              </div>
               ${item.matchedKw ? `<span class="kw-match-badge">#${item.matchedKw}</span>` : ""}
-              <span class="score-badge">중요도 ${item.score}점</span>
               ${item.duplicate ? `<span class="dup-badge">과거 발행 중복</span>` : ""}
             </div>
             <span style="font-size:0.76rem; color:#64748b;">🕒 ${item.time}</span>
@@ -1383,6 +1502,7 @@
           </div>
         `;
 
+        // 노출 선택 체크박스
         const cb = card.querySelector("input[type='checkbox']");
         cb.addEventListener("change", (e) => {
           const selectedCount = list.filter(c => c.selected).length;
@@ -1396,20 +1516,72 @@
           updateSidebarPreview();
         });
 
-        const catSel = card.querySelector(".cat-select-inline");
-        catSel.addEventListener("change", (e) => {
-          item.category = e.target.value;
-          renderCandidates();
-          updateSidebarPreview();
+        // 원클릭 구분(자사/경쟁사/업계) 버튼 클릭 시 구분 지정 + 자동 노출 선택 처리
+        card.querySelectorAll(".cat-choice-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const targetCat = btn.dataset.setCat;
+            item.category = targetCat;
+            if (!item.selected) {
+              const selectedCount = list.filter(c => c.selected).length;
+              if (selectedCount < 15) {
+                item.selected = true;
+              } else {
+                showToast("⚠️ 이미 15개가 선택되어 구분만 변경되었습니다.");
+              }
+            }
+            renderCandidates();
+            updateSidebarPreview();
+          });
         });
 
         container.appendChild(card);
       });
     }
 
+    function renderSelectedOrganizer(selectedList) {
+      const box = document.getElementById("selectedOrganizerBox");
+      if (selectedList.length === 0) {
+        box.innerHTML = `<div style="text-align:center; color:#94a3b8; font-size:0.78rem; padding:14px 0;">좌측 목록에서 기사를 체크하거나 [자사/경쟁사/업계] 버튼을 누르면 여기에 담깁니다.</div>`;
+        return;
+      }
+
+      // 자사 -> 경쟁사 -> 업계 순으로 정렬하여 표시
+      const order = { own: 1, comp: 2, ind: 3 };
+      const sorted = [...selectedList].sort((a, b) => order[a.category] - order[b.category]);
+
+      box.innerHTML = "";
+      sorted.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "org-item";
+        row.innerHTML = `
+          <select class="org-mini-select">
+            <option value="own" ${item.category === "own" ? "selected" : ""}>[자사]</option>
+            <option value="comp" ${item.category === "comp" ? "selected" : ""}>[경쟁사]</option>
+            <option value="ind" ${item.category === "ind" ? "selected" : ""}>[업계]</option>
+          </select>
+          <span class="org-title" title="[${item.press}] ${item.title}">[${item.press}] ${item.title}</span>
+          <button type="button" class="org-remove-btn" title="선택 해제">&times;</button>
+        `;
+
+        row.querySelector("select").addEventListener("change", (e) => {
+          item.category = e.target.value;
+          renderCandidates();
+          updateSidebarPreview();
+        });
+
+        row.querySelector("button").addEventListener("click", () => {
+          item.selected = false;
+          renderCandidates();
+          updateSidebarPreview();
+        });
+
+        box.appendChild(row);
+      });
+    }
+
     function buildFormattedSms() {
       const cfg = getCurrentConfig();
-      const today = getTodayInfo();
+      const pubDateStr = document.getElementById("inputPublishDateStr").value.trim() || getTodayInfo().dateStr;
       const list = cfg.candidates || cfg.fallbackCandidates;
       const quote = document.getElementById("inputQuote").value.trim();
       const author = document.getElementById("inputAuthor").value.trim();
@@ -1420,7 +1592,7 @@
       const ind = selected.filter(c => c.category === "ind");
 
       const out = [];
-      out.push(`[${today.dateStr}] ${cfg.name} 모니터링`);
+      out.push(`[${pubDateStr}] ${cfg.name} 모니터링`);
       out.push("");
       out.push(quote);
       out.push(`- ${author}`);
@@ -1455,10 +1627,28 @@
       document.getElementById("selComp").textContent = selected.filter(c => c.category === "comp").length;
       document.getElementById("selInd").textContent = selected.filter(c => c.category === "ind").length;
 
+      renderSelectedOrganizer(selected);
       document.getElementById("smsPreviewBox").textContent = buildFormattedSms();
     }
 
-    // Event Bindings
+    // Date Preset Buttons
+    document.getElementById("btnPresetYesterdayToday").addEventListener("click", () => {
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      document.getElementById("scrapeStartDate").value = formatDateInput(yesterday);
+      document.getElementById("scrapeEndDate").value = formatDateInput(today);
+    });
+
+    document.getElementById("btnPresetWeekend").addEventListener("click", () => {
+      const today = new Date();
+      const fri = new Date(today);
+      fri.setDate(today.getDate() - 3);
+      document.getElementById("scrapeStartDate").value = formatDateInput(fri);
+      document.getElementById("scrapeEndDate").value = formatDateInput(today);
+    });
+
+    // Affiliate Switcher
     document.getElementById("adminAffiliateSelect").addEventListener("change", (e) => {
       activeAffiliate = e.target.value;
       const cfg = getCurrentConfig();
@@ -1469,7 +1659,10 @@
       updateAffiliateMeta();
       const affInfo = scrapedPoolData?.affiliates?.[activeAffiliate];
       if (affInfo && affInfo.scrapedAt) {
-        setSyncStatus(false, `✅ 네이버 API 자동 수집 완료 (${affInfo.scrapedAt} · 후보 ${affInfo.count}건)`);
+        const rangeTxt = affInfo.dateRange ? ` · 기간: ${affInfo.dateRange}` : "";
+        setSyncStatus(false, `✅ 수집 완료 (${affInfo.scrapedAt}${rangeTxt} · 전체 ${affInfo.count}건)`);
+      } else {
+        setSyncStatus(true, "⚠️ 수집된 데이터가 없습니다. 날짜를 선택 후 [🔍 지정 날짜로 네이버 뉴스 스크래핑]을 눌러주세요.");
       }
       renderKeywords();
       renderCandidates();
@@ -1488,34 +1681,33 @@
       });
     });
 
+    document.getElementById("searchArticleInput").addEventListener("input", (e) => {
+      searchKeywordFilter = e.target.value.trim();
+      renderCandidates();
+    });
+
     document.getElementById("newKwInput").addEventListener("keydown", (e) => {
       if (e.key === "Enter") { e.preventDefault(); document.getElementById("btnAddKw").click(); }
     });
 
     document.getElementById("btnAddKw").addEventListener("click", () => {
-      const cat = document.getElementById("newKwCategory").value;
       const input = document.getElementById("newKwInput");
-      const val = input.value.trim();
-      if (!val) return;
+      const raw = input.value.trim();
+      if (!raw) return;
       const cfg = getCurrentConfig();
-      if (!cfg.keywords[cat].includes(val)) {
-        cfg.keywords[cat].push(val);
+      const items = raw.split(",").map(s => s.trim()).filter(Boolean);
+      let added = 0;
+      items.forEach(val => {
+        if (!cfg.keywords.includes(val)) {
+          cfg.keywords.push(val);
+          added++;
+        }
+      });
+      if (added > 0) {
         renderKeywords();
-        showToast(`'${val}' 추가됨 (우측 [💾 키워드 변경사항 저장소 반영]을 눌러 저장하세요)`);
+        showToast(`${added}개 키워드 추가됨 ([💾 키워드 저장소 반영] 클릭 시 영구 저장)`);
       }
       input.value = "";
-    });
-
-    document.getElementById("btnAutoPick15").addEventListener("click", () => {
-      const cfg = getCurrentConfig();
-      const list = cfg.candidates || cfg.fallbackCandidates;
-      list.forEach(c => c.selected = false);
-      const prio = { own: 1, comp: 2, ind: 3 };
-      const sorted = list.filter(c => !c.duplicate).sort((a, b) => (prio[a.category] - prio[b.category]) || (b.score - a.score));
-      sorted.slice(0, 15).forEach(c => c.selected = true);
-      renderCandidates();
-      updateSidebarPreview();
-      showToast(`자사 우선 및 중요도 기준으로 ${Math.min(sorted.length, 15)}건 선정 완료`);
     });
 
     document.getElementById("btnClearAll").addEventListener("click", () => {
@@ -1526,6 +1718,7 @@
       updateSidebarPreview();
     });
 
+    document.getElementById("inputPublishDateStr").addEventListener("input", updateSidebarPreview);
     document.getElementById("inputQuote").addEventListener("input", updateSidebarPreview);
     document.getElementById("inputAuthor").addEventListener("input", updateSidebarPreview);
 
@@ -1553,6 +1746,7 @@
     });
 
     // Init
+    initDateInputs();
     updateAffiliateMeta();
     loadScrapedPool(false);
   </script>
