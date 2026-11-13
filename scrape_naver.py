@@ -1,4 +1,4 @@
-import os
+hub_py_code = '''import os
 import re
 import json
 import time
@@ -122,3 +122,145 @@ def get_date_bounds(now_dt, start_str, end_str):
         try:
             d = datetime.strptime(end_str.strip(), '%Y-%m-%d')
             end_dt = datetime(d.year, d.month, d.day, 23, 59, 59, tzinfo=KST)
+        except Exception:
+            pass
+
+    if start_dt or end_dt:
+        if not start_dt:
+            start_dt = end_dt - timedelta(days=3)
+        if not end_dt:
+            end_dt = now_dt
+        return start_dt, end_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {end_dt.strftime('%Y.%m.%d')}"
+
+    start_dt = now_dt - timedelta(days=7)
+    return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')} (최근 7일)"
+
+def fetch_naver_news(query, client_id, client_secret, display=30):
+    encoded = urllib.parse.quote(query)
+    # 1순위: 네이버 클라우드 플랫폼 NAVER API HUB (search/v1/news.json)
+    url_hub = f"https://naveropenapi.apigw.ntruss.com/search/v1/news.json?query={encoded}&display={display}&sort=date"
+    req_hub = urllib.request.Request(url_hub)
+    req_hub.add_header("X-NCP-APIGW-API-KEY-ID", client_id)
+    req_hub.add_header("X-NCP-APIGW-API-KEY", client_secret)
+    try:
+        with urllib.request.urlopen(req_hub, timeout=10) as resp:
+            return json.loads(resp.read().decode('utf-8')).get('items', [])
+    except urllib.error.HTTPError as e:
+        if e.code not in (401, 403, 404):
+            raise
+        # 2순위: 일반 네이버 개발자센터 폴백
+        url_dev = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
+        req_dev = urllib.request.Request(url_dev)
+        req_dev.add_header("X-Naver-Client-Id", client_id)
+        req_dev.add_header("X-Naver-Client-Secret", client_secret)
+        with urllib.request.urlopen(req_dev, timeout=10) as resp2:
+            return json.loads(resp2.read().decode('utf-8')).get('items', [])
+
+def main():
+    client_id = os.environ.get("NAVER_CLIENT_ID", "").strip()
+    client_secret = os.environ.get("NAVER_CLIENT_SECRET", "").strip()
+    target = os.environ.get("TARGET_AFFILIATE", "all").strip()
+    start_str = os.environ.get("START_DATE", "").strip()
+    end_str = os.environ.get("END_DATE", "").strip()
+
+    if not client_id or not client_secret:
+        raise RuntimeError("NAVER_CLIENT_ID 또는 NAVER_CLIENT_SECRET 시크릿이 설정되지 않았습니다.")
+
+    now_dt = datetime.now(KST)
+    pool_data = load_json(POOL_FILE, {"updatedAt": "", "keywords": DEFAULT_KEYWORDS, "affiliates": {}})
+    pub_data = load_json(PUBLISHED_FILE, {"history": {}, "published": {}})
+
+    saved_kw = pool_data.get("keywords") or {}
+    active_keywords = {}
+    for k in DEFAULT_KEYWORDS:
+        active_keywords[k] = flatten_keywords(saved_kw.get(k)) if k in saved_kw else DEFAULT_KEYWORDS[k]
+
+    history_map = pub_data.get("history", {})
+    affiliates_out = pool_data.get("affiliates", {})
+
+    for aff_key, kw_list in active_keywords.items():
+        if target != "all" and target != aff_key:
+            continue
+
+        history_set = set(history_map.get(aff_key, []))
+        start_dt, end_dt, range_label = get_date_bounds(now_dt, start_str, end_str)
+        collected = []
+        seen_norms = set()
+
+        for kw in kw_list:
+            try:
+                items = fetch_naver_news(kw, client_id, client_secret, display=30)
+            except Exception as e:
+                print(f"[WARN] {aff_key} - {kw} 호출 실패: {e}")
+                continue
+
+            for item in items:
+                title = clean_html(item.get('title', ''))
+                orig_link = item.get('originallink') or item.get('link') or ''
+                pub_raw = item.get('pubDate', '')
+
+                if not title or not orig_link:
+                    continue
+
+                try:
+                    pub_dt = parsedate_to_datetime(pub_raw).astimezone(KST)
+                    if pub_dt < start_dt or pub_dt > end_dt:
+                        continue
+                    time_label = pub_dt.strftime('%Y.%m.%d %H:%M')
+                    pub_iso = pub_dt.isoformat()
+                    pub_ts = pub_dt.timestamp()
+                except Exception:
+                    time_label = now_dt.strftime('%Y.%m.%d %H:%M')
+                    pub_iso = now_dt.isoformat()
+                    pub_ts = now_dt.timestamp()
+
+                norm = normalize_title(title)
+                if not norm or norm in seen_norms:
+                    continue
+                seen_norms.add(norm)
+
+                initial_cat = "ind"
+                if kw_list and kw_list[0].lower() in title.lower():
+                    initial_cat = "own"
+
+                collected.append({
+                    "id": int(time.time() * 1000) + len(collected),
+                    "category": initial_cat,
+                    "press": extract_press(orig_link),
+                    "title": title,
+                    "url": orig_link,
+                    "pubDateISO": pub_iso,
+                    "time": time_label,
+                    "pubTs": pub_ts,
+                    "matchedKw": kw,
+                    "duplicate": norm in history_set,
+                    "selected": False
+                })
+            time.sleep(0.07)
+
+        collected.sort(key=lambda x: -x['pubTs'])
+
+        affiliates_out[aff_key] = {
+            "scrapedAt": now_dt.strftime('%Y-%m-%d %H:%M:%S KST'),
+            "dateRange": range_label,
+            "count": len(collected),
+            "articles": collected
+        }
+        print(f"[OK] {aff_key} ({range_label}): 총 {len(collected)}건 수집")
+
+    pool_data["updatedAt"] = now_dt.strftime('%Y-%m-%d %H:%M:%S KST')
+    pool_data["keywords"] = active_keywords
+    pool_data["affiliates"] = affiliates_out
+
+    save_json(POOL_FILE, pool_data)
+    if not os.path.exists(PUBLISHED_FILE):
+        save_json(PUBLISHED_FILE, pub_data)
+
+if __name__ == '__main__':
+    main()
+'''
+
+with open("scrape_naver_hub.py", "w", encoding="utf-8") as f:
+    f.write(hub_py_code)
+
+print("Generated scrape_naver_hub.py successfully.")
