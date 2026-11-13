@@ -970,13 +970,16 @@
           <div style="text-align:center; color:#94a3b8; font-size:0.78rem; padding:14px 0;">좌측 목록에서 기사를 체크하면 여기에 담깁니다.</div>
         </div>
 
-        <div class="quote-editor">
-          <label>💬 발행일 및 오늘의 명언 설정</label>
-          <div style="display:flex; gap:6px; margin-bottom:5px;">
-            <input type="text" id="inputPublishDateStr" placeholder="YYYY.MM.DD" style="width:45%; margin-bottom:0; font-weight:700;">
-            <input type="text" id="inputAuthor" value="토머스 에디슨" placeholder="명언 인물명" style="width:55%; margin-bottom:0;">
+        <div class="quote-editor" style="background:#eff6ff; border-color:#bfdbfe;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:6px;">
+            <label style="margin-bottom:0; color:#1e3a8a;">💬 공통 발행일 및 오늘의 명언 (전 계열사 일괄 적용)</label>
+            <button type="button" class="btn btn-secondary" id="btnSyncCommonQuote" style="padding:3px 8px; font-size:0.72rem; color:#1e40af; border-color:#93c5fd;">🌐 전 계열사 즉시 반영</button>
           </div>
-          <textarea id="inputQuote" rows="2" style="margin-bottom:0;">나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.</textarea>
+          <div style="display:flex; gap:6px; margin-bottom:5px;">
+            <input type="text" id="inputPublishDateStr" placeholder="YYYY.MM.DD" style="width:45%; margin-bottom:0; font-weight:700; background:#ffffff;">
+            <input type="text" id="inputAuthor" value="토머스 에디슨" placeholder="명언 인물명" style="width:55%; margin-bottom:0; background:#ffffff;">
+          </div>
+          <textarea id="inputQuote" rows="2" style="margin-bottom:0; background:#ffffff;">나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.</textarea>
         </div>
 
         <div style="font-size:0.76rem; font-weight:800; color:var(--text-muted); margin-bottom:5px;">
@@ -1372,13 +1375,47 @@
       };
     }
 
+    function saveCommonQuoteLocal() {
+      try {
+        localStorage.setItem("pr_common_pub_date", document.getElementById("inputPublishDateStr").value.trim());
+        localStorage.setItem("pr_common_quote", document.getElementById("inputQuote").value.trim());
+        localStorage.setItem("pr_common_author", document.getElementById("inputAuthor").value.trim());
+      } catch (e) {}
+    }
+
+    function loadCommonQuoteLocal() {
+      const todayStr = getTodayInfo().dateStr;
+      const savedDate = localStorage.getItem("pr_common_pub_date");
+      const savedQuote = localStorage.getItem("pr_common_quote");
+      const savedAuthor = localStorage.getItem("pr_common_author");
+      document.getElementById("inputPublishDateStr").value = savedDate || todayStr;
+      if (savedQuote !== null) document.getElementById("inputQuote").value = savedQuote;
+      if (savedAuthor !== null) document.getElementById("inputAuthor").value = savedAuthor;
+    }
+
+    async function loadRemoteCommonQuote() {
+      try {
+        const res = await fetch(`./published_data.json?t=${Date.now()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.common) {
+            if (data.common.date) document.getElementById("inputPublishDateStr").value = data.common.date;
+            if (data.common.quote) document.getElementById("inputQuote").value = data.common.quote;
+            if (data.common.author) document.getElementById("inputAuthor").value = data.common.author;
+            saveCommonQuoteLocal();
+            updateSidebarPreview();
+          }
+        }
+      } catch (e) {}
+    }
+
     function initDateInputs() {
       const today = new Date();
       const yesterday = new Date(today);
       yesterday.setDate(today.getDate() - 1);
       document.getElementById("scrapeStartDate").value = formatDateInput(yesterday);
       document.getElementById("scrapeEndDate").value = formatDateInput(today);
-      document.getElementById("inputPublishDateStr").value = getTodayInfo().dateStr;
+      loadCommonQuoteLocal();
     }
 
     function showToast(msg) {
@@ -1663,7 +1700,21 @@
         if (!pubJson.published) pubJson.published = {};
         if (!pubJson.history) pubJson.history = {};
 
+        // 전 계열사 공통 발행일 및 오늘의 명언 동기화
+        pubJson.common = {
+          date: pubDateStr,
+          quote: payload.quote,
+          author: payload.author
+        };
+        Object.keys(AFFILIATE_CONFIGS).forEach(k => {
+          if (pubJson.published[k]) {
+            pubJson.published[k].date = pubDateStr;
+            pubJson.published[k].quote = payload.quote;
+            pubJson.published[k].author = payload.author;
+          }
+        });
         pubJson.published[activeAffiliate] = payload;
+        saveCommonQuoteLocal();
 
         const normList = new Set(pubJson.history[activeAffiliate] || []);
         selected.forEach(s => {
@@ -2009,9 +2060,6 @@
       activeAffiliate = e.target.value;
       selectedKwFilter = "";
       visibleLimit = 60;
-      const cfg = getCurrentConfig();
-      document.getElementById("inputQuote").value = cfg.quote;
-      document.getElementById("inputAuthor").value = cfg.author;
       activeCatFilter = "all";
       document.querySelectorAll(".f-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === "all"));
       enrichAffiliateArticles(activeAffiliate);
@@ -2147,9 +2195,80 @@
       updateSidebarPreview();
     });
 
-    document.getElementById("inputPublishDateStr").addEventListener("input", updateSidebarPreview);
-    document.getElementById("inputQuote").addEventListener("input", updateSidebarPreview);
-    document.getElementById("inputAuthor").addEventListener("input", updateSidebarPreview);
+    document.getElementById("inputPublishDateStr").addEventListener("input", () => { saveCommonQuoteLocal(); updateSidebarPreview(); });
+    document.getElementById("inputQuote").addEventListener("input", () => { saveCommonQuoteLocal(); updateSidebarPreview(); });
+    document.getElementById("inputAuthor").addEventListener("input", () => { saveCommonQuoteLocal(); updateSidebarPreview(); });
+
+    document.getElementById("btnSyncCommonQuote").addEventListener("click", async () => {
+      saveCommonQuoteLocal();
+      const pubDateStr = document.getElementById("inputPublishDateStr").value.trim() || getTodayInfo().dateStr;
+      const quoteVal = document.getElementById("inputQuote").value.trim();
+      const authorVal = document.getElementById("inputAuthor").value.trim();
+
+      // 로컬 스토리지 전 계열사 반영
+      Object.keys(AFFILIATE_CONFIGS).forEach(k => {
+        try {
+          const raw = localStorage.getItem("group_news_published_" + k);
+          if (raw) {
+            const obj = JSON.parse(raw);
+            obj.date = pubDateStr;
+            obj.quote = quoteVal;
+            obj.author = authorVal;
+            localStorage.setItem("group_news_published_" + k, JSON.stringify(obj));
+          }
+        } catch (e) {}
+      });
+
+      const gh = getGhSettings();
+      if (!gh.token) {
+        showToast("💾 공통 발행일·명언이 저장되었습니다. (GitHub 토큰 등록 시 전 직원 페이지에도 일괄 반영됩니다)");
+        return;
+      }
+
+      const btn = document.getElementById("btnSyncCommonQuote");
+      btn.disabled = true;
+      btn.textContent = "⏳ 반영 중...";
+      try {
+        let pubJson = { history: {}, published: {} };
+        const existing = await githubGetFile(gh.repo, gh.token, "published_data.json");
+        if (existing && existing.content) {
+          pubJson = JSON.parse(base64ToUtf8(existing.content));
+        }
+        if (!pubJson.published) pubJson.published = {};
+        pubJson.common = { date: pubDateStr, quote: quoteVal, author: authorVal };
+
+        Object.keys(AFFILIATE_CONFIGS).forEach(k => {
+          const baseCfg = AFFILIATE_CONFIGS[k];
+          if (!pubJson.published[k]) {
+            const fallbackSel = (baseCfg.candidates || baseCfg.fallbackCandidates || []).filter(c => c.selected);
+            pubJson.published[k] = {
+              affiliate: k,
+              name: baseCfg.name,
+              manager: baseCfg.manager,
+              cycle: baseCfg.cycle,
+              date: pubDateStr,
+              dayLabel: getTodayInfo().dayLabel,
+              scrapeWindow: `${baseCfg.cycle} · 담당: ${baseCfg.manager}`,
+              quote: quoteVal,
+              author: authorVal,
+              articles: fallbackSel.map(s => ({ category: s.category, press: s.press, title: s.title, url: s.url }))
+            };
+          } else {
+            pubJson.published[k].date = pubDateStr;
+            pubJson.published[k].quote = quoteVal;
+            pubJson.published[k].author = authorVal;
+          }
+        });
+
+        await githubPutFile(gh.repo, gh.token, "published_data.json", pubJson, `chore: update common date and quote (${pubDateStr})`);
+        showToast("🌐 5개 전 계열사 페이지에 공통 발행일·명언이 일괄 반영되었습니다!");
+      } catch (e) {
+        showToast(`❌ 반영 실패: ${e.message}`);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "🌐 전 계열사 즉시 반영";
+      }
+    });
 
     document.getElementById("btnOpenGhModal").addEventListener("click", () => {
       const gh = getGhSettings();
@@ -2178,6 +2297,7 @@
     initDateInputs();
     updateAffiliateMeta();
     loadScrapedPool(false);
+    loadRemoteCommonQuote();
   </script>
 </body>
 </html>
