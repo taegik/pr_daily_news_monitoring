@@ -1,4 +1,49 @@
 {
-  "history": {},
-  "published": {}
+  "history": {
+    "medica": [
+      "hlb제약gc녹십자대웅제약유한양행지씨씨엘연7억정생산시설부터정밀검체분석까지",
+      "수입코코아분말서16철사가식약처회수조치",
+      "동국제약센텔리안24컬리뷰티페스타참가온오프라인혜택마련",
+      "제약바이오협회국내기업해외진출지원바이오협회와협력논의"
+    ]
+  },
+  "published": {
+    "medica": {
+      "affiliate": "medica",
+      "name": "메디카코리아",
+      "manager": "김태기 과장",
+      "cycle": "매일 오전 9시~9시반",
+      "date": "2026.11.13",
+      "dayLabel": "금",
+      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 김태기 과장 · 확정 4건",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": [
+        {
+          "category": "ind",
+          "press": "한국면세뉴스",
+          "title": "[제약·바이오 NOW!] HLB제약·GC녹십자·대웅제약·유한양행·지씨씨엘...\"연 7억정 생산시설부터 정밀 검체분석까지\"",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBaNjZkWnQxMzdycnhwUlRKNUhuQkszNUdrYUotcmg2Z3RfM2VXamxFU3cyeVZRUGh3SWN0RG1ZTm1SRlRNN2pyd0ZZaFFfSkhpdy1jS1gzOHhhaVY5LW1Md1hjc3VraFgwdVE?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "뉴스1",
+          "title": "수입 코코아분말서 16㎜ 철사가…식약처, 회수 조치",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5Lc2EwQlhLOXdHYnA5OU8yUHBlbjlheS1MSExsVF9LSUoxZGtYSkhab1JKbkFpcm8xcDRGd1dfalhSV3g1YjlvcWhocEVvSFNqY2c?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "천지일보",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가… 온·오프라인 혜택 마련",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE91Qi1SOW4zR252ZU1BU2J0eW9rQi1QNHF1TG1fNnBvbGt2UlpWY0NNNENyWlI3Ykd4eDFfaFd6cDB1Q1F0ZTRWdzBNeExaUmtMQU8yUmlYcXp5NVktNWY5TERKOEdCOXNuVlE?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "이뉴스투데이",
+          "title": "제약바이오협회, 국내 기업 해외 진출 지원···美 바이오협회와 협력 논의",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1CYTJrOUJPaXRiS3EyOVItVGRTM2NUbEFCaV9VaUhGNTZ4b2lnT2ZmdzRTeWNlQ3Y5UkY0anp1LU83bUdqWDBBR2MxUDBsTE95MUFkZG84M05LaWNEc2ZSVXE4R3BjMlJQa254LWxRdUPSAXRBVV95cUxOTWo0S2xjLUZsbElPcjhzUng2NHNUa3BVRE1nMFgzdUF4U0ZfRk42TG1aRGhvcTQ0OWpnQkVpaHppZ1lYZTN5VzhTR2NLOXRRZXhUV1R2WmxZekZnbDhLR3hCenMzS1VfUmExM1BibTZYS1FjdA?oc=5"
+        }
+      ]
+    }
+  }
 }
