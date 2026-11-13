@@ -1408,7 +1408,26 @@
       setTimeout(() => t.classList.remove("show"), 2600);
     }
 
+    let serverPublishedCache = {};
+
+    async function fetchServerPublished(corpKey) {
+      try {
+        const res = await fetch("/api/published/" + corpKey);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.status === "ok" && json.data && Array.isArray(json.data.articles)) {
+            serverPublishedCache[corpKey] = json.data;
+            renderPage();
+    fetchServerPublished(currentAffiliateKey);
+          }
+        }
+      } catch (e) {}
+    }
+
     function getActiveData() {
+      if (serverPublishedCache[currentAffiliateKey]) {
+        return serverPublishedCache[currentAffiliateKey];
+      }
       try {
         const publishedRaw = localStorage.getItem("group_news_published_" + currentAffiliateKey);
         if (publishedRaw) {
@@ -1579,6 +1598,7 @@
       document.querySelectorAll(".cat-tab").forEach(t => t.classList.toggle("active", t.dataset.filter === "all"));
       document.getElementById("copyFallbackBox").classList.remove("open");
       renderPage();
+    fetchServerPublished(currentAffiliateKey);
       showToast(`${getActiveData().name} 모니터링으로 전환되었습니다.`);
     });
 
@@ -1588,6 +1608,7 @@
         document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
         renderPage();
+    fetchServerPublished(currentAffiliateKey);
       });
     });
 
@@ -1622,6 +1643,7 @@
     });
 
     renderPage();
+    fetchServerPublished(currentAffiliateKey);
   </script>
 </body>
 </html>
