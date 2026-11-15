@@ -3,6 +3,10 @@ name: Daily Naver News Scrape
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'Run mode (scrape or enrich_published)'
+        required: false
+        default: 'scrape'
       affiliate:
         description: 'Target affiliate (all or specific key)'
         required: false
@@ -31,10 +35,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Naver API News Scraper
+      - name: Run News Scraper & Reader Enricher
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          RUN_MODE: ${{ github.event.inputs.mode || 'scrape' }}
           TARGET_AFFILIATE: ${{ github.event.inputs.affiliate || 'all' }}
           START_DATE: ${{ github.event.inputs.start_date || '' }}
           END_DATE: ${{ github.event.inputs.end_date || '' }}
@@ -48,6 +53,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes in scraped news."
           else
-            git commit -m "chore: update naver scraped news [skip ci]"
+            git commit -m "chore: update news and reader view data [skip ci]"
             git push
           fi
