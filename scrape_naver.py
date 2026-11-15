@@ -2,6 +2,7 @@ import os
 import re
 import json
 import time
+import html
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -81,9 +82,7 @@ def save_json(path, data):
 
 def clean_html(raw):
     text = re.sub(r'<[^>]+>', '', raw or '')
-    return (text.replace('&quot;', '"').replace('&amp;', '&')
-                .replace('&lt;', '<').replace('&gt;', '>')
-                .replace('&apos;', "'")).strip()
+    return html.unescape(text).strip()
 
 def normalize_title(title):
     t = re.sub(r'\[[^\]]*\]', '', title or '')
@@ -136,9 +135,161 @@ def get_date_bounds(now_dt, start_str, end_str):
     start_dt = now_dt - timedelta(days=7)
     return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')} (최근 7일)"
 
+def resolve_google_news_url(gnews_url):
+    # Google News RSS 링크를 실제 언론사 원문 URL로 해석
+    if 'news.google.com' not in gnews_url:
+        return gnews_url
+    try:
+        req = urllib.request.Request(gnews_url, headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        })
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            final_url = resp.geturl()
+            if 'news.google.com' not in final_url:
+                return final_url
+            page_html = resp.read().decode('utf-8', errors='ignore')
+            # batchexecute / data-n-au 또는 og:url / canonical 추출 시도
+            m_au = re.search(r'data-n-au="([^"]+)"', page_html)
+            if m_au and 'news.google.com' not in m_au.group(1):
+                return html.unescape(m_au.group(1))
+            m_href = re.search(r'<a[^>]+href="(https?://(?!news\.google\.com|www\.google\.com)[^"]+)"', page_html)
+            if m_href:
+                return html.unescape(m_href.group(1))
+    except Exception:
+        pass
+    return gnews_url
+
+def extract_article_reader_content(url):
+    # 실제 언론사 URL에서 대표 이미지(og:image)와 광고 없는 순수 기사 본문 추출
+    resolved_url = resolve_google_news_url(url)
+    result = {
+        "realUrl": resolved_url,
+        "image": "",
+        "body": "",
+        "summary": ""
+    }
+    try:
+        req = urllib.request.Request(resolved_url, headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8"
+        })
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            raw_bytes = resp.read()
+            # 인코딩 자동 판별 (UTF-8 / EUC-KR / CP949)
+            charset = resp.headers.get_content_charset()
+            if not charset:
+                head_snippet = raw_bytes[:2048].decode('ascii', errors='ignore').lower()
+                if 'euc-kr' in head_snippet or 'ks_c_5601' in head_snippet:
+                    charset = 'cp949'
+                else:
+                    charset = 'utf-8'
+            try:
+                page_html = raw_bytes.decode(charset, errors='replace')
+            except Exception:
+                page_html = raw_bytes.decode('utf-8', errors='replace')
+
+        # 1. 대표 이미지 추출 (og:image / twitter:image)
+        og_img = (
+            re.search(r'<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']', page_html, re.I) or
+            re.search(r'<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']', page_html, re.I) or
+            re.search(r'<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']', page_html, re.I)
+        )
+        if og_img:
+            img_url = html.unescape(og_img.group(1)).strip()
+            if img_url.startswith('//'):
+                img_url = 'https:' + img_url
+            elif img_url.startswith('/'):
+                parsed = urllib.parse.urlparse(resolved_url)
+                img_url = f"{parsed.scheme}://{parsed.netloc}{img_url}"
+            if img_url.startswith('http') and 'google' not in img_url.lower():
+                result["image"] = img_url
+
+        # 2. og:description 요약 추출
+        og_desc = (
+            re.search(r'<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']+)["']', page_html, re.I) or
+            re.search(r'<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:description["']', page_html, re.I) or
+            re.search(r'<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']', page_html, re.I)
+        )
+        if og_desc:
+            result["summary"] = clean_html(og_desc.group(1))
+
+        # 3. 불필요한 태그(script, style, nav, header, footer, aside, iframe, form) 제거 후 본문 문단 추출
+        cleaned = re.sub(r'<(script|style|nav|header|footer|aside|iframe|form|noscript|svg)[^>]*>.*?</>', ' ', page_html, flags=re.S | re.I)
+        cleaned = re.sub(r'<!--.*?-->', ' ', cleaned, flags=re.S)
+
+        # <p> 태그 또는 <br> 단위 문단 분리
+        cleaned = re.sub(r'<br\s*/?>', '
+', cleaned, flags=re.I)
+        cleaned = re.sub(r'</(p|div|li|h[1-6]|article|section)>', '
+', cleaned, flags=re.I)
+        plain = re.sub(r'<[^>]+>', ' ', cleaned)
+        plain = html.unescape(plain)
+
+        paragraphs = []
+        noise_patterns = re.compile(
+            r'(무단\s*전재|재배포\s*금지|저작권자|구독하기|좋아요|기사제보|기자\s*=|Copyright|All rights reserved|로그인|회원가입|댓글\s*\d+|관련기사|많이\s*본\s*뉴스|이\s*기사와\s*함께|이전기사|다음기사|맨위로|프린트|글자크기)',
+            re.I
+        )
+
+        for line in plain.splitlines():
+            line = re.sub(r'[ 	]+', ' ', line).strip()
+            if len(line) < 35:
+                continue
+            if noise_patterns.search(line):
+                continue
+            # 한국어 문장 종결어미 또는 충분한 서술형 문장 위주 필터링
+            if re.search(r'[가-힣]{3,}', line):
+                paragraphs.append(line)
+
+        # 중복 문단 제거
+        dedup_paras = list(dict.fromkeys(paragraphs))
+        body_text = "
+
+".join(dedup_paras[:18])
+        if len(body_text) > 3500:
+            body_text = body_text[:3500] + "..."
+
+        result["body"] = body_text
+    except Exception as e:
+        print(f"[WARN] 본문 추출 예외 ({url}): {e}")
+
+    return result
+
+def enrich_published_articles(target_affiliate="all"):
+    pub_data = load_json(PUBLISHED_FILE, {"history": {}, "published": {}})
+    published_map = pub_data.get("published", {})
+    updated_count = 0
+
+    for aff_key, entry in published_map.items():
+        if target_affiliate != "all" and target_affiliate != aff_key:
+            continue
+        articles = entry.get("articles", [])
+        for art in articles:
+            # 이미 본문이나 이미지가 채워져 있고 실제 URL이 해석된 경우 스킵
+            if art.get("readerReady"):
+                continue
+            url = art.get("url", "")
+            if not url:
+                continue
+            extracted = extract_article_reader_content(url)
+            if extracted["realUrl"]:
+                art["realUrl"] = extracted["realUrl"]
+            if extracted["image"]:
+                art["image"] = extracted["image"]
+            if extracted["body"]:
+                art["body"] = extracted["body"]
+            if extracted["summary"]:
+                art["summary"] = extracted["summary"]
+            art["readerReady"] = True
+            updated_count += 1
+            time.sleep(0.15)
+
+    save_json(PUBLISHED_FILE, pub_data)
+    print(f"[OK] 리더 뷰(이미지·본문) 추출 완료: 총 {updated_count}건 업데이트")
+
 def fetch_naver_news(query, client_id, client_secret, display=30, log_detail=False):
     encoded = urllib.parse.quote(query)
-    # 1순위: 네이버 클라우드 플랫폼 NAVER API HUB (search/v1/news.json)
     url_hub = f"https://naveropenapi.apigw.ntruss.com/search/v1/news.json?query={encoded}&display={display}&sort=date"
     req_hub = urllib.request.Request(url_hub)
     req_hub.add_header("X-NCP-APIGW-API-KEY-ID", client_id)
@@ -147,34 +298,14 @@ def fetch_naver_news(query, client_id, client_secret, display=30, log_detail=Fal
         with urllib.request.urlopen(req_hub, timeout=10) as resp:
             return json.loads(resp.read().decode('utf-8')).get('items', []), "NAVER_HUB"
     except urllib.error.HTTPError as e1:
-        err_body1 = ""
-        try:
-            err_body1 = e1.read().decode('utf-8', errors='ignore')
-        except Exception:
-            pass
-        if log_detail:
-            print(f"[DEBUG] NAVER API HUB 응답 ({e1.code}): {err_body1}")
-
-        # 2순위: 일반 네이버 개발자센터 (openapi.naver.com)
         url_dev = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
         req_dev = urllib.request.Request(url_dev)
         req_dev.add_header("X-Naver-Client-Id", client_id)
         req_dev.add_header("X-Naver-Client-Secret", client_secret)
-        try:
-            with urllib.request.urlopen(req_dev, timeout=10) as resp2:
-                return json.loads(resp2.read().decode('utf-8')).get('items', []), "NAVER_DEV"
-        except urllib.error.HTTPError as e2:
-            err_body2 = ""
-            try:
-                err_body2 = e2.read().decode('utf-8', errors='ignore')
-            except Exception:
-                pass
-            if log_detail:
-                print(f"[DEBUG] NAVER DEV 응답 ({e2.code}): {err_body2}")
-            raise RuntimeError(f"Naver API 인증 실패 (HUB:{e1.code}, DEV:{e2.code})")
+        with urllib.request.urlopen(req_dev, timeout=10) as resp2:
+            return json.loads(resp2.read().decode('utf-8')).get('items', []), "NAVER_DEV"
 
 def fetch_google_rss_fallback(query, start_dt, end_dt):
-    # 네이버 API 인증 실패 시 GitHub 서버에서 직접 Google News 한국어 RSS 수집 (CORS/방화벽 없음)
     after_str = (start_dt - timedelta(days=1)).strftime('%Y-%m-%d')
     before_str = (end_dt + timedelta(days=1)).strftime('%Y-%m-%d')
     full_q = f'{query} after:{after_str} before:{before_str}'
@@ -209,9 +340,16 @@ def fetch_google_rss_fallback(query, start_dt, end_dt):
     return items_out
 
 def main():
+    mode = os.environ.get("RUN_MODE", "scrape").strip()
+    target = os.environ.get("TARGET_AFFILIATE", "all").strip()
+
+    # 발행 후 본문/대표이미지 추출 전용 모드
+    if mode == "enrich_published":
+        enrich_published_articles(target)
+        return
+
     client_id = os.environ.get("NAVER_CLIENT_ID", "").strip()
     client_secret = os.environ.get("NAVER_CLIENT_SECRET", "").strip()
-    target = os.environ.get("TARGET_AFFILIATE", "all").strip()
     start_str = os.environ.get("START_DATE", "").strip()
     end_str = os.environ.get("END_DATE", "").strip()
 
@@ -244,9 +382,7 @@ def main():
                 try:
                     items, src = fetch_naver_news(kw, client_id, client_secret, display=30, log_detail=(idx == 0))
                     used_source = src
-                except Exception as e:
-                    if idx == 0:
-                        print(f"[WARN] 네이버 API 인증 오류로 Google News RSS 백업 수집기로 자동 전환합니다: {e}")
+                except Exception:
                     naver_auth_failed = True
 
             if not items and (naver_auth_failed or not client_id):
