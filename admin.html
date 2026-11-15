@@ -1724,7 +1724,27 @@
         pubJson.history[activeAffiliate] = Array.from(normList).slice(-500);
 
         await githubPutFile(gh.repo, gh.token, "published_data.json", pubJson, `publish: ${cfg.name} daily news (${pubDateStr})`);
-        showToast(`🚀 [${cfg.name}] 전 직원 페이지 발행 완료!`);
+
+        // 발행된 기사의 대표 이미지 및 광고 없는 본문을 백그라운드에서 자동 추출하도록 워크플로우 트리거
+        try {
+          await fetch(`https://api.github.com/repos/${gh.repo}/actions/workflows/naver_scrape.yml/dispatches`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${gh.token}`,
+              "Accept": "application/vnd.github+json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              ref: "main",
+              inputs: {
+                mode: "enrich_published",
+                affiliate: activeAffiliate
+              }
+            })
+          });
+        } catch (enrichErr) {}
+
+        showToast(`🚀 [${cfg.name}] 발행 완료! 대표 이미지·깔끔한 본문 추출도 자동 시작되었습니다.`);
       } catch (e) {
         showToast(`❌ 발행 오류: ${e.message}`);
       } finally {
