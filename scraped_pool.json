@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17 10:08:35 KST",
+  "updatedAt": "2026-11-17 10:09:44 KST",
   "keywords": {
     "sangsangin": [
       "유준원",
@@ -5094,12 +5094,38 @@
       "articles": []
     },
     "medica": {
-      "scrapedAt": "2026-11-17 10:08:35 KST (Google News RSS)",
+      "scrapedAt": "2026-11-17 10:09:44 KST (Google News RSS)",
       "dateRange": "2026.11.16 ~ 2026.11.17",
-      "count": 269,
+      "count": 326,
       "articles": [
         {
-          "id": 1794877724758,
+          "id": 1794877788654,
+          "category": "ind",
+          "press": "서울경제TV",
+          "title": "대웅제약, 자가면역 신약 ‘플로디시티닙’ 임상 1상서 효과 확인",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBIUHdmVk1EbnNWbGRrbkNERjBQUjF5V1VmODJJX000SWtlcktqT3Z4bTNHYnFJX1E5ZUFpS3ZmY05kSGhDN0ZWWnJMakdSWWpSVmRhSlR1YU5kRnFDVjhfZWJOUHY?oc=5",
+          "pubDateISO": "2026-11-17T10:03:01+09:00",
+          "time": "2026.11.17 10:03",
+          "pubTs": 1794877381.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788663,
+          "category": "ind",
+          "press": "스마트경제",
+          "title": "대웅제약, 자가면역질환 신약 임상 1상 중간결과 공개…안전성 확인",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1Gb0ZyUWQ0ZUlOamtxNlRsZDJsN0l4S1dPMFo2aFA5VkVOZklpRDlXSWxxRmgxdllKMklhUXFPWGpVTVo4b3piRlQzeWdrdUZEUjZRb0plSGR2Ymh1akdaQW1uTVg5Qmp5RnpaVGdaWEI?oc=5",
+          "pubDateISO": "2026-11-17T10:00:00+09:00",
+          "time": "2026.11.17 10:00",
+          "pubTs": 1794877200.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798120,
           "category": "ind",
           "press": "데일리대구경북뉴스",
           "title": "영주시, 보건복지부 지역복지사업평가 ‘최우수기관’ 선정",
@@ -5112,7 +5138,7 @@
           "selected": false
         },
         {
-          "id": 1794877723168,
+          "id": 1794877792926,
           "category": "ind",
           "press": "팍스메디컬뉴스",
           "title": "제약바이오협·식약처, 25일 GMP 기술보급 교육 개최",
@@ -5125,7 +5151,7 @@
           "selected": false
         },
         {
-          "id": 1794877723166,
+          "id": 1794877792924,
           "category": "ind",
           "press": "헬스경향",
           "title": "한국제약바이오협회-식품의약품안전처, ‘글로벌 GMP 이행기술 관련 기술보급 교육’ 개최",
@@ -5138,7 +5164,20 @@
           "selected": false
         },
         {
-          "id": 1794877723167,
+          "id": 1794877788660,
+          "category": "ind",
+          "press": "더구루",
+          "title": "대웅제약, 인니서 '엔블로' 임상 연구 착수…RSUI·CRO와 3자 협약",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1WcFdiZTcxMjU5OEp1enhTcVZUa01SVFRlU3JyYzloa2xXWENiaVhHT0J4eGRXVjBUVUI3UDhYMlFVdEFtdXpRcDBqVS04MW1rVTZZVHJHamd3eDljeXBkNXZTS3hmdw?oc=5",
+          "pubDateISO": "2026-11-17T09:52:50+09:00",
+          "time": "2026.11.17 09:52",
+          "pubTs": 1794876770.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877792925,
           "category": "ind",
           "press": "매일일보",
           "title": "제약바이오협회-식약처, 글로벌 GMP 규정 대응 교육…무균 제조기술 공유",
@@ -5151,7 +5190,20 @@
           "selected": false
         },
         {
-          "id": 1794877724764,
+          "id": 1794877794343,
+          "category": "ind",
+          "press": "헬스이슈앤뉴스",
+          "title": "식약처, 디지털의료기기·디지털융합의약품 현장 중심 정책 간담회 개최",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9qZFJqcU5HSE1aVEgtUTRTTUdwQ2xJOW90cEFjNWt1OTlCeER6cy0xZWhUN3hKWk1sRkhibUJVVzRsdUNrTFVLZGlqSlpUT05tVFJSOW5fbmZIbVlRczU1dkVYZFpNcEN3?oc=5",
+          "pubDateISO": "2026-11-17T09:51:54+09:00",
+          "time": "2026.11.17 09:51",
+          "pubTs": 1794876714.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798125,
           "category": "ind",
           "press": "뉴시스",
           "title": "\"지역 필수의료 강화\"…분당서울대·복지부 논의",
@@ -5164,33 +5216,7 @@
           "selected": false
         },
         {
-          "id": 1794877719064,
-          "category": "ind",
-          "press": "머니투데이",
-          "title": "메디아나, '메디카 2026'서 통합 모니터링으로 글로벌 시장 공략 - 머니투데이",
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE4xcnFON1lfWW5CR0FyYWdBUmRWSDlvemZIS2RnVmZGcWFtZTdvNFRINTBibTdiQ0trb19HcUowTDJHN1VUQzctdWY1ek41LVZFaHZlTkNSNEdvRHFLRmVqampXMVdJRl9XTVpYUmx0TkM3aXlleFHSAXtBVV95cUxOcklkSmxkbXZWTzM4RkpobDFGSDFnMHB1eVZhOUIzdkJJNHBENm1uVVFxSUdLNmdyQ1VUdnF4Y0ppN1QzLVlrLTlReXkwcUxEM2todUdUZ3R1dVVQd3RBQXNHaXdWcUhsWW1MRW9JZjdnLXVNWjFDTlpoQ3M?oc=5",
-          "pubDateISO": "2026-11-17T09:48:34+09:00",
-          "time": "2026.11.17 09:48",
-          "pubTs": 1794876514.0,
-          "matchedKw": "Medica Korea",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877719069,
-          "category": "ind",
-          "press": "머니투데이",
-          "title": "HLB파나진, '메디카 2026'서 글로벌 분자진단 사업 확장 박차 - 머니투데이",
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB6ZmNHNEluRGtVaHZQTWlxejBxa0VVLU1fMXk2X0NPTGd2T3FtSnNkRUU4MmQ1bFU0TlhfNnR2aTdfQVR3NWJ5MzBSMGdKMDdpMkh6VFJFeURiV3k0SHBndXZDdE5GZXh3T0VWbllaV1NRZTVQa1HSAXtBVV95cUxPZGlGZmxmS1hzSzc4V2ZyRkFBT0VCQlBDdk1DSU5RQnprVkpqZXcyazFCTGl5WHVwdG5zdmNZcTZvOFMwaVVUVWZDQ1N2cDQzSXpGdGtpWTRMUWNkQ2VvVDF3bllTWnZFQ24taTM0UVIwblBzd2g0S2I5Mms?oc=5",
-          "pubDateISO": "2026-11-17T09:45:54+09:00",
-          "time": "2026.11.17 09:45",
-          "pubTs": 1794876354.0,
-          "matchedKw": "Medica Korea",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721213,
+          "id": 1794877789570,
           "category": "ind",
           "press": "PRESS9",
           "title": "유한재단, 가족돌봄 청소년·청년 276명에 생활비 지원",
@@ -5203,7 +5229,20 @@
           "selected": false
         },
         {
-          "id": 1794877721205,
+          "id": 1794877794352,
+          "category": "ind",
+          "press": "한국의약통신",
+          "title": "현대바이오 '페니트리움', 전립선암 환자 치료목적 사용승인 획득",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE56LXJPYmZjcHZSUGFtcXJ5bC1fR3VaVUtic1hPbng5cE0temRyMkJJX2xxTVlvQTlCY2V4VEdVOWxOTERQQUZ0dU8zdTVxYlRwU2FlS3VnZ2JxdUdSalJDRzl1aFYyNGVybE13?oc=5",
+          "pubDateISO": "2026-11-17T09:39:30+09:00",
+          "time": "2026.11.17 09:39",
+          "pubTs": 1794875970.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789563,
           "category": "ind",
           "press": "아시아뉴스통신",
           "title": "유한양행 주가 상승 중",
@@ -5216,20 +5255,33 @@
           "selected": false
         },
         {
-          "id": 1794877722723,
+          "id": 1794877788647,
           "category": "ind",
-          "press": "자본시장뉴스",
-          "title": "비보존제약, 3분기 적자 3억…제네릭은 CSO에 넘겼다",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBSUTdPOG5MRWZXN0w3djBTaGVZaW81aml6UGRWeFR5bERaVTQyelc0bG83QllMc3hkdUFiM1JzWjl0bjJ1RTZFeTZIY3JFY3B4UGpDaUlGcWxvd1lRVU9FZmFzaFRRbjQ?oc=5",
-          "pubDateISO": "2026-11-17T09:30:47+09:00",
-          "time": "2026.11.17 09:30",
-          "pubTs": 1794875447.0,
-          "matchedKw": "제네릭",
+          "press": "Chosunbiz",
+          "title": "대웅제약, 자가면역질환 신약 후보 美서 공개",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNcm9jYUxJRTJWc1M4ZlRuMEZHdzYtSmI1Vy1CZ3BkZkl6X0ZsdFd1MFlrTF96WEJEU01YQWptSHluR05KTzJWT3pYVExKVGc1RmhOOFctVGctbXp4emFNdXRlS0xOZTh3Y3A5ZkplN2gzRXQzVXZaOHhBNXNmTXpPeXZWMzNnQVHSAZsBQVVfeXFMTms4RU5GVkVpVjZYMWFyeUxJOTItWTJYXzhQSVRNeTZDb2s1QlNKcktUQ25QTWFrd3BvZ0cxMWl5Z0REamZ5bmNLRHE4TWVyM21CVmx1MW5naXlXVW1SQTgweVRUVGpQU1NVanlxTnVkRE1hZzFSVEdCRG5SY2dTQ0pBXzg5Q0k3RWw2Ylg5T1NGazhOZFlZM0NuWG8?oc=5",
+          "pubDateISO": "2026-11-17T09:33:45+09:00",
+          "time": "2026.11.17 09:33",
+          "pubTs": 1794875625.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724759,
+          "id": 1794877788653,
+          "category": "ind",
+          "press": "더구루",
+          "title": "대웅제약 '플로디시티닙', 1상서 BTK·ITK 표적점유율 90%↑…중간결과 발표",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5Ib0d2UkpPUTYxUng0Vm5WSEJUaGg1dHNzV0p2TmJiSWJTR1ZEYzJDM0FxS05rTFo1ekp1VzBpRkpNcnBURV9QWmdWRjJnaXBpaE03dmQ1X0k0RUh3ZlIzSVpQRQ?oc=5",
+          "pubDateISO": "2026-11-17T09:25:11+09:00",
+          "time": "2026.11.17 09:25",
+          "pubTs": 1794875111.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798121,
           "category": "ind",
           "press": "메디칼업저버",
           "title": "[동정] 서울성모 곽승기 진료부원장, 보건복지부 장관 표창",
@@ -5242,7 +5294,20 @@
           "selected": false
         },
         {
-          "id": 1794877719505,
+          "id": 1794877788662,
+          "category": "ind",
+          "press": "뉴스핌",
+          "title": "대웅제약, 자가면역질환 신약 1상서 표적점유율 90% 이상 확인",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBpU0xhRGdISWtSd085dVpZS2M4TmpYTndCUkkxTmJ5Q0w4MFFqRkNDYzVpRmM5NVhDSWhWREFaWnhqOVBmY1V0S1dWcjdfQmJOdGdzZmM3QUJYN1Jx?oc=5",
+          "pubDateISO": "2026-11-17T09:24:00+09:00",
+          "time": "2026.11.17 09:24",
+          "pubTs": 1794875040.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787686,
           "category": "ind",
           "press": "버핏연구소",
           "title": "[버핏 리포트] 동국제약, 화장품 매출 66.4% 성장…'해외 수출'이 실적 견인 - LS",
@@ -5255,7 +5320,85 @@
           "selected": false
         },
         {
-          "id": 1794877721195,
+          "id": 1794877794338,
+          "category": "ind",
+          "press": "더바이오",
+          "title": "바이젠셀, ‘VT-EBV-N’ 식약처 신속처리대상 첨단바이오의약품 지정",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE16V2lJLXhpMllqdHVwZHVlOXJjMlplaGJOOG8wRHROOEk5dUZfVzZDamNlb3QtNHROMnJsZWQ1TFJrelFOMzMtSXBLaTA5Rm1vRzdpVHlPNUZGODVFLWtIYld3Z0pnVEsyU08wVdIBcEFVX3lxTE5GZ1NRc2Q2QnMtV3JuaklTWXhRSTNLMnRMWXd2SWwzUVZJbC15ejlUWkxYT3Y2eWhFVzJObWstbDJUOVNqb1JWT09EalNRX0pRNTJLNUhWTDh3cl9SUmVFYVpBVUFMcHV4UTczMnZJMks?oc=5",
+          "pubDateISO": "2026-11-17T09:17:16+09:00",
+          "time": "2026.11.17 09:17",
+          "pubTs": 1794874636.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788651,
+          "category": "ind",
+          "press": "머니투데이",
+          "title": "대웅제약, 자가면역 신약 '플로디시티닙' 1상서 표적점유율 90% 이상 확인 - 머니투데이",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1fSVp0REhZWmJtZ2pQZlVfU0NpZFpmQS1aZmRRb25qMHpOMzdBVWlxdFM5N3duWTRGVlhNSVF3Rm5qT2JzbE5RU1pibi1RYzQ5ckMtZnNLTnFlN2EtT3NoOWVhQWJrdkJrcUHSAW9BVV95cUxPWk14RmhNRUhGMFA1VVYzcFZYRkRGMFlidzI5Z1haOWI1c0h5bG0wSWZ2aEFpTVYyRU80djNsejVtQVdLemlSQkFRMVVYLXg1QjMyYURvWnZRN1ZOYjFEVlVXZ29VNHI1R0ppSUZONVE?oc=5",
+          "pubDateISO": "2026-11-17T09:15:49+09:00",
+          "time": "2026.11.17 09:15",
+          "pubTs": 1794874549.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794384,
+          "category": "ind",
+          "press": "전남인터넷신문",
+          "title": "현대바이오 '페니트리움', 전립선암 환자 치료목적 사용승인",
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE03RmRObUxJdlZQU1N5YV9rU2tRcUlLMC1EV3Z6eU5kczc1ZjVjLVVrQWtyS0V0RFNlM2I0NGVVTkRvVjAweWs3Y3hvNjNWRGthdlFyb0pMdXVtNU5XRVlLMVRUdTFiWDBJMmlVSWhfNU5Zbk0?oc=5",
+          "pubDateISO": "2026-11-17T09:13:15+09:00",
+          "time": "2026.11.17 09:13",
+          "pubTs": 1794874395.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788661,
+          "category": "ind",
+          "press": "더바이오",
+          "title": "대웅제약, 자가면역질환 신약 후보물질 ‘플로디시티닙’ 1상 중간결과 공개",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE13azVUQ1RIUENIZEVOclEtX2hvaV9WbFdxUk8tdGpIYU9iU0RPQUpFMGFCOTlvZWxVTEVfV1c1cVdwaVlaSlh0ancwMWZiOUZjdHlWdTVDOFY1Z1RRcnlCeHhFaTR2WnBaX3hiZNIBcEFVX3lxTE9Xelg1RGhadWtQcUl4TXZuZktzdFZ6OE5IMmRnQlo5TFpRQ0QtOGZzQnkzd1ZtR012Zy1wY0hYbE5LWUF6TUJjNnNWRjVrNVZURUpOSTFjN1FwbmpRZTlaRE12RkxaQ01QOGRHUHFsOXE?oc=5",
+          "pubDateISO": "2026-11-17T09:11:33+09:00",
+          "time": "2026.11.17 09:11",
+          "pubTs": 1794874293.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788650,
+          "category": "ind",
+          "press": "매일일보",
+          "title": "대웅제약, 자가면역 신약 후보 ‘플로디시티닙’ 임상 1상서 표적 억제 확인",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1majNER1pLcUcybGwwSGRkS1pyVklSbjR1a0g3VDhjSVp1SmJLYl9QUzd5M1o4cmE5QTNnZktleWR3dGJ6UGxrcXpnVnZBdWJHM2FlS1lRZTcwZmluS1FoU19PQTU?oc=5",
+          "pubDateISO": "2026-11-17T09:11:27+09:00",
+          "time": "2026.11.17 09:11",
+          "pubTs": 1794874287.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794331,
+          "category": "ind",
+          "press": "머니투데이",
+          "title": "바이젠셀, 'VT-EBV-N' 식약처 신속처리 첨단의약품 지정 - 머니투데이",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBOUlBadE1tbkQ4R2tqRGdvLWpZTXlDU0ZJWkFpVlp5X0NyR3ZmVWZsYUlTR2ZqMnZEbGFyQmluMXNCNVZfNi1ZWG5lZFpDeUQzOHVqemhwT3RkZ0s0eEVmQ094ZXF0cFJfd2fSAW9BVV95cUxOdFdGMGNZNndWbHRmTTNtVjNscG1BUGVMbkVkazI1Q0NtNUFRS0M5WDdTMFN5YkhpVUh5bEttTDBVRDREVDdpWnhySzc4YWVoa3QtMGJROVI4U3VHLWd5MHVvWXBqVXVEM2s1TEdfWjA?oc=5",
+          "pubDateISO": "2026-11-17T09:11:09+09:00",
+          "time": "2026.11.17 09:11",
+          "pubTs": 1794874269.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789553,
           "category": "ind",
           "press": "일간투데이",
           "title": "유한양행, 개별인정형 잇몸유산균 '유한잇몸유산균 Q' 출시",
@@ -5268,7 +5411,7 @@
           "selected": false
         },
         {
-          "id": 1794877719503,
+          "id": 1794877787685,
           "category": "ind",
           "press": "네이버 프리미엄콘텐츠",
           "title": "더마코스메틱과 일반의약품의 명가 - 동국제약",
@@ -5281,59 +5424,124 @@
           "selected": false
         },
         {
-          "id": 1794877722724,
+          "id": 1794877794333,
+          "category": "ind",
+          "press": "메가충청뉴스",
+          "title": "식약처, AI 기반 바이오의약품 품질관리 최신 동향 워크숍 개최",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE91MEpCZ3hsT3h0OFlRNnphTm40ZkRQb3N2TEZRQ2dfNXJZNER4VDFzaHo3d0IzUXhlcldxMlVsb3R6WVpnUU5aR0owbnM1YXUwZEs2N2Iyb1R0N2EtUmttUUdCdFEwdDg2WUxuZA?oc=5",
+          "pubDateISO": "2026-11-17T09:04:13+09:00",
+          "time": "2026.11.17 09:04",
+          "pubTs": 1794873853.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788659,
+          "category": "ind",
+          "press": "스페셜타임스",
+          "title": "대웅제약, 자가면역 신약 플로디시티닙 1상 중간결과 발표",
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFB0UEQ3ZTljTG8zWWlIZnpMNzhJUmUzejFXYUV5OVloZlZKUkNIc0hyc21XdGRmNHF6QW9OMHJBWVdmLVVYamNQdTFFSXNfcUw0NWRseEhBemx0ODM2d2VvV2NrbUlTSUtjSWRyUXdzSHh1dlE?oc=5",
+          "pubDateISO": "2026-11-17T09:01:51+09:00",
+          "time": "2026.11.17 09:01",
+          "pubTs": 1794873711.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788649,
+          "category": "ind",
+          "press": "히트뉴스",
+          "title": "대웅제약 \"플로디시티닙, 1상서 목표 단백질 90% 이상 결합\"",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9YR25SSVNHM1pWb05UTlBwVFB4b2VDanpHRDc4ZlhHUUR4aHE3blh0QWNxOW1vVnM0SVBjc0tJNFZwZ3JoaUZMR3RtUGEyS3l3SmxVTk93eThvRWJ4MUtrWVNXVGQ0N04wTE5F?oc=5",
+          "pubDateISO": "2026-11-17T09:01:12+09:00",
+          "time": "2026.11.17 09:01",
+          "pubTs": 1794873672.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788652,
           "category": "ind",
           "press": "팜뉴스",
-          "title": "알리코제약, 3분기 매출 531억...영업손실 82% 줄며 '회복 국면'",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE15TXM2T3ZlTGkwSjVVTnBxb25UZjNTZjlWY25lR0U0TmdHa01scW9Ocks0b0pXOHk3eDZXMGcxX0pvdkhkRjI0aHVXRUxmVHQyckRWUlJLek1Pa0JNZU5YQTd5d1YxdFE3dml6Qg?oc=5",
-          "pubDateISO": "2026-11-17T09:05:00+09:00",
-          "time": "2026.11.17 09:05",
-          "pubTs": 1794873900.0,
-          "matchedKw": "제네릭",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720685,
-          "category": "ind",
-          "press": "웹이코노미",
-          "title": "[제약소식]동아제약, 네이버 공식 브랜드스토어에서 블랙프라이데이 프로모션 진행",
-          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBRckxnaG5kMHBWZnFKQVhYUHdlSTVQMHVYTDFSOVVOTS0tRV8xckV3bHYtTjlBT1FZWjB1TXdUcENqWkk3dFZQOE5rYnFidU9Hby1OZXRLc0lGUGVDeUduZ24wSjZsMTRVOFFINzhwUlI1UQ?oc=5",
-          "pubDateISO": "2026-11-17T09:00:00+09:00",
+          "title": "대웅제약, 美 류마티스학회서 '플로디시티닙' 임상 1상 중간 결과 발표",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1fSDZYcVgza3JXTnRiNU5DNUd6RHdBNldIN001Z3ZGb3AxZ1BxLUxDeFNXVGcwMG5Tcm5odHJSbjJzdWZQZ0pHLWdPZ3JfOWpDZkxmZjhJa3p6WGcxM3NSOWdIRGk3WUVYOTUwRA?oc=5",
+          "pubDateISO": "2026-11-17T09:00:56+09:00",
           "time": "2026.11.17 09:00",
-          "pubTs": 1794873600.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794873656.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877722725,
+          "id": 1794877788658,
           "category": "ind",
-          "press": "헬스코리아뉴스",
-          "title": "전립선비대증 5-ARI·알파차단제 복합제 개발 경쟁…세 갈래로 확산",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9YUGFkRzJKdnpYRnJhaDhrZVZjZXNnT2NuWVI0UjNZcGJ1MUJDb1B0MzNSb2x4c2ZIZjRIcTZaNU9zclQ5SWNBUGZPV0NLYWU3NFA0dWZSbm9INUV4RE1VcE53aTdCQ0U?oc=5",
-          "pubDateISO": "2026-11-17T08:56:28+09:00",
-          "time": "2026.11.17 08:56",
-          "pubTs": 1794873388.0,
-          "matchedKw": "제네릭",
+          "press": "뉴스클레임",
+          "title": "대웅제약 자가면역 신약 '플로디시티닙' 임상 성과",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5TRk54TnJrV0hMRkJ0RTFDOGpkZjM2RVRjLVRwOFhXemYtZGtoUkFnOEtRalh3M0Jwc2NRSnZfdl9zQThRMHJPd3dSd2h4WW9DNHp3WF9qZHlibjRJZEtVVU9zeENfVVRTN3JVUzFuMTLSAXRBVV95cUxNYlZmel9uNG9GZ1lJNXNIcGdTYmcwaUpRX2pwaWR2enlmMmtzaHFULTJWT054UllLdEZNV25BRUhaczVJQTBNaTVJYXJnZFFaa0RPMFd0YmZYaW9nSlU4X3ZhY2xWME9zUGZzZjBaOGFuM2VFWQ?oc=5",
+          "pubDateISO": "2026-11-17T09:00:49+09:00",
+          "time": "2026.11.17 09:00",
+          "pubTs": 1794873649.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720682,
+          "id": 1794877788648,
           "category": "ind",
-          "press": "미디어인뉴스",
-          "title": "동아제약, 액상 마그네슘 '마그랑비 피돌샷' 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFAxRXRyT21HeVc0c1FzcHdnRVhKcVB6MDBEUjY1emw1Ql9wS1QxZVcwYmVJb1Bnak1yTTdWcjI0aGJNU1RyWjJKb190THpOcE9RRkFFRm1IV1JreXRTSmp1NkZvdG1JaEJ5LVBXd21R?oc=5",
-          "pubDateISO": "2026-11-17T08:55:08+09:00",
+          "press": "한국경제",
+          "title": "대웅제약, 다중타깃 자가면역 신약 ‘플로디시티닙’ 임상 1상 성과 공개",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE00a3VVV3RiOG1zT1B6a0dYMmF4OUZmbGNpTFhTNU9sVTJNQWJMQTc0Mk1zQXVySXQ2LXdJb2k5Ry0xeUlPdjlYZkpFU2ZmTGk4MUhkdGtCX29BQQ?oc=5",
+          "pubDateISO": "2026-11-17T08:59:38+09:00",
+          "time": "2026.11.17 08:59",
+          "pubTs": 1794873578.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788655,
+          "category": "ind",
+          "press": "FETV",
+          "title": "대웅제약, 자가면역 신약 '플로디시티닙' 임상 1상 중간결과 공개",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5PVGs5MGFLR0VyRURlVWo4OGxxUWZyT2ltcnBEWHh4TWV6N3ZYZ1FhWXJoMlhQY1l2MzRteDhSMnlEWGdSWmdNajg0dUVJWWhJQXp6MXNlRGlKYk92SFNBMjc4d1cwMDhE?oc=5",
+          "pubDateISO": "2026-11-17T08:57:47+09:00",
+          "time": "2026.11.17 08:57",
+          "pubTs": 1794873467.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788657,
+          "category": "ind",
+          "press": "블로터",
+          "title": "[반환물질 리부트]③ 대웅제약, LO 신약 개발 중단…1상 문턱 높았다",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5uUEF5UE5BeGg4WnRQVC0xNGZ0SWMzanFvOFllYjJBZ1d0VFRzRlJwTWZqcURpRFNfQjc2cEtfZGdkWXhpRl83V1RCSjhmbFE0QmJFQklwTUZ1Mjd3Q0VGR3lndExtaUtU0gFsQVVfeXFMT3BsTXB6aGJzTlZoRWZPaDlSaGZqMlMwaXRWQ0R4WmxzdEhPNjdYUmtFT2JkbjZIdlZHdnMzbXEtWXl1RFRrN3lwNU1hN1M5T1RIWWdoeUl3WUdZY2sxMElrT2lLemwwaWh5VFpP?oc=5",
+          "pubDateISO": "2026-11-17T08:55:01+09:00",
           "time": "2026.11.17 08:55",
-          "pubTs": 1794873308.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794873301.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721192,
+          "id": 1794877794340,
+          "category": "ind",
+          "press": "연합뉴스",
+          "title": "현대바이오, 항암제 후보물질 '치료목적 사용승인' 획득",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFAydW4tMENzb09BWDg4RHBMbEFhRjFfRzVvbmZiTDV5SjJjN0xGS1g1YjBoU0czN0NzVElWYmV0UDRMemc5OTZQeUh5ZUIwWDVrNEFGTElQSkZiZXfSAWBBVV95cUxQN2xYY2hlWWNXU2JzZy1tZjk1Wl9NNVNJYUxySWE0M09MN3JPWGY3cEQ0ekk4NUtoNnNRQWV6OFM4VFBpQkNMc0hidXhYRHZ4dVVDeGdHZkU0VDYwemZYcHg?oc=5",
+          "pubDateISO": "2026-11-17T08:54:52+09:00",
+          "time": "2026.11.17 08:54",
+          "pubTs": 1794873292.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789550,
           "category": "ind",
           "press": "의학신문",
           "title": "유한양행, 로젠지 제형 ‘유한잇몸유산균 Q’ 출시",
@@ -5346,7 +5554,7 @@
           "selected": false
         },
         {
-          "id": 1794877724762,
+          "id": 1794877798123,
           "category": "ind",
           "press": "메드월드뉴스",
           "title": "곽승기 교수, ‘보건복지부 장관 표창’ 수상",
@@ -5359,7 +5567,7 @@
           "selected": false
         },
         {
-          "id": 1794877721190,
+          "id": 1794877789548,
           "category": "ind",
           "press": "한국경제",
           "title": "유한양행 유한재단 \"가족돌봄청소년·청년 자립 위해 6.6억 지원\"",
@@ -5372,7 +5580,7 @@
           "selected": false
         },
         {
-          "id": 1794877724761,
+          "id": 1794877798122,
           "category": "ind",
           "press": "MEDI:GATE NEWS",
           "title": "서울성모병원 곽승기 진료부원장, 보건복지부 장관 표창 수상",
@@ -5385,7 +5593,7 @@
           "selected": false
         },
         {
-          "id": 1794877719506,
+          "id": 1794877787688,
           "category": "ind",
           "press": "뉴스핌",
           "title": "[리포트 브리핑]동국제약, '자회사 부진 속 빛난 화장품 성장' 목표가 30,000원 - IBK투자증권",
@@ -5398,7 +5606,7 @@
           "selected": false
         },
         {
-          "id": 1794877721197,
+          "id": 1794877789555,
           "category": "ind",
           "press": "뉴스핌",
           "title": "유한양행, 식약처 인정 잇몸유산균 '유한잇몸유산균 Q' 출시",
@@ -5411,7 +5619,7 @@
           "selected": false
         },
         {
-          "id": 1794877721193,
+          "id": 1794877789551,
           "category": "ind",
           "press": "더구루",
           "title": "유한양행 '렉라자', FDA 라벨링 보충 허가 획득…블록버스터 입지 공고화",
@@ -5424,7 +5632,20 @@
           "selected": false
         },
         {
-          "id": 1794877721200,
+          "id": 1794877794332,
+          "category": "ind",
+          "press": "데일리팜",
+          "title": "다이어트약·소아 감기약 안전망 강화…병용·연령금기 확대",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1raEcwM0pVMTF4Vnc2U2I1NXhnbFM0Yi1COU9zN0MyWjc3SjJnSWdUUVFKSEJNbFJ5a0pLbkpoSGlMVWs5SWY3QnlQajdQeXZnNkJkSDNR?oc=5",
+          "pubDateISO": "2026-11-17T08:22:08+09:00",
+          "time": "2026.11.17 08:22",
+          "pubTs": 1794871328.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789558,
           "category": "ind",
           "press": "메디포뉴스",
           "title": "유한재단, 가족돌봄 청소년·청년 276명 생활비 지원",
@@ -5437,20 +5658,20 @@
           "selected": false
         },
         {
-          "id": 1794877720683,
+          "id": 1794877794335,
           "category": "ind",
           "press": "이뉴스투데이",
-          "title": "동아제약, 마그네슘 보충제 ‘마그랑비 피돌샷’ 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE82SFRvdzc4SGxlRks2R1d6ZzlTZWN2MUZvWEVLMDd4OVk2ajRSSWlDNEtPVjgtUDlqcmhQZ1VPTkV2NHR1OEVjQzBUOGowYWZWVkQxcjgzZTZkcWJ2RnFlMXVPU1J1eVdBeFBybDh4THDSAXRBVV95cUxQZmFmWEFEZnZmdEVnQ3ZxMU1uZl9fWGpMakRLbkNWeEFsQzFWUnliMEFrNlNJaHpPUHhUWFZ0U3kyS0FXRDFVYXJaczdQZzJlSXRnUFRJM1hfV0NseGswR3VNQkk0a2w3cDIwbzAwNkEwNkZZdg?oc=5",
-          "pubDateISO": "2026-11-17T08:19:19+09:00",
+          "title": "식약처, 수능 앞두고 의약품 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE05LW00TzdMTDNuck5DOHJFT0ZudVpNcmZXTnZEbEFMVkxtRzNOdUQ4V1BOckRHUDY4QjcxaC10cnFKNURxOFFpWUNKQlNKdkhXZEdDRFgxMEZCVjEydnlaSklXUm5ZS0pPWFZtaC16UE7SAXRBVV95cUxNUndUb1RKemMxOTN1UURvdUNkdTg1emRMTFJuRjVYZy01dk1VaXRVR1drd0p5SGE3NzA2Q2dsTFJub1hWRlQyTXFacEItTngwR285YzhQSF9xa3VmdjRXTEJWcndkczlBaTZFM01hOXBGRkNzMg?oc=5",
+          "pubDateISO": "2026-11-17T08:19:23+09:00",
           "time": "2026.11.17 08:19",
-          "pubTs": 1794871159.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794871163.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721198,
+          "id": 1794877789556,
           "category": "ind",
           "press": "이뉴스투데이",
           "title": "유한양행, 잇몸 건강 기능성 유산균 신제품 출시",
@@ -5463,20 +5684,7 @@
           "selected": false
         },
         {
-          "id": 1794877722722,
-          "category": "ind",
-          "press": "메디컬투데이",
-          "title": "길리어드, 에볼라 치료 후보물질 제네릭 생산 계약…127개국 공급 기반 마련",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1Id3dLdnlOaEpYR0FrYXNCa1FNeDlqMDlYckRNVzRvb3d1amJUcHRvNEVPRG96TjctWFNpQUJIN1NrVVp1SlRlUTVGWENHWHhNNnlLN3NzSWdZN0RpVHRVX2xOdFhWekgwRnBwLQ?oc=5",
-          "pubDateISO": "2026-11-17T08:18:52+09:00",
-          "time": "2026.11.17 08:18",
-          "pubTs": 1794871132.0,
-          "matchedKw": "제네릭",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877719504,
+          "id": 1794877787687,
           "category": "ind",
           "press": "아주경제",
           "title": "IBK證 동국제약, 자회사 부진에도 화장품 성장 견조…목표가 유지",
@@ -5489,7 +5697,7 @@
           "selected": false
         },
         {
-          "id": 1794877724765,
+          "id": 1794877798126,
           "category": "ind",
           "press": "한의신문",
           "title": "장재호 화성시한의사회장, ‘노인의 날’ 보건복지부 장관 표창 수상 > 뉴스",
@@ -5502,7 +5710,7 @@
           "selected": false
         },
         {
-          "id": 1794877721191,
+          "id": 1794877789549,
           "category": "ind",
           "press": "이코노미톡뉴스",
           "title": "유한양행, ESG 실천 넘어 ‘학술 생태계’ 키운다…4년째 연구 지원",
@@ -5515,20 +5723,20 @@
           "selected": false
         },
         {
-          "id": 1794877722726,
+          "id": 1794877794379,
           "category": "ind",
-          "press": "더바이오",
-          "title": "코오롱생명과학, ‘원료의약품 CDMO TF’ 본격 가동…수익 기반 넓힌다",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1GNnRMMGl4Rnh0Z1JTR1FjNjZ1R0RhOU1vOVlPOG4tU01FaDBPLWZrQ3E3QWtEX3A2dFRucVVxc1lTYTk4NElhb0ZkbDl4X1pJMU85OFBLUEt5WkgycmFpWFZwbVdrSFQ2UFRiblQ3bEHSAXBBVV95cUxNRjZ0TDBpeEZ4dGdSU0dRYzY2dUdEYTlNbzlZTzhuLVNNRWgwTy1ma0NxN0FrRF9wNnRUbnFVcXNZU2E5ODRJYW9GZGw5eF9aSTFPOThQS1BLeVpIMnJhaVhWcG1Xa0hUNlBUYm5UN2xB?oc=5",
-          "pubDateISO": "2026-11-17T07:50:09+09:00",
-          "time": "2026.11.17 07:50",
-          "pubTs": 1794869409.0,
-          "matchedKw": "제네릭",
+          "press": "한국공공정책신문",
+          "title": "GMO 완전표시제 시행 앞두고 설명회…식품 표시 무엇이 달라지나",
+          "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE92MzV0SzBKaWk1RC1mNDFTWTg1MGUtNTFETDh5TENlOXFpTzJVUXZDdmlwbEEzdXVNNzV4ZGhRY1BMcEE?oc=5",
+          "pubDateISO": "2026-11-17T07:54:42+09:00",
+          "time": "2026.11.17 07:54",
+          "pubTs": 1794869682.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721212,
+          "id": 1794877789569,
           "category": "ind",
           "press": "나눔경제뉴스",
           "title": "유한양행, 국내 첫 개별인정형 잇몸유산균 출시…잇몸 염증·구취 관리 시장 공략",
@@ -5541,20 +5749,20 @@
           "selected": false
         },
         {
-          "id": 1794877722720,
+          "id": 1794877788656,
           "category": "ind",
-          "press": "팜이데일리",
-          "title": "메지온, 美특허 거절 뒤집었다…유데나필 ‘제네릭’ 원천 봉쇄",
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5yZXBZdDRDemxQRmxqd1RZbFlIN0RsRk9ISFBucHJkeGM2ZmFoMDhiNUI4VldGVXpKQjJfaGdBS1lSaU9IZzNuaTFJNU5JOWJmSndsa1paeWpEcm5MYmQxN2hWWUpYTzNZbWNZckd3?oc=5",
-          "pubDateISO": "2026-11-17T07:15:04+09:00",
-          "time": "2026.11.17 07:15",
-          "pubTs": 1794867304.0,
-          "matchedKw": "제네릭",
+          "press": "더바이오",
+          "title": "대웅제약, ‘펙수클루’ 내수·해외 시장서 약가유연계약 효과 ‘톡톡’",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBTVnZWRjJlNFZxT2ZLcVFLamlqRXlpdHZIekhVcjk1RDZWNGIyQTlVUWNEM2hWU1lTMWN5Szg3cDJGM25LZk1sVHJmNXprWTZQOUc3OHNPcHNrUlluSEdRWDVIcHR1Q1JQcVNoSnVtUl_SAXBBVV95cUxQU1Z2VkYyZTRWcU9mS3FRS2ppakV5aXR2SHpIVXI5NUQ2VjRiMkE5VVFjRDNoVlNZUzFjeUs4N3AyRjNuS2ZNbFRyZjV6a1k2UDlHNzhzT3Bza1JZbkhHUVg1SHB0dUNSUHFTaEp1bVJf?oc=5",
+          "pubDateISO": "2026-11-17T07:25:40+09:00",
+          "time": "2026.11.17 07:25",
+          "pubTs": 1794867940.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724791,
+          "id": 1794877798153,
           "category": "ind",
           "press": "컨슈머타임스",
           "title": "\"나눔과 상생 실천\" 한전원자력연료, '지역사회공헌 인정제' 5년 연속 최고 등급 획득",
@@ -5567,7 +5775,33 @@
           "selected": false
         },
         {
-          "id": 1794877722328,
+          "id": 1794877794356,
+          "category": "ind",
+          "press": "식품저널 foodnews",
+          "title": "법인 대표자 변경 시 신임 대표자가 위생교육을 받아야 하나요?",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1oaVhRblNjSk9DY3h1UGduSmROWEx3RjduWk8wcTMycTZjdmRzSHk4QmtlWEo2RmFYME42UzB6d1hPaWNET2o2RFpRbXVRWEhJdHRpMDNMbFFtMWRQWkJPVGZmbkc3Q3J1a25HVQ?oc=5",
+          "pubDateISO": "2026-11-17T07:05:49+09:00",
+          "time": "2026.11.17 07:05",
+          "pubTs": 1794866749.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788664,
+          "category": "ind",
+          "press": "파이낸셜포스트",
+          "title": "대웅·일동 신약 계열사 '매각설'...지분 매각 '득실' 어떻게",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE4wTUN6Qm1rSDlfSlNiR1RpQ0JLdmhkZHgydzZPUzJEandnbk01aTZoRGhuck1VaDhfRm1aZGYwamZPWUJXSWhjbFl0a2V1WmE0R3Zwdl9xUjJhSzVRUFhRYUpoVnQ3NG5XRWd1UjhvNE1qRnJN?oc=5",
+          "pubDateISO": "2026-11-17T07:00:00+09:00",
+          "time": "2026.11.17 07:00",
+          "pubTs": 1794866400.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877791256,
           "category": "ind",
           "press": "뉴스투데이",
           "title": "해외 비만약 반입 허용...국내 가격 인하 압력 커질까",
@@ -5580,7 +5814,20 @@
           "selected": false
         },
         {
-          "id": 1794877722320,
+          "id": 1794877794330,
+          "category": "ind",
+          "press": "데일리메디",
+          "title": "식약처 “올해까지 혁신의료기기 지정률 33%”",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFB3V0VZY1VMZnoweVNVMUJ0SG5ZZE1kOVBfaFRTUVdCVks2Skh0RGxlYXpnaTdYYlpEMV9VNlh6cVJlU0N4bzFyRzFyWGo5ZVRwdlJvVmdMTm1vSjMxS2hNQ01WaXRKaVVq?oc=5",
+          "pubDateISO": "2026-11-17T06:22:00+09:00",
+          "time": "2026.11.17 06:22",
+          "pubTs": 1794864120.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877791255,
           "category": "ind",
           "press": "뉴스더보이스헬스케어",
           "title": "복지부 상대로 소송 중인 제약사는…7개사, 약가인하·리베이트 처분 다퉈",
@@ -5593,7 +5840,7 @@
           "selected": false
         },
         {
-          "id": 1794877724775,
+          "id": 1794877798136,
           "category": "ind",
           "press": "뉴스더보이스헬스케어",
           "title": "희귀·중증난치질환 본인부담 10%→7%…12월 인하 추진",
@@ -5606,7 +5853,33 @@
           "selected": false
         },
         {
-          "id": 1794877722727,
+          "id": 1794877794342,
+          "category": "ind",
+          "press": "뉴스더보이스헬스케어",
+          "title": "함께 쓰면 안 되는 의약품 조합 295개 추가…연령·임부금기도 확대",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE0wSzZoNWtJNWR5QjY2R3BlaEdFUWZPc2VWMDBlNTJRcXM2U2s2b0VGT3ZNYWNjdHlLYVlxZ0ZNcUZOT1R3OGs4aHlSaENIaUtaUl93VGUxR2tyUUxBZ2xydm83RmVHU21MUTJUZkxkSQ?oc=5",
+          "pubDateISO": "2026-11-17T06:06:00+09:00",
+          "time": "2026.11.17 06:06",
+          "pubTs": 1794863160.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794336,
+          "category": "ind",
+          "press": "뉴스더보이스헬스케어",
+          "title": "의약외품 범위 지정, 전문가 검토체계 마련…15명 내외 위원회 구성",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9HUUdPdERaQVZDNm5YcU5zbU56d3kxTmtkYk5PbXNPc1YwWVQ3OENVQWV4d1dINW5YelFqQnZNYjROTjA1aENYQVJwbU5MRndNZzdfUDFwQ3BDSlVfcXRpQjhDYWR3TjVjM3hrSkVvNA?oc=5",
+          "pubDateISO": "2026-11-17T06:02:00+09:00",
+          "time": "2026.11.17 06:02",
+          "pubTs": 1794862920.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789956,
           "category": "ind",
           "press": "메디파나뉴스",
           "title": "비씨월드제약, 월1회 비만약부터 AI 신약까지…R&D 확대",
@@ -5614,12 +5887,12 @@
           "pubDateISO": "2026-11-17T06:01:00+09:00",
           "time": "2026.11.17 06:01",
           "pubTs": 1794862860.0,
-          "matchedKw": "제네릭",
+          "matchedKw": "개량신약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721194,
+          "id": 1794877789552,
           "category": "ind",
           "press": "데일리메디팜",
           "title": "유한양행, 국내 최초·유일 개별인정형 잇몸유산균 원료 함유 ‘유한잇몸유산균 Q’ 출시",
@@ -5632,20 +5905,7 @@
           "selected": false
         },
         {
-          "id": 1794877720681,
-          "category": "ind",
-          "press": "히트뉴스",
-          "title": "[경력채용] 동아제약, 휴온스, 유유제약, 메디톡스, 차메디텍",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5wako1QkRoUk55TUQzOWtzSmJ2ZVZTem8zOXU3ejcwRGdnMlA0dkhhaDFxc3hsV0ttWnlYa2F2QV8weEQxS3V0cmltYVpDZjZ6c28xV0RnQmZDVlFzVklFaUROWmxGcWd5OFVv?oc=5",
-          "pubDateISO": "2026-11-17T06:00:00+09:00",
-          "time": "2026.11.17 06:00",
-          "pubTs": 1794862800.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877724767,
+          "id": 1794877798128,
           "category": "ind",
           "press": "뉴스더보이스헬스케어",
           "title": "복지부, 중소·요양병원 진료지원 교육 병협에 위탁…교육비 '지원'",
@@ -5658,7 +5918,7 @@
           "selected": false
         },
         {
-          "id": 1794877724772,
+          "id": 1794877798133,
           "category": "ind",
           "press": "팜뉴스",
           "title": "슈도에페드린 함유 의약품 판매 약사 4명...회원 자격정지 처분 요구 의결",
@@ -5671,7 +5931,7 @@
           "selected": false
         },
         {
-          "id": 1794877719525,
+          "id": 1794877787707,
           "category": "ind",
           "press": "메디팜스투데이",
           "title": "동국 해외 매출 3.8배↑·파마 화장품 수출 92%↑…K-뷰티가 이끈 제약사 해외 성장",
@@ -5684,7 +5944,7 @@
           "selected": false
         },
         {
-          "id": 1794877722321,
+          "id": 1794877791262,
           "category": "ind",
           "press": "팜뉴스",
           "title": "내달 3일, 약평위...은행엽·도베실산 급여 유지 '운명의 날'",
@@ -5697,7 +5957,33 @@
           "selected": false
         },
         {
-          "id": 1794877719542,
+          "id": 1794877794329,
+          "category": "ind",
+          "press": "약사공론",
+          "title": "식약처, 비만약·ADHD약 등 신규 병용금기 295개 조합 추가 추진",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBjTnYxYl9aWmlvT3RQelM2U1paWlM2ZHBnaWw5WHhjQXhQeHNoenBRZDVvMnNGYVFCMDlkMEx6WVA2WjZZSFBKTGlLX29IQmxZSmNYX3dXQjFhN0dvMjg3WHpCajd4M2l1blZOMA?oc=5",
+          "pubDateISO": "2026-11-17T05:52:00+09:00",
+          "time": "2026.11.17 05:52",
+          "pubTs": 1794862320.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794341,
+          "category": "ind",
+          "press": "머니투데이",
+          "title": "[단독] AI로 건기식 원료값 알아낸 대기업…中企 설 자리 좁아진다 - 머니투데이",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE55X2lKbjZqSTJycDRacHV2eDRvSHVnU2xfNkZOZ1FhSkp6am9oR1FiemRwZXBNakM4SDdUNkNJTUJXd056QWhyc21SdUhSd3EwNF8tM1dMWnZDV2V0UkQ1S1pLNGlPQ3RVWUd1S9IBckFVX3lxTE1Cc1htTTdmcFZPeXp4MjQ4UXA1eUZFdUtldUs3Z0VSVEdjbjBQNnhVWk40RFlLdTg3LVFfdTBEWVlOSU5Hb0RuUGNWRS13NHB4VlVvUEJNU2U3NHpBZ2lVSDllM3B3eGM1UUdIT1JpYXdUdw?oc=5",
+          "pubDateISO": "2026-11-17T05:41:00+09:00",
+          "time": "2026.11.17 05:41",
+          "pubTs": 1794861660.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787724,
           "category": "ind",
           "press": "이투데이",
           "title": "‘5조 클럽 탄생 눈앞’…제약·바이오, 2조·1조 신규 진입도 관심",
@@ -5710,7 +5996,7 @@
           "selected": false
         },
         {
-          "id": 1794877724763,
+          "id": 1794877798124,
           "category": "ind",
           "press": "대한민국 정책브리핑",
           "title": "[보도설명자료][11.16.월 경향신문]내 의료정보 동의 없이 AI 연구에 활용 디지털헬스케어법 논란 관련",
@@ -5723,20 +6009,33 @@
           "selected": false
         },
         {
-          "id": 1794877722721,
+          "id": 1794877794348,
           "category": "ind",
-          "press": "Investing.com 한국어",
-          "title": "Teva Pharm, 미국 제네릭 의약품 가격 담합 소송 합의",
-          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9USklOVC1CR0ZOd1dfWEFHenFOd3FMakxOdHZZaWNPakVucnh5VTRkSTdSV3lpZ0p5Tll5THVqc3pIUG03UzEwYjBieVNHWElKTHdEYm1OYi1DNklkbVpGeEYxZzkzUWV4NEZYT2JsVkk4d1c0S0tn?oc=5",
-          "pubDateISO": "2026-11-17T01:36:00+09:00",
-          "time": "2026.11.17 01:36",
-          "pubTs": 1794846960.0,
-          "matchedKw": "제네릭",
+          "press": "머니투데이",
+          "title": "환각 부르는 이게 공부 잘하는 약?…수능 앞두고 불법판매글 와르르 - 머니투데이",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9ySm16Um1hdkt5ZTcwWXN1T3lDTDhDczFsSVpiOEZOT3Zhb2tFUnNvSE1TVG1oYkJxTWhRNktqbGlmdE92UlB6QmJ2V0tjTS1ESUtvT2pUS3M4aWZGVDlFNXp5dUZYQnJBZFHSAW9BVV95cUxPeUtIckdEZkZpUG5kdFZEUU42ZjM1OHFVcUhQRkNVNE1MV1g2bUowVnMzLTkzMUJKYlpjZ2dMaWxiREJ3cDhTM01FSldrNlBLTDhTMndwNlhsZnpRQXZWRzVWWE0zdV9IdXdhVjh6UGs?oc=5",
+          "pubDateISO": "2026-11-17T04:00:00+09:00",
+          "time": "2026.11.17 04:00",
+          "pubTs": 1794855600.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721202,
+          "id": 1794877794328,
+          "category": "ind",
+          "press": "의약뉴스",
+          "title": "식약처, 수능 앞두고 의약품 온라인 불법 판매 게시물 571건 적발 外",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9RUnVJWEtJNnR2bW95SmhaQk93OHlKLUtWNm5MMVhlVEhxa09yd3BLRHladWZrUG5EQmZBYlhRbUlnR2w2R053MkhXR19HTHFMcGNkY244dWRuRHgyQXJNV01tVW1zZ0Zk?oc=5",
+          "pubDateISO": "2026-11-17T02:47:55+09:00",
+          "time": "2026.11.17 02:47",
+          "pubTs": 1794851275.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789560,
           "category": "ind",
           "press": "팍스경제TV",
           "title": "유한양행, 제4회 유한ESG학술상 시상...ESG 우수 연구 발굴 지원",
@@ -5749,7 +6048,7 @@
           "selected": false
         },
         {
-          "id": 1794877724769,
+          "id": 1794877798130,
           "category": "ind",
           "press": "강원일보",
           "title": "횡성군보건소, 재난응급의료 대응 역량 우수성 입증",
@@ -5762,7 +6061,7 @@
           "selected": false
         },
         {
-          "id": 1794877722327,
+          "id": 1794877791263,
           "category": "ind",
           "press": "헬스포커스뉴스",
           "title": "대원제약, 3분기 누적 매출 4502억원…영업이익 흑자전환",
@@ -5775,33 +6074,20 @@
           "selected": false
         },
         {
-          "id": 1794877722731,
+          "id": 1794877794362,
           "category": "ind",
-          "press": "헬스코리아뉴스",
-          "title": "590억대 골관절염 복합제 ‘레일라디에스’ 특허도전 레이스 개막 … 마더스제약 ‘포문’",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9nc0xWeEZHeVF3TEo3b1p5d2dGYmRvSkZyQlBtUWNldEtzUDJ4UWFRaTIyN2NYSGYzZWtfT0dHUW41ek5SNXlIYkVEbkVMV29Xd1dtSzIxMHQxY0g0VlBKV3ktV0M4QTg?oc=5",
-          "pubDateISO": "2026-11-17T00:01:00+09:00",
-          "time": "2026.11.17 00:01",
-          "pubTs": 1794841260.0,
-          "matchedKw": "제네릭",
+          "press": "대한급식신문",
+          "title": "GMO 완전표시제, 업계 준비 지원",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9qRUkwWnVVS3BJY1RIWUhCUWFWUlU2QWVuS2wtRjcyVVphZEh2MWZBclpTdTd3XzFyNEMzZVhJMlNMQlBtUU9lcTZ6UGF4Q0Z1WlFnYU9WSU5oNDJWTGdBUjBaQ2NYeDRh?oc=5",
+          "pubDateISO": "2026-11-16T23:36:28+09:00",
+          "time": "2026.11.16 23:36",
+          "pubTs": 1794839788.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720702,
-          "category": "ind",
-          "press": "뉴스비전e",
-          "title": "동아쏘시오그룹, ‘마음안심버스’로 임직원 마음 건강 돌본다",
-          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1Eanh2NFNUWE9TcGhCbTZrT05KZUVzQ2hzNHh6N0g1bnNLTnpSWEZ5dlNKSWViX1RnTXhhQjFXOFdDUTFMcDdsakxpczBEQW1TTl96LWhXcndKbXdoR18xWVJlb05wZw?oc=5",
-          "pubDateISO": "2026-11-16T23:38:59+09:00",
-          "time": "2026.11.16 23:38",
-          "pubTs": 1794839939.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721207,
+          "id": 1794877789565,
           "category": "ind",
           "press": "메디포뉴스",
           "title": "유한ESG학술상 대상에 청주대 이원준 교수",
@@ -5814,20 +6100,33 @@
           "selected": false
         },
         {
-          "id": 1794877720691,
+          "id": 1794877795588,
           "category": "ind",
-          "press": "로이슈",
-          "title": "동아제약 아일로 PDRN+B5, 11월 올영픽 선정",
-          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBXeXg0a1BOYXk0RF9tdXhSWmJoVzhqS09QMVd3dERNdnA1eDFFTVNLZVVJVG93RzhueVZScFI4YXAtdkRicWpYMy13bkNxTmd5azFhd21Ra25MVXd1SnFmU3RkYm5saEdsQUFmWnJRTGNYSVBkbVo0eUl3?oc=5",
-          "pubDateISO": "2026-11-16T22:53:28+09:00",
-          "time": "2026.11.16 22:53",
-          "pubTs": 1794837208.0,
-          "matchedKw": "동아제약",
+          "press": "메디포뉴스",
+          "title": "종근당, 마약류 취급내역 보고기한 미준수로 경고",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBtaVRMSDh3ajJUVWJHNVJMUWRmNG1WdXdBWm85eVE5QnFfTjFVX3NyX0ZkckdtQlp5YlJuaVUyakp0QWtBckNHY1Z6SzcwdkI3TGd3U1E2RXNlSUZHTk9wT191Ymo?oc=5",
+          "pubDateISO": "2026-11-16T23:15:37+09:00",
+          "time": "2026.11.16 23:15",
+          "pubTs": 1794838537.0,
+          "matchedKw": "의약품안전나라",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724787,
+          "id": 1794877795590,
+          "category": "ind",
+          "press": "더코리아",
+          "title": "파주시, 어린이 기호식품! 품질인증 마크 확인하고 고르세요 > 뉴스",
+          "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE1ydzAxZFVSajZjY24zcWtwdERnbnV2Z3JzUXNrVnRRZVhyNDJDNG1xNU1maTdXSnBjejh2YUNhOWlPbWw1?oc=5",
+          "pubDateISO": "2026-11-16T22:35:11+09:00",
+          "time": "2026.11.16 22:35",
+          "pubTs": 1794836111.0,
+          "matchedKw": "의약품안전나라",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798148,
           "category": "ind",
           "press": "뉴스체인지",
           "title": "정은경 보건복지부장관, 발달장애인 의료현장 찾아 응급의료 연계 방안 논의",
@@ -5840,7 +6139,33 @@
           "selected": false
         },
         {
-          "id": 1794877724771,
+          "id": 1794877794347,
+          "category": "ind",
+          "press": "뉴스체인지",
+          "title": "식약처, GMO 완전표시제 시행 앞두고 업계 설명회 개최",
+          "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE80MFJ2dC1WN0ZVOWlielZDYnRxTDlhTXpZZ0lFS09BLW5iUHRYOHZPUlNiaVFMeDU3cENNUENyNDNwTTdSbW9lVDZKOA?oc=5",
+          "pubDateISO": "2026-11-16T22:06:00+09:00",
+          "time": "2026.11.16 22:06",
+          "pubTs": 1794834360.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794363,
+          "category": "ind",
+          "press": "www.skedaily.com",
+          "title": "식약처, 수능 대비 마약류 등 의약품 온라인 불법 판매·알선 점검…571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1oc3pXcXNLOExmaGlVd2tNMG9USzFFQjJrU0V3RjJsWFBJV0h2QzVQRGd1ZERpNU1MaElvT2VCdmVMclJyZHdlc1M4VU9mYlpyUHdvTlN2SlZ2NHpvX004cU5tV2dRZ2R3VHc?oc=5",
+          "pubDateISO": "2026-11-16T22:04:58+09:00",
+          "time": "2026.11.16 22:04",
+          "pubTs": 1794834298.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798132,
           "category": "ind",
           "press": "전민일보",
           "title": "정읍시보건소, 심뇌혈관질환 예방·관리 ‘보건복지부 장관’ 표창",
@@ -5853,7 +6178,7 @@
           "selected": false
         },
         {
-          "id": 1794877724776,
+          "id": 1794877798137,
           "category": "ind",
           "press": "CBC뉴스",
           "title": "목포시, 지역사회보장협의체 운영 우수사례 보건복지부 장관상 수상",
@@ -5866,7 +6191,33 @@
           "selected": false
         },
         {
-          "id": 1794877719543,
+          "id": 1794877794372,
+          "category": "ind",
+          "press": "데일리팜",
+          "title": "바이오 CDMO 원료물질, 품목허가 없이 신속 수입 길 열려",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBJenFvYmRzek9TaEZVTEl1WFdPYUZlbEQ4U2R1S19UMzA3bnhwek9rMklCcW1VU0EzdXJJZFdRbklWZ1ZOaVVGZUhYUDdIZWp3dVpjWVVR?oc=5",
+          "pubDateISO": "2026-11-16T20:15:10+09:00",
+          "time": "2026.11.16 20:15",
+          "pubTs": 1794827710.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794359,
+          "category": "ind",
+          "press": "도민연합뉴스",
+          "title": "식약처, 겨울철 다소비 수산물 집중 수거·검사",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBXUnVUbXl3RGVLSVhlMEd6bmtBaUE4N3ZlWWRHMUtEdWRjNmM5VWtPVk1ucWxDN0JtUkpoRnoxNjlzdXc0a29yS0FWaVQ1R193SU50aGhwNk1WVTNrSjlZQ2UzY3JRdWFHMnc?oc=5",
+          "pubDateISO": "2026-11-16T20:03:40+09:00",
+          "time": "2026.11.16 20:03",
+          "pubTs": 1794827020.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787725,
           "category": "ind",
           "press": "ER 이코노믹리뷰",
           "title": "'선택과 집중' 동국생명과학, 글로벌 영토 확장 채비",
@@ -5879,7 +6230,7 @@
           "selected": false
         },
         {
-          "id": 1794877721232,
+          "id": 1794877789590,
           "category": "ind",
           "press": "파이낸셜뉴스",
           "title": "유한ESG학술상 대상에 이원준 청주대 교수",
@@ -5892,20 +6243,33 @@
           "selected": false
         },
         {
-          "id": 1794877719066,
+          "id": 1794877794354,
           "category": "ind",
-          "press": "코리아이글뉴스",
-          "title": "CBC 검사 결과부터 세포 이미지까지: 오젤, 메디카 2026에서 O-Cyte 1 시연",
-          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5rMWNQVXBfQmFjWkwwUW9pR1ltNGFfSjdtODU1RzBBTF9QRzE4X0ZDTm1fQmhQNFhtWjZ3Z3ZLLXJKdTRncUp3Q2Rpa1FMQmQwMTByOERRWEg3WmVDTzFZaTZwa041SHJoNGxpUE9sR3lvQ28?oc=5",
-          "pubDateISO": "2026-11-16T18:45:00+09:00",
+          "press": "푸드투데이",
+          "title": "대만산 '냉동 청상아리' 메틸수은 기준 초과…식약처 판매 중단·회수",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBCcXZMdTJuczNFOGVaN3RXbGJPVFZHVnJNWU03RmpvOUR4dW1EYlF6QmhMUGRoMWpjVmRvazRPWHpBRF9zYmp3ODl1OURwNUwtQ0tZQ1ZuQVRyTVk1ZUtCWUtISHpLUQ?oc=5",
+          "pubDateISO": "2026-11-16T18:45:41+09:00",
           "time": "2026.11.16 18:45",
-          "pubTs": 1794822300.0,
-          "matchedKw": "Medica Korea",
+          "pubTs": 1794822341.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724768,
+          "id": 1794877794410,
+          "category": "ind",
+          "press": "CBC뉴스",
+          "title": "큐로셀, CAR-T 치료제 '안발셀' 임상 1/2상 계획 변경승인 신청",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9zNXVsenJUczBwTGh5RnZ1TklyYkF1X0pnc3c5S0MtaW1YT1U2RXBDY1NUNXhnQ2xDV2psS2l2T05RRTdlVHFaWUl0NHFPQ3pJUldhU2JJNkNMR2xDX1dKSVdBTVBZUVlk?oc=5",
+          "pubDateISO": "2026-11-16T18:45:18+09:00",
+          "time": "2026.11.16 18:45",
+          "pubTs": 1794822318.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798129,
           "category": "ind",
           "press": "영남경제",
           "title": "포항세명기독병원 정항재 심혈관센터장, 보건복지부 장관 표창상 받아",
@@ -5918,20 +6282,20 @@
           "selected": false
         },
         {
-          "id": 1794877720689,
+          "id": 1794877794345,
           "category": "ind",
-          "press": "뉴스락",
-          "title": "동아제약, ‘마그랑비 피돌샷’ 신규 광고 공개…액상형 마그네슘 강조",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5RMUc2T0puREZEVGVNX29zLXR3THpIWVdTQ3JMSFFrZnVIUUQ3bkl0ZUJ2bWdSUGsyZEhVYkI1bE8wa2pna3NwVTZfQUZwTHRueG5OdEdJcXFWYngxLXg5NEpkYmZRQ1dBMnI1Tg?oc=5",
-          "pubDateISO": "2026-11-16T18:36:00+09:00",
-          "time": "2026.11.16 18:36",
-          "pubTs": 1794821760.0,
-          "matchedKw": "동아제약",
+          "press": "매일경제",
+          "title": "“인공지능으로 인슐린 최적 용량 추천”…식약처, 디지털융합의약품 개발 지원",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE12N240ZHV2bzh6dk4tUFMxdHFNTUJkOFkwQThXOERMZUZsNlhvVmdObm4yZm5YZGl2OXQyaEFiaFJKSmtyMGI2SVQwS3VzZw?oc=5",
+          "pubDateISO": "2026-11-16T18:34:37+09:00",
+          "time": "2026.11.16 18:34",
+          "pubTs": 1794821677.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721247,
+          "id": 1794877789605,
           "category": "ind",
           "press": "포인트데일리",
           "title": "유한양행, ﻿잇몸유산균 원료 함유 '유한잇몸유산균 Q' 출시",
@@ -5944,7 +6308,7 @@
           "selected": false
         },
         {
-          "id": 1794877721217,
+          "id": 1794877789574,
           "category": "ind",
           "press": "더파마뉴스",
           "title": "유한양행, 경구 비만 후보물질 투여한 생쥐서 체중 최대 '22.9%' 감소",
@@ -5957,7 +6321,7 @@
           "selected": false
         },
         {
-          "id": 1794877721218,
+          "id": 1794877789575,
           "category": "ind",
           "press": "주간한국",
           "title": "유한양행, 잇몸 건강 기능성 원료 담은 건강기능식품 출시",
@@ -5970,7 +6334,7 @@
           "selected": false
         },
         {
-          "id": 1794877721220,
+          "id": 1794877789578,
           "category": "ind",
           "press": "팍스메디컬뉴스",
           "title": "유한양행, 국내 첫 개별인정형 잇몸유산균 ‘유한잇몸유산균 Q’ 출시",
@@ -5983,7 +6347,7 @@
           "selected": false
         },
         {
-          "id": 1794877719528,
+          "id": 1794877787710,
           "category": "ind",
           "press": "서울경제",
           "title": "동국제약, ‘DK 루오닉스’로 사명 변경…사업구조 재편 본격화",
@@ -5996,20 +6360,7 @@
           "selected": false
         },
         {
-          "id": 1794877720696,
-          "category": "ind",
-          "press": "비즈트리뷴",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 온에어",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBuVVRnVnhmZDUwaVppb3RlU2JHcG9QUmRueEw3bFo5UXB4VlBwcE1LYWIyVWw1RnBMX2JGSEE3N1B3NjFYRGJDOWE0SC1DVElqVEhPdWlCVl9wS2hyRzFQVUxIajNzV0dvY1BIV0JxZ3E?oc=5",
-          "pubDateISO": "2026-11-16T18:05:52+09:00",
-          "time": "2026.11.16 18:05",
-          "pubTs": 1794819952.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877724777,
+          "id": 1794877798138,
           "category": "ind",
           "press": "간호사신문",
           "title": "109 상담 연결 우려에…복지부, 연말 상담인력 200명 확보 추진",
@@ -6022,7 +6373,20 @@
           "selected": false
         },
         {
-          "id": 1794877719535,
+          "id": 1794877794376,
+          "category": "ind",
+          "press": "헬스이슈앤뉴스",
+          "title": "식약처, 디지털융합의약품 규제 손본다... 12월 가이드라인 마련",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9jcnVjUWl0eW54clM3VExyTm1lOUlsYlVibnV3anowTnM5bl9XUlBzQ1k2dDM4T045VDVTM0ZPd192T2U4bGFpbFlhSkpVUms1Qnhjai1FSnVLRThZdWtaZ0hFZm9uSHow?oc=5",
+          "pubDateISO": "2026-11-16T18:01:41+09:00",
+          "time": "2026.11.16 18:01",
+          "pubTs": 1794819701.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787717,
           "category": "ind",
           "press": "현대경제신문",
           "title": "동국제약, 3분기 누적 매출 7686억원···해외 뷰티 성장 견인",
@@ -6035,7 +6399,7 @@
           "selected": false
         },
         {
-          "id": 1794877721204,
+          "id": 1794877789562,
           "category": "ind",
           "press": "팜뉴스",
           "title": "유한양행, 개별인정형 원료 함유 건강기능식품 '유한잇몸유산균 Q' 출시",
@@ -6048,7 +6412,7 @@
           "selected": false
         },
         {
-          "id": 1794877721234,
+          "id": 1794877789592,
           "category": "ind",
           "press": "메디소비자뉴스",
           "title": "유한양행, 잇몸건강 기능성 유산균 원료 함유 제품 출시",
@@ -6061,7 +6425,7 @@
           "selected": false
         },
         {
-          "id": 1794877719523,
+          "id": 1794877787705,
           "category": "ind",
           "press": "www.dt.co.kr",
           "title": "동국제약, 3분기 영업익 238억원…연 매출 1조원 돌파 눈앞에",
@@ -6074,7 +6438,20 @@
           "selected": false
         },
         {
-          "id": 1794877721258,
+          "id": 1794877794334,
+          "category": "ind",
+          "press": "BBS불교방송",
+          "title": "식약처, 디지털융합의약품 규제 개선 본격화…오유경 처장, 직접 기업 현장 의견 수렴",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBNdldaM0ZlUzM0WTBPMXBoYWNaOWZsQ1FRUEwzcGk3RzJrMzBhWjlKYlNJMkhncWlFd2JwZWl1dDFadlNGZF9sV19hbVo2Sk9MbWxpRkcyMGRza0xoN2NQRTNRU1lXRnNwN0E4?oc=5",
+          "pubDateISO": "2026-11-16T17:46:40+09:00",
+          "time": "2026.11.16 17:46",
+          "pubTs": 1794818800.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789616,
           "category": "ind",
           "press": "스마트경제",
           "title": "유한양행, 잇몸 건강 기능성 유산균 '유한잇몸유산균 Q' 출시",
@@ -6087,7 +6464,7 @@
           "selected": false
         },
         {
-          "id": 1794877724785,
+          "id": 1794877798146,
           "category": "ind",
           "press": "이투데이",
           "title": "포항세명기독병원 정항재 심혈관센터장, 보건복지부 장관 표창… 20년 헌신 결실",
@@ -6100,7 +6477,7 @@
           "selected": false
         },
         {
-          "id": 1794877721222,
+          "id": 1794877789580,
           "category": "ind",
           "press": "대한경제",
           "title": "[제약바이오 브리프] 동아제약ㆍ유한양행ㆍ삼천당제약ㆍSK케미칼ㆍ한미사이언스",
@@ -6113,7 +6490,7 @@
           "selected": false
         },
         {
-          "id": 1794877721203,
+          "id": 1794877789561,
           "category": "ind",
           "press": "한국의약통신",
           "title": "유한양행, 잇몸 건강 기능성 유산균 담은 '유한잇몸유산균 Q' 출시",
@@ -6126,7 +6503,7 @@
           "selected": false
         },
         {
-          "id": 1794877724788,
+          "id": 1794877798149,
           "category": "ind",
           "press": "머니투데이",
           "title": "'필수의료 수사 지침' 논의, 복지부·경찰만? 의사들 \"우린 왜 빼나\" - 머니투데이",
@@ -6139,7 +6516,7 @@
           "selected": false
         },
         {
-          "id": 1794877721206,
+          "id": 1794877789564,
           "category": "ind",
           "press": "뉴시스",
           "title": "\"물없이 양치후 섭취\"…유한양행, 잇몸유산균 출시",
@@ -6152,7 +6529,7 @@
           "selected": false
         },
         {
-          "id": 1794877721245,
+          "id": 1794877789603,
           "category": "ind",
           "press": "소비자경제",
           "title": "잇몸 염증·출혈에 입 냄새 관리도...유한양행, '유한잇몸유산균 Q' 선봬",
@@ -6165,7 +6542,7 @@
           "selected": false
         },
         {
-          "id": 1794877719546,
+          "id": 1794877787728,
           "category": "ind",
           "press": "SR타임스",
           "title": "동국제약, 3분기 누적 매출 7686억…연 매출 1조 돌파 전망",
@@ -6178,7 +6555,7 @@
           "selected": false
         },
         {
-          "id": 1794877721196,
+          "id": 1794877789554,
           "category": "ind",
           "press": "약사공론",
           "title": "유한양행, 신장 염증·섬유화 겨냥 신약 임상 1상 진입",
@@ -6191,7 +6568,7 @@
           "selected": false
         },
         {
-          "id": 1794877724766,
+          "id": 1794877798127,
           "category": "ind",
           "press": "한국NGO신문",
           "title": "목포시, 1인 가구 고립 막은 '남성 요리교실'로 보건복지부 장관상 쾌거",
@@ -6204,7 +6581,7 @@
           "selected": false
         },
         {
-          "id": 1794877722322,
+          "id": 1794877791257,
           "category": "ind",
           "press": "한국식품의약신문",
           "title": "대원제약, 3분기 누적 매출 4502억 원…영업익 흑자전환",
@@ -6217,7 +6594,7 @@
           "selected": false
         },
         {
-          "id": 1794877723171,
+          "id": 1794877792928,
           "category": "ind",
           "press": "한국식품의약신문",
           "title": "제약바이오협회, 아일랜드와 바이오 인력양성 협력 확대 모색",
@@ -6230,7 +6607,7 @@
           "selected": false
         },
         {
-          "id": 1794877724786,
+          "id": 1794877798147,
           "category": "ind",
           "press": "경북매일",
           "title": "정항재 포항세명기독병원 심혈관센터장, 보건복지부 장관 표창 수상",
@@ -6243,7 +6620,7 @@
           "selected": false
         },
         {
-          "id": 1794877721215,
+          "id": 1794877789572,
           "category": "ind",
           "press": "메드월드뉴스",
           "title": "유한양행, ‘유한잇몸유산균 Q’ 출시",
@@ -6256,7 +6633,7 @@
           "selected": false
         },
         {
-          "id": 1794877721235,
+          "id": 1794877789593,
           "category": "ind",
           "press": "PRESS9",
           "title": "유한양행, 잇몸 건강 유산균 '유한잇몸유산균 Q' 출시",
@@ -6269,7 +6646,7 @@
           "selected": false
         },
         {
-          "id": 1794877719516,
+          "id": 1794877787698,
           "category": "ind",
           "press": "서울경제",
           "title": "동국제약, 화장품 해외 판매 호조에 연매출 1조 눈앞",
@@ -6282,7 +6659,7 @@
           "selected": false
         },
         {
-          "id": 1794877721249,
+          "id": 1794877789607,
           "category": "ind",
           "press": "핀포인트뉴스",
           "title": "비만치료제 관련주 혼조…큐라티스·유한양행 상승랠리",
@@ -6295,7 +6672,7 @@
           "selected": false
         },
         {
-          "id": 1794877719533,
+          "id": 1794877787715,
           "category": "ind",
           "press": "데일리안",
           "title": "동국제약, 3분기 누적 매출 7686억원…전년比 12.4%↑",
@@ -6308,7 +6685,7 @@
           "selected": false
         },
         {
-          "id": 1794877719517,
+          "id": 1794877787699,
           "category": "ind",
           "press": "뉴스투데이",
           "title": "동국제약, 3분기 매출 14.1% 증가...연간 1조 달성 가능성",
@@ -6321,7 +6698,7 @@
           "selected": false
         },
         {
-          "id": 1794877719531,
+          "id": 1794877787713,
           "category": "ind",
           "press": "여성소비자신문",
           "title": "동국제약·동국생명과학, 센텔리안24 ‘컬리뷰티페스타 2026’ 참가·글로벌 성장 기반 사업구조 재편",
@@ -6334,7 +6711,7 @@
           "selected": false
         },
         {
-          "id": 1794877721251,
+          "id": 1794877789609,
           "category": "ind",
           "press": "코메디닷컴",
           "title": "유한양행 후원 '유한ESG학술상' 대상에 청주대 이원준 교수",
@@ -6347,7 +6724,7 @@
           "selected": false
         },
         {
-          "id": 1794877724779,
+          "id": 1794877798140,
           "category": "ind",
           "press": "서울Pn",
           "title": "보건복지부 국립정신건강센터 의료부장 경력경쟁채용시험 서류심사 결과 및 면접심사 시행계획 공고",
@@ -6360,7 +6737,20 @@
           "selected": false
         },
         {
-          "id": 1794877721230,
+          "id": 1794877794415,
+          "category": "ind",
+          "press": "더퍼블릭",
+          "title": "유세린, 특허 성분 ‘티아미돌’ 식약처 승인...색소침착 시장 공략",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1yRVRjcFlYLTEzbG9pZVRLUFFMVk9KUEZCeFB6U21weWJoOVBmRlZvcUdyczJBWWNsT2FKaTc1bnhDcmhMdFVjaEpvbzRhUlhTcUh0ZENTTkNTNUs4ZFQyRTdBbUdDd2xubHo40gFvQVVfeXFMTkhSbko2SG12dEhQcHE4STh0T0FWRmZoZFJhV0FZeVVNLV9tWmV0ZzV3U2QxU2pJWnhNLVZpQUh5Y3h5YXZtV1Z3UG4xRHFVdGFWbGFub1hMNHRQcFJXVHVXemxiQmdDWW5WUURYSXBN?oc=5",
+          "pubDateISO": "2026-11-16T17:05:52+09:00",
+          "time": "2026.11.16 17:05",
+          "pubTs": 1794816352.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789588,
           "category": "ind",
           "press": "매일경제TV",
           "title": "유한양행, 제4회 '유한ESG학술상' 시상식 개최…\"ESG 경영 밑거름\"",
@@ -6373,7 +6763,7 @@
           "selected": false
         },
         {
-          "id": 1794877721227,
+          "id": 1794877789585,
           "category": "ind",
           "press": "이지경제",
           "title": "유한양행, 영업익 늘어도 주가 ‘주춤’…주가 반등 열쇠는 결국 ‘임상 데이터’",
@@ -6386,20 +6776,7 @@
           "selected": false
         },
         {
-          "id": 1794877722730,
-          "category": "ind",
-          "press": "보건신문",
-          "title": "휴메딕스, 3분기 매출 502억·영업익 100억… 두 자릿수 성장",
-          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1HazhCU19Kd1YxN1BiaW5qYXppeXFYU0lsQzFtOUUxeDFFNHhraWVWOVJjX3JSLXQwSW05T1Bfam41MWd2Zlh5YmljdlNRalluSDZwRzFEQ3JzLUJJY0p3?oc=5",
-          "pubDateISO": "2026-11-16T16:56:36+09:00",
-          "time": "2026.11.16 16:56",
-          "pubTs": 1794815796.0,
-          "matchedKw": "제네릭",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721224,
+          "id": 1794877789582,
           "category": "ind",
           "press": "뉴스웨이",
           "title": "유한양행, '렉라자'로 증명한 R&D 선순환···제2의 신화 쓴다",
@@ -6412,7 +6789,20 @@
           "selected": false
         },
         {
-          "id": 1794877724789,
+          "id": 1794877794339,
+          "category": "ind",
+          "press": "간호사신문",
+          "title": "약·AI 결합 제품 개발 돕는다…식약처, 11월17일 산업계 설명회",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1jS2x0TndVMkZuYnBLNDJsM2l1SjJ4dk5reFgzQkpIRjYyaE5ZelVBWmQ2VzN6RWJzQ0RSem1VOFdtUFpqQzFDUnVGYk9oUEtWWEhaRjVPSVN2VHlycEtXNjBvWWMwSkZCUXBHYm1R?oc=5",
+          "pubDateISO": "2026-11-16T16:51:52+09:00",
+          "time": "2026.11.16 16:51",
+          "pubTs": 1794815512.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798150,
           "category": "ind",
           "press": "간호사신문",
           "title": "발달장애인 응급실 문턱 낮출까…복지부, 거점병원 연계 모색",
@@ -6425,7 +6815,46 @@
           "selected": false
         },
         {
-          "id": 1794877721264,
+          "id": 1794877794358,
+          "category": "ind",
+          "press": "푸드투데이",
+          "title": "식약처, AI 결합 '디지털융합의약품' 규제 완화…신속 제품화 지원",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBPQkU2Mk15c1lYT1pLdTN0VWdkT0JhUDB1Qi0zVjdlbHJicTlfSWN2bWlLVkNXSUdUWUM4cUlSeWkweDNidC1na2dKaGVWNEZlOUxDRm1TQ1dJb0x5Tm5NeVZhVTJaZw?oc=5",
+          "pubDateISO": "2026-11-16T16:50:22+09:00",
+          "time": "2026.11.16 16:50",
+          "pubTs": 1794815422.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788665,
+          "category": "ind",
+          "press": "월요신문",
+          "title": "염증 억제 넘어 장 점막 회복으로…대웅제약, 최대 6625억 신약 개발 승부수",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE15d0JHa2pRV1F6cm5ibEw3bDFsbnR6T3hLUWlDdVpsWjdQV1ZmRXNSamZ2QkU2Tk56SlNzaVJUX2ZFSUpzM01Rcko1V2NKX3VRTXltUGg2LXFfVDdxN2NlZ21ZZzZuNHJqNXc?oc=5",
+          "pubDateISO": "2026-11-16T16:49:41+09:00",
+          "time": "2026.11.16 16:49",
+          "pubTs": 1794815381.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788666,
+          "category": "ind",
+          "press": "뉴시스",
+          "title": "\"선제적 지원\"…식약처, 디지털융합의약품 간담회",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE4wamdSbHZCQk12SDFZd3VDR0ZXTW51cHE1aFoybkZSc0dUZjNsMmdmdjdzdDJGVVdIckNPSGRlWWNWVWd6NmV0NlA3S29JeEw1dFB5andTeGZiV1BJOXVVLVNZc1JDcWFMbGpUSjFvUl9QSklBQWlZQdIBeEFVX3lxTE4wamdSbHZCQk12SDFZd3VDR0ZXTW51cHE1aFoybkZSc0dUZjNsMmdmdjdzdDJGVVdIckNPSGRlWWNWVWd6NmV0NlA3S29JeEw1dFB5andTeGZiV1BJOXVVLVNZc1JDcWFMbGpUSjFvUl9QSklBQWlZQQ?oc=5",
+          "pubDateISO": "2026-11-16T16:49:23+09:00",
+          "time": "2026.11.16 16:49",
+          "pubTs": 1794815363.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788668,
           "category": "ind",
           "press": "포인트데일리",
           "title": "유한·대웅 '미소', 종근당 '덤덤', 녹십자·한미 '웃지도 울지도'",
@@ -6433,12 +6862,12 @@
           "pubDateISO": "2026-11-16T16:42:20+09:00",
           "time": "2026.11.16 16:42",
           "pubTs": 1794814940.0,
-          "matchedKw": "유한양행",
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877719514,
+          "id": 1794877787696,
           "category": "ind",
           "press": "뉴데일리 경제",
           "title": "'마데카 크림' 잘 나가더니 … 동국제약, 3분기 매출 14% 쑥, 수익성은 주춤",
@@ -6451,7 +6880,7 @@
           "selected": false
         },
         {
-          "id": 1794877719507,
+          "id": 1794877787689,
           "category": "ind",
           "press": "한국경제",
           "title": "동국제약, 3분기 누적 매출 7686억원…연 매출 1조원 넘나",
@@ -6464,7 +6893,7 @@
           "selected": false
         },
         {
-          "id": 1794877719518,
+          "id": 1794877787700,
           "category": "ind",
           "press": "Investing.com 한국어",
           "title": "동국제약, 3분기 누적 매출 7686억원…연매출 1조원 눈앞 By EBN",
@@ -6477,7 +6906,7 @@
           "selected": false
         },
         {
-          "id": 1794877724770,
+          "id": 1794877798131,
           "category": "ind",
           "press": "연합뉴스",
           "title": "복지장관, 발달장애인 거점병원 방문…응급의료 연계 논의",
@@ -6490,7 +6919,7 @@
           "selected": false
         },
         {
-          "id": 1794877721269,
+          "id": 1794877789626,
           "category": "ind",
           "press": "중앙이코노미뉴스",
           "title": "[르포] \"기업 이익은 사회에 환원한다\"...'100년 기업' 철학 담긴 윌로우하우스",
@@ -6503,7 +6932,7 @@
           "selected": false
         },
         {
-          "id": 1794877719511,
+          "id": 1794877787693,
           "category": "ind",
           "press": "서울파이낸스",
           "title": "동국제약, 3분기 영업익 238억원···전년 比 4.1% 감소",
@@ -6516,7 +6945,7 @@
           "selected": false
         },
         {
-          "id": 1794877721223,
+          "id": 1794877789581,
           "category": "ind",
           "press": "뉴스저널리즘",
           "title": "유한양행, 제4회 '유한ESG학술상' 시상식 개최",
@@ -6529,7 +6958,20 @@
           "selected": false
         },
         {
-          "id": 1794877719527,
+          "id": 1794877794367,
+          "category": "ind",
+          "press": "지디넷코리아",
+          "title": "공부잘하는 약은 ‘불안‧환각’…수능약은 ‘어지럼증’ 부작용 주의",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE8yUXFNTG5rOTNQaXdLX0djLUdac1hsMFEzVmpNTy1YN0M4bGFMWUpGc2dZVWhoelZOSDNNaUtoOWJjVFlzTVNjb0ZjTW02Qmd4NkdJemh3?oc=5",
+          "pubDateISO": "2026-11-16T16:30:09+09:00",
+          "time": "2026.11.16 16:30",
+          "pubTs": 1794814209.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787709,
           "category": "ind",
           "press": "스페셜경제",
           "title": "동국제약, 3분기 누적매출 7686억 달성…전 사업 성장세",
@@ -6542,7 +6984,7 @@
           "selected": false
         },
         {
-          "id": 1794877719529,
+          "id": 1794877787711,
           "category": "ind",
           "press": "뉴스투데이",
           "title": "동국제약, 3분기 영업익 238억...전년비 4.1% ↓(1보)",
@@ -6555,7 +6997,7 @@
           "selected": false
         },
         {
-          "id": 1794877721201,
+          "id": 1794877789559,
           "category": "ind",
           "press": "더나은미래",
           "title": "유한양행, 제4회 ‘유한ESG학술상’ 시상…ESG 연구 생태계 지원",
@@ -6568,7 +7010,20 @@
           "selected": false
         },
         {
-          "id": 1794877724781,
+          "id": 1794877788670,
+          "category": "ind",
+          "press": "뉴스N연합",
+          "title": "대웅제약, 세란병원에 AI 스마트 모니터링 시스템 ‘씽크’ 공급…환자 안전관리 강화",
+          "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE42UDhrVlB6cjNuOC0yV1FoNXUwNFBqMGJ3c3BRazdtZXh2R2JObGJpbEJUV2QyQXNOSlI1MkVON01Rc1RQQ1hoSlFB?oc=5",
+          "pubDateISO": "2026-11-16T16:26:32+09:00",
+          "time": "2026.11.16 16:26",
+          "pubTs": 1794813992.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798142,
           "category": "ind",
           "press": "BBS불교방송",
           "title": "복지부, 발달장애인 응급의료 지원 강화…거점병원·응급의료기관 연계 추진",
@@ -6581,7 +7036,7 @@
           "selected": false
         },
         {
-          "id": 1794877721238,
+          "id": 1794877789596,
           "category": "ind",
           "press": "뉴스티앤티",
           "title": "유한양행, 제4회 유한ESG학술상 시상식 개최…청주대 이원준 교수 연구 대상 수상",
@@ -6594,20 +7049,7 @@
           "selected": false
         },
         {
-          "id": 1794877720684,
-          "category": "ind",
-          "press": "Daily NTN",
-          "title": "동아제약, 액상형 마그네슘 ‘마그랑비 피돌샷’ 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5vdmx3Z3Zwd2t5b05GTk4zVXhmSjZXeHFBWllJeXNmb3Q0R2cwcFZzSVRzLXZSQmc4ZjRMcFBPM21ubnJSUHN4WDRaWDNobTJVaWVaam5sTnpKbzBLWEhfYXhZUjBnRVltTGc?oc=5",
-          "pubDateISO": "2026-11-16T16:24:06+09:00",
-          "time": "2026.11.16 16:24",
-          "pubTs": 1794813846.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721199,
+          "id": 1794877789557,
           "category": "ind",
           "press": "Daily NTN",
           "title": "유한양행, 제4회 ‘유한ESG학술상’ 개최…ESG 우수 연구 지원",
@@ -6620,7 +7062,7 @@
           "selected": false
         },
         {
-          "id": 1794877721228,
+          "id": 1794877789586,
           "category": "ind",
           "press": "의학신문",
           "title": "주요 제약사, '당뇨병 인식 개선' 앞장",
@@ -6633,7 +7075,7 @@
           "selected": false
         },
         {
-          "id": 1794877719537,
+          "id": 1794877787719,
           "category": "ind",
           "press": "스마트경제",
           "title": "동국제약, 3분기 매출 14% 증가…연매출 1조원 돌파 가시권",
@@ -6646,7 +7088,7 @@
           "selected": false
         },
         {
-          "id": 1794877723176,
+          "id": 1794877792933,
           "category": "ind",
           "press": "라포르시안",
           "title": "제약바이오협, 아일랜드 주요 제약바이오 기관 방문… 글로벌 인력양성·산업 협력 강화",
@@ -6659,7 +7101,7 @@
           "selected": false
         },
         {
-          "id": 1794877724783,
+          "id": 1794877798144,
           "category": "ind",
           "press": "핀포인트뉴스",
           "title": "목포시, 지역사회보장협의체 운영 우수사례 보건복지부 장관상",
@@ -6672,7 +7114,7 @@
           "selected": false
         },
         {
-          "id": 1794877721214,
+          "id": 1794877789571,
           "category": "ind",
           "press": "뉴시스",
           "title": "\"학술연구 활성화\"…유한ESG학술상 시상식 개최",
@@ -6685,7 +7127,7 @@
           "selected": false
         },
         {
-          "id": 1794877720711,
+          "id": 1794877792940,
           "category": "ind",
           "press": "헬스코리아뉴스",
           "title": "[Pharma Report] 보령·셀트리온제약, 당뇨병약 공동판매…온코닉테라퓨틱스, R&D 확대 속 흑자 外",
@@ -6693,12 +7135,12 @@
           "pubDateISO": "2026-11-16T16:07:51+09:00",
           "time": "2026.11.16 16:07",
           "pubTs": 1794812871.0,
-          "matchedKw": "동아제약",
+          "matchedKw": "한국제약바이오협회",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724801,
+          "id": 1794877798163,
           "category": "ind",
           "press": "간호사신문",
           "title": "계명대 동산병원, 퇴원손상심층조사 유공 복지부 장관 표창",
@@ -6711,7 +7153,20 @@
           "selected": false
         },
         {
-          "id": 1794877719515,
+          "id": 1794877794337,
+          "category": "ind",
+          "press": "YTN 사이언스",
+          "title": "식약처, 수능 대비 온라인 마약류 등 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9kMHF2VVYyVDNTQWF0QlRXTW5TU3hoTmlCZWc3UlZuemNqYWw5dmJEeUtONEJ4QmhETWNBaWRfcFhZMDRvSDR4b3puZUFUQ1FyaUNXNEUyemNhcDZ0UzJKWEdSa0htNDFYYUVCZGFZM2h1VmQ4RjlwUm5GaThKd2c?oc=5",
+          "pubDateISO": "2026-11-16T16:01:34+09:00",
+          "time": "2026.11.16 16:01",
+          "pubTs": 1794812494.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787697,
           "category": "ind",
           "press": "비즈니스포스트",
           "title": "동국제약 3분기 영업이익 238억 4.1% 감소, 광고선전비 포함 비용 증가",
@@ -6724,7 +7179,7 @@
           "selected": false
         },
         {
-          "id": 1794877721229,
+          "id": 1794877789587,
           "category": "ind",
           "press": "레디앙",
           "title": "유한양행, 제4회 ‘유한ESG학술상’ 시상...ESG 학술연구 지원 지속",
@@ -6737,7 +7192,7 @@
           "selected": false
         },
         {
-          "id": 1794877724798,
+          "id": 1794877798160,
           "category": "ind",
           "press": "에너지경제신문",
           "title": "[패트롤] 목포시-신안군-무안군",
@@ -6750,7 +7205,20 @@
           "selected": false
         },
         {
-          "id": 1794877721248,
+          "id": 1794877794364,
+          "category": "ind",
+          "press": "한국NGO신문",
+          "title": "수능 앞둔 수험생 불안 노린 '불법 의약품' 거래…온라인 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFB1TmVxbTJnN08xMnVaOEZQcFZweW15clFSaWREb0JUdXZBLW1mUUQ2M2pGdUMxaUhsRzJGU0NOeE9lZkctandZeDBPV2R5eFoyREwwVUVCS2lrVGVaby02NWR4d1RsR3lh?oc=5",
+          "pubDateISO": "2026-11-16T15:54:09+09:00",
+          "time": "2026.11.16 15:54",
+          "pubTs": 1794812049.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789606,
           "category": "ind",
           "press": "아시아뉴스통신",
           "title": "유한양행 주가 1,000원 상승 후 장마감",
@@ -6763,7 +7231,7 @@
           "selected": false
         },
         {
-          "id": 1794877721246,
+          "id": 1794877789604,
           "category": "ind",
           "press": "서울타임즈뉴스",
           "title": "유한양행, 제4회 유한ESG학술상 시상…청주대 이원준 교수 대상",
@@ -6776,7 +7244,7 @@
           "selected": false
         },
         {
-          "id": 1794877724774,
+          "id": 1794877798135,
           "category": "ind",
           "press": "뉴시스",
           "title": "포항세명기독병원 정항재 심혈관센터장, 보건복지부 장관 표창",
@@ -6789,20 +7257,7 @@
           "selected": false
         },
         {
-          "id": 1794877720713,
-          "category": "ind",
-          "press": "세계비즈",
-          "title": "동아제약, ‘마그랑비 피돌샷’ 신규광고",
-          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBtTUJZMTAyTlhsa0hLV1A4TWc4Y19TMVFpa2lXMmtkeFJob2UwRlJlUGNxT25XdDIwREtiTUk4OFN1RWxxUDZqb3lzYmlsY2FWWldtcEVqeGJCQQ?oc=5",
-          "pubDateISO": "2026-11-16T15:39:25+09:00",
-          "time": "2026.11.16 15:39",
-          "pubTs": 1794811165.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877719526,
+          "id": 1794877787708,
           "category": "ind",
           "press": "Investing.com 한국어",
           "title": "[실적] 동국제약, 매출 성장에도 영업이익 뒷걸음…화장품 해외 판촉비 부담 추정 By 알파경제 alphabiz",
@@ -6815,33 +7270,7 @@
           "selected": false
         },
         {
-          "id": 1794877720698,
-          "category": "ind",
-          "press": "뉴스엔뷰",
-          "title": "동아제약, 액상형 마그네슘 ‘마그랑비 피돌샷’ 신규 광고 온에어",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5qTEdBd0FSUHZ4OEg1QkFMeEdJamdTbmQ1VjVWa0NnM1ExZFVkVzVKUHRFMk9Fbjc1R3VfTjBTd1NVN1pfZ21lQWJnTmxyS1V4TjBOSFdTWDlETjhxQnAxYXhJdjI?oc=5",
-          "pubDateISO": "2026-11-16T15:37:08+09:00",
-          "time": "2026.11.16 15:37",
-          "pubTs": 1794811028.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720708,
-          "category": "ind",
-          "press": "메디칼트리뷴",
-          "title": "동아제약 '마그랑비 피돌샷' 신규 TV·디지털 광고 온에어",
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5pVmU3RXlMNHZZN1BwVTV1azMxMmlQczBVUTBWZVVZMFB1NjRjWklxRmNjSmRGQnhSR2FRX0JzUTZnY0duejA1ZzRudTktQjByMlUwT0N5bnBpTDB5WktMMlhiOGNFaTMxUlotRmVmRjJlTWZIOHc?oc=5",
-          "pubDateISO": "2026-11-16T15:36:26+09:00",
-          "time": "2026.11.16 15:36",
-          "pubTs": 1794810986.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877724803,
+          "id": 1794877798165,
           "category": "ind",
           "press": "웹이코노미",
           "title": "목포시, 지역사회보장협의체 운영 우수사례로 보건복지부 장관상 수상",
@@ -6854,7 +7283,7 @@
           "selected": false
         },
         {
-          "id": 1794877721250,
+          "id": 1794877789608,
           "category": "ind",
           "press": "연합뉴스",
           "title": "[바이오스냅] 대원제약, '펠루비정' 소아용 시럽 임상시험",
@@ -6867,7 +7296,7 @@
           "selected": false
         },
         {
-          "id": 1794877719519,
+          "id": 1794877787701,
           "category": "ind",
           "press": "뉴스핌",
           "title": "동국제약, 화장품 앞세워 외형 성장…3분기 누적 매출 7686억원",
@@ -6880,7 +7309,7 @@
           "selected": false
         },
         {
-          "id": 1794877724800,
+          "id": 1794877798162,
           "category": "ind",
           "press": "강원경제신문",
           "title": "횡성군보건소, ‘2026년 재난응급의료 종합훈련대회’ 보건복지부장관상 등 2관왕 영예",
@@ -6893,20 +7322,7 @@
           "selected": false
         },
         {
-          "id": 1794877719065,
-          "category": "ind",
-          "press": "헬스코리아뉴스",
-          "title": "[Medical Report] 당뇨병약 효과 가르는 유전자 발견…자궁내막암 새 치료 가능성 확인 外",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1LWUh0bk83UUFKTWI4RlVnQ0hoZmZHZEIxeTJGeU1sZE5FMmZXTmRsY0p2ZHhLNGJMVzlFaS1DdFVPd09DN2VQOG5fb1hKNkIzS0QxRkdnZXF2S3RVWll4anh2ak0zU0U?oc=5",
-          "pubDateISO": "2026-11-16T15:29:04+09:00",
-          "time": "2026.11.16 15:29",
-          "pubTs": 1794810544.0,
-          "matchedKw": "Medica Korea",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877724778,
+          "id": 1794877798139,
           "category": "ind",
           "press": "뉴스투데이",
           "title": "[현장 : 인천대 의전원 설립 국회 토론회 ③·끝] 보건복지부 “의전원 신설, 의사 수급 및 의료 수요 등 종합 검토 필요”",
@@ -6919,7 +7335,7 @@
           "selected": false
         },
         {
-          "id": 1794877719534,
+          "id": 1794877787716,
           "category": "ind",
           "press": "뉴스저널리즘",
           "title": "동국제약, 3분기 누적 매출 7686억원…연매출 1조원 돌파 기대",
@@ -6932,7 +7348,7 @@
           "selected": false
         },
         {
-          "id": 1794877721211,
+          "id": 1794877789568,
           "category": "ind",
           "press": "한국의약통신",
           "title": "유한양행, 제4회 '유한ESG학술상' 시상…대상에 청주대 이원준 교수",
@@ -6945,7 +7361,7 @@
           "selected": false
         },
         {
-          "id": 1794877724780,
+          "id": 1794877798141,
           "category": "ind",
           "press": "매일신문",
           "title": "따뜻한 겨울에도 한랭질환자·사망자 증가…보건복지부, 종합대책 마련",
@@ -6958,20 +7374,20 @@
           "selected": false
         },
         {
-          "id": 1794877720717,
+          "id": 1794877794405,
           "category": "ind",
-          "press": "컨슈머타임스",
-          "title": "동아제약, '마그랑비 피돌샷' 신규 광고 공개…빠른 흡수로 활력 충전",
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1WSUs5RzVjUWRKaTEtSEpUcHRLQlNaelRqU2NkSVJFQUJhNGt2TzRFcGR5LXJhXzJBeGxxT3FSakIxSzNEZ09DdUZOOUpKTHREWG5Gd0V5cU1uUHZJa1ltT2tHWXRBT3R3T3c?oc=5",
-          "pubDateISO": "2026-11-16T15:17:59+09:00",
+          "press": "아시아타임즈",
+          "title": "'스시자로' 관심 커지나…日 의료기관, 한국인 환자 유치 '속도전'",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5PQk0tTnlUOVcyemdWN0ZGV3R6YjhrRERSZWxlalR6R0w4YlpuYlpJOFFzNkh0ako2b1VGTDgyYjA1blQyX3pQRnZVQnR3X0k3eWp6cVU2UGNONTRxT2c?oc=5",
+          "pubDateISO": "2026-11-16T15:17:00+09:00",
           "time": "2026.11.16 15:17",
-          "pubTs": 1794809879.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794809820.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877719544,
+          "id": 1794877787726,
           "category": "ind",
           "press": "이포커스",
           "title": "동국제약, 3분기 누적 매출 7686억…전년비 12.4% 증가",
@@ -6984,7 +7400,7 @@
           "selected": false
         },
         {
-          "id": 1794877721268,
+          "id": 1794877789625,
           "category": "ind",
           "press": "중앙이코노미뉴스",
           "title": "유한양행, 제4회 ESG학술상 시상…이원준 청주대 교수 대상",
@@ -6997,7 +7413,20 @@
           "selected": false
         },
         {
-          "id": 1794877724796,
+          "id": 1794877794413,
+          "category": "ind",
+          "press": "현대건강신문",
+          "title": "수능 앞두고 의약품 불법 판매 571건 적발..“공부 잘하는 약‘ 없어",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1tem1FNWNPa2ZZbm5hdWdJbkM0SW16RjBqcmNlMWpNZU5ONUx6anhFTnZBTW1ELWItWHNURWQzdDQtRVBCLUtqX0JKbFRLdjNhaXRVaHFB?oc=5",
+          "pubDateISO": "2026-11-16T15:12:00+09:00",
+          "time": "2026.11.16 15:12",
+          "pubTs": 1794809520.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798158,
           "category": "ind",
           "press": "대한경제",
           "title": "용인시, 지역사회보장협의체 전국대회 ‘대상’ 쾌거… 복지사각지대 해소 앞장",
@@ -7010,7 +7439,7 @@
           "selected": false
         },
         {
-          "id": 1794877721257,
+          "id": 1794877789615,
           "category": "ind",
           "press": "한국정경신문",
           "title": "유한양행, ESG 연구 지원 4년째..청주대 이원준 교수 대상",
@@ -7023,7 +7452,33 @@
           "selected": false
         },
         {
-          "id": 1794877719522,
+          "id": 1794877794355,
+          "category": "ind",
+          "press": "서울STV뉴스",
+          "title": "식약처, \"공부 잘하는 약·수능약은 없다\"…온라인 불법 의약품 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5DMEgwUkJMR1JGUVpiMUZpN01UQmFJSWQzbmY3RldmLTNvZkNNakxUd1g1cUlLTkZ4a1ExcFIyZ2dRcjdnZ3EwTV9uQk52bHJISmFZaS15UU9VQS1FSVp0Mno4MlZ0NzQ?oc=5",
+          "pubDateISO": "2026-11-16T14:53:22+09:00",
+          "time": "2026.11.16 14:53",
+          "pubTs": 1794808402.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794350,
+          "category": "ind",
+          "press": "조선일보",
+          "title": "‘수능약’으로 둔갑한 마약류... 먹으면 불안·두통·환각 온다",
+          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOMURjQXpHVWtuSl9sSW1lekc3NzNUa3VGZVltWUZjSGp2cmRGbk1IXzdGWXdBWDZhbF9JVllKeXNZVFNaSVRkRXVodWZsOENBc0VjekhfREpzYWlVN3N5V3N3TlFDUDBjWFlNOW94TEhqMmk3ZlUzSzkwLTNadkMwS1RZTWNVOExzai0wYmxPQQ?oc=5",
+          "pubDateISO": "2026-11-16T14:51:48+09:00",
+          "time": "2026.11.16 14:51",
+          "pubTs": 1794808308.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787704,
           "category": "ind",
           "press": "산경투데이",
           "title": "동국제약, 3분기 매출 14.1% 증가…연매출 1조원 돌파 전망",
@@ -7036,20 +7491,7 @@
           "selected": false
         },
         {
-          "id": 1794877720703,
-          "category": "ind",
-          "press": "비즈니스플러스",
-          "title": "[제약·바이오 브리핑]유한양행·한미사이언스·동아제약·메디톡스",
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE55a3QzUHNYa0pkWUlvdHdsenItQVhxYURZQldmRmN6bGI5OEhxMDFtRXhvXzBHSVBaTjNvemo4QjBJQmxaQWpjQzRwWWtsX0VUUWhiQWdsaUt3aF9DdjZVZzNSUEx6LWVjeHp1WEd3?oc=5",
-          "pubDateISO": "2026-11-16T14:48:09+09:00",
-          "time": "2026.11.16 14:48",
-          "pubTs": 1794808089.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721231,
+          "id": 1794877789589,
           "category": "ind",
           "press": "헬스포커스뉴스",
           "title": "유한양행, 만성신장병 신약 후보물질 임상 1상 승인",
@@ -7062,7 +7504,7 @@
           "selected": false
         },
         {
-          "id": 1794877721216,
+          "id": 1794877789573,
           "category": "ind",
           "press": "팜뉴스",
           "title": "유한양행·한국전문경영인학회, 제4회 '유한ESG학술상' 시상식 개최",
@@ -7075,7 +7517,20 @@
           "selected": false
         },
         {
-          "id": 1794877724790,
+          "id": 1794877794385,
+          "category": "ind",
+          "press": "아주경제",
+          "title": "공부 잘하는 약·수능약은 없다… 온라인 불법 판매 게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA5Q214TjRnTk9HX0hucHBqUllydEFWX3ltUW9oSjVLd3lQUzBySGEtSlhrQlhpUnlWZ3puUjl1T0dfYkZaQlIzN1prOUZMdXRVV04zVnZNYm9Cd9IBWEFVX3lxTFBtd1ltcjFUUDQwM1BwNmN5dWx6dEIxN0RXWk5adG9TUnpBdkhRVXZiY05zYzhJUGk5U0hHRzJoY2UwUExuRl96cER5Y3NNbUdEUTNJTXFxVEs?oc=5",
+          "pubDateISO": "2026-11-16T14:45:28+09:00",
+          "time": "2026.11.16 14:45",
+          "pubTs": 1794807928.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798151,
           "category": "ind",
           "press": "장강뉴스",
           "title": "장흥군정신건강복지센터, 보건복지부 평가 최우수 S등급 선정",
@@ -7088,7 +7543,7 @@
           "selected": false
         },
         {
-          "id": 1794877719541,
+          "id": 1794877787723,
           "category": "ind",
           "press": "아이뉴스24",
           "title": "동국제약, 3분기 영업익 238억⋯전년 대비 4.1% 감소",
@@ -7101,20 +7556,20 @@
           "selected": false
         },
         {
-          "id": 1794877720688,
+          "id": 1794877794402,
           "category": "ind",
-          "press": "뉴스핌",
-          "title": "동아제약 '아일로 PDRN+B5', 올리브영 11월 올영픽 선정",
-          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9EUXByWUtNaDNtRUhBYnBEM3JIWi1IXzRPYXd4MDlxam1BX052WmhRTVlIWXNQbkxsRkVtSmRjWm5uU3NTcGhVMFpsMW5nektJQVZibFVWTy1TVVp1?oc=5",
-          "pubDateISO": "2026-11-16T14:45:00+09:00",
-          "time": "2026.11.16 14:45",
-          "pubTs": 1794807900.0,
-          "matchedKw": "동아제약",
+          "press": "한국경제",
+          "title": "유세린, 티아미돌™ 성분 식약처 미백 기능성 허가",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBueWc5T2lRT0psWVNZV3dYSUxSbG1OTWV5eEpYTU5yR0tCU3BjenpxTndnMEJESXRhekpIUXp1TWNGUUdNQi1wbHB6ZFEtcHJsbjlXWVZkUmN6QQ?oc=5",
+          "pubDateISO": "2026-11-16T14:41:58+09:00",
+          "time": "2026.11.16 14:41",
+          "pubTs": 1794807718.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721244,
+          "id": 1794877789601,
           "category": "ind",
           "press": "투데이e코노믹",
           "title": "유한양행, 제4회 유한ESG학술상 시상…대상에 이원준 청주대 교수",
@@ -7127,7 +7582,7 @@
           "selected": false
         },
         {
-          "id": 1794877723172,
+          "id": 1794877792929,
           "category": "ind",
           "press": "팜뉴스",
           "title": "제약바이오협회, 아일랜드 NIBRT·투자개발청 방문",
@@ -7140,7 +7595,7 @@
           "selected": false
         },
         {
-          "id": 1794877719538,
+          "id": 1794877787720,
           "category": "ind",
           "press": "뉴스로드",
           "title": "동국제약, 3분기 매출 2,587억·영업익 238억…연 매출 1조 눈앞",
@@ -7153,7 +7608,7 @@
           "selected": false
         },
         {
-          "id": 1794877719509,
+          "id": 1794877787691,
           "category": "ind",
           "press": "Chosunbiz",
           "title": "마데카 크림 날개 단 동국제약, 1~3Q 매출 7686억원",
@@ -7166,7 +7621,7 @@
           "selected": false
         },
         {
-          "id": 1794877719510,
+          "id": 1794877787692,
           "category": "ind",
           "press": "머니투데이",
           "title": "동국제약 3분기 매출 2587억, 전년比 14%↑…\"화장품 해외 본격 성과\" - 머니투데이",
@@ -7179,7 +7634,7 @@
           "selected": false
         },
         {
-          "id": 1794877724782,
+          "id": 1794877798143,
           "category": "ind",
           "press": "연합뉴스",
           "title": "[게시판] 복지부, '대한민국 인구포럼'…인구감소 대응모색",
@@ -7192,7 +7647,7 @@
           "selected": false
         },
         {
-          "id": 1794877719508,
+          "id": 1794877787690,
           "category": "ind",
           "press": "메디코파마",
           "title": "동국제약, K뷰티 해외 판로 확대…해외 매출 4배 성장",
@@ -7205,7 +7660,7 @@
           "selected": false
         },
         {
-          "id": 1794877721226,
+          "id": 1794877789584,
           "category": "ind",
           "press": "주간한국",
           "title": "유한양행, 만성신장병 후보물질 ‘YH34180’ 임상 1상 승인",
@@ -7218,7 +7673,7 @@
           "selected": false
         },
         {
-          "id": 1794877719524,
+          "id": 1794877787706,
           "category": "ind",
           "press": "뉴시스",
           "title": "동국, 3분기 누적매출 7686억…전년대비 12.4%↑",
@@ -7231,7 +7686,7 @@
           "selected": false
         },
         {
-          "id": 1794877721252,
+          "id": 1794877789610,
           "category": "ind",
           "press": "뉴스1",
           "title": "유한ESG학술상 대상에 이원준 청주대 교수…기업 ESG 연구",
@@ -7244,7 +7699,7 @@
           "selected": false
         },
         {
-          "id": 1794877721262,
+          "id": 1794877789621,
           "category": "ind",
           "press": "뉴스락",
           "title": "제4회 유한ESG학술상 대상에 이원준 청주대 교수",
@@ -7257,7 +7712,20 @@
           "selected": false
         },
         {
-          "id": 1794877719520,
+          "id": 1794877794353,
+          "category": "ind",
+          "press": "뉴스핌",
+          "title": "'공부 잘하는 약' 없다…식약처, 수능·면접 앞둔 의약품 불법 유통 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBSSVFWbEk3cy1VTXJYWXZiSW42eDFxYk4ycW5uV2ZDbFFvbnoyQVBGY3AtaEZ1Tk9uME1PQ1I1TFhOa09xeFdvZXZzd2NvNUhSLXBMajRDaGVManA4?oc=5",
+          "pubDateISO": "2026-11-16T14:15:00+09:00",
+          "time": "2026.11.16 14:15",
+          "pubTs": 1794806100.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787702,
           "category": "ind",
           "press": "사이언스엠디뉴스",
           "title": "동국제약, 올 3분기 누적 매출 7686억 실현",
@@ -7270,33 +7738,7 @@
           "selected": false
         },
         {
-          "id": 1794877720692,
-          "category": "ind",
-          "press": "디지털비즈온",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 온에어…액상형 마그네슘으로 차별화",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9OdVJJNEw1YkdhcGZTbEptWUlVdGd2SF9BQ1dpYXJjRUMxcUlLYndPM0t3MjdvS2lQM193SHlOa3FCY2VSdUk1NmdUT21QQW1iZEpHUUxSQ0ZLcW56cGU0aW9XWWQ2ckdSZVFoSEpTVjLSAXRBVV95cUxNZnN6NTRoZlo4ZF9VakFfWnVWZjBhYzdybVpUTjhjV2pmVU1Hc1dqMUtlUjRscEpXUVIwWll3cS1tUlB4M05ya3FsdUhvb1lUYlNZZzAwUUxkUFQ3U0xJYkw2NTlzTUpLanc1Mm04Sk1xcG5mdw?oc=5",
-          "pubDateISO": "2026-11-16T14:11:20+09:00",
-          "time": "2026.11.16 14:11",
-          "pubTs": 1794805880.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720723,
-          "category": "ind",
-          "press": "이코노미사이언스",
-          "title": "동아제약, 액상형 마그네슘 ‘피돌샷’ 알린다…TV·디지털 광고 확대",
-          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1fSzhrbTFJS080cS1vb3l1Y19HaHFUamx5STBYcTd5X29iTDJCZGJRSkFoRGtaRXktaWpycG1rMUZtd3pFUGdscVVBenM2OVdRSFpXMlNzX0ZBd04wV0p1RzFJUXV1bXliV2FKX1Bocw?oc=5",
-          "pubDateISO": "2026-11-16T14:10:04+09:00",
-          "time": "2026.11.16 14:10",
-          "pubTs": 1794805804.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721253,
+          "id": 1794877789611,
           "category": "ind",
           "press": "인더스트리뉴스",
           "title": "유한ESG학술상 대상에 이원준 청주대 교수…ESG·소비 관계 연구",
@@ -7309,7 +7751,7 @@
           "selected": false
         },
         {
-          "id": 1794877723169,
+          "id": 1794877792927,
           "category": "ind",
           "press": "더나은미래",
           "title": "유럽 품는 제약바이오협회…아일랜드 주요 기관과 ‘바이오 인력양성’ 협력하기로",
@@ -7322,7 +7764,7 @@
           "selected": false
         },
         {
-          "id": 1794877721256,
+          "id": 1794877789614,
           "category": "ind",
           "press": "이뉴스투데이",
           "title": "유한양행, 제4회 ESG 학술상 시상···우수 연구 2편 선정",
@@ -7335,7 +7777,7 @@
           "selected": false
         },
         {
-          "id": 1794877721237,
+          "id": 1794877789595,
           "category": "ind",
           "press": "더바이오",
           "title": "유한양행 비만신약, 생쥐 체중 22.9%↓…세마글루티드·오르포글리프론 상회",
@@ -7348,7 +7790,20 @@
           "selected": false
         },
         {
-          "id": 1794877721241,
+          "id": 1794877789960,
+          "category": "ind",
+          "press": "데일리팜",
+          "title": "대원제약, 펠루비 소아용 개발 속도…임상 2상 승인",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE94RFZuXzVueHRWb2JabTBwTlRmWkIyejRBMDdlazVZSlMwdTFWaV9yaVI5alI2UUNUd3JLclhhd0d2cXlMdnlndlhQMjk1Y2FsR3R5TThB?oc=5",
+          "pubDateISO": "2026-11-16T13:56:57+09:00",
+          "time": "2026.11.16 13:56",
+          "pubTs": 1794805017.0,
+          "matchedKw": "개량신약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789599,
           "category": "ind",
           "press": "이지경제",
           "title": "유한양행, ESG 학술연구 지원 확대…제4회 학술상 시상",
@@ -7361,20 +7816,33 @@
           "selected": false
         },
         {
-          "id": 1794877719067,
+          "id": 1794877794349,
           "category": "ind",
-          "press": "부산일보",
-          "title": "부산대, 한일 전문가와 함께 ‘미래세대 건강 창조 국제심포지엄’ 개최",
-          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE00ekRjbjEzZjhzZ3ZMVlh5RVBiZ2FrVV83QjExcHRVVzJncUtqRVo5U05oUjVWdmEwaVJBalZYNGNCMTJaY1pBdDA5d2NrUlk2Q1ZwaEdPTW9UOTZtUVRGU1pJbWhRN1dKSWdic1FxS3FXS2M5U0dj?oc=5",
-          "pubDateISO": "2026-11-16T13:48:57+09:00",
-          "time": "2026.11.16 13:48",
-          "pubTs": 1794804537.0,
-          "matchedKw": "Medica Korea",
+          "press": "전자신문",
+          "title": "AI 의료기기, 허가 넘어 시장 진입까지…식약처, 규제·수가 연계 논의",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5FXzRsNmtkeG1saHJGamhOQVNwTHhkbGRIUlR3bmNUX1JkY2RZWVZLMUZfXzVIMWJPbFVHWFNsczZMMHRaN08ySm9iNE9EUQ?oc=5",
+          "pubDateISO": "2026-11-16T13:54:42+09:00",
+          "time": "2026.11.16 13:54",
+          "pubTs": 1794804882.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721210,
+          "id": 1794877794368,
+          "category": "ind",
+          "press": "경향신문",
+          "title": "‘공부 잘하는 약’부터 ‘면접약’까지···수능 앞 불법판매 게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9SbVc3LTFjb05wanpvdlZDeXBiUG9ORUhNZFRKc3BadDBXV3VJRVd1UFNDRnNSeG9oWnM3SlJ4blNoUElKMTVreGh0OVhqYXY3djluOWtnQ0Npd9IBX0FVX3lxTE5MSVowcnBzV041YmVUaG1OcmdXeFdWcTRIVE1CbFV6Q2VtU3VCTjZfcTU4UDRQTkJtUkFRY040LXdUTkM1Z0djSlBaN0d4SDJBbXJ3ejJLVzlxYWNsTlBB?oc=5",
+          "pubDateISO": "2026-11-16T13:53:00+09:00",
+          "time": "2026.11.16 13:53",
+          "pubTs": 1794804780.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789567,
           "category": "ind",
           "press": "더나은미래",
           "title": "유한양행, 만성신장병 신약 임상 나서",
@@ -7387,7 +7855,20 @@
           "selected": false
         },
         {
-          "id": 1794877724804,
+          "id": 1794877794346,
+          "category": "ind",
+          "press": "대한민국 정책브리핑",
+          "title": "건선, 올바른 이해가 배려의 시작입니다 - 영상 | 멀티미디어",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFB3WUFvUnNfMXB3d1B6R3U4MFBuak5fMEM0bVhTaEdEdm1QUFJXSmVGSklVVEozc05nekthODJ1ZmJxTlFmdGJuQ3NrYjYtbkV3c0M5NFZpNEZSRVJHTTNwZ3R4cFBQTkU3dHRqSg?oc=5",
+          "pubDateISO": "2026-11-16T13:47:32+09:00",
+          "time": "2026.11.16 13:47",
+          "pubTs": 1794804452.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798166,
           "category": "ind",
           "press": "웹이코노미",
           "title": "오산시, 통합사례관리 전국대회서 보건복지부 장관상 수상",
@@ -7400,7 +7881,7 @@
           "selected": false
         },
         {
-          "id": 1794877719512,
+          "id": 1794877787694,
           "category": "ind",
           "press": "연합뉴스",
           "title": "동국제약, 3분기 영업익 238억원…연 매출 1조원 돌파 전망",
@@ -7413,46 +7894,33 @@
           "selected": false
         },
         {
-          "id": 1794877720690,
+          "id": 1794877794380,
           "category": "ind",
-          "press": "중소기업신문",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE14ZHRIMC1yeHk5VjZSRERKREFybmtfbF9tY1JDUnY3NHB3TmJWbHh1elZMbTdVNVA2Q0xPTkRSNlExWkZwS0FWdHc2blEweU5GS1pzaVc3VGRlc3lFWFlHdXlIUVBCbl9HNmZjMw?oc=5",
-          "pubDateISO": "2026-11-16T13:36:52+09:00",
-          "time": "2026.11.16 13:36",
-          "pubTs": 1794803812.0,
-          "matchedKw": "동아제약",
+          "press": "이데일리",
+          "title": "플라즈맵 ‘30L 멸균기’ 식약처 허가…이달 판매 개시",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQN2xDWE9yRmZSZzBuUVdYbV9tczJudnR5d29HaUh3cFBTODRmYjBhMjh0MlBfLVlkam9FZW51QTYzSjRzUjgya1hrVGVUQWJMRDMtOXQ1eVNLNjI2bHVWYTN2VDR1WjBKaEQ1cHJPWFJwSEE3V3J1YTRJaHNFcGwxeA?oc=5",
+          "pubDateISO": "2026-11-16T13:32:02+09:00",
+          "time": "2026.11.16 13:32",
+          "pubTs": 1794803522.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720704,
+          "id": 1794877789957,
           "category": "ind",
-          "press": "민주신문",
-          "title": "[민주 약국] 제일파마홀딩스·동아제약·한미사이언스",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA4c2ZidGJNN3NXZFVHRWVpODFkUFBXck1jOS0ycUR3Zmk2TzVYM3gxOG1yblByMTZESFJWaXR0WHppZy1HbFV0SmI5WTd5WGM5SVBVNFVIUUdXcnRob1pvMU80YlJUbk3SAWtBVV95cUxNS0JCajBNZEt2M0g3SEloazVmbHpiTzN6cDczaU54cy1DSHd1TWJkcDNFZm1LbmZCUmVKNkxMel9SZmdJcTBhRVRKck1mbUhDazF1LWNrQ283WFJnQ2xZeTAzZE1RX2FJU1F4NA?oc=5",
-          "pubDateISO": "2026-11-16T13:36:17+09:00",
-          "time": "2026.11.16 13:36",
-          "pubTs": 1794803777.0,
-          "matchedKw": "동아제약",
+          "press": "데일리팜",
+          "title": "HLB제약 박재형 7년…매출 7배 눈앞·550억 투자 승부수",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9kT1F4SEY3ZTBNaUxSNzdIbTIySkZWZ2E4Q0lDZ0kwM0VaN2FpNFFFeV9FYUF3cEduQl9TOHlZcmgxd3NXaVlwUnkwc3FKY3AwSkRDZWdn?oc=5",
+          "pubDateISO": "2026-11-16T13:17:27+09:00",
+          "time": "2026.11.16 13:17",
+          "pubTs": 1794802647.0,
+          "matchedKw": "개량신약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724806,
-          "category": "ind",
-          "press": "서울뉴스통신",
-          "title": "[분당서울대병원] 알레르기면역내과 장윤석 교수 세계알레르기기구(WAO) 이사 재선출 이어 보건복지부 장관 표창 수상",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9pZ0kwbldaeXBoYy12NXhRQkJvUnM4VE5XakEwcDdnWm53TXRtSHJmZ0k5cVhHc0ZvUjVwd1lvZFA4TXhWc2czbnV5YW9ja3M0cWRKYTI0bXB0OFk5dVlVelJYTWFTTEo1d1FR?oc=5",
-          "pubDateISO": "2026-11-16T13:23:21+09:00",
-          "time": "2026.11.16 13:23",
-          "pubTs": 1794803001.0,
-          "matchedKw": "보건복지부",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721239,
+          "id": 1794877789597,
           "category": "ind",
           "press": "뉴스웰",
           "title": "유한양행, ESG 우수 연구자 시상… 지속가능경영 학술 지원 강화",
@@ -7465,20 +7933,33 @@
           "selected": false
         },
         {
-          "id": 1794877720687,
+          "id": 1794877794389,
           "category": "ind",
-          "press": "메트로신문",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 온에어…제품 차별성 강조",
-          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5jajF1VzFjWGowakw5WTdFaXV6OHp4V09nRFNqaGZiVVhiRkFOQTlQbXFzem55UFNXV1hVNjlFemxXQjF1V0VaaElmUGhEZEc1Yk9CRnFINjVMbTN1UmlCNg?oc=5",
-          "pubDateISO": "2026-11-16T13:10:45+09:00",
-          "time": "2026.11.16 13:10",
-          "pubTs": 1794802245.0,
-          "matchedKw": "동아제약",
+          "press": "미주중앙일보",
+          "title": "‘수능약’ 불법판매 점검서 571건 적발…“온라인 약 사지 마세요”",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9rV2YtX1cwWWFUdUtzcTc0UHpyOHg1WTlHbURCZVVfcWlkeDRzQzN4d0NPVHZTaXE4YXloVDgwcmNKaUtvRWFCRUhiVmRwWDh0LXlZZVQ0YVNYZ1BTZ2h0a3FB?oc=5",
+          "pubDateISO": "2026-11-16T13:07:00+09:00",
+          "time": "2026.11.16 13:07",
+          "pubTs": 1794802020.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724773,
+          "id": 1794877794369,
+          "category": "ind",
+          "press": "이코리아",
+          "title": "수능 앞두고 '공부 잘하는 약' 불법 판매 기승…식약처, 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9kOXhReGRmNkpXMS16UlZlZ1JCWjB5NndoWV9iLTZlT3FkeDBocjJRWXJlc2xwU0tTZm9jN1h3WGcxdktsMEFwOTZnblB1Yk5HbmRhRHJNbEM4RDlHZThRa1NVRnc1LVdWbTlEdjlnRQ?oc=5",
+          "pubDateISO": "2026-11-16T13:06:46+09:00",
+          "time": "2026.11.16 13:06",
+          "pubTs": 1794802006.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798134,
           "category": "ind",
           "press": "병원신문",
           "title": "[동정]보건복지부 장관 표창 수상",
@@ -7491,7 +7972,7 @@
           "selected": false
         },
         {
-          "id": 1794877724784,
+          "id": 1794877798145,
           "category": "ind",
           "press": "문화체육관광부 한국문화원",
           "title": "'공공의료 AI 고속도로' 개통···병원 간 진료 협력",
@@ -7504,7 +7985,59 @@
           "selected": false
         },
         {
-          "id": 1794877721219,
+          "id": 1794877794401,
+          "category": "ind",
+          "press": "농민신문",
+          "title": "“되레 불안·두통·졸음 부작용”…수능 앞두고 ‘집중력 약’ 불법 판매·알선 적발",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA1UVpzV05OU18xX2JXMTJQQ0RGRThqbzJRNVBscDBVUEF2ek1MYXJwdDM2Y2tiWW5VNEtLdDBFaFotMlp1VmR3dXFWenVmR0N0UF9HTHlzbmRXUQ?oc=5",
+          "pubDateISO": "2026-11-16T13:01:00+09:00",
+          "time": "2026.11.16 13:01",
+          "pubTs": 1794801660.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794378,
+          "category": "ind",
+          "press": "연합뉴스TV",
+          "title": "수능 앞두고 ’집중력약’ 불법 판매…571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1NV2hlV3ladjJIUU1wRmpmQ3h3NGo3c0lzY2x3d04xbzRTR0oxVXZLSEtxMkYwUnpvRGVBeDFjY1RNOTVEbWo0Q29WdHRrMUxlOU1nUXZPbDRBM0ptR25DRFhTWTJOVVk?oc=5",
+          "pubDateISO": "2026-11-16T12:58:00+09:00",
+          "time": "2026.11.16 12:58",
+          "pubTs": 1794801480.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794404,
+          "category": "ind",
+          "press": "데일리메디",
+          "title": "수능 앞두고 ‘공부약’ 불법 판매 기승",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE83cU43YXpMMy15UlppYTFybFN1UV8zUnNmV2xsQWh5UlVaWG1yMVF6VHFQSnlSVmJ2NUlvYjBnRkJlTm9FNVRDcHk2NzNQMHE3Y21WT290MDVnd0FtZ0FhckFUVG54YXBU?oc=5",
+          "pubDateISO": "2026-11-16T12:37:00+09:00",
+          "time": "2026.11.16 12:37",
+          "pubTs": 1794800220.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794408,
+          "category": "ind",
+          "press": "바이오타임즈",
+          "title": "유세린, 기미·색소침착 특허 선분 ‘티아미돌’ 식약처 미백 기능성 허가 받아",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5QVndEM2ltdENrTEhVUTRqUEFYLTF2UmFXbU85Nm1iZlBRQlhmWUZMaWc5YklaeDdsc19CcE9IVExmS0h1MHpUbEV3YW9yM3N5cUUwNWJRcjBCS1JDa3R2U1E1VEZPTTluODlfZg?oc=5",
+          "pubDateISO": "2026-11-16T12:17:51+09:00",
+          "time": "2026.11.16 12:17",
+          "pubTs": 1794799071.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789576,
           "category": "ind",
           "press": "바이오타임즈",
           "title": "유한양행, 제4회 ESG학술상 시상…청주대 이원준 교수 대상",
@@ -7517,7 +8050,7 @@
           "selected": false
         },
         {
-          "id": 1794877724793,
+          "id": 1794877798155,
           "category": "ind",
           "press": "뉴시스",
           "title": "복지부 \"연말까지 자살예방상담 인력 200명 규모로 확충\"",
@@ -7530,7 +8063,7 @@
           "selected": false
         },
         {
-          "id": 1794877719539,
+          "id": 1794877787721,
           "category": "ind",
           "press": "메디팜스투데이",
           "title": "너무 잘 나갔나…동국제약, 2분기 연속 영업익↓·이익률 9.2%",
@@ -7543,7 +8076,7 @@
           "selected": false
         },
         {
-          "id": 1794877724792,
+          "id": 1794877798154,
           "category": "ind",
           "press": "경기평화신문",
           "title": "오산시, 통합사례관리 전국대회서 보건복지부 장관상…복지와 정신건강 지원을 이어 주민 자립 도와",
@@ -7556,7 +8089,7 @@
           "selected": false
         },
         {
-          "id": 1794877719513,
+          "id": 1794877787695,
           "category": "ind",
           "press": "약사공론",
           "title": "동국제약, 본업 영업익 23% 늘었지만 연결 실적은 뒷걸음",
@@ -7569,7 +8102,33 @@
           "selected": false
         },
         {
-          "id": 1794877723178,
+          "id": 1794877794357,
+          "category": "ind",
+          "press": "매일일보",
+          "title": "식약처, 국내 유통 비만치료제 '실명 가능성' 경고에 뒷북대응 여전",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5wU0hENFkwWEpzWmhqczRsSVAxdkhSbm1MTkJfbGYtVEZ1QkhqY1RqWUtDM1dlZHJfVXZyQzVrNkxYNVJfYktiMWhkUDY0UUdvSWFhdm9mQ0FiNmVqS1dremZCeHM?oc=5",
+          "pubDateISO": "2026-11-16T12:00:00+09:00",
+          "time": "2026.11.16 12:00",
+          "pubTs": 1794798000.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794371,
+          "category": "ind",
+          "press": "약사공론",
+          "title": "\"위고비·마운자로 등 시력 상실 위험?\"…식약처, GLP-1 계열 38개 품목 주의",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBOY200Q1ZfVlBJdEgwQnFQa2U3UHFLV2I3elJiQ1F4WnM4ay1GNnZFcjMxb2lKZjRkNC13ajgzUVY5R2J3Q09mTnhyUlhUQk80OGI5YjdlNU5pTHA0MmpRdUpxdmJ1Y0RGUE1hWA?oc=5",
+          "pubDateISO": "2026-11-16T12:00:00+09:00",
+          "time": "2026.11.16 12:00",
+          "pubTs": 1794798000.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877792935,
           "category": "ind",
           "press": "파이낸셜포스트",
           "title": "제약바이오협회, 아일랜드 NIBRT와 공동 교육과정 개발 논의",
@@ -7582,7 +8141,7 @@
           "selected": false
         },
         {
-          "id": 1794877721242,
+          "id": 1794877789600,
           "category": "ind",
           "press": "코리아리포트",
           "title": "유한양행, 제4회 ‘유한ESG학술상’ 시상식...대상에 이원준 청주대 교수",
@@ -7595,7 +8154,7 @@
           "selected": false
         },
         {
-          "id": 1794877724794,
+          "id": 1794877798156,
           "category": "ind",
           "press": "서울복지신문",
           "title": "서울장애인종합복지관, 보건복지부 ‘2026년 중증장애인직업재활지원사업’ 평가 S등급 달성",
@@ -7608,7 +8167,7 @@
           "selected": false
         },
         {
-          "id": 1794877721240,
+          "id": 1794877789598,
           "category": "ind",
           "press": "증권일보",
           "title": "유한양행, 만성신장병 신약 ‘YH34180’ 임상 1상 시험 계획(IND) 식약처 승인",
@@ -7621,7 +8180,7 @@
           "selected": false
         },
         {
-          "id": 1794877723175,
+          "id": 1794877792932,
           "category": "ind",
           "press": "바이오타임즈",
           "title": "제약바이오협회, 아일랜드 NIBRT와 바이오 인력양성 협력 확대 추진",
@@ -7634,20 +8193,7 @@
           "selected": false
         },
         {
-          "id": 1794877720725,
-          "category": "ind",
-          "press": "라이센스뉴스",
-          "title": "[제약 바이오 Pick] 제품 공급부터 지역 환경정화까지",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBxbzRCOG9mWnY4dDBPT3JoN1d1MTZpUWFSNnZKWmNqRDZhX2ZOSlhHa0szck1ucUtCalgwUU9zMU45SksySnpvM1dXNWFFT3hJVV9SWDRva25pY0pDNGYxS2IzTGZLc0RoZ2R3?oc=5",
-          "pubDateISO": "2026-11-16T11:26:52+09:00",
-          "time": "2026.11.16 11:26",
-          "pubTs": 1794796012.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720701,
+          "id": 1794877789620,
           "category": "ind",
           "press": "굿모닝경제",
           "title": "[굿모닝! 16일 제약바이오 소식] 삼성바이오·세라젬·동아제약·시지메드텍·유한양행·제일약품·오스템임플란트",
@@ -7655,12 +8201,25 @@
           "pubDateISO": "2026-11-16T11:24:32+09:00",
           "time": "2026.11.16 11:24",
           "pubTs": 1794795872.0,
-          "matchedKw": "동아제약",
+          "matchedKw": "유한양행",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721243,
+          "id": 1794877794392,
+          "category": "ind",
+          "press": "매일경제",
+          "title": "‘면접 잘 보는 약’ 팝니다…온라인 불법 의약품 571건 무더기 적발",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5lZHFPcGxQaVJXdlozdlRFX2xxQnNhZURCSkY1ME5fU2pYZ2doMldYREo4NUlSRk5GeERVcXNVSWNNLWVaRjJVOUJ1N2pWQQ?oc=5",
+          "pubDateISO": "2026-11-16T11:22:35+09:00",
+          "time": "2026.11.16 11:22",
+          "pubTs": 1794795755.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789602,
           "category": "ind",
           "press": "간호사신문",
           "title": "유한양행·한국전문경영인학회, 제4회 유한ESG학술상 시상",
@@ -7673,7 +8232,7 @@
           "selected": false
         },
         {
-          "id": 1794877724799,
+          "id": 1794877798161,
           "category": "ind",
           "press": "아시아뉴스통신",
           "title": "단양군 복지행정, 전국서 빛났다… 보건복지부 장관상 수상",
@@ -7686,20 +8245,7 @@
           "selected": false
         },
         {
-          "id": 1794877720709,
-          "category": "ind",
-          "press": "레디앙",
-          "title": "동아제약, ‘마그랑비 피돌샷’ 신규 광고 온에어...차별화된 성분 강조",
-          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1zanNHS0lTVnJmWnZTbjhyZVA3Wnd3MFktWDlINlFwR19PX2VmNHpsSWdxN1RGUWY3d3M5dENQTEhvWG8yVWs0Wi11bE1YVXNKQ1l3NEp0Sk10SzVmaGhEa1g1SERNTkRP?oc=5",
-          "pubDateISO": "2026-11-16T11:18:44+09:00",
-          "time": "2026.11.16 11:18",
-          "pubTs": 1794795524.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721254,
+          "id": 1794877789612,
           "category": "ind",
           "press": "베이비뉴스",
           "title": "[건강뉴스] 유한양행-한국베링거인겔하임, 세계 당뇨병의 날 맞아 환자 응원 캠페인 진행 外",
@@ -7712,7 +8258,7 @@
           "selected": false
         },
         {
-          "id": 1794877721266,
+          "id": 1794877789624,
           "category": "ind",
           "press": "이코노미사이언스",
           "title": "유한양행, ESG 학술상 대상에 청주대 이원준 교수…소비·ESG 연결성 조명",
@@ -7725,7 +8271,7 @@
           "selected": false
         },
         {
-          "id": 1794877721221,
+          "id": 1794877789579,
           "category": "ind",
           "press": "약업신문",
           "title": "유한양행, 제4회 ‘유한ESG학술상’ 대상 청주대 이원준 교수 수상",
@@ -7738,7 +8284,7 @@
           "selected": false
         },
         {
-          "id": 1794877721260,
+          "id": 1794877789618,
           "category": "ind",
           "press": "나눔경제뉴스",
           "title": "유한양행, 제4회 ‘유한ESG학술상’ 시상…ESG 연구 활성화 지원",
@@ -7751,7 +8297,20 @@
           "selected": false
         },
         {
-          "id": 1794877719530,
+          "id": 1794877794395,
+          "category": "ind",
+          "press": "진일보 | 전남일보",
+          "title": "수능 앞두고 ‘공부 잘하는 약’ 불법 판매…식약처 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE50MFAyUzVGUkhrUTNqUVpxZXJBcUZaSFVwUFd6VXFPeDNlb1I1cmM3RVdxdGF1cE1CSzd5UGhjZGUzeXBOdUo4bHhlUXdTaXJ6SjFNekxKTzlqXzBXc3JMNzgyVjhHRTFwZ0ZqX1V3cw?oc=5",
+          "pubDateISO": "2026-11-16T11:15:18+09:00",
+          "time": "2026.11.16 11:15",
+          "pubTs": 1794795318.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787712,
           "category": "ind",
           "press": "뉴스1",
           "title": "동국제약, 3분기 누적 매출 7686억…전년대비 12.4% 증가",
@@ -7764,7 +8323,7 @@
           "selected": false
         },
         {
-          "id": 1794877719547,
+          "id": 1794877787729,
           "category": "ind",
           "press": "인사이트",
           "title": "마데카 크림 1억개 판 동국제약, 3분기 누적 매출 7686억",
@@ -7777,7 +8336,7 @@
           "selected": false
         },
         {
-          "id": 1794877721236,
+          "id": 1794877789594,
           "category": "ind",
           "press": "경인방송 뉴스",
           "title": "제약업계 ESG 경영의 진화…유한양행·한미사이언스, 사회적 가치 창출 확대",
@@ -7790,7 +8349,7 @@
           "selected": false
         },
         {
-          "id": 1794877723180,
+          "id": 1794877792937,
           "category": "ind",
           "press": "핀포인트뉴스",
           "title": "제약바이오협회, 아일랜드와 바이오 인력양성 협력",
@@ -7803,7 +8362,7 @@
           "selected": false
         },
         {
-          "id": 1794877721209,
+          "id": 1794877789566,
           "category": "ind",
           "press": "약사공론",
           "title": "유한양행, 만성신장병 신약 임상 1상 승인…염증·섬유화 동시 공략",
@@ -7816,7 +8375,7 @@
           "selected": false
         },
         {
-          "id": 1794877719532,
+          "id": 1794877787714,
           "category": "ind",
           "press": "데일리팜",
           "title": "동국제약, 3분기 누적 매출 7686억...전년 대비 12.4% ↑",
@@ -7829,7 +8388,20 @@
           "selected": false
         },
         {
-          "id": 1794877724795,
+          "id": 1794877794383,
+          "category": "ind",
+          "press": "서울뉴스통신",
+          "title": "식약처, 수능 앞 '공부 잘하는 약' 등 온라인 불법 판매 게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE96UVM0VUZBS2otcUVyS3lYSWxmS05UcWx5eTFnUHduSVdzb3BuODhkT0JKUGZZNUIza2RTWmgzMEhoVzBjVjBrRmVxVEw0dThpaFhkS0VsTmdnUl8zM1pVSUstRm1MRGJnSms0?oc=5",
+          "pubDateISO": "2026-11-16T11:03:58+09:00",
+          "time": "2026.11.16 11:03",
+          "pubTs": 1794794638.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798157,
           "category": "ind",
           "press": "연합뉴스",
           "title": "사랑의열매, 사회문제 해결 위한 복지사업 아이디어 공모",
@@ -7842,7 +8414,20 @@
           "selected": false
         },
         {
-          "id": 1794877719536,
+          "id": 1794877794391,
+          "category": "ind",
+          "press": "충남일보",
+          "title": "식약처, ‘공부 잘하는 약·수능약’ 온라인 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE9QNlVsd3BYRlFpN3dOSTdGUEJGMGJDbDdpdmdDcWFKeWF3eW0xdTVydEt1VEFrZGlUSktlTUsxa2RBektsaFpuUXpEOWNqWnNpOUM1YTl5WTU2TXd5d3NOVk5qcnlUQlZyRjh3YkpFb3Mtd1k?oc=5",
+          "pubDateISO": "2026-11-16T11:00:31+09:00",
+          "time": "2026.11.16 11:00",
+          "pubTs": 1794794431.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877787718,
           "category": "ind",
           "press": "이투데이",
           "title": "동국제약, 3분기 누적 매출 7686억원…전년比 12.4% 증가",
@@ -7855,85 +8440,72 @@
           "selected": false
         },
         {
-          "id": 1794877720726,
+          "id": 1794877794374,
           "category": "ind",
-          "press": "열린뉴스통신",
-          "title": "동아제약, 액상형 일반의약품 '마그랑비 피돌샷' 새 광고 온에어",
-          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE51TUktTjJlUTNTcUdWUzQ3TncyM2pJRHlwWnVuOVZlWXJ0cE1tbzcxTURyZlBYLTkxeEJxRWY5T0lBTGhoMGJibm5GRFN3WHJITldSdERNakhEdlFQSG5fbkdMUXRYZw?oc=5",
-          "pubDateISO": "2026-11-16T10:51:54+09:00",
-          "time": "2026.11.16 10:51",
-          "pubTs": 1794793914.0,
-          "matchedKw": "동아제약",
+          "press": "한국식품의약신문",
+          "title": "식약처, 수능 앞두고 의약품 온라인 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9OZVczNVR2YlF6MlVXeTk3b1pxT1pCeVh3QlJMakhXQm13eUhkOGVmSUNsSUNnVFpZNWxPdkh3SmxCSkJWeFNTQVV3aGtSWnNhVm9OVmo2MGVtMlN1Um1Xdm01NmE2YUU?oc=5",
+          "pubDateISO": "2026-11-16T10:59:11+09:00",
+          "time": "2026.11.16 10:59",
+          "pubTs": 1794794351.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877722325,
+          "id": 1794877794382,
           "category": "ind",
-          "press": "보건신문",
-          "title": "대원제약, 누적 영업이익 흑자전환",
-          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ZNkJzSVd0eU5IUWRyY2NYdWJCZmFHcTdKTkZrdXhTTnpDOWh4Uy1BeGFydE1qYXJRcHBZWm1LOHBYMVgwaTRiMzYtUVpNZDQ4N1dfOTZ6S1IyaDRoU2V3?oc=5",
-          "pubDateISO": "2026-11-16T10:43:44+09:00",
-          "time": "2026.11.16 10:43",
-          "pubTs": 1794793424.0,
+          "press": "바이오타임즈",
+          "title": "식약처, 혁신의료기기 심사 최단 80일 단축∙∙∙건보 적용 의료 AI는 9%",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5jT3liOWRnc0lHbW51Tjl4VHh0MW9vWHpBMnllQXc2RFM5cU9MU1F1VnBXSGZBQTJsT2lxbUZDTmZ0ZlpIUGozYUNxTlZ0VDF4M0VXWGdWdFlRNzROVFMtbkJkaU1iS25kMDAzOA?oc=5",
+          "pubDateISO": "2026-11-16T10:47:03+09:00",
+          "time": "2026.11.16 10:47",
+          "pubTs": 1794793623.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794412,
+          "category": "ind",
+          "press": "뉴스1",
+          "title": "GMO 표시 확대에 업계 혼선 막는다…식약처, 권역별 설명회",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE0yckZRRk1OX0hiZDhsaE1WYjEyVThFaDBUOTdkZHhHazlMZTNVY1Bfd2JuUnBuZG1ZaEJPN3l6ZlpzRWgxX00tQTY2ZnJPQzlDYWE4a1BnR0ZlTnVl?oc=5",
+          "pubDateISO": "2026-11-16T10:42:58+09:00",
+          "time": "2026.11.16 10:42",
+          "pubTs": 1794793378.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877791264,
+          "category": "ind",
+          "press": "메디칼업저버",
+          "title": "대원제약, 누적 영업이익 흑자 전환",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9oZlMzbU9kUndFemlMcnNxU3B5bGZZVlBmazI3Tk1DcHpPMWJyTkdhSGR6NEFyLVl5d2x1bVpFdm8yN25TQThjMndYRlV4cHVyYlY5ajZfSDdMSWxVMmRSMEVzWFZ4NDR6MG1V?oc=5",
+          "pubDateISO": "2026-11-16T10:41:36+09:00",
+          "time": "2026.11.16 10:41",
+          "pubTs": 1794793296.0,
           "matchedKw": "약가 인하",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720686,
+          "id": 1794877794400,
           "category": "ind",
-          "press": "약사공론",
-          "title": "동아제약, '마그랑비 피돌샷' 액상형 마그네슘 강조",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5VekxqMzkyd3Y2b3B6VUhGa28yUXFveWotVnplMFBkMEpFV2FscXZXV2MwWGdmRkV2QzNHSEFkdTA4TGhWS2JUZE41RzUzUUlvODVDS09HVXpIR0RyakNfSVVKcGVoVF9GaWxfcA?oc=5",
-          "pubDateISO": "2026-11-16T10:43:10+09:00",
-          "time": "2026.11.16 10:43",
-          "pubTs": 1794793390.0,
-          "matchedKw": "동아제약",
+          "press": "OhmyNews",
+          "title": "수능 앞두고 '공부 잘하는 약' 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5tanNoNzdMM3BLc0l5blBqZEprc0FxUktYTFRkQWszZjdZTE1kWl94dzhDQzBBX2syM1lTd081NDN2M3RnY1dSLVAzM2pxM0hUX19KYkZiVmlOQWRnQUtlY2NNSEl6UTFoa2Z5aGZrUGlldWpXSGNV?oc=5",
+          "pubDateISO": "2026-11-16T10:41:00+09:00",
+          "time": "2026.11.16 10:41",
+          "pubTs": 1794793260.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720715,
-          "category": "ind",
-          "press": "위클리오늘",
-          "title": "[위클리오늘] 산업일반 소식_제일약품, 동아제약(11.16)",
-          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE11bksxZ2JVZVZGdzhjMjV5QnNQb3l4T0xhd0F4VG9fVWtGRU9WR0JHTkJlT2tNUzdYS2RZOGZPMnNhd3A5bGRnclJITEJJTC1OSU9UQWp3YTBaSWgyUkVxeHBwNGgtOGg0eXFnTFl0MA?oc=5",
-          "pubDateISO": "2026-11-16T10:43:04+09:00",
-          "time": "2026.11.16 10:43",
-          "pubTs": 1794793384.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720722,
-          "category": "ind",
-          "press": "위클리오늘",
-          "title": "[위클리오늘] 산업일반 소식_오스템임플란트, 동아제약(11.16)",
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9kQnF3QzA5Q0NSYVIybmZMREJLbGFzQW1HaEFwcFRTa1hjSXN3MTJDN2dhYzh6X3hjZWdKckwwWmFKRlhwaXk1dUlRR2REdHI3U1RiTTdvUmpIVUxMVFNDSHgtTjJ3RjQ1cmYyVXJn?oc=5",
-          "pubDateISO": "2026-11-16T10:42:59+09:00",
-          "time": "2026.11.16 10:42",
-          "pubTs": 1794793379.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720695,
-          "category": "ind",
-          "press": "더트래커",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 공개…액상형 마그네슘 특성 강조",
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE56cW5IU1VScWZWVTR1X0o5ZzNQaTBGSjUxeUV3eVZGOTVWYXpLeVk0TUlBSXhtSFNGR0JycV9YUVUyZVU5WTJJNkViTzhJLS1mUzdETV94R20?oc=5",
-          "pubDateISO": "2026-11-16T10:42:22+09:00",
-          "time": "2026.11.16 10:42",
-          "pubTs": 1794793342.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877719540,
+          "id": 1794877787722,
           "category": "ind",
           "press": "아주경제",
           "title": "동국제약, 3분기 누적 매출 7686억… 헬스·뷰티 해외 판매 확대, 12.4%↑",
@@ -7946,7 +8518,20 @@
           "selected": false
         },
         {
-          "id": 1794877724802,
+          "id": 1794877794360,
+          "category": "ind",
+          "press": "연합뉴스",
+          "title": "[바이오스냅] 식약처, GMO 완전표시제 권역별 설명회",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9oUWxSQ1BxWlplczU4Rk1kVDFmUkpRYTBsS2d0Q3lTVlVHcDhDY0puVEJ1LS1qQ2hjbXJPaVJ2b3E4VGRaMlU0TlhJNUhFVVk3dEh3WGZPSDNSaHlBVHA3adIBYEFVX3lxTE9oUWxSQ1BxWlplczU4Rk1kVDFmUkpRYTBsS2d0Q3lTVlVHcDhDY0puVEJ1LS1qQ2hjbXJPaVJ2b3E4VGRaMlU0TlhJNUhFVVk3dEh3WGZPSDNSaHlBVHA3aQ?oc=5",
+          "pubDateISO": "2026-11-16T10:38:45+09:00",
+          "time": "2026.11.16 10:38",
+          "pubTs": 1794793125.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798164,
           "category": "ind",
           "press": "K-Life TV",
           "title": "충주시의 통합사례관리 보건복지부장관상 수상",
@@ -7959,7 +8544,7 @@
           "selected": false
         },
         {
-          "id": 1794877721259,
+          "id": 1794877789617,
           "category": "ind",
           "press": "비즈월드",
           "title": "유한양행, 만성신장병 신약후보물질 ‘YH34180’ 국내 1상 IND 승인",
@@ -7972,7 +8557,7 @@
           "selected": false
         },
         {
-          "id": 1794877724797,
+          "id": 1794877798159,
           "category": "ind",
           "press": "MTN 머니투데이방송",
           "title": "김세훈 동신대 교수, 보건복지부 장관 표창",
@@ -7985,7 +8570,7 @@
           "selected": false
         },
         {
-          "id": 1794877723181,
+          "id": 1794877792938,
           "category": "ind",
           "press": "포인트데일리",
           "title": "제약바이오협회, 바이오 인력양성 협력 강화 방안 논의",
@@ -7998,20 +8583,7 @@
           "selected": false
         },
         {
-          "id": 1794877720710,
-          "category": "ind",
-          "press": "스페셜경제",
-          "title": "동아제약, 마그랑비 피돌샷 새 광고…액상 마그네슘 복용 편의성 강조",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5jVG9WeTNtZU9CVXNzTHFnblhLeVhna3hENC1CY2tZRnl4eXJUZHRTc3YzZFY0VWprM2JiaXdJRTJGN3lTWmVsVDNQOXlDcXpkeGl1OERxRWJXaGNraHhfbnphTjd3VnJ5ZW95Nw?oc=5",
-          "pubDateISO": "2026-11-16T10:25:33+09:00",
-          "time": "2026.11.16 10:25",
-          "pubTs": 1794792333.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877721270,
+          "id": 1794877789627,
           "category": "ind",
           "press": "인사이트",
           "title": "치료 후에도 남는 염증·섬유화 겨냥... 유한양행, 만성신장병 신약 임상 돌입",
@@ -8024,7 +8596,7 @@
           "selected": false
         },
         {
-          "id": 1794877719521,
+          "id": 1794877787703,
           "category": "ind",
           "press": "팜이데일리",
           "title": "동국제약, 3분기 누적 매출 7686억…해외 뷰티가 끌었다",
@@ -8037,20 +8609,33 @@
           "selected": false
         },
         {
-          "id": 1794877720728,
+          "id": 1794877789959,
           "category": "ind",
-          "press": "스마트경제",
-          "title": "동아제약, '마그랑비 피돌샷' 신규 광고 공개…액상 마그네슘 특성 강조",
-          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1lRm5GZXJtcVBXd3NCbGljVjRaeVR3WGtoYWZqSXhDdXlkVmIwRkZpei1SQk9HVWFpS2E4XzFEaDJDbVZkY01wMllHTllXVk5Mb0N1d2xwUm9pTFpOc1EyVjVDdEpnaUZ5VEtOUkNJaw?oc=5",
-          "pubDateISO": "2026-11-16T10:15:00+09:00",
+          "press": "데일리팜",
+          "title": "경동제약, 3분기 누적 영업익 100억…전년 대비 96% 증가",
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1KQjJqNFg4bjhIVi1FY29fMlVIaHBDdUJGWXYzUkM4TExuQmFiNEUyb1JtR0x3a2tCNWJJQjdhSU1ZWlJKeFZUQ0hQd3pCaHZiT0x1UzNB?oc=5",
+          "pubDateISO": "2026-11-16T10:15:21+09:00",
           "time": "2026.11.16 10:15",
-          "pubTs": 1794791700.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794791721.0,
+          "matchedKw": "개량신약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877723174,
+          "id": 1794877795591,
+          "category": "ind",
+          "press": "파주에서신문",
+          "title": "파주시, 어린이 기호식품 품질인증 마크 확인 당부",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE8yTUdNMjFzUWRvRVAyOVUwNzlTcl92MkJFOHZwMXJRbmN2eUM2WGVyZkIwenhEb1JGT05zM0FxUEFpX2poV3lOQks5R1llYk5PTGJkUHpQQkVtOTY3b1p6dndUX1M0bnc?oc=5",
+          "pubDateISO": "2026-11-16T10:15:04+09:00",
+          "time": "2026.11.16 10:15",
+          "pubTs": 1794791704.0,
+          "matchedKw": "의약품안전나라",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877792931,
           "category": "ind",
           "press": "의학신문",
           "title": "제약바이오협, 글로벌 바이오 인력 양성 힘 쏟는다",
@@ -8063,7 +8648,20 @@
           "selected": false
         },
         {
-          "id": 1794877723177,
+          "id": 1794877794411,
+          "category": "ind",
+          "press": "KBC광주방송",
+          "title": "수능 앞두고 '공부 잘하는 약' 온라인 활개…불법게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1vdk5hZlU3YkVnZzdldkZJWVJScXhrNU8tLUwwNTEtNXZDYTB0TmdHa0xibjI1bl9xbUs2bnlsc0JlN1J6MkJCVmZuN3lXWVUwZDROSUZJVW11YlRFSVJLWDRB?oc=5",
+          "pubDateISO": "2026-11-16T10:10:11+09:00",
+          "time": "2026.11.16 10:10",
+          "pubTs": 1794791411.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877792934,
           "category": "ind",
           "press": "간호사신문",
           "title": "제약바이오협회, 아일랜드서 글로벌 인력양성·교류 협력 논의",
@@ -8076,20 +8674,33 @@
           "selected": false
         },
         {
-          "id": 1794877720714,
+          "id": 1794877794398,
           "category": "ind",
-          "press": "Korea IT Times",
-          "title": "동아제약, 액상 마그네슘 ‘마그랑비 피돌샷’ 차별화… 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBtZ2gxWmVXcFB1SGVLT3YydWZ1akVCWk96S3RiUmtIckg2eFpKNVJqOVBIcC1jNkkyT25lMVIzZm1kRUs0dzBGYUJfTFdOblZOM05CdUFoOHJxNlpSdDRDSno5eU9HRUJyNUR4aVBJY2k?oc=5",
-          "pubDateISO": "2026-11-16T10:05:46+09:00",
-          "time": "2026.11.16 10:05",
-          "pubTs": 1794791146.0,
-          "matchedKw": "동아제약",
+          "press": "부산일보",
+          "title": "ADHD 치료제가 수능약?…식약처 571건 불법 판매 적발",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBkLUZnWGpRWW14LTFMX3NUZmZNMEtMcWpVVlZoNlYxb3M1V20yY1dQU0I5cUlUTmw3a1MxQXJNNU9wenVmZG1kbVJ6QzlZTTI2RlFvTmc5anNIUm0zWW1DSkhPSF9ROVVMTDBja2JLdUo2U051WFE4?oc=5",
+          "pubDateISO": "2026-11-16T10:03:49+09:00",
+          "time": "2026.11.16 10:03",
+          "pubTs": 1794791029.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877723173,
+          "id": 1794877794403,
+          "category": "ind",
+          "press": "서남투데이",
+          "title": "식약처, `혁신의료기기 정책 포럼 2026` 개최",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9Fd2Z3NU5OX1hGZmhXV09nbGxuUVhuYVF4X1ZfS0VlRE5HNTVDcTJQSGZmY3I1bFZ5b2hiWm82T0NuOFdxNFJ0NloyU05aLXhZdHNpaUpjczVoZw?oc=5",
+          "pubDateISO": "2026-11-16T09:58:16+09:00",
+          "time": "2026.11.16 09:58",
+          "pubTs": 1794790696.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877792930,
           "category": "ind",
           "press": "MEDI:GATE NEWS",
           "title": "제약바이오협회, 아일랜드 NIBRT 등과 바이오 인력양성 협력 확대 모색",
@@ -8102,72 +8713,46 @@
           "selected": false
         },
         {
-          "id": 1794877720716,
+          "id": 1794877794406,
           "category": "ind",
-          "press": "헬스오",
-          "title": "동아제약, 피돌산마그네슘 흡수 특성 강조한 ‘마그랑비 피돌샷’ 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFAyQTVnSnBxV01CaG9jLWZIYnRQUUJaQ0pjU1VDSS1OcHNvbndPak9nQVpRTTFyaGFzS2c4RWNUam5LOEY0aDNhUzdaYnJ2dTlCOVBKemlPRm4?oc=5",
-          "pubDateISO": "2026-11-16T09:49:57+09:00",
-          "time": "2026.11.16 09:49",
-          "pubTs": 1794790197.0,
-          "matchedKw": "동아제약",
+          "press": "서남투데이",
+          "title": "식약처, 수능 앞두고 `공부 잘하는 약` 온라인 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1xbS02RkpLUF9SN1l5LWtPdnZnWENIWHQ0ZV9GckJEOVVJNS1rUzdtZHhSMzZ4WUdpLWVPZkNXMW9kcHJpOW8xODhFWEw3ejVZc1NqOTBwVW96QQ?oc=5",
+          "pubDateISO": "2026-11-16T09:55:19+09:00",
+          "time": "2026.11.16 09:55",
+          "pubTs": 1794790519.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720721,
-          "category": "ind",
-          "press": "m.thepowernews.co.kr",
-          "title": "동아제약, 액상형 마그네슘 ‘마그랑비 피돌샷’ 광고 온에어",
-          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5TVmpmUlZva0duV1RiRkpuc2R6WVhUYVhLVlJ5ZzNSWHZZVy1BdVJEQ1JieDY0V3dobW5scmZiZDBhdW1NeHFqRDlHaWxXVFJacFFNdGljc2RkVHh0bFNiaGU1NGs0Qnh4b2RtbnZMWVMtMm9nNGY1YUFENGRudw?oc=5",
-          "pubDateISO": "2026-11-16T09:46:09+09:00",
-          "time": "2026.11.16 09:46",
-          "pubTs": 1794789969.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877719068,
+          "id": 1794877794393,
           "category": "ind",
           "press": "바이오타임즈",
-          "title": "티앤알바이오팹, 독일 ‘메디카 2026’서 FDA 허가 기반 글로벌 수출 확대 추진",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5wLXVQYUNHZ1JDMFM4c243b3Y0LUVaMkZad1hoNVliYTJDaXVSWENWSmxJVUNXZXRQS181LUVJeEJoZklTQ0MwWDlqVjE3WFpxVjRDSjBRQWFrZlVsYTZMLU5aX3Q5MXZwTDFmLQ?oc=5",
-          "pubDateISO": "2026-11-16T09:46:07+09:00",
-          "time": "2026.11.16 09:46",
-          "pubTs": 1794789967.0,
-          "matchedKw": "Medica Korea",
+          "title": "플라즈맵, 30L급 멸균기 식약처 허가 획득∙∙∙대형 의료기구 시장 정조준",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5sMld3cWtnZUJtVXR6YU1CWms1MTNpM2RaTzFBMjdzTVlGRzRLM3U0U19FdE1lTEp3N3ItVHpJdHJaTVl5YUMxWndwRUU3Smk2cUppQUNRQWVuam1rYXlqYzg4M3pEV2lVa25LZQ?oc=5",
+          "pubDateISO": "2026-11-16T09:53:52+09:00",
+          "time": "2026.11.16 09:53",
+          "pubTs": 1794790432.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720718,
+          "id": 1794877794381,
           "category": "ind",
-          "press": "메디소비자뉴스",
-          "title": "동아제약 아일로, ‘11월 올영픽’ 선정…먹는 PDRN 선봬",
-          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1KQmVJdmplQlFKRVphTUZPLWFqWXMyS1JremFMeE5Ra3NMZUtXMldsaC1XMmdWNDljdWxhZVY5T0s1eTlxc2IwTDBDZm1ZWEZnWS0yRjBFNmVZOW15M2FBTEl5QnpYdm9NUi1lTHFhTW5ld9IBdkFVX3lxTE9FZzY1ZXpwd2VYVTE0Vmx3eFFvUi0zMzlpcVkwbjRxSkFfUlVZWG04ajBvMkpYOEdrMHoxdGxuQk9rdWsxeHpzcmNJcVdOLTRxRVMyU0RKSVZPZ1dMSVcxMFlMbGJXSTk2NFRhVmFZckdKYmNCNEE?oc=5",
-          "pubDateISO": "2026-11-16T09:44:30+09:00",
-          "time": "2026.11.16 09:44",
-          "pubTs": 1794789870.0,
-          "matchedKw": "동아제약",
+          "press": "경기일보",
+          "title": "수능 앞두고 ‘공부 잘하는 약’ 기승…불법 의약품 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFA4VUVOanJKbTJiWEhRLVdnQzRpYUhBcjVjaC1KRTJpM203U1hHejZLWWJIVFhiRkthOXNCNGJvaVl2QmgyNE5ySGg3cy1vYzhVbDZtS2RpbklhMFE?oc=5",
+          "pubDateISO": "2026-11-16T09:49:58+09:00",
+          "time": "2026.11.16 09:49",
+          "pubTs": 1794790198.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720706,
-          "category": "ind",
-          "press": "뉴스1",
-          "title": "동아제약 '마그랑비피돌샷' 새 광고…액상형 마그네슘 강조",
-          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9Zc053MTIyU2dXd3VpVmZiMS1sMXA4U0cxM3ppTXgxM0pEVkpQa0VHU2dyY0c2RHd4OXhGN0VQYkh0V1BhSGRfdW5MTHNnVV9jR3p4ZFZKQXUxQjN5NXRHTA?oc=5",
-          "pubDateISO": "2026-11-16T09:40:18+09:00",
-          "time": "2026.11.16 09:40",
-          "pubTs": 1794789618.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877719545,
+          "id": 1794877787727,
           "category": "ind",
           "press": "주간신문씨엠엔",
           "title": "동국제약 센텔리안24, ‘컬리뷰티페스타 2026’ 참가",
@@ -8180,7 +8765,20 @@
           "selected": false
         },
         {
-          "id": 1794877724807,
+          "id": 1794877794351,
+          "category": "ind",
+          "press": "MBC 뉴스",
+          "title": "식약처, '수능약' 불법 판매·알선 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBPY29vNUhSYW9hdjBSaGE0RkV2eDB3MVVZSGE2ZmRVdjhmbmRDR2lxaFVUTFJzLUpxd3ZsblZQVlQ2Mm0zclBjdHFOTjM0QXBFUlpyb0dJX05TWHM1NHpUWTZZMUg3NE5vdE1NaEhXMmVBbXUwREFN0gF3QVVfeXFMT3BReGRDS0RBT1BHMTA4QlJ6b3k1TlVkY3BmNE1Kc19HYmV6RkstU055dG00OUFYTnpGRkRRcW0xbHVHR0lCRkw4dTZ1SVZaZTVLdHlqZ09LN3h4UFFYN2RDUHFjU0o0cXpnUWVxZ0FUWURmV0Jsblk?oc=5",
+          "pubDateISO": "2026-11-16T09:38:56+09:00",
+          "time": "2026.11.16 09:38",
+          "pubTs": 1794789536.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877798168,
           "category": "ind",
           "press": "분당신문",
           "title": "성남시, 지역사회보장협의체 우수사례 보건복지부 장관상 수상…금광2동 3ON 운동 주목",
@@ -8193,7 +8791,7 @@
           "selected": false
         },
         {
-          "id": 1794877721265,
+          "id": 1794877789623,
           "category": "ind",
           "press": "아시아뉴스통신",
           "title": "유한양행 주가 하락 중",
@@ -8206,20 +8804,7 @@
           "selected": false
         },
         {
-          "id": 1794877722732,
-          "category": "ind",
-          "press": "현대건강신문",
-          "title": "비만치료제 선택권 넓어졌지만, 국내 환자 접근성 여전히 낮아",
-          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBTTkNXbkZBd0pKakdTQzVlTlBCS1dLOUtCZ09KSHVlTjZJRVA3akRYaHFfbUtOSmk3RkJPczIwcmh2THJFSUxteWlhMF9PaWEzMFNQcWRn?oc=5",
-          "pubDateISO": "2026-11-16T09:36:00+09:00",
-          "time": "2026.11.16 09:36",
-          "pubTs": 1794789360.0,
-          "matchedKw": "제네릭",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877723179,
+          "id": 1794877792936,
           "category": "ind",
           "press": "뉴스더보이스헬스케어",
           "title": "제약바이오협, 아일랜드와 바이오 인력양성 협력 넓힌다",
@@ -8232,150 +8817,280 @@
           "selected": false
         },
         {
-          "id": 1794877720699,
+          "id": 1794877794377,
           "category": "ind",
-          "press": "메디코파마",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 공개… 체내 흡수 특성 강조",
-          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE81clVPT2M4bFhkWVRoWHh6aGlPa3dsT0VBNnRyOTd3UUlWVzdiSEhWSThQemxJWDV3SGlpelpOUWRGMW1PYVlXdFgtZlM0bHp0S25zWGF4SUV2TmNRalRlMTVlaUlLNU40U3d0ME9XVE9sdw?oc=5",
-          "pubDateISO": "2026-11-16T09:32:56+09:00",
-          "time": "2026.11.16 09:32",
-          "pubTs": 1794789176.0,
-          "matchedKw": "동아제약",
+          "press": "미디어생활",
+          "title": "식약처, 장애인의 의약외품 안전정보 접근성 강화",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1aWFpTWkpYQloxT1RYMFRQTmFkQnZBeWhVa2V1ME1qRkVEOFdtZl9KUEY0MVo1ZFBTcGJDWFd2YlRRQXMxbUtySXpSZTZocE1ZLU5rZ1ZVa0E2ZFRESkVDb2tBTEM1dXJqWi1QNUxSVQ?oc=5",
+          "pubDateISO": "2026-11-16T09:34:40+09:00",
+          "time": "2026.11.16 09:34",
+          "pubTs": 1794789280.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720727,
+          "id": 1794877794375,
           "category": "ind",
-          "press": "디스커버리뉴스(DISCOVERYNEWS)",
-          "title": "동아제약, ‘마그랑비 피돌샷’ 신규 광고 공개…성분·제형 차별화 부각",
-          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1ib29OaTZIREIwaklFcEFFOWRKWE56bHhVV0M4SUNxbE5tc1ljdEdncXN5SV91WEIxSkJYMkVQVnNDRnY2X2wwUXhYclhNZXQ1Zm1LakgxWVI1SnJYTVZfZ1Q0VVNXVGVDb3ZlTEVVenpyUQ?oc=5",
-          "pubDateISO": "2026-11-16T09:29:58+09:00",
-          "time": "2026.11.16 09:29",
-          "pubTs": 1794788998.0,
-          "matchedKw": "동아제약",
+          "press": "바이오타임즈",
+          "title": "식약처, 수능 불법 의약품 571건 적발∙∙∙의료기관 처방 통제가 남은 관문",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1JS2JDXzhVclJPNlEwc2JqellrV3duVjF6LUFPVktLcXBfRkVwTnl3YVc0VjB0RVV2RkhSejhzelVrOVRXOV9vX2xnekJSOE94NHdQU2FhZHV1ZkpNU2JDNTFoYzJpeXZlSEFkMw?oc=5",
+          "pubDateISO": "2026-11-16T09:34:23+09:00",
+          "time": "2026.11.16 09:34",
+          "pubTs": 1794789263.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720700,
+          "id": 1794877794373,
           "category": "ind",
-          "press": "뉴스더보이스헬스케어",
-          "title": "[동아제약] 마그랑비 피돌샷 신규 광고 온에어…제품 차별성 강조",
-          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBqRGczajNqNnlNWWF3OG8xemFpQnNFenV5dDRnTGgtZm1HTDVGR3Vjd2JMUWw0WkRQbDk5S3F5QlhZSXpkVW0ySnpmcEpSV1k1cW9DX0NnVm1KenJqbklqSHBtWGlzS01CaS1GTHJuaw?oc=5",
-          "pubDateISO": "2026-11-16T09:27:29+09:00",
-          "time": "2026.11.16 09:27",
-          "pubTs": 1794788849.0,
-          "matchedKw": "동아제약",
+          "press": "메디파나뉴스",
+          "title": "식약처, 혁신의료기기 정책 포럼 개최…시장 진입 지원 논의",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9faHpWQUJPbDdPUm8yZnpzQXhrZ05hT0VyM29UWTdSdy1vSGR6dGRaaHVUZEpTSEtNWHNzTktKQW42QVdsd2FJcVdBeUpOQTM3SUp1M3o0WTdwd0YzZzJWMkRIZ3p2MDVtTDlN?oc=5",
+          "pubDateISO": "2026-11-16T09:30:28+09:00",
+          "time": "2026.11.16 09:30",
+          "pubTs": 1794789028.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720693,
+          "id": 1794877794370,
           "category": "ind",
           "press": "뉴시스",
-          "title": "\"마그네슘 채우세요\"…동아제약, 새 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5sMEVvRnJCM1ZkX2RoSDJSaXRIVVZvdUpQUkVrby1mREdkM3hUeTFQVy1yVVFNWFJvOUhnTjRobV9KcTBUZTJ2TEUtcmp4NGFkUG02dXlldU1GTGZYYlpPZmxsUjRsdTJnYnpmUE1jU3AyVk5VbFNHQ9IBeEFVX3lxTE5sMEVvRnJCM1ZkX2RoSDJSaXRIVVZvdUpQUkVrby1mREdkM3hUeTFQVy1yVVFNWFJvOUhnTjRobV9KcTBUZTJ2TEUtcmp4NGFkUG02dXlldU1GTGZYYlpPZmxsUjRsdTJnYnpmUE1jU3AyVk5VbFNHQw?oc=5",
-          "pubDateISO": "2026-11-16T09:26:58+09:00",
-          "time": "2026.11.16 09:26",
-          "pubTs": 1794788818.0,
-          "matchedKw": "동아제약",
+          "title": "'공부 잘하는 약' 없다…불법 판매글 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9obUZxWkFtSWVxSHpmaVNEbnBDb3dGbW45cklmd3VtWFNqYmVmQlEydjdUWkNmWmwyUEx5RUpDaW80QUE2cnlXLTczaWVyQXNkODgwdzlxUkJXVlNscnNXZ1NhZjhtYWNrTlZ4VlM1N3NZZWxtdVQ1UtIBeEFVX3lxTE9obUZxWkFtSWVxSHpmaVNEbnBDb3dGbW45cklmd3VtWFNqYmVmQlEydjdUWkNmWmwyUEx5RUpDaW80QUE2cnlXLTczaWVyQXNkODgwdzlxUkJXVlNscnNXZ1NhZjhtYWNrTlZ4VlM1N3NZZWxtdVQ1Ug?oc=5",
+          "pubDateISO": "2026-11-16T09:30:27+09:00",
+          "time": "2026.11.16 09:30",
+          "pubTs": 1794789027.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720705,
+          "id": 1794877794394,
           "category": "ind",
-          "press": "초이스경제",
-          "title": "동아제약, 마그랑비 피돌샷 신규 광고 온에어…제품 차별성 부각",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5pcTRKZHkzS0VTWmdlMFNyMnRnSmw3d0txdndtU1JxMUJ5Zy0yWHlIT3hWRWhvUkNtSmFlenRZVVlSQ21mZzR2OFFXZ05nMm9tRUNrTWdFVEo5UXdmb19rd3p4ejQ0MEJTQ2xSMWljRVLSAXNBVV95cUxOc1hxNFRQVG9fOGc2d3Z1TlVxbm9LSlVjSmxVUDZfczZzblJwVHV6R2NlR09BXzRSZ0E3bUtTZVFobmEyT0tCOC1pVUJjNndod0ZtX1VJUDNuSXJHalE2cGowWGxHQkxTZzVFNklpQklreFZZ?oc=5",
-          "pubDateISO": "2026-11-16T09:24:21+09:00",
+          "press": "BBS불교방송",
+          "title": "식약처, 수능 앞두고 ‘공부 잘하는 약’ 불법 알선·판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBsb1B3V3d6NWJWX00ycnVLS0JkTG9Malh6LWRqc3E5TDdzcXZDYm1MWWlUWHJCUk00Ykx6MmE1YzUyMHQ5M1Z4QkpkWk1XVWtQcGtXWVY4TjNnOWN3MkFXX0xpREY2SWJOaHdF?oc=5",
+          "pubDateISO": "2026-11-16T09:25:29+09:00",
+          "time": "2026.11.16 09:25",
+          "pubTs": 1794788729.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794388,
+          "category": "ind",
+          "press": "Chosunbiz",
+          "title": "“공부 잘하는 약은 없습니다”…식약처, 온라인 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNR3FxZEFQaGNwaUtwclZod1JDdVVPbEtQejVGMlJGcEVWbVNzX2xuSHpCRzVxWmRLMHZpcnBlTlhVNERzV21OZmhIeDZUdTBoSENpcGlDTWhkQVNsdDUyOU5OQ1JPdHRTTE1ZemtGRGFOak42OVJYZ21CNFhTUXZMekpKTHQtYXfSAZsBQVVfeXFMUG5LMGFwa0pZZkR5Ukh0R09XS1BwTDJMZnZ4LUhpWHBzZzZsOVV3cm5CRjBYRXVjd3VBZVZYMmw1ZFVYaHZDWFNCV1pjb0Radk04bXpYTmlMOW1kSDJTODV0empPMlc2Y2QxOEJSRDJZd1N1QjRUUmVFQlhjQVFGb2RxZERaM1pyR2laYTZEM3JzU1IwU21ueWdicWs?oc=5",
+          "pubDateISO": "2026-11-16T09:24:00+09:00",
           "time": "2026.11.16 09:24",
-          "pubTs": 1794788661.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794788640.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720729,
+          "id": 1794877794390,
           "category": "ind",
-          "press": "웹이코노미",
-          "title": "[제약소식]동아제약, 마그랑비 피돌샷 신규 광고 온에어/한미사이언스, 청각장애인 바리스타 ‘완전두유 창의상’ 시상/동아제약 이너뷰티 아일로, ‘11월 올영픽’ 선정",
-          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBIaWVyUGFRYVZfZVN0NlVucktLcmJRVF95Z3ZPRzJxclRYMHNiNGFfZmlJM3IzbHNBaE5BSDJfbnJHMWVJYXROWFVHX2hPdkVKb3NOd1d0NFJQbEFPRnlFbUpmVjNFNURmU2N1R3VyV1l0QQ?oc=5",
-          "pubDateISO": "2026-11-16T09:21:50+09:00",
-          "time": "2026.11.16 09:21",
-          "pubTs": 1794788510.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877720724,
-          "category": "ind",
-          "press": "서울파이낸스",
-          "title": "[제약브리핑] 지오영, '의약품 나눔 공로' 강서구청장 표창 수상 외",
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9IdWR6REZBcnIxcUZLcjI3Sy11VHd2aU9VeEJlU3E3amp3QVlhQWVWR2ctem1yb2NBcTNSbG9mUWhFNEhCb0hTUTkxSmdwMG1CZGs2ME1mdnR0WWZ1dW9STEdtSlRMLUhveUE?oc=5",
-          "pubDateISO": "2026-11-16T09:17:36+09:00",
+          "press": "M이코노미뉴스",
+          "title": "식약처, ‘공부 잘하는 약·수능약’ 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9QSHF2ejVuRjEtMGpQcEQ4QWVPUVpvbWNpbGdxVk9McW9Zejc3REtlejJ2dWZXeS02aGJ4cjBGcFpmT1VjLXZVRUh2QTVRMU5zUWYtLVN4WTBNWU1uOVJzODR1VEU4SGc?oc=5",
+          "pubDateISO": "2026-11-16T09:17:47+09:00",
           "time": "2026.11.16 09:17",
-          "pubTs": 1794788256.0,
-          "matchedKw": "동아제약",
+          "pubTs": 1794788267.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720707,
+          "id": 1794877794366,
           "category": "ind",
-          "press": "리드경제",
-          "title": "동아제약, 마그네슘 300mg 한 병에 담았다…‘마그랑비 피돌샷’ 새 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE41U0tqNGF2VzdFZlFVdDhCZFM1V3F1Q3Foa1pGUEZ3ekdmRVZPVWpUSGVkMkc2bVJIZnJMUDhrZ0h4ZDVULXhQM2Rzc1lTb0dXUGF2ZWhZcm9TY3Y5bTlwYzdyU29pMFFYV3FIWnRUMnk?oc=5",
-          "pubDateISO": "2026-11-16T09:17:32+09:00",
-          "time": "2026.11.16 09:17",
-          "pubTs": 1794788252.0,
-          "matchedKw": "동아제약",
+          "press": "뉴시스",
+          "title": "\"혁신의료기기 관심업체 주목\"…정책포럼 개최",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE96dmpYNUtja2tJUktHUXhRSWNzZ1pnNEdtN0VVNGZMUmZBLUQ1V2VxUnB4Q0tXRlBwd21laThvbWxuYTFpRzdHbGg0NWpibThMZFVQejltcFhiYkxTaS1SRDJOSVFjemF6ckFxd3RRemRieGJMWURRatIBeEFVX3lxTE96dmpYNUtja2tJUktHUXhRSWNzZ1pnNEdtN0VVNGZMUmZBLUQ1V2VxUnB4Q0tXRlBwd21laThvbWxuYTFpRzdHbGg0NWpibThMZFVQejltcFhiYkxTaS1SRDJOSVFjemF6ckFxd3RRemRieGJMWURRag?oc=5",
+          "pubDateISO": "2026-11-16T09:15:28+09:00",
+          "time": "2026.11.16 09:15",
+          "pubTs": 1794788128.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720694,
+          "id": 1794877795589,
           "category": "ind",
-          "press": "한국의약통신",
-          "title": "동아제약, '마그랑비 피돌샷' 신규 광고 공개…피돌산마그네슘 특장점 강조",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBVR0hPOVlncUZIZC03Q1V2X3NsX3B3RUxGdGJlRzNRUWVEdndTd2gxbVRKeV9nQTJoWjd3TUtKeWlicGpxVnJDOGhmSlNMSE0yczBjbDNhaHM0aHFtV3BZM3pyaDgzLWltVDBF?oc=5",
-          "pubDateISO": "2026-11-16T09:08:47+09:00",
-          "time": "2026.11.16 09:08",
-          "pubTs": 1794787727.0,
-          "matchedKw": "동아제약",
+          "press": "누리일보",
+          "title": "파주시, 어린이 기호식품! 품질인증 마크 확인하고 고르세요",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5tTFlRUzd6TGFjVE5NUWxfNWJFZ01MR2t3bVNhX2pFdEtLNzZ5bXRUU1lCRXM0bVhoLXlGa3ZGQzl2TGsxRVM4bVQ5dktYdFRaa2k4ell3ZzhYdGc?oc=5",
+          "pubDateISO": "2026-11-16T09:10:27+09:00",
+          "time": "2026.11.16 09:10",
+          "pubTs": 1794787827.0,
+          "matchedKw": "의약품안전나라",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720720,
+          "id": 1794877788673,
           "category": "ind",
-          "press": "팝콘뉴스",
-          "title": "동아제약, 액상 마그네슘 '마그랑비 피돌샷' 신규 광고 온에어",
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE85aDdoaWFTaW5BNWVXTHFxcGY0Q2x0NjkxaTFERTVldGh3MEJLcVJSamJ2a1AzLTFoSHVwNi1zRWFldWNhUGpINWUxcGFHQW9OTUxKN1BVNmF5MEVaM3hTc2F5ZnU3Q1ZVcTJPWE5B0gFyQVVfeXFMTzBwRkp4UEMwZGN6WHNnOUZyc0JWZFVtVEwyNWJHbzFIUmx0eVNvS0FHUDBJcHljUEEyeVpzSlVfTGtqSDk3Q3J1RGM2X2NXSVh0bDZSd2w3TVNVVzJ4dXNzd0wzZEFkVkI3WXpEYXNUaDVB?oc=5",
-          "pubDateISO": "2026-11-16T09:08:07+09:00",
-          "time": "2026.11.16 09:08",
-          "pubTs": 1794787687.0,
-          "matchedKw": "동아제약",
+          "press": "한스경제",
+          "title": "대웅제약, 3분기 '나보타' 효과로 매출·영업익 동반 성장",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5NSGhrNmpSdlI5Z2o3XzFUdHJySnBqaE5IQWEtaUN5clVMWTVscHlwclNRT1JyS0l4U25DTThzQ1MwODRnbWJ0YVdXUjlrQncyRWl0ZjJNM1U2dFBwSmozLXotQUtBQnktdGpZQ9IBb0FVX3lxTE1RLWNfOTBERjR5UzVYNWNlbmtzenhBS1FIenU1RWpkNWRSYjU1UmlsWjhEbDNQaHZoaWZkdjl0Vk5TY0VkUy14THFqelJUOHpzSWdOMGdTUHNTMGVEQ2ktMWg0bWZ2azgxSTVUOUhMYw?oc=5",
+          "pubDateISO": "2026-11-16T09:06:10+09:00",
+          "time": "2026.11.16 09:06",
+          "pubTs": 1794787570.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720697,
+          "id": 1794877794386,
           "category": "ind",
-          "press": "팜뉴스",
-          "title": "동아제약, 액상형 일반의약품 '마그랑비 피돌샷' 신규 광고 공개",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFB2MHEwcE1zNEtEczNfR1JJb0ttWF9nMkpmd28xZnktZ1lXZ0dZd2F6aDJXYS1ocFR4UjNIUHpPdHRNQ3FqTlcyOTBmTGJnMGVBYzRKdDVZb2dzUHBHQjVUT1pNZERwelBpQVB1LQ?oc=5",
-          "pubDateISO": "2026-11-16T09:07:37+09:00",
-          "time": "2026.11.16 09:07",
-          "pubTs": 1794787657.0,
-          "matchedKw": "동아제약",
+          "press": "대구MBC",
+          "title": "\"혁신 의료기기 시장 진입 돕는다\" 식약처, 정책 포럼 개최",
+          "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFB2LVRreElNMktWenJTcDZQdExyTmhDQ2E3NWZ6M3k1Umx4TXZRNHJPVE02UkRwS0lPdVhBMjVPNFdPck05Q1ktYk9hbFA?oc=5",
+          "pubDateISO": "2026-11-16T09:05:15+09:00",
+          "time": "2026.11.16 09:05",
+          "pubTs": 1794787515.0,
+          "matchedKw": "식품의약품안전처",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877721261,
+          "id": 1794877794414,
+          "category": "ind",
+          "press": "팍스메디컬뉴스",
+          "title": "수능 앞두고 ‘공부 잘하는 약’ 불법 판매…식약처, 게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1Dcm45SVRXRk5TV3J4WWswY2pWbXFoT3hia2dVc2dMdjFNbERWQlQtTkJpdnBXY09zWjlCZENqUkt6ZHNtRGpMWVJwb2x4YXVDMldrRksycWtpVmM2OU15NDF2eG5YaFd0RGVHVzhFMHM?oc=5",
+          "pubDateISO": "2026-11-16T09:05:06+09:00",
+          "time": "2026.11.16 09:05",
+          "pubTs": 1794787506.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794365,
+          "category": "ind",
+          "press": "연합뉴스",
+          "title": "수능 앞두고 '집중력약' 둔갑한 마약류…불법게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5Na3pLV1lXSmRkSUFhYW0yRFdFRnBxWXZtci1TNjZUYlk4dmFVOV9makdFaU02X2w1d3pELTgxZkxQckViaXJEelU2cWROOURBMWIwLVN0Q05nNGFiYjhWUtIBYEFVX3lxTE5Na3pLV1lXSmRkSUFhYW0yRFdFRnBxWXZtci1TNjZUYlk4dmFVOV9makdFaU02X2w1d3pELTgxZkxQckViaXJEelU2cWROOURBMWIwLVN0Q05nNGFiYjhWUg?oc=5",
+          "pubDateISO": "2026-11-16T09:02:18+09:00",
+          "time": "2026.11.16 09:02",
+          "pubTs": 1794787338.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794396,
+          "category": "ind",
+          "press": "간호사신문",
+          "title": "GMO 표시대상 확대 앞두고…식약처, 제조·수입업체 궁금증 푼다",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9CM3RxQXRBLXBVNnVyeWs0eVJIbEttMkEzZnZwTWwxQlI5bkNOVWRsMFFvT2puQmVWMGJrMF9BRFlfUFgtcGFaRFZkYlhJblFJZzV1OXBpZXUwazdIWnFoT080VE9qOEFOeUx1TVJB?oc=5",
+          "pubDateISO": "2026-11-16T09:00:20+09:00",
+          "time": "2026.11.16 09:00",
+          "pubTs": 1794787220.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788667,
+          "category": "ind",
+          "press": "메디코파마",
+          "title": "대웅제약, 자가면역 신약 DWP213388 개발 보류…후속 파이프라인 연구 지속",
+          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5fQzloVlc1cDU1cFZrS0ZHejJJYTVFVFhXTUF2ei1uQzFOLXZMQl9BbXpTSWtUMXp0WXItUWVQVlVLeDRRZHhMOVRqbGEySzlCOGt4N3pSd3hqWlRET2JOelBSTjlQUEF4ak85dmNLTDZKdw?oc=5",
+          "pubDateISO": "2026-11-16T09:00:00+09:00",
+          "time": "2026.11.16 09:00",
+          "pubTs": 1794787200.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794361,
+          "category": "ind",
+          "press": "KBS 뉴스",
+          "title": "식약처, ‘공부 잘하는 약’ ‘수능약’ 불법 판매·알선 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE01Uks4cmNjR3MtRXZXWnpYUHZUVU5SbXc1ejh5aEZ0SnRhbW1zTkVVRmpGMzJkNlJZOXNNbGYyVXpHQXN5ZWFLVEFUS3plc0p2Q09KSHY0bHp4bHlMR21ENGREOHJ2dw?oc=5",
+          "pubDateISO": "2026-11-16T08:49:00+09:00",
+          "time": "2026.11.16 08:49",
+          "pubTs": 1794786540.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794397,
+          "category": "ind",
+          "press": "간호사신문",
+          "title": "수능 앞두고 의약품 불법거래 유인…식약처, 온라인 게시물 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5jSFlyVzNJdUJnSjYyWlJ6RTFPM2dVODdMYXdBa3otcmtPZHVOTm1CWVpSM3hVNjNHZURHLUFSRHRKWEtTc1Bpc090TldEaW83NFhDZkN6NmM3Z0JQRzg5emk2MlZCRHp2a1dQbHRB?oc=5",
+          "pubDateISO": "2026-11-16T08:44:38+09:00",
+          "time": "2026.11.16 08:44",
+          "pubTs": 1794786278.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794409,
+          "category": "ind",
+          "press": "머니투데이",
+          "title": "수능 앞두고 '공부 잘하는 약' 불법 판매 기승…식약처, 571건 적발 - 머니투데이",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1vS2o2VktLSUxFcGl3OEpzdUtzeG41TWlGb0V1NFFvY2lReVNSZDZxWm9pOS0yMk95MEpxd2ZPbE1VMVJQdzZhbkJLVV9nTjZXSXZuODJEcTZId0w2bzZpSzFhd1NUU1gwcFHSAW9BVV95cUxOeERUQ1h2d19MLXRRWC1BQ1lrTnZiQ0FuMUlHdHVTOHo1cER0cjV4QkIxYTRPMi1iQW9SY0hrR2ZZWWZQT0hNSXFzRFdGV2NvSWJzZmJZZUZueEFEVktZd2dLVXFkM2V0dmRBblRxLXc?oc=5",
+          "pubDateISO": "2026-11-16T08:38:37+09:00",
+          "time": "2026.11.16 08:38",
+          "pubTs": 1794785917.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794387,
+          "category": "ind",
+          "press": "뉴데일리 경제",
+          "title": "수능 사흘 앞두고 '공부 잘하는 약' 기승 … 식약처, 불법판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQMjd6Y21PSXZDLVRTVkoxbEt1S3BiWDJydjZETDBIMVdWZlI2RHN6b1RCOWZ5TENuYTFXaFB4NWttanh3Vm1DUnlneUZjSVpCVjdhczFmWTB2S1ZscVlwVkFCYnJFQ2NRY1JyWlNCaGJ2bWswYjlIekQ5VWpkRDFCadIBgAFBVV95cUxQMjd6Y21PSXZDLVRTVkoxbEt1S3BiWDJydjZETDBIMVdWZlI2RHN6b1RCOWZ5TENuYTFXaFB4NWttanh3Vm1DUnlneUZjSVpCVjdhczFmWTB2S1ZscVlwVkFCYnJFQ2NRY1JyWlNCaGJ2bWswYjlIekQ5VWpkRDFCaQ?oc=5",
+          "pubDateISO": "2026-11-16T08:38:00+09:00",
+          "time": "2026.11.16 08:38",
+          "pubTs": 1794785880.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794407,
+          "category": "ind",
+          "press": "뉴스후플러스",
+          "title": "식약처, 수능 앞두고 ADHD 치료제·수능약 불법 판매 571건 적발",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE04NGtnRjQyRWROdlhBeUhuX0VBWlE2WDVVZ3hCbHhFU2dPTVdOV2VZb29JVldic1ZhMVc0bFJFYjdmcGh5cThXemNpWHZDaFdMWEdEQ0FJXzRkWHpRTGN5RndiZ3lhQW5Vak5tdTBR?oc=5",
+          "pubDateISO": "2026-11-16T08:31:00+09:00",
+          "time": "2026.11.16 08:31",
+          "pubTs": 1794785460.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877794399,
+          "category": "ind",
+          "press": "푸드투데이",
+          "title": "GMO 완전표시제 시행 앞두고 식약처, 간장·당류·식용유 업계 설명회",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBOclA0UW02UW1UWVNFUFZZVEhYcWFYbG5ETG5ZTnM0aWpySVVNeDZsVjFyTTlQRkRmNGx5dy11WjdHSzZuYW9DZFYyZ0lHZHJRWW1vbF85MDdzbEduLW4yNTY1R2RyQQ?oc=5",
+          "pubDateISO": "2026-11-16T08:29:18+09:00",
+          "time": "2026.11.16 08:29",
+          "pubTs": 1794785358.0,
+          "matchedKw": "식품의약품안전처",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789619,
           "category": "ind",
           "press": "한경매거진",
           "title": "'신한금융·포스코·유한양행' 성장 비결은 '창업자 정신'",
@@ -8388,7 +9103,7 @@
           "selected": false
         },
         {
-          "id": 1794877721225,
+          "id": 1794877789583,
           "category": "ind",
           "press": "바이오스펙테이터",
           "title": "유한양행, '자체발굴' CKD 후보물질 \"1상 IND 승인\"",
@@ -8401,7 +9116,20 @@
           "selected": false
         },
         {
-          "id": 1794877721267,
+          "id": 1794877788672,
+          "category": "ind",
+          "press": "엠투데이",
+          "title": "대웅제약, ‘나보타’ 인기에도 순익 23.5% 급감⋯ 수익성 ‘비상’",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFAxR2VQSDFPdUJUTVc3c1J6THVESUlYZDVmc2NGTXJXUVR6bERlMUZxdDJ6QW9YWUpLTnZUX29oajljbGRPdEtmNEJEakhGNDlxa3hGbmo4a0NQcHBQbTczekxWaGJUVUwxMVF2cm5Waw?oc=5",
+          "pubDateISO": "2026-11-16T08:02:11+09:00",
+          "time": "2026.11.16 08:02",
+          "pubTs": 1794783731.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877788675,
           "category": "ind",
           "press": "이코노미사이언스",
           "title": "[ES 진단] 유한·녹십자·광동·종근당·대웅·한미, 6色 성장전략…신약·수출·헬스케어로 승부",
@@ -8409,12 +9137,12 @@
           "pubDateISO": "2026-11-16T08:00:00+09:00",
           "time": "2026.11.16 08:00",
           "pubTs": 1794783600.0,
-          "matchedKw": "유한양행",
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877724805,
+          "id": 1794877798167,
           "category": "ind",
           "press": "메디컬투데이",
           "title": "내년 복지부 예산 8조8196억 늘린다…건보 지원·공공의료 확충에 무게",
@@ -8427,20 +9155,20 @@
           "selected": false
         },
         {
-          "id": 1794877722729,
+          "id": 1794877788674,
           "category": "ind",
-          "press": "농수축산신문",
-          "title": "[Issue+] 올 작물보호제 시장 동향 & 2027년도 전망",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9LWERvcmExM21xNjBUQWNVSjk5dGE0T1lXME1KaDRTR085SXFEVGR0a2xJZXd1YnNHRzVROE1YZGo2VTNHX0REWmY5bHZlSVBzZ2ZWdm5RcU52NGtuUWRFbHRmOGQySG1rTExrdw?oc=5",
-          "pubDateISO": "2026-11-16T07:00:00+09:00",
-          "time": "2026.11.16 07:00",
-          "pubTs": 1794780000.0,
-          "matchedKw": "제네릭",
+          "press": "Chosunbiz",
+          "title": "[비즈톡톡] ‘냉장고도 뚫렸다“...유럽 흔든 사이버 공격에 식약처, 제약사 보안 비상령",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPRlI4UVV2RjROZHJuM3ZFaDZpclplU21tTmpUcWh0S1ZURjZBdEJMMjJraFY1S1l4NUtFaGZpc0FOX2pobUFrcy1jMHB2S2sxaUVKUkdsd3B0TmtFOWM3ZkJwdEZnR0xJdnJLSDJwbmZ4RGVCV0d6U2QxVE9IaFhuVkhKLUR5QnfSAZsBQVVfeXFMTmVpX1l3SU9PMktxOHpIaGI1UkdFV0VYNlFqN2VsNG5iTnJDZUl3OG4wUERtR1llX1NaTmNJSC1aMU1hZkNSTlc2ckNwbHJsRUhJZUFaMHFYckpXQ1BQUnFiR29oVDlVc1R4R0ZJWGJrUXJuYzVPOUc1Vjc1R0NoenU3dUI4V0pKZVdVZ2pZa1BMbmQ5amJjWHdMaEk?oc=5",
+          "pubDateISO": "2026-11-16T07:34:00+09:00",
+          "time": "2026.11.16 07:34",
+          "pubTs": 1794782040.0,
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877723182,
+          "id": 1794877792939,
           "category": "ind",
           "press": "메디컬헤럴드",
           "title": "제약바이오협, 바이오유럽 2026 참가 '글로벌 협력 확대 모색'…'국내 기업 해외 진출 지원 및 해외 주요 기관과 협력 방안' 논의",
@@ -8453,7 +9181,7 @@
           "selected": false
         },
         {
-          "id": 1794877721255,
+          "id": 1794877789613,
           "category": "ind",
           "press": "이코노미톡뉴스",
           "title": "유한양행 ‘알레르기 신약’ 성장 카드 될까… 레시게르셉트에 쏠린 눈",
@@ -8466,33 +9194,20 @@
           "selected": false
         },
         {
-          "id": 1794877722728,
+          "id": 1794877788669,
           "category": "ind",
-          "press": "IB토마토",
-          "title": "보령, '디탁셀' 매각 시한 임박…탁소텔 국내 확장 시험대",
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9tTXBGdHlwdlB6MGlORnFlaVJrV2Z3NUpKNnozT0w3RG9jRUxpZS1nSDVmc0ZzOTM5VG04T1c1cGdXdVhVU0Q3ZXF1YmtvNy1JTERySThHLU9feGVXS1Fsc1hIT1Vka0NtLXc?oc=5",
+          "press": "메디코파마",
+          "title": "알피바이오, 3Q 대웅 계열 거래 69억…한올과 공급 확대",
+          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE8xOGd2REpsMnoxdU5pNDl1cTdWMmFNMUo4T0hSNEJuRzFFWm1QcEVmTlpDV0M1blY1WUNMcGpyR2ZjRG15SWg2TVZSbnI3YnkxdWh4QjVEdjRJdjMtQ09oUk9JVExxc2hvQkhlX2NrUThzUQ?oc=5",
           "pubDateISO": "2026-11-16T06:40:00+09:00",
           "time": "2026.11.16 06:40",
           "pubTs": 1794778800.0,
-          "matchedKw": "제네릭",
+          "matchedKw": "대웅제약",
           "duplicate": false,
           "selected": false
         },
         {
-          "id": 1794877720719,
-          "category": "ind",
-          "press": "메디칼업저버",
-          "title": "제약 ESG, 등급 넘어 '경쟁력'으로 부상",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9uZm1yc1NQRGc2V3FPWTUtYlR4LXlHbkJtQzJ1d0N5bmJ0a3BnTTVtNllwT1lqUVhXVk85TE1HZWxJV0FQYjZUM3RHam5oeVBuSkZkRE5EZGNmakxlZEJKX0VMZDk3WmFUbFlV?oc=5",
-          "pubDateISO": "2026-11-16T06:01:47+09:00",
-          "time": "2026.11.16 06:01",
-          "pubTs": 1794776507.0,
-          "matchedKw": "동아제약",
-          "duplicate": false,
-          "selected": false
-        },
-        {
-          "id": 1794877722331,
+          "id": 1794877791267,
           "category": "ind",
           "press": "메디팜스투데이",
           "title": "'제네릭 무더기 출시' 릭시아나 원료 국내산 9건…깐깐한 요건에 직접생산 약가우대 '0'",
@@ -8505,7 +9220,20 @@
           "selected": false
         },
         {
-          "id": 1794877722323,
+          "id": 1794877789958,
+          "category": "ind",
+          "press": "팜뉴스",
+          "title": "대화제약 리포락셀, 내달 약평위...실처방 내년 3월 전후 전망",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5nb1VVMmVHTFUxMmlMbWM0eTlEOTBGRHVVcFo3eW5Oa1Y2bWstdkc1UzBNUW13dGdUd0ZUUkljcnZZQm9fVEdxTjVyZWpPX3NCNlJJVElEYzRGTkZpYWRTVVc1WGV1dUw1NHlVRw?oc=5",
+          "pubDateISO": "2026-11-16T05:58:00+09:00",
+          "time": "2026.11.16 05:58",
+          "pubTs": 1794776280.0,
+          "matchedKw": "개량신약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877791258,
           "category": "ind",
           "press": "메디팜스투데이",
           "title": "[칼럼] ‘약가 우대’ 볼모로 기업 정보 털어가는 정부, 희미해진 혁신",
@@ -8518,7 +9246,7 @@
           "selected": false
         },
         {
-          "id": 1794877722326,
+          "id": 1794877791259,
           "category": "ind",
           "press": "의학신문",
           "title": "‘스시자로’ 원정 처방 열풍...日 개원가 한국인 유치 혈안",
@@ -8531,7 +9259,7 @@
           "selected": false
         },
         {
-          "id": 1794877722324,
+          "id": 1794877791260,
           "category": "ind",
           "press": "Naver Blog",
           "title": "대원제약, ‘만성질환·컨슈머헬스’ 선방…3분기 적자 축소 : 네이버 블로그",
@@ -8544,7 +9272,7 @@
           "selected": false
         },
         {
-          "id": 1794877721233,
+          "id": 1794877789591,
           "category": "ind",
           "press": "데일리메디",
           "title": "유한양행, 만성신장병 신약 YH34180 ‘임상 1상’ 승인",
@@ -8557,7 +9285,20 @@
           "selected": false
         },
         {
-          "id": 1794877721263,
+          "id": 1794877788671,
+          "category": "ind",
+          "press": "한국신용신문",
+          "title": "대웅제약, 인도네시아 국립대병원과 당뇨신약 '엔블로' 임상 돌입",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5mOU8xREdZdjQyNDVxM1hINGhER2lFZVBBc292SUFFbl93SV9hSURvWVdHZmUxSmFDVkJiVm85Yl9LVDVmV1k4djFwYXlvem5fbUhlUy1WUl9RcnFaZFR4Z1FZT1lqQ2JST2xJ?oc=5",
+          "pubDateISO": "2026-11-16T02:53:00+09:00",
+          "time": "2026.11.16 02:53",
+          "pubTs": 1794765180.0,
+          "matchedKw": "대웅제약",
+          "duplicate": false,
+          "selected": false
+        },
+        {
+          "id": 1794877789622,
           "category": "ind",
           "press": "더파마뉴스",
           "title": "유한양행, 만성 신장병 후보물질 임상1상 IND 승인",
@@ -8570,7 +9311,7 @@
           "selected": false
         },
         {
-          "id": 1794877722330,
+          "id": 1794877791266,
           "category": "ind",
           "press": "더파마뉴스",
           "title": "대원제약, 3분기 매출 3.2% 감소…영업손실 41억원으로 축소",
@@ -8583,7 +9324,7 @@
           "selected": false
         },
         {
-          "id": 1794877722329,
+          "id": 1794877791265,
           "category": "ind",
           "press": "헬스코리아뉴스",
           "title": "대원제약 ‘펠루비’ 변신 본궤도 … 소아 액상제 ‘DW5524’ 2상 진입",
