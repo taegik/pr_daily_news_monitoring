@@ -8,6 +8,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
@@ -73,6 +74,20 @@ UA_HEADER = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8"
 }
+
+class MetaTagParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.meta = {}
+
+    def handle_starttag(self, tag, attrs):
+        if tag.lower() != 'meta':
+            return
+        attr_dict = {k.lower(): (v or '') for k, v in attrs if k}
+        key = (attr_dict.get('property') or attr_dict.get('name') or '').strip().lower()
+        content = attr_dict.get('content', '').strip()
+        if key and content and key not in self.meta:
+            self.meta[key] = content
 
 def load_json(path, default):
     if os.path.exists(path):
@@ -157,7 +172,7 @@ def resolve_google_news_url(gnews_url):
         if padding != 4:
             b64_str += '=' * padding
         decoded_bytes = base64.urlsafe_b64decode(b64_str)
-        m_url = re.search(rb'https?://[^\x00-\x20\x7f-\xff"\'<>]+', decoded_bytes)
+        m_url = re.search(rb'https?://[A-Za-z0-9\-._~:/?#\[\]@!$&\'()*+,;=%]+', decoded_bytes)
         if m_url:
             candidate = m_url.group(0).decode('utf-8', errors='ignore')
             if 'news.google.com' not in candidate and 'gstatic.com' not in candidate:
@@ -198,7 +213,7 @@ def resolve_google_news_url(gnews_url):
             )
             with urllib.request.urlopen(batch_req, timeout=8) as b_resp:
                 b_text = b_resp.read().decode('utf-8', errors='ignore')
-                m_real = re.search(r'\"garturlres\",\"(https?://[^\"\\]+)', b_text)
+                m_real = re.search(r'garturlres","(https?://[^"\\]+)', b_text)
                 if m_real:
                     return m_real.group(1).replace('\\u003d', '=').replace('\\u0026', '&')
     except Exception as e:
@@ -234,14 +249,16 @@ def extract_article_reader_content(url):
             except Exception:
                 page_html = raw_bytes.decode('utf-8', errors='replace')
 
-        # 1. 대표 이미지 추출 (og:image / twitter:image)
-        og_img = (
-            re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', page_html, re.I) or
-            re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', page_html, re.I) or
-            re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']', page_html, re.I)
-        )
-        if og_img:
-            img_url = html.unescape(og_img.group(1)).strip()
+        # 1. HTMLParser로 안전하게 대표 이미지(og:image) 및 요약(og:description) 추출
+        parser = MetaTagParser()
+        try:
+            parser.feed(page_html)
+        except Exception:
+            pass
+
+        raw_img = parser.meta.get('og:image') or parser.meta.get('twitter:image') or ''
+        if raw_img:
+            img_url = html.unescape(raw_img).strip()
             if img_url.startswith('//'):
                 img_url = 'https:' + img_url
             elif img_url.startswith('/'):
@@ -250,16 +267,11 @@ def extract_article_reader_content(url):
             if img_url.startswith('http') and 'google' not in img_url.lower():
                 result["image"] = img_url
 
-        # 2. og:description 요약 추출
-        og_desc = (
-            re.search(r'<meta[^>]+property=["\']og:description["\'][^>]+content=["\']([^"\']+)["\']', page_html, re.I) or
-            re.search(r'<meta[^>]+content=["\']([^"']+)["\'][^>]+property=["\']og:description["\']', page_html, re.I) or
-            re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\']([^"']+)["\']', page_html, re.I)
-        )
-        if og_desc:
-            result["summary"] = clean_html(og_desc.group(1))
+        raw_desc = parser.meta.get('og:description') or parser.meta.get('description') or ''
+        if raw_desc:
+            result["summary"] = clean_html(raw_desc)
 
-        # 3. 불필요한 태그 제거 후 순수 기사 본문 문단 추출
+        # 2. 광고·메뉴·스크립트 제거 후 순수 기사 본문 문단 추출
         cleaned = re.sub(r'<(script|style|nav|header|footer|aside|iframe|form|noscript|svg)[^>]*>.*?</\1>', ' ', page_html, flags=re.S | re.I)
         cleaned = re.sub(r'<!--.*?-->', ' ', cleaned, flags=re.S)
         cleaned = re.sub(r'<br\s*/?>', '\n', cleaned, flags=re.I)
@@ -304,7 +316,6 @@ def enrich_published_articles(target_affiliate="all"):
             continue
         articles = entry.get("articles", [])
         for art in articles:
-            # 기존에 추출 실패해 본문과 이미지가 모두 비어 있던 기사도 다시 재시도하도록 조건 개선
             if art.get("readerReady") and (art.get("body") or art.get("image")):
                 continue
             url = art.get("url", "")
@@ -349,7 +360,7 @@ def fetch_google_rss_fallback(query, start_dt, end_dt):
     full_q = f'{query} after:{after_str} before:{before_str}'
     encoded = urllib.parse.quote(full_q)
     rss_url = f"https://news.google.com/rss/search?q={encoded}&hl=ko&gl=KR&ceid=KR:ko"
-    req = urllib.request.Request(rss_url, headers={"User-Agent": "Mozilla/5.0"})
+    req = urllib.request.Request(rss_url, headers={"User-Agent": UA_HEADER["User-Agent"]})
     with urllib.request.urlopen(req, timeout=10) as resp:
         xml_data = resp.read().decode('utf-8')
 
