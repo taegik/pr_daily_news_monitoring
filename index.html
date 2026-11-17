@@ -1587,7 +1587,7 @@
         } else {
           bodyHtml = `<div class="news-list">` + sec.items.map(item => {
             const num = runningIndex++;
-            const targetUrl = item.realUrl || item.url;
+            const targetUrl = item.url;
             return `
               <a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="news-item">
                 <div class="news-item-top">
