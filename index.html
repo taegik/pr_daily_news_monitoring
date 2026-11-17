@@ -1777,7 +1777,45 @@
       });
     }
 
-    function openArticleReader(item) {
+    async function tryLiveClientReaderFetch(item, bodyEl, imgEl) {
+      const targetUrl = item.realUrl || item.url;
+      if (!targetUrl || targetUrl.includes("news.google.com")) return false;
+      try {
+        const res = await fetch(`https://r.jina.ai/${targetUrl}`, {
+          headers: { "Accept": "text/plain" }
+        });
+        if (!res.ok) return false;
+        const mdText = await res.text();
+        if (!mdText || mdText.length < 150) return false;
+
+        // 마크다운 내 첫 이미지 추출
+        if (!item.image) {
+          const imgMatch = mdText.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/);
+          if (imgMatch && imgMatch[1] && !imgMatch[1].includes("google")) {
+            item.image = imgMatch[1];
+            imgEl.src = item.image;
+            imgEl.style.display = "block";
+            imgEl.onerror = () => { imgEl.style.display = "none"; };
+          }
+        }
+
+        // 헤더/링크/메뉴 노이즈 제거 후 깔끔한 문단 정제
+        const lines = mdText.split("\n")
+          .map(l => l.replace(/!\[[^\]]*\]\([^)]+\)/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/^[#*>-]+\s*/, "").trim())
+          .filter(l => l.length >= 35 && !/^(Title:|URL Source:|Markdown Content:|Published Time:|무단전재|재배포|로그인|회원가입|구독|댓글)/.test(l));
+
+        const cleanBody = Array.from(new Set(lines)).slice(0, 20).join("\n\n");
+        if (cleanBody.length >= 100) {
+          item.body = cleanBody;
+          bodyEl.innerHTML = "";
+          bodyEl.textContent = cleanBody;
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    async function openArticleReader(item) {
       const modal = document.getElementById("articleReaderModal");
       const scrollBody = document.getElementById("readerScrollBody");
       const imgEl = document.getElementById("readerHeroImg");
@@ -1796,10 +1834,27 @@
         imgEl.style.display = "none";
       }
 
-      if (item.body && item.body.trim().length > 30) {
+      scrollBody.scrollTop = 0;
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+
+      if (item.body && item.body.trim().length > 40) {
         bodyEl.innerHTML = "";
         bodyEl.textContent = item.body;
-      } else if (item.summary && item.summary.trim().length > 10) {
+        return;
+      }
+
+      // 서버 본문이 비어 있는 경우 실시간 클린 리더 추출 시도
+      bodyEl.innerHTML = `
+        <div class="reader-fallback-notice" style="text-align:center;">
+          ⏳ 광고 없는 클린 뷰 본문을 불러오는 중입니다...
+        </div>
+      `;
+
+      const fetched = await tryLiveClientReaderFetch(item, bodyEl, imgEl);
+      if (fetched) return;
+
+      if (item.summary && item.summary.trim().length > 10) {
         bodyEl.innerHTML = `
           <div style="margin-bottom:14px;">${item.summary}</div>
           <div class="reader-fallback-notice">
@@ -1810,15 +1865,11 @@
       } else {
         bodyEl.innerHTML = `
           <div class="reader-fallback-notice">
-            ⏳ 기사 본문 및 대표 이미지를 불러오는 중이거나, 해당 언론사에서 외부 본문 추출을 제한하고 있습니다.<br><br>
+            ℹ️ 해당 언론사 보안 정책으로 외부 본문 추출이 제한된 기사입니다.<br><br>
             아래 <strong>[언론사 원문 페이지로 이동 ↗]</strong> 버튼을 누르시면 원문 기사를 바로 확인하실 수 있습니다.
           </div>
         `;
       }
-
-      scrollBody.scrollTop = 0;
-      modal.classList.add("open");
-      document.body.style.overflow = "hidden";
     }
 
     function closeArticleReader() {

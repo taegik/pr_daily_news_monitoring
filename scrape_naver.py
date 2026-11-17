@@ -69,11 +69,33 @@ DOMAIN_PRESS_MAP = {
     'm-i.kr': '매일일보'
 }
 
+PRESS_TIER_1 = [
+    "연합뉴스", "뉴시스", "뉴스1", "연합인포맥스",
+    "한국경제", "매일경제", "서울경제", "파이낸셜뉴스", "이데일리", "머니투데이", "아시아경제", "헤럴드경제", "조선비즈",
+    "조선일보", "중앙일보", "동아일보", "한겨레", "경향신문",
+    "KBS", "MBC", "SBS", "YTN", "JTBC", "MBN", "TV조선", "채널A", "한국경제TV", "MTN"
+]
+
+PRESS_TIER_2 = [
+    "데일리팜", "메디파나뉴스", "의약뉴스", "의학신문", "약사공론", "약업신문",
+    "히트뉴스", "바이오스펙테이터", "청년의사", "데일리메디", "메디컬타임즈", "라포르시안", "보건뉴스",
+    "전자신문", "디지털타임스", "아이뉴스24", "지디넷코리아", "블로터", "더벨", "인베스트조선",
+    "시사저널e", "비즈니스포스트", "CEO스코어데일리", "이투데이", "아시아투데이", "브릿지경제", "메트로신문"
+]
+
 UA_HEADER = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8"
 }
+
+TARGET_BODY_ATTRS = (
+    'dic_area', 'articlebodycontents', 'articebody', 'articlebody', 'article-body',
+    'article_body', 'news_view', 'news-view', 'view_con', 'view_txt', 'article_txt',
+    'article-text', 'newsct_article', 'read_body', 'post-content', 'entry-content'
+)
+
+SKIP_TAGS = {'script', 'style', 'nav', 'header', 'footer', 'aside', 'iframe', 'form', 'noscript', 'svg', 'button'}
 
 class MetaTagParser(HTMLParser):
     def __init__(self):
@@ -88,6 +110,64 @@ class MetaTagParser(HTMLParser):
         content = attr_dict.get('content', '').strip()
         if key and content and key not in self.meta:
             self.meta[key] = content
+
+class ArticleBodyParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.skip_depth = 0
+        self.target_depth = 0
+        self.in_article_tag = 0
+        self.targeted_chunks = []
+        self.fallback_chunks = []
+
+    def handle_starttag(self, tag, attrs):
+        t = tag.lower()
+        if t in SKIP_TAGS:
+            self.skip_depth += 1
+            return
+        if self.skip_depth > 0:
+            return
+
+        attr_dict = {k.lower(): (v or '').lower() for k, v in attrs if k}
+        id_val = attr_dict.get('id', '')
+        cls_val = attr_dict.get('class', '')
+        combined = f"{id_val} {cls_val}"
+
+        if self.target_depth > 0:
+            self.target_depth += 1
+        elif any(key in combined for key in TARGET_BODY_ATTRS):
+            self.target_depth = 1
+
+        if t == 'article':
+            self.in_article_tag += 1
+
+        if t in ('p', 'div', 'br', 'li', 'h2', 'h3', 'h4', 'blockquote'):
+            self.targeted_chunks.append('\n')
+            self.fallback_chunks.append('\n')
+
+    def handle_endtag(self, tag):
+        t = tag.lower()
+        if t in SKIP_TAGS:
+            if self.skip_depth > 0:
+                self.skip_depth -= 1
+            return
+        if self.skip_depth > 0:
+            return
+
+        if self.target_depth > 0:
+            self.target_depth -= 1
+        if t == 'article' and self.in_article_tag > 0:
+            self.in_article_tag -= 1
+        if t in ('p', 'div', 'li', 'h2', 'h3', 'h4', 'blockquote'):
+            self.targeted_chunks.append('\n')
+            self.fallback_chunks.append('\n')
+
+    def handle_data(self, data):
+        if self.skip_depth > 0 or not data:
+            return
+        if self.target_depth > 0 or self.in_article_tag > 0:
+            self.targeted_chunks.append(data)
+        self.fallback_chunks.append(data)
 
 def load_json(path, default):
     if os.path.exists(path):
@@ -157,7 +237,38 @@ def get_date_bounds(now_dt, start_str, end_str):
     start_dt = now_dt - timedelta(days=7)
     return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')} (최근 7일)"
 
-def resolve_google_news_url(gnews_url):
+def search_original_url_by_title(title, press=""):
+    """구글 뉴스 암호화 링크 해석이 막혔을 때 기사 제목으로 다음(Daum) 뉴스 검색에서 원본 URL 역추적"""
+    clean_t = re.sub(r'\[[^\]]*\]', ' ', title or '')
+    clean_t = re.sub(r'[^\w\s가-힣]', ' ', clean_t)
+    clean_t = re.sub(r'\s+', ' ', clean_t).strip()
+    if len(clean_t) < 6:
+        return ""
+
+    query = f"{press} {clean_t}".strip() if press and press != '주요언론' else clean_t
+    try:
+        q_enc = urllib.parse.quote(query)
+        daum_url = f"https://search.daum.net/search?w=news&q={q_enc}&sort=accuracy"
+        req = urllib.request.Request(daum_url, headers=UA_HEADER)
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            d_html = resp.read().decode('utf-8', errors='ignore')
+
+        # 다음 뉴스 검색 결과의 외부 언론사 원문 링크 추출
+        links = re.findall(r'href="(https?://[^"]+)"', d_html)
+        for u in links:
+            u_clean = html.unescape(u)
+            host = urllib.parse.urlparse(u_clean).netloc.lower()
+            if not host:
+                continue
+            if any(skip in host for skip in ('daum.net', 'kakao.com', 'google.com', 'naver.com', 'youtube.com', 'facebook.com', 'twitter.com', 'x.com')):
+                continue
+            if len(urllib.parse.urlparse(u_clean).path) > 5:
+                return u_clean
+    except Exception:
+        pass
+    return ""
+
+def resolve_google_news_url(gnews_url, title="", press=""):
     if 'news.google.com' not in gnews_url:
         return gnews_url
 
@@ -180,7 +291,7 @@ def resolve_google_news_url(gnews_url):
     except Exception:
         pass
 
-    # 방법 2: 신형 Google News 토큰 -> signature/timestamp 획득 후 batchexecute API로 실제 URL 해석
+    # 방법 2: 신형 Google News 토큰 -> batchexecute API 디코딩
     try:
         page_url = f"https://news.google.com/rss/articles/{article_token}"
         req = urllib.request.Request(page_url, headers=UA_HEADER)
@@ -215,15 +326,43 @@ def resolve_google_news_url(gnews_url):
                 b_text = b_resp.read().decode('utf-8', errors='ignore')
                 m_real = re.search(r'garturlres","(https?://[^"\\]+)', b_text)
                 if m_real:
-                    return m_real.group(1).replace('\\u003d', '=').replace('\\u0026', '&')
-    except Exception as e:
-        print(f"[WARN] Google News URL 디코딩 실패 ({article_token[:16]}...): {e}")
+                    decoded = m_real.group(1).replace('\\u003d', '=').replace('\\u0026', '&')
+                    if 'news.google.com' not in decoded:
+                        return decoded
+    except Exception:
+        pass
+
+    # 방법 3: 구글 디코딩 차단 시 기사 제목+언론사로 다음 뉴스에서 원본 URL 역추적
+    if title:
+        traced = search_original_url_by_title(title, press)
+        if traced:
+            return traced
 
     return gnews_url
 
-def extract_article_reader_content(url):
-    resolved_url = resolve_google_news_url(url)
-    print(f"[INFO] 본문 추출 대상 URL: {resolved_url}")
+def format_clean_paragraphs(raw_text):
+    noise_patterns = re.compile(
+        r'(무단\s*전재|재배포\s*금지|저작권자|구독하기|좋아요|기사제보|Copyright|All rights reserved|로그인|회원가입|댓글\s*\d+|관련기사|많이\s*본\s*뉴스|이\s*기사와\s*함께|이전기사|다음기사|맨위로|프린트|글자크기|기사원문|공유하기|북마크|ⓒ\s*[가-힣a-zA-Z]+)',
+        re.I
+    )
+    paragraphs = []
+    for line in raw_text.splitlines():
+        line = re.sub(r'[ \t\r\f\v]+', ' ', line).strip()
+        if len(line) < 30:
+            continue
+        if noise_patterns.search(line):
+            continue
+        if re.search(r'[가-힣]{4,}', line):
+            paragraphs.append(line)
+
+    dedup = list(dict.fromkeys(paragraphs))
+    body_text = "\n\n".join(dedup[:22])
+    if len(body_text) > 4000:
+        body_text = body_text[:4000] + "..."
+    return body_text
+
+def extract_article_reader_content(url, title="", press=""):
+    resolved_url = resolve_google_news_url(url, title=title, press=press)
     result = {
         "realUrl": resolved_url,
         "image": "",
@@ -235,7 +374,7 @@ def extract_article_reader_content(url):
 
     try:
         req = urllib.request.Request(resolved_url, headers=UA_HEADER)
-        with urllib.request.urlopen(req, timeout=12) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:
             raw_bytes = resp.read()
             charset = resp.headers.get_content_charset()
             if not charset:
@@ -249,14 +388,14 @@ def extract_article_reader_content(url):
             except Exception:
                 page_html = raw_bytes.decode('utf-8', errors='replace')
 
-        # 1. HTMLParser로 안전하게 대표 이미지(og:image) 및 요약(og:description) 추출
-        parser = MetaTagParser()
+        # 1. 메타 태그에서 대표 이미지(og:image)와 요약 추출
+        m_parser = MetaTagParser()
         try:
-            parser.feed(page_html)
+            m_parser.feed(page_html)
         except Exception:
             pass
 
-        raw_img = parser.meta.get('og:image') or parser.meta.get('twitter:image') or ''
+        raw_img = m_parser.meta.get('og:image') or m_parser.meta.get('twitter:image') or ''
         if raw_img:
             img_url = html.unescape(raw_img).strip()
             if img_url.startswith('//'):
@@ -267,44 +406,39 @@ def extract_article_reader_content(url):
             if img_url.startswith('http') and 'google' not in img_url.lower():
                 result["image"] = img_url
 
-        raw_desc = parser.meta.get('og:description') or parser.meta.get('description') or ''
+        raw_desc = m_parser.meta.get('og:description') or m_parser.meta.get('description') or ''
         if raw_desc:
             result["summary"] = clean_html(raw_desc)
 
-        # 2. 광고·메뉴·스크립트 제거 후 순수 기사 본문 문단 추출
-        cleaned = re.sub(r'<(script|style|nav|header|footer|aside|iframe|form|noscript|svg)[^>]*>.*?</\1>', ' ', page_html, flags=re.S | re.I)
-        cleaned = re.sub(r'<!--.*?-->', ' ', cleaned, flags=re.S)
-        cleaned = re.sub(r'<br\s*/?>', '\n', cleaned, flags=re.I)
-        cleaned = re.sub(r'</(p|div|li|h[1-6]|article|section)>', '\n', cleaned, flags=re.I)
-        plain = re.sub(r'<[^>]+>', ' ', cleaned)
-        plain = html.unescape(plain)
+        # 2. 전용 본문 컨테이너 파서로 순수 기사 본문 추출
+        b_parser = ArticleBodyParser()
+        try:
+            b_parser.feed(page_html)
+        except Exception:
+            pass
 
-        paragraphs = []
-        noise_patterns = re.compile(
-            r'(무단\s*전재|재배포\s*금지|저작권자|구독하기|좋아요|기사제보|기자\s*=|Copyright|All rights reserved|로그인|회원가입|댓글\s*\d+|관련기사|많이\s*본\s*뉴스|이\s*기사와\s*함께|이전기사|다음기사|맨위로|프린트|글자크기|기사원문|공유하기|북마크)',
-            re.I
-        )
+        targeted_text = format_clean_paragraphs("".join(b_parser.targeted_chunks))
+        if len(targeted_text) >= 120:
+            result["body"] = targeted_text
+        else:
+            fallback_text = format_clean_paragraphs("".join(b_parser.fallback_chunks))
+            result["body"] = fallback_text
 
-        for line in plain.splitlines():
-            line = re.sub(r'[ \t\r\f\v]+', ' ', line).strip()
-            if len(line) < 35:
-                continue
-            if noise_patterns.search(line):
-                continue
-            if re.search(r'[가-힣]{4,}', line):
-                paragraphs.append(line)
-
-        dedup_paras = list(dict.fromkeys(paragraphs))
-        body_text = "\n\n".join(dedup_paras[:20])
-        if len(body_text) > 3800:
-            body_text = body_text[:3800] + "..."
-
-        result["body"] = body_text
-        print(f"[OK] 추출 결과 -> 이미지: {'있음' if result['image'] else '없음'}, 본문 길이: {len(body_text)}자")
     except Exception as e:
         print(f"[WARN] 본문 추출 예외 ({resolved_url}): {e}")
 
     return result
+
+def compute_quick_rank(item, kw_list):
+    title = item.get('title', '')
+    title_l = title.lower()
+    press = item.get('press', '')
+    tier_score = 38 if any(t in press for t in PRESS_TIER_1) else (28 if any(t in press for t in PRESS_TIER_2) else 14)
+    matched_cnt = sum(1 for k in kw_list if k and k.lower() in title_l)
+    kw_score = min(36, 12 + matched_cnt * 10)
+    if kw_list and kw_list[0].lower() in title_l:
+        kw_score += 12
+    return tier_score + kw_score
 
 def enrich_published_articles(target_affiliate="all"):
     pub_data = load_json(PUBLISHED_FILE, {"history": {}, "published": {}})
@@ -321,7 +455,7 @@ def enrich_published_articles(target_affiliate="all"):
             url = art.get("url", "")
             if not url:
                 continue
-            extracted = extract_article_reader_content(url)
+            extracted = extract_article_reader_content(url, title=art.get("title", ""), press=art.get("press", ""))
             if extracted["realUrl"]:
                 art["realUrl"] = extracted["realUrl"]
             if extracted["image"]:
@@ -332,7 +466,8 @@ def enrich_published_articles(target_affiliate="all"):
                 art["summary"] = extracted["summary"]
             art["readerReady"] = True
             updated_count += 1
-            time.sleep(0.2)
+            print(f"  -> [{art.get('press')}] {art.get('title')[:22]}... | img={bool(extracted['image'])} | body={len(extracted['body'])}자")
+            time.sleep(0.15)
 
     save_json(PUBLISHED_FILE, pub_data)
     print(f"[OK] 리더 뷰(이미지·본문) 추출 완료: 총 {updated_count}건 업데이트")
@@ -485,9 +620,25 @@ def main():
                     "duplicate": norm in history_set,
                     "selected": False
                 })
-            time.sleep(0.08)
+            time.sleep(0.06)
 
-        collected.sort(key=lambda x: -x['pubTs'])
+        # 추천순위 상위 30건에 대해 본문·대표 이미지를 미리 추출(Pre-enrich)하여 발행 즉시 클린뷰 표시
+        collected.sort(key=lambda x: (-compute_quick_rank(x, kw_list), -x['pubTs']))
+        pre_enriched = 0
+        for art in collected[:30]:
+            if art.get("duplicate"):
+                continue
+            ext = extract_article_reader_content(art["url"], title=art["title"], press=art["press"])
+            if ext["realUrl"]:
+                art["realUrl"] = ext["realUrl"]
+            if ext["image"]:
+                art["image"] = ext["image"]
+            if ext["body"]:
+                art["body"] = ext["body"]
+            if ext["summary"]:
+                art["summary"] = ext["summary"]
+            pre_enriched += 1
+            time.sleep(0.1)
 
         affiliates_out[aff_key] = {
             "scrapedAt": f"{now_dt.strftime('%Y-%m-%d %H:%M:%S KST')} ({used_source})",
@@ -495,7 +646,7 @@ def main():
             "count": len(collected),
             "articles": collected
         }
-        print(f"[OK] {aff_key} ({range_label} / {used_source}): 총 {len(collected)}건 수집")
+        print(f"[OK] {aff_key} ({range_label} / {used_source}): 총 {len(collected)}건 수집 (상위 {pre_enriched}건 클린뷰 사전 추출 완료)")
 
     pool_data["updatedAt"] = now_dt.strftime('%Y-%m-%d %H:%M:%S KST')
     pool_data["keywords"] = active_keywords

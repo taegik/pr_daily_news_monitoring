@@ -1672,7 +1672,12 @@
           category: s.category,
           press: s.press,
           title: s.title,
-          url: s.url
+          url: s.url,
+          realUrl: s.realUrl || s.url,
+          image: s.image || "",
+          body: s.body || "",
+          summary: s.summary || "",
+          readerReady: Boolean(s.body || s.image)
         }))
       };
 
