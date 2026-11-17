@@ -3,6 +3,7 @@ import re
 import json
 import time
 import html
+import base64
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -65,6 +66,12 @@ DOMAIN_PRESS_MAP = {
     'bokuennews.com': '보건뉴스', 'skyedaily.com': '스카이데일리', 'ceoscoredaily.com': 'CEO스코어데일리',
     'sisajournal-e.com': '시사저널e', 'asiatime.co.kr': '아시아타임즈', 'tf.co.kr': '더팩트',
     'm-i.kr': '매일일보'
+}
+
+UA_HEADER = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8"
 }
 
 def load_json(path, default):
@@ -136,47 +143,85 @@ def get_date_bounds(now_dt, start_str, end_str):
     return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')} (최근 7일)"
 
 def resolve_google_news_url(gnews_url):
-    # Google News RSS 링크를 실제 언론사 원문 URL로 해석
     if 'news.google.com' not in gnews_url:
         return gnews_url
+
+    parsed = urllib.parse.urlparse(gnews_url)
+    path_parts = parsed.path.split('/')
+    article_token = path_parts[-1] if path_parts else ''
+
+    # 방법 1: 구형 Base64 토큰 직접 디코딩
     try:
-        req = urllib.request.Request(gnews_url, headers={
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-        })
-        with urllib.request.urlopen(req, timeout=8) as resp:
-            final_url = resp.geturl()
-            if 'news.google.com' not in final_url:
-                return final_url
-            page_html = resp.read().decode('utf-8', errors='ignore')
-            # batchexecute / data-n-au 또는 og:url / canonical 추출 시도
-            m_au = re.search(r'data-n-au="([^"]+)"', page_html)
-            if m_au and 'news.google.com' not in m_au.group(1):
-                return html.unescape(m_au.group(1))
-            m_href = re.search(r'<a[^>]+href="(https?://(?!news\.google\.com|www\.google\.com)[^"]+)"', page_html)
-            if m_href:
-                return html.unescape(m_href.group(1))
+        b64_str = article_token
+        padding = 4 - (len(b64_str) % 4)
+        if padding != 4:
+            b64_str += '=' * padding
+        decoded_bytes = base64.urlsafe_b64decode(b64_str)
+        m_url = re.search(rb'https?://[^\x00-\x20\x7f-\xff"\'<>]+', decoded_bytes)
+        if m_url:
+            candidate = m_url.group(0).decode('utf-8', errors='ignore')
+            if 'news.google.com' not in candidate and 'gstatic.com' not in candidate:
+                return candidate
     except Exception:
         pass
+
+    # 방법 2: 신형 Google News 토큰 -> signature/timestamp 획득 후 batchexecute API로 실제 URL 해석
+    try:
+        page_url = f"https://news.google.com/rss/articles/{article_token}"
+        req = urllib.request.Request(page_url, headers=UA_HEADER)
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            if 'news.google.com' not in resp.geturl():
+                return resp.geturl()
+            html_str = resp.read().decode('utf-8', errors='ignore')
+
+        m_sig = re.search(r'data-n-a-sg="([^"]+)"', html_str)
+        m_ts = re.search(r'data-n-a-ts="([^"]+)"', html_str)
+        if m_sig and m_ts:
+            sig = m_sig.group(1)
+            ts = m_ts.group(1)
+            inner_payload = json.dumps([
+                "garturlreq",
+                [["X", "X", ["X", "X"], None, None, 1, 1, "KR:ko", None, 1, None, None, None, None, None, 0, 1],
+                 "X", "X", 1, [1, 1, 1], 1, 1, None, 0, 0, None, 0],
+                article_token,
+                int(ts),
+                sig
+            ])
+            f_req = urllib.parse.quote(json.dumps([[["Fbv4je", inner_payload, None, "generic"]]]))
+            batch_req = urllib.request.Request(
+                "https://news.google.com/_/DotsSplashUi/data/batchexecute",
+                data=f"f.req={f_req}".encode('utf-8'),
+                headers={
+                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                    "User-Agent": UA_HEADER["User-Agent"]
+                }
+            )
+            with urllib.request.urlopen(batch_req, timeout=8) as b_resp:
+                b_text = b_resp.read().decode('utf-8', errors='ignore')
+                m_real = re.search(r'\"garturlres\",\"(https?://[^\"\\]+)', b_text)
+                if m_real:
+                    return m_real.group(1).replace('\\u003d', '=').replace('\\u0026', '&')
+    except Exception as e:
+        print(f"[WARN] Google News URL 디코딩 실패 ({article_token[:16]}...): {e}")
+
     return gnews_url
 
 def extract_article_reader_content(url):
-    # 실제 언론사 URL에서 대표 이미지(og:image)와 광고 없는 순수 기사 본문 추출
     resolved_url = resolve_google_news_url(url)
+    print(f"[INFO] 본문 추출 대상 URL: {resolved_url}")
     result = {
         "realUrl": resolved_url,
         "image": "",
         "body": "",
         "summary": ""
     }
+    if 'news.google.com' in resolved_url:
+        return result
+
     try:
-        req = urllib.request.Request(resolved_url, headers={
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8"
-        })
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        req = urllib.request.Request(resolved_url, headers=UA_HEADER)
+        with urllib.request.urlopen(req, timeout=12) as resp:
             raw_bytes = resp.read()
-            # 인코딩 자동 판별 (UTF-8 / EUC-KR / CP949)
             charset = resp.headers.get_content_charset()
             if not charset:
                 head_snippet = raw_bytes[:2048].decode('ascii', errors='ignore').lower()
@@ -191,9 +236,9 @@ def extract_article_reader_content(url):
 
         # 1. 대표 이미지 추출 (og:image / twitter:image)
         og_img = (
-            re.search(r'<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']', page_html, re.I) or
-            re.search(r'<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']', page_html, re.I) or
-            re.search(r'<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']', page_html, re.I)
+            re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', page_html, re.I) or
+            re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', page_html, re.I) or
+            re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']', page_html, re.I)
         )
         if og_img:
             img_url = html.unescape(og_img.group(1)).strip()
@@ -207,52 +252,45 @@ def extract_article_reader_content(url):
 
         # 2. og:description 요약 추출
         og_desc = (
-            re.search(r'<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']+)["']', page_html, re.I) or
-            re.search(r'<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:description["']', page_html, re.I) or
-            re.search(r'<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']', page_html, re.I)
+            re.search(r'<meta[^>]+property=["\']og:description["\'][^>]+content=["\']([^"\']+)["\']', page_html, re.I) or
+            re.search(r'<meta[^>]+content=["\']([^"']+)["\'][^>]+property=["\']og:description["\']', page_html, re.I) or
+            re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\']([^"']+)["\']', page_html, re.I)
         )
         if og_desc:
             result["summary"] = clean_html(og_desc.group(1))
 
-        # 3. 불필요한 태그(script, style, nav, header, footer, aside, iframe, form) 제거 후 본문 문단 추출
-        cleaned = re.sub(r'<(script|style|nav|header|footer|aside|iframe|form|noscript|svg)[^>]*>.*?</>', ' ', page_html, flags=re.S | re.I)
+        # 3. 불필요한 태그 제거 후 순수 기사 본문 문단 추출
+        cleaned = re.sub(r'<(script|style|nav|header|footer|aside|iframe|form|noscript|svg)[^>]*>.*?</\1>', ' ', page_html, flags=re.S | re.I)
         cleaned = re.sub(r'<!--.*?-->', ' ', cleaned, flags=re.S)
-
-        # <p> 태그 또는 <br> 단위 문단 분리
-        cleaned = re.sub(r'<br\s*/?>', '
-', cleaned, flags=re.I)
-        cleaned = re.sub(r'</(p|div|li|h[1-6]|article|section)>', '
-', cleaned, flags=re.I)
+        cleaned = re.sub(r'<br\s*/?>', '\n', cleaned, flags=re.I)
+        cleaned = re.sub(r'</(p|div|li|h[1-6]|article|section)>', '\n', cleaned, flags=re.I)
         plain = re.sub(r'<[^>]+>', ' ', cleaned)
         plain = html.unescape(plain)
 
         paragraphs = []
         noise_patterns = re.compile(
-            r'(무단\s*전재|재배포\s*금지|저작권자|구독하기|좋아요|기사제보|기자\s*=|Copyright|All rights reserved|로그인|회원가입|댓글\s*\d+|관련기사|많이\s*본\s*뉴스|이\s*기사와\s*함께|이전기사|다음기사|맨위로|프린트|글자크기)',
+            r'(무단\s*전재|재배포\s*금지|저작권자|구독하기|좋아요|기사제보|기자\s*=|Copyright|All rights reserved|로그인|회원가입|댓글\s*\d+|관련기사|많이\s*본\s*뉴스|이\s*기사와\s*함께|이전기사|다음기사|맨위로|프린트|글자크기|기사원문|공유하기|북마크)',
             re.I
         )
 
         for line in plain.splitlines():
-            line = re.sub(r'[ 	]+', ' ', line).strip()
+            line = re.sub(r'[ \t\r\f\v]+', ' ', line).strip()
             if len(line) < 35:
                 continue
             if noise_patterns.search(line):
                 continue
-            # 한국어 문장 종결어미 또는 충분한 서술형 문장 위주 필터링
-            if re.search(r'[가-힣]{3,}', line):
+            if re.search(r'[가-힣]{4,}', line):
                 paragraphs.append(line)
 
-        # 중복 문단 제거
         dedup_paras = list(dict.fromkeys(paragraphs))
-        body_text = "
-
-".join(dedup_paras[:18])
-        if len(body_text) > 3500:
-            body_text = body_text[:3500] + "..."
+        body_text = "\n\n".join(dedup_paras[:20])
+        if len(body_text) > 3800:
+            body_text = body_text[:3800] + "..."
 
         result["body"] = body_text
+        print(f"[OK] 추출 결과 -> 이미지: {'있음' if result['image'] else '없음'}, 본문 길이: {len(body_text)}자")
     except Exception as e:
-        print(f"[WARN] 본문 추출 예외 ({url}): {e}")
+        print(f"[WARN] 본문 추출 예외 ({resolved_url}): {e}")
 
     return result
 
@@ -266,8 +304,8 @@ def enrich_published_articles(target_affiliate="all"):
             continue
         articles = entry.get("articles", [])
         for art in articles:
-            # 이미 본문이나 이미지가 채워져 있고 실제 URL이 해석된 경우 스킵
-            if art.get("readerReady"):
+            # 기존에 추출 실패해 본문과 이미지가 모두 비어 있던 기사도 다시 재시도하도록 조건 개선
+            if art.get("readerReady") and (art.get("body") or art.get("image")):
                 continue
             url = art.get("url", "")
             if not url:
@@ -283,7 +321,7 @@ def enrich_published_articles(target_affiliate="all"):
                 art["summary"] = extracted["summary"]
             art["readerReady"] = True
             updated_count += 1
-            time.sleep(0.15)
+            time.sleep(0.2)
 
     save_json(PUBLISHED_FILE, pub_data)
     print(f"[OK] 리더 뷰(이미지·본문) 추출 완료: 총 {updated_count}건 업데이트")
@@ -297,7 +335,7 @@ def fetch_naver_news(query, client_id, client_secret, display=30, log_detail=Fal
     try:
         with urllib.request.urlopen(req_hub, timeout=10) as resp:
             return json.loads(resp.read().decode('utf-8')).get('items', []), "NAVER_HUB"
-    except urllib.error.HTTPError as e1:
+    except urllib.error.HTTPError:
         url_dev = f"https://openapi.naver.com/v1/search/news.json?query={encoded}&display={display}&sort=date"
         req_dev = urllib.request.Request(url_dev)
         req_dev.add_header("X-Naver-Client-Id", client_id)
@@ -343,7 +381,6 @@ def main():
     mode = os.environ.get("RUN_MODE", "scrape").strip()
     target = os.environ.get("TARGET_AFFILIATE", "all").strip()
 
-    # 발행 후 본문/대표이미지 추출 전용 모드
     if mode == "enrich_published":
         enrich_published_articles(target)
         return
