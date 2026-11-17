@@ -23,7 +23,10 @@
       "지역필수의료강화분당서울대복지부논의",
       "메디아나메디카2026서통합모니터링으로글로벌시장공략머니투데이",
       "hlb파나진메디카2026서글로벌분자진단사업확장박차머니투데이",
-      "대원제약펠루비정소아용시럽임상시험"
+      "대원제약펠루비정소아용시럽임상시험",
+      "대웅제약자가면역신약플로디시티닙임상1상서효과확인",
+      "대웅제약다중타깃자가면역신약플로디시티닙임상1상성과공개",
+      "현대바이오항암제후보물질치료목적사용승인획득"
     ],
     "mitech": [
       "의료기기주혼조속종목별차별화수술로봇진단미용기기시장주목을"
@@ -37,41 +40,27 @@
       "cycle": "매일 오전 9시~9시반",
       "date": "2026.11.13",
       "dayLabel": "화",
-      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 김태기 과장 · 확정 4건",
+      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 김태기 과장 · 확정 3건",
       "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
       "author": "토머스 에디슨",
       "articles": [
         {
           "category": "ind",
-          "press": "뉴시스",
-          "title": "\"지역 필수의료 강화\"…분당서울대·복지부 논의",
-          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1aa0VvZU9SdV8zQXV6SS1UcDRWQnpzb1FkUHRpdW5FNnBGS09Qc1QzT0YxbzdjZzhZVll3Sms1ai00c3FiQThmZ2dwcmNnTndZbUxzSXlGVWhmcWFpUXBjSNIBeEFVX3lxTE9CLVRocHd1ckxPMHVDcjhXeUxQUW1BTXFHS3lkSGZPODJMTURYeno3Z0E1YXJHV3d6N3QwOGZCbk5MVlJwcDJGdnI2c0JCZnRCZHFoUXhBelpjSWJFVlVwbVd3SVY2RnF5ekctZFM5eGhoLVB0ZmYtTQ?oc=5",
-          "realUrl": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1aa0VvZU9SdV8zQXV6SS1UcDRWQnpzb1FkUHRpdW5FNnBGS09Qc1QzT0YxbzdjZzhZVll3Sms1ai00c3FiQThmZ2dwcmNnTndZbUxzSXlGVWhmcWFpUXBjSNIBeEFVX3lxTE9CLVRocHd1ckxPMHVDcjhXeUxQUW1BTXFHS3lkSGZPODJMTURYeno3Z0E1YXJHV3d6N3QwOGZCbk5MVlJwcDJGdnI2c0JCZnRCZHFoUXhBelpjSWJFVlVwbVd3SVY2RnF5ekctZFM5eGhoLVB0ZmYtTQ?oc=5",
-          "readerReady": true
+          "press": "서울경제TV",
+          "title": "대웅제약, 자가면역 신약 ‘플로디시티닙’ 임상 1상서 효과 확인",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBIUHdmVk1EbnNWbGRrbkNERjBQUjF5V1VmODJJX000SWtlcktqT3Z4bTNHYnFJX1E5ZUFpS3ZmY05kSGhDN0ZWWnJMakdSWWpSVmRhSlR1YU5kRnFDVjhfZWJOUHY?oc=5"
         },
         {
           "category": "ind",
-          "press": "머니투데이",
-          "title": "메디아나, '메디카 2026'서 통합 모니터링으로 글로벌 시장 공략 - 머니투데이",
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE4xcnFON1lfWW5CR0FyYWdBUmRWSDlvemZIS2RnVmZGcWFtZTdvNFRINTBibTdiQ0trb19HcUowTDJHN1VUQzctdWY1ek41LVZFaHZlTkNSNEdvRHFLRmVqampXMVdJRl9XTVpYUmx0TkM3aXlleFHSAXtBVV95cUxOcklkSmxkbXZWTzM4RkpobDFGSDFnMHB1eVZhOUIzdkJJNHBENm1uVVFxSUdLNmdyQ1VUdnF4Y0ppN1QzLVlrLTlReXkwcUxEM2todUdUZ3R1dVVQd3RBQXNHaXdWcUhsWW1MRW9JZjdnLXVNWjFDTlpoQ3M?oc=5",
-          "realUrl": "https://news.google.com/rss/articles/CBMidkFVX3lxTE4xcnFON1lfWW5CR0FyYWdBUmRWSDlvemZIS2RnVmZGcWFtZTdvNFRINTBibTdiQ0trb19HcUowTDJHN1VUQzctdWY1ek41LVZFaHZlTkNSNEdvRHFLRmVqampXMVdJRl9XTVpYUmx0TkM3aXlleFHSAXtBVV95cUxOcklkSmxkbXZWTzM4RkpobDFGSDFnMHB1eVZhOUIzdkJJNHBENm1uVVFxSUdLNmdyQ1VUdnF4Y0ppN1QzLVlrLTlReXkwcUxEM2todUdUZ3R1dVVQd3RBQXNHaXdWcUhsWW1MRW9JZjdnLXVNWjFDTlpoQ3M?oc=5",
-          "readerReady": true
-        },
-        {
-          "category": "ind",
-          "press": "머니투데이",
-          "title": "HLB파나진, '메디카 2026'서 글로벌 분자진단 사업 확장 박차 - 머니투데이",
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB6ZmNHNEluRGtVaHZQTWlxejBxa0VVLU1fMXk2X0NPTGd2T3FtSnNkRUU4MmQ1bFU0TlhfNnR2aTdfQVR3NWJ5MzBSMGdKMDdpMkh6VFJFeURiV3k0SHBndXZDdE5GZXh3T0VWbllaV1NRZTVQa1HSAXtBVV95cUxPZGlGZmxmS1hzSzc4V2ZyRkFBT0VCQlBDdk1DSU5RQnprVkpqZXcyazFCTGl5WHVwdG5zdmNZcTZvOFMwaVVUVWZDQ1N2cDQzSXpGdGtpWTRMUWNkQ2VvVDF3bllTWnZFQ24taTM0UVIwblBzd2g0S2I5Mms?oc=5",
-          "realUrl": "https://news.google.com/rss/articles/CBMidkFVX3lxTFB6ZmNHNEluRGtVaHZQTWlxejBxa0VVLU1fMXk2X0NPTGd2T3FtSnNkRUU4MmQ1bFU0TlhfNnR2aTdfQVR3NWJ5MzBSMGdKMDdpMkh6VFJFeURiV3k0SHBndXZDdE5GZXh3T0VWbllaV1NRZTVQa1HSAXtBVV95cUxPZGlGZmxmS1hzSzc4V2ZyRkFBT0VCQlBDdk1DSU5RQnprVkpqZXcyazFCTGl5WHVwdG5zdmNZcTZvOFMwaVVUVWZDQ1N2cDQzSXpGdGtpWTRMUWNkQ2VvVDF3bllTWnZFQ24taTM0UVIwblBzd2g0S2I5Mms?oc=5",
-          "readerReady": true
+          "press": "한국경제",
+          "title": "대웅제약, 다중타깃 자가면역 신약 ‘플로디시티닙’ 임상 1상 성과 공개",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE00a3VVV3RiOG1zT1B6a0dYMmF4OUZmbGNpTFhTNU9sVTJNQWJMQTc0Mk1zQXVySXQ2LXdJb2k5Ry0xeUlPdjlYZkpFU2ZmTGk4MUhkdGtCX29BQQ?oc=5"
         },
         {
           "category": "ind",
           "press": "연합뉴스",
-          "title": "[바이오스냅] 대원제약, '펠루비정' 소아용 시럽 임상시험",
-          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE93NGtVNVU4MmItajdEWnk2SWYzVG5WY0lwUzNwbXpaVVhEaGFidUszQk16aG1lcXdFSVd3VllwZUQ5d0VZdWRMdkRNVGJHckpYdFNuQ1FQRThVWjTSAWBBVV95cUxQVl95T2h0WXFLd1lEU05NOG1jeFl6ZEFXNUNUZ1hqQWo1cjlhODhpeEYwaUNKWmE5MTUzc3dFTFlTQlZIdEdnS2VSRDB1dTgteGFMOXgwUEpHR1hPUGlRMHY?oc=5",
-          "realUrl": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE93NGtVNVU4MmItajdEWnk2SWYzVG5WY0lwUzNwbXpaVVhEaGFidUszQk16aG1lcXdFSVd3VllwZUQ5d0VZdWRMdkRNVGJHckpYdFNuQ1FQRThVWjTSAWBBVV95cUxQVl95T2h0WXFLd1lEU05NOG1jeFl6ZEFXNUNUZ1hqQWo1cjlhODhpeEYwaUNKWmE5MTUzc3dFTFlTQlZIdEdnS2VSRDB1dTgteGFMOXgwUEpHR1hPUGlRMHY?oc=5",
-          "readerReady": true
+          "title": "현대바이오, 항암제 후보물질 '치료목적 사용승인' 획득",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFAydW4tMENzb09BWDg4RHBMbEFhRjFfRzVvbmZiTDV5SjJjN0xGS1g1YjBoU0czN0NzVElWYmV0UDRMemc5OTZQeUh5ZUIwWDVrNEFGTElQSkZiZXfSAWBBVV95cUxQN2xYY2hlWWNXU2JzZy1tZjk1Wl9NNVNJYUxySWE0M09MN3JPWGY3cEQ0ekk4NUtoNnNRQWV6OFM4VFBpQkNMc0hidXhYRHZ4dVVDeGdHZkU0VDYwemZYcHg?oc=5"
         }
       ]
     },
