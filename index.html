@@ -475,135 +475,6 @@
       color: #ffffff;
       border-color: #1e3a8a;
     }
-    /* Clean Article Reader View Modal (No Ads) */
-    .reader-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.72);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 150;
-    }
-    .reader-overlay.open { display: flex; }
-
-    .reader-sheet {
-      background: #ffffff;
-      width: 100%;
-      max-width: 600px;
-      height: 92vh;
-      border-radius: 20px 20px 0 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
-      animation: slideUpReader 0.22s ease-out;
-    }
-
-    @keyframes slideUpReader {
-      from { transform: translateY(40px); opacity: 0.7; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .reader-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
-      background: #ffffff;
-      flex-shrink: 0;
-    }
-
-    .reader-press-badge {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--primary-accent);
-      background: var(--primary-light);
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    .reader-close-btn {
-      background: #f1f5f9;
-      border: none;
-      color: #334155;
-      font-size: 0.85rem;
-      font-weight: 800;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .reader-scroll-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 20px 36px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .reader-title {
-      font-size: 1.24rem;
-      font-weight: 800;
-      color: #0f172a;
-      line-height: 1.42;
-      word-break: keep-all;
-      margin-bottom: 14px;
-    }
-
-    .reader-hero-img {
-      width: 100%;
-      max-height: 320px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 18px;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-    }
-
-    .reader-content-text {
-      font-size: 1.02rem;
-      line-height: 1.82;
-      color: #1e293b;
-      word-break: keep-all;
-      white-space: pre-line;
-    }
-
-    .reader-fallback-notice {
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 18px;
-      color: #475569;
-      font-size: 0.92rem;
-      line-height: 1.65;
-      margin-top: 8px;
-    }
-
-    .reader-bottom-bar {
-      padding: 12px 18px;
-      border-top: 1px solid var(--border);
-      background: #ffffff;
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    .btn-origin-site {
-      flex: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 12px 16px;
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 0.9rem;
-      font-weight: 800;
-      border-radius: 10px;
-      text-decoration: none;
-    }
   </style>
 </head>
 <body>
@@ -656,26 +527,6 @@
       <div class="pw-btns">
         <button type="button" class="pw-btn" id="btnCancelAdminPw">취소</button>
         <button type="button" class="pw-btn pw-btn-primary" id="btnConfirmAdminPw">확인</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Clean Article Reader View Modal -->
-  <div class="reader-overlay" id="articleReaderModal" role="dialog" aria-modal="true">
-    <div class="reader-sheet">
-      <div class="reader-top-bar">
-        <span class="reader-press-badge" id="readerPressBadge">[언론사]</span>
-        <button type="button" class="reader-close-btn" id="btnCloseReader">닫기 ✕</button>
-      </div>
-      <div class="reader-scroll-body" id="readerScrollBody">
-        <h2 class="reader-title" id="readerTitle">기사 제목</h2>
-        <img id="readerHeroImg" class="reader-hero-img" alt="기사 대표 이미지" style="display:none;">
-        <div class="reader-content-text" id="readerBodyText"></div>
-      </div>
-      <div class="reader-bottom-bar">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-origin-site" id="readerOriginLink">
-          언론사 원문 페이지로 이동 ↗
-        </a>
       </div>
     </div>
   </div>
@@ -1734,23 +1585,20 @@
         if (sec.items.length === 0) {
           bodyHtml = `<div class="empty-box">없음 (금일 자사 관련 신규 기사 없음)</div>`;
         } else {
-          bodyHtml = `<div class="news-list">` + sec.items.map((item, localIdx) => {
+          bodyHtml = `<div class="news-list">` + sec.items.map(item => {
             const num = runningIndex++;
-            const hasImg = item.image ? `<span style="font-size:0.7rem;color:#2563eb;font-weight:700;">🖼️ 이미지 포함</span>` : "";
+            const targetUrl = item.realUrl || item.url;
             return `
-              <div class="news-item" role="button" tabindex="0" data-sec="${sec.key}" data-idx="${localIdx}" style="cursor:pointer;">
+              <a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="news-item">
                 <div class="news-item-top">
-                  <div style="display:flex;align-items:center;gap:6px;">
-                    <span class="press-name">[${item.press}]</span>
-                    ${hasImg}
-                  </div>
+                  <span class="press-name">[${item.press}]</span>
                   <span class="item-num">#${String(num).padStart(2, '0')}</span>
                 </div>
                 <div class="news-headline">${item.title}</div>
                 <div class="news-link-row">
-                  <span class="read-arrow">클린 뷰로 읽기 →</span>
+                  <span class="read-arrow">기사 원문 보기 →</span>
                 </div>
-              </div>
+              </a>
             `;
           }).join("") + `</div>`;
         }
@@ -1765,122 +1613,9 @@
           </div>
           ${bodyHtml}
         `;
-        secEl.querySelectorAll(".news-item").forEach(cardEl => {
-          cardEl.addEventListener("click", () => {
-            const idx = Number(cardEl.dataset.idx);
-            const articleObj = sec.items[idx];
-            if (articleObj) openArticleReader(articleObj);
-          });
-        });
-
         container.appendChild(secEl);
       });
     }
-
-    async function tryLiveClientReaderFetch(item, bodyEl, imgEl) {
-      const targetUrl = item.realUrl || item.url;
-      if (!targetUrl || targetUrl.includes("news.google.com")) return false;
-      try {
-        const res = await fetch(`https://r.jina.ai/${targetUrl}`, {
-          headers: { "Accept": "text/plain" }
-        });
-        if (!res.ok) return false;
-        const mdText = await res.text();
-        if (!mdText || mdText.length < 150) return false;
-
-        // 마크다운 내 첫 이미지 추출
-        if (!item.image) {
-          const imgMatch = mdText.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/);
-          if (imgMatch && imgMatch[1] && !imgMatch[1].includes("google")) {
-            item.image = imgMatch[1];
-            imgEl.src = item.image;
-            imgEl.style.display = "block";
-            imgEl.onerror = () => { imgEl.style.display = "none"; };
-          }
-        }
-
-        // 헤더/링크/메뉴 노이즈 제거 후 깔끔한 문단 정제
-        const lines = mdText.split("\n")
-          .map(l => l.replace(/!\[[^\]]*\]\([^)]+\)/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/^[#*>-]+\s*/, "").trim())
-          .filter(l => l.length >= 35 && !/^(Title:|URL Source:|Markdown Content:|Published Time:|무단전재|재배포|로그인|회원가입|구독|댓글)/.test(l));
-
-        const cleanBody = Array.from(new Set(lines)).slice(0, 20).join("\n\n");
-        if (cleanBody.length >= 100) {
-          item.body = cleanBody;
-          bodyEl.innerHTML = "";
-          bodyEl.textContent = cleanBody;
-          return true;
-        }
-      } catch (e) {}
-      return false;
-    }
-
-    async function openArticleReader(item) {
-      const modal = document.getElementById("articleReaderModal");
-      const scrollBody = document.getElementById("readerScrollBody");
-      const imgEl = document.getElementById("readerHeroImg");
-      const bodyEl = document.getElementById("readerBodyText");
-      const originLink = document.getElementById("readerOriginLink");
-
-      document.getElementById("readerPressBadge").textContent = `[${item.press}]`;
-      document.getElementById("readerTitle").textContent = item.title;
-      originLink.href = item.realUrl || item.url;
-
-      if (item.image) {
-        imgEl.src = item.image;
-        imgEl.style.display = "block";
-        imgEl.onerror = () => { imgEl.style.display = "none"; };
-      } else {
-        imgEl.style.display = "none";
-      }
-
-      scrollBody.scrollTop = 0;
-      modal.classList.add("open");
-      document.body.style.overflow = "hidden";
-
-      if (item.body && item.body.trim().length > 40) {
-        bodyEl.innerHTML = "";
-        bodyEl.textContent = item.body;
-        return;
-      }
-
-      // 서버 본문이 비어 있는 경우 실시간 클린 리더 추출 시도
-      bodyEl.innerHTML = `
-        <div class="reader-fallback-notice" style="text-align:center;">
-          ⏳ 광고 없는 클린 뷰 본문을 불러오는 중입니다...
-        </div>
-      `;
-
-      const fetched = await tryLiveClientReaderFetch(item, bodyEl, imgEl);
-      if (fetched) return;
-
-      if (item.summary && item.summary.trim().length > 10) {
-        bodyEl.innerHTML = `
-          <div style="margin-bottom:14px;">${item.summary}</div>
-          <div class="reader-fallback-notice">
-            ℹ️ 해당 언론사 보안 정책으로 전문 자동 추출이 제한되어 핵심 요약을 표시합니다.<br>
-            전체 내용은 하단의 <strong>[언론사 원문 페이지로 이동 ↗]</strong> 버튼을 눌러 확인하실 수 있습니다.
-          </div>
-        `;
-      } else {
-        bodyEl.innerHTML = `
-          <div class="reader-fallback-notice">
-            ℹ️ 해당 언론사 보안 정책으로 외부 본문 추출이 제한된 기사입니다.<br><br>
-            아래 <strong>[언론사 원문 페이지로 이동 ↗]</strong> 버튼을 누르시면 원문 기사를 바로 확인하실 수 있습니다.
-          </div>
-        `;
-      }
-    }
-
-    function closeArticleReader() {
-      document.getElementById("articleReaderModal").classList.remove("open");
-      document.body.style.overflow = "";
-    }
-
-    document.getElementById("btnCloseReader").addEventListener("click", closeArticleReader);
-    document.getElementById("articleReaderModal").addEventListener("click", (e) => {
-      if (e.target.id === "articleReaderModal") closeArticleReader();
-    });
 
     function generateSmsText() {
       const data = getActiveData();
