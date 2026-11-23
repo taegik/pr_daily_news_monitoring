@@ -1,31 +1,41 @@
-name: Daily Naver News Scrape
+name: Daily News Scrape
 
 on:
+  schedule:
+    # 평일 아침 자동 수집 (UTC 기준, 한국시간 = UTC+9)
+    #  - 22:35 UTC (일~목) = KST 07:35 (월~금) : 상상인 (8시 발행 전)
+    #  - 23:35 UTC (일~목) = KST 08:35 (월~금) : 엠아이텍·시너지이노베이션·메디카코리아 (+금요일 뉴로바이오젠)
+    - cron: '35 22 * * 0-4'
+    - cron: '35 23 * * 0-4'
   workflow_dispatch:
     inputs:
-      mode:
-        description: 'Run mode (scrape or enrich_published)'
-        required: false
-        default: 'scrape'
       affiliate:
-        description: 'Target affiliate (all or specific key)'
+        description: '수집 대상 (all 또는 sangsangin / mitech / synergy / medica / neurobiogen)'
         required: false
         default: 'all'
       start_date:
-        description: 'Start Date (YYYY-MM-DD, optional)'
+        description: '시작일 YYYY-MM-DD (비우면 전일~현재, 월요일은 금요일부터)'
         required: false
         default: ''
       end_date:
-        description: 'End Date (YYYY-MM-DD, optional)'
+        description: '종료일 YYYY-MM-DD (비우면 현재)'
         required: false
         default: ''
 
 permissions:
   contents: write
 
+# 데이터 파일을 쓰는 작업은 한 번에 하나씩만 실행
+concurrency:
+  group: data-write
+  cancel-in-progress: false
+
 jobs:
   scrape-news:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,24 +45,42 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run News Scraper & Reader Enricher
+      - name: Run news scraper
+        id: scrape
+        continue-on-error: true
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
-          RUN_MODE: ${{ github.event.inputs.mode || 'scrape' }}
+          RUN_MODE: scrape
           TARGET_AFFILIATE: ${{ github.event.inputs.affiliate || 'all' }}
           START_DATE: ${{ github.event.inputs.start_date || '' }}
           END_DATE: ${{ github.event.inputs.end_date || '' }}
+          SCHEDULE_CRON: ${{ github.event.schedule || '' }}
         run: python scrape_naver.py
 
-      - name: Commit and push scraped news JSON
+      - name: Commit and push scraped data
+        if: always()
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add scraped_pool.json published_data.json
+          git add scraped_pool.json archive/stats.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes in scraped news."
           else
-            git commit -m "chore: update news and reader view data [skip ci]"
+            git commit -m "chore: update scraped news [skip ci]"
+            git pull --rebase origin main
             git push
           fi
+
+      - name: Notify on failure (optional Slack webhook)
+        if: steps.scrape.outcome == 'failure' && env.SLACK_WEBHOOK_URL != ''
+        run: |
+          curl -sS -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"[뉴스 모니터링] 자동 수집 실패 또는 0건 - ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+            "$SLACK_WEBHOOK_URL"
+
+      - name: Fail the run when collection failed (sends GitHub failure alert)
+        if: steps.scrape.outcome == 'failure'
+        run: |
+          echo "수집 실패 또는 0건입니다. 위 'Run news scraper' 로그의 [수집 진단]을 확인하세요."
+          exit 1
