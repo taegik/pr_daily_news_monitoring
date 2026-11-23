@@ -1,0 +1,33 @@
+# 상상인그룹 뉴스 모니터링 – 적용 안내
+
+## 1. 파일 반영
+이 폴더의 **모든 파일**을 저장소 루트에 덮어쓰기로 올립니다. (숨김 폴더 `.github/workflows/` 포함)
+- 삭제할 파일: 루트의 `naver_scrape.yml` (기존에는 이 사본에만 스케줄이 있어 동작하지 않았습니다. 이제 `.github/workflows/naver_scrape.yml` 하나로 통합)
+
+## 2. 네이버 연동 확인 (가장 먼저)
+1. 저장소 ▸ Settings ▸ Secrets and variables ▸ Actions 에 아래 두 개가 **이름 그대로** 있는지 확인
+   - `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` (값 앞뒤 공백 주의)
+2. 네이버 개발자센터 ▸ 내 애플리케이션 ▸ **사용 API에 '검색'** 이 추가되어 있는지 확인
+3. Actions ▸ *Daily News Scrape* ▸ Run workflow 로 1회 수동 실행
+4. 관리자 ▸ [수집] 탭 ▸ **네이버 연동 진단**에서 결과 확인 (실패 원인이 문장으로 표시됩니다)
+
+(선택) 실패 알림을 슬랙으로 받으려면 `SLACK_WEBHOOK_URL` Secret 추가. 설정하지 않아도 GitHub 실패 메일이 갑니다.
+
+## 3. 관리자 비밀번호
+- 처음 `admin.html` 접속 시 **비밀번호 설정 화면**이 나옵니다. (10자 이상 권장, 기존 비밀번호는 이미 공개되었으므로 사용 금지)
+- 화면에 나오는 `ADMIN_PW_HASH: '…'` 값을 `assets/common.js` 에 붙여넣어 커밋하면 다른 기기에서도 같은 비밀번호로 접속됩니다.
+- GitHub 토큰: **Fine-grained 토큰**을 이 저장소 한 곳에만, 권한 *Contents: Read and write* + *Actions: Read and write* 로 발급해 [설정] 탭에 등록
+
+## 4. 자동 일정 (한국시간, 평일)
+| 시각 | 대상 |
+|---|---|
+| 07:35 | 상상인 |
+| 08:35 | 엠아이텍 · 시너지이노베이션 · 메디카코리아 (+금요일 뉴로바이오젠) |
+GitHub 스케줄은 혼잡 시 수 분~수십 분 늦을 수 있으니 발행 시각에 여유를 두세요.
+
+## 5. 데이터 구조
+- `keywords.json` : 계열사별 자사/경쟁사/업계 키워드 (관리자 [키워드] 탭에서 수정)
+- `scraped_pool.json` : 오늘 수집된 후보 기사 + 네이버 연동 진단
+- `published_data.json` : 계열사별 최신 발행분
+- `archive/` : 날짜별 발행 기록(최근 90일), `index.json`(날짜 목록) · `search.json`(검색용) · `stats.json`(추이 통계)
+- 색상 변경: `assets/common.css` 상단의 `--brand` 등 변수만 수정

@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-13",
+  "affiliates": {
+    "medica": {
+      "name": "메디카코리아",
+      "manager": "김태기 과장",
+      "date": "2026.11.13",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": [
+        {
+          "category": "ind",
+          "press": "서울경제TV",
+          "title": "대웅제약, 자가면역 신약 ‘플로디시티닙’ 임상 1상서 효과 확인",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBIUHdmVk1EbnNWbGRrbkNERjBQUjF5V1VmODJJX000SWtlcktqT3Z4bTNHYnFJX1E5ZUFpS3ZmY05kSGhDN0ZWWnJMakdSWWpSVmRhSlR1YU5kRnFDVjhfZWJOUHY?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "한국경제",
+          "title": "대웅제약, 다중타깃 자가면역 신약 ‘플로디시티닙’ 임상 1상 성과 공개",
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE00a3VVV3RiOG1zT1B6a0dYMmF4OUZmbGNpTFhTNU9sVTJNQWJMQTc0Mk1zQXVySXQ2LXdJb2k5Ry0xeUlPdjlYZkpFU2ZmTGk4MUhkdGtCX29BQQ?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "연합뉴스",
+          "title": "현대바이오, 항암제 후보물질 '치료목적 사용승인' 획득",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFAydW4tMENzb09BWDg4RHBMbEFhRjFfRzVvbmZiTDV5SjJjN0xGS1g1YjBoU0czN0NzVElWYmV0UDRMemc5OTZQeUh5ZUIwWDVrNEFGTElQSkZiZXfSAWBBVV95cUxQN2xYY2hlWWNXU2JzZy1tZjk1Wl9NNVNJYUxySWE0M09MN3JPWGY3cEQ0ekk4NUtoNnNRQWV6OFM4VFBpQkNMc0hidXhYRHZ4dVVDeGdHZkU0VDYwemZYcHg?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "머니투데이",
+          "title": "[단독] AI로 건기식 원료값 알아낸 대기업…中企 설 자리 좁아진다 - 머니투데이",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE55X2lKbjZqSTJycDRacHV2eDRvSHVnU2xfNkZOZ1FhSkp6am9oR1FiemRwZXBNakM4SDdUNkNJTUJXd056QWhyc21SdUhSd3EwNF8tM1dMWnZDV2V0UkQ1S1pLNGlPQ3RVWUd1S9IBckFVX3lxTE1Cc1htTTdmcFZPeXp4MjQ4UXA1eUZFdUtldUs3Z0VSVEdjbjBQNnhVWk40RFlLdTg3LVFfdTBEWVlOSU5Hb0RuUGNWRS13NHB4VlVvUEJNU2U3NHpBZ2lVSDllM3B3eGM1UUdIT1JpYXdUdw?oc=5"
+        },
+        {
+          "category": "ind",
+          "press": "연합뉴스",
+          "title": "[바이오스냅] 대원제약, '펠루비정' 소아용 시럽 임상시험",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE93NGtVNVU4MmItajdEWnk2SWYzVG5WY0lwUzNwbXpaVVhEaGFidUszQk16aG1lcXdFSVd3VllwZUQ5d0VZdWRMdkRNVGJHckpYdFNuQ1FQRThVWjTSAWBBVV95cUxQVl95T2h0WXFLd1lEU05NOG1jeFl6ZEFXNUNUZ1hqQWo1cjlhODhpeEYwaUNKWmE5MTUzc3dFTFlTQlZIdEdnS2VSRDB1dTgteGFMOXgwUEpHR1hPUGlRMHY?oc=5"
+        }
+      ]
+    },
+    "mitech": {
+      "name": "엠아이텍",
+      "manager": "박한솔 대리",
+      "date": "2026.11.13",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": [
+        {
+          "category": "ind",
+          "press": "핀포인트뉴스",
+          "title": "의료기기주 혼조 속 종목별 차별화… 수술 로봇·진단·미용기기 시장 주목을",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFAtZS1LcVdMcGxnQW8xZ2p5X2ZEVHFEUXZUS0RfVWc4dTdNTUFuUU9XN2Z0VVpxc1FDcWJETUNzOWsxVVN1MDFxbFFwMjVWTkVPZlc2VEc1OE9kbHpyUXhOM0FrSXdmZzNfUFVwVE1lR0pveGw0c2U40gF3QVVfeXFMUC1lLUtxV0xwbGdBbzFnanlfZkRUcURRdlRLRF9VZzh1N01NQW5RT1c3ZnRVWnFzUUNxYkRNQ3M5azFVU3UwMXFsUXAyNVZORU9mVzZURzU4T2RsenJReE4zQWtJd2ZnM19QVXBUTWVHSm94bDRzZTg?oc=5"
+        }
+      ]
+    },
+    "sangsangin": {
+      "name": "상상인",
+      "manager": "박슬기 과장",
+      "date": "2026.11.13",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": []
+    },
+    "synergy": {
+      "name": "시너지이노베이션",
+      "manager": "박한솔 대리",
+      "date": "2026.11.13",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": []
+    },
+    "neurobiogen": {
+      "name": "뉴로바이오젠",
+      "manager": "김성목 대리",
+      "date": "2026.11.13",
+      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
+      "author": "토머스 에디슨",
+      "articles": []
+    }
+  }
+}
