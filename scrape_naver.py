@@ -34,7 +34,9 @@ INDEX_FILE = os.path.join(ARCHIVE_DIR, 'index.json')
 SEARCH_FILE = os.path.join(ARCHIVE_DIR, 'search.json')
 RETENTION_DAYS = 90
 POOL_CAP_PER_AFFILIATE = 300
-AFFILIATE_ORDER = ['sangsangin', 'mitech', 'synergy', 'medica', 'neurobiogen']
+AFFILIATE_ORDER = ['sangsangin', 'mitech', 'synergy', 'medica', 'neurobiogen', 'csr']
+# 주 1회 발행하는 구분값: 기본 수집 기간이 '최근 7일', 일별 통계(급증 배지)에서는 제외
+WEEKLY_AFFILIATES = {'neurobiogen', 'csr'}
 
 CRON_MORNING_SANGSANGIN = '35 22 * * 0-4'   # KST 07:35 (상상인 8시 발행)
 CRON_MORNING_AFFILIATES = '35 23 * * 0-4'   # KST 08:35 (계열사 9시 발행)
@@ -288,6 +290,16 @@ def normalize_keywords(entry):
     return out
 
 
+# keywords.json 에 아직 없는 구분값(사회공헌)은 아래 기본 키워드로 수집합니다. (관리자 ▸ 키워드 탭에서 저장하면 keywords.json 이 우선)
+DEFAULT_KEYWORDS = {
+    'csr': {
+        'own': ['휠체어', '이동권', '자립지원', '조직문화 사회공헌', '임직원 참여 사회공헌'],
+        'comp': ['비즈니스 기반 사회공헌', '지역사회 사회공헌', 'IT 사회공헌', '의료 사회공헌'],
+        'ind': ['사회공헌', 'CSR', '소셜임팩트', '임직원 봉사활동', 'ESG 사회공헌', '사회적가치'],
+    }
+}
+
+
 def load_keywords(pool_data):
     raw = load_json(KEYWORD_FILE, None)
     if not raw:
@@ -296,6 +308,8 @@ def load_keywords(pool_data):
     for aff in AFFILIATE_ORDER:
         if aff in raw:
             result[aff] = normalize_keywords(raw[aff])
+        elif aff in DEFAULT_KEYWORDS:
+            result[aff] = normalize_keywords(DEFAULT_KEYWORDS[aff])
     return result
 
 
@@ -501,15 +515,24 @@ def get_date_bounds(now_dt, start_str, end_str):
 
 
 def resolve_targets(target, schedule, now_dt, available):
-    target = (target or 'all').strip()
-    if target != 'all':
-        return [target] if target in available else []
+    """수집 대상 결정
+    - target: 'all' 이거나, 쉼표로 구분한 계열사 키 목록 (예: 'sangsangin,mitech' / 'neurobiogen' / 'csr')
+    - 'all' 이고 자동 실행(schedule)이면 시각별 기본 대상, 수동 실행이면 전체
+    """
+    raw = (target or 'all').strip()
+    wanted = [t.strip() for t in re.split(r'[,\s]+', raw) if t.strip()]
+    if wanted and 'all' not in wanted:
+        seen = []
+        for t in wanted:
+            if t in available and t not in seen:
+                seen.append(t)
+        return seen
     if schedule == CRON_MORNING_SANGSANGIN:
         picked = ['sangsangin']
     elif schedule == CRON_MORNING_AFFILIATES:
         picked = ['mitech', 'synergy', 'medica']
-        if now_dt.weekday() == 4:      # 뉴로바이오젠은 주 1회(금요일)
-            picked.append('neurobiogen')
+        if now_dt.weekday() == 4:      # 뉴로바이오젠·사회공헌은 주 1회(금요일)
+            picked += ['neurobiogen', 'csr']
     else:
         picked = list(available)
     return [a for a in picked if a in available]
@@ -688,15 +711,21 @@ def run_scrape():
     log(f"[INFO] 대상: {targets} / 기간: {range_label}")
 
     for aff_key in targets:
+        a_start, a_end, a_label = start_dt, end_dt, range_label
+        if aff_key in WEEKLY_AFFILIATES and not explicit_range:
+            # 주간 발행 구분값은 지난 7일 기사를 모읍니다 (전주 같은 요일 00:00 ~ 현재)
+            w = now_dt - timedelta(days=7)
+            a_start = datetime(w.year, w.month, w.day, 0, 0, 0, tzinfo=KST)
+            a_label = f"{a_start.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')}"
         collected, total_found = collect_for_affiliate(
-            aff_key, all_keywords[aff_key], naver, state, start_dt, end_dt, now_dt,
+            aff_key, all_keywords[aff_key], naver, state, a_start, a_end, now_dt,
             set(history_map.get(aff_key, [])), diag)
         n_naver = sum(1 for a in collected if a.get('source') == 'naver')
         n_google = len(collected) - n_naver
         used = f"NAVER API {n_naver}건 / Google 보조 {n_google}건"
         affiliates_out[aff_key] = {
             "scrapedAt": f"{now_dt.strftime('%Y-%m-%d %H:%M:%S KST')} ({used})",
-            "dateRange": range_label,
+            "dateRange": a_label,
             "count": len(collected),
             "articles": collected
         }
@@ -704,7 +733,7 @@ def run_scrape():
         if len(collected) == 0:
             zero_targets.append(aff_key)
             warn(f"{aff_key}: 수집된 기사가 0건입니다.")
-        if not explicit_range:
+        if not explicit_range and aff_key not in WEEKLY_AFFILIATES:
             update_stats(stats, now_dt.strftime('%Y-%m-%d'), aff_key, collected)
 
     pool_data["updatedAt"] = now_dt.strftime('%Y-%m-%d %H:%M:%S KST')
@@ -819,7 +848,7 @@ def run_archive():
             continue
         path = os.path.join(ARCHIVE_DIR, f"{d}.json")
         day = load_json(path, {"date": d, "affiliates": {}})
-        day.setdefault('affiliates', {})[aff] = {
+        rec = {
             "name": entry.get('name', aff),
             "manager": entry.get('manager', ''),
             "date": entry.get('date', ''),
@@ -827,6 +856,11 @@ def run_archive():
             "author": entry.get('author', ''),
             "articles": entry.get('articles', [])
         }
+        # 사회공헌 주간 리포트 전용 항목(회차·키워드·금주의 코멘트·섹션·인사이트·마무리)도 함께 보관
+        for extra in ('report', 'weekLabel', 'fixedKeywords', 'weeklyKeywords', 'comment', 'sections', 'insights', 'closing'):
+            if extra in entry:
+                rec[extra] = entry[extra]
+        day.setdefault('affiliates', {})[aff] = rec
         day['date'] = d
         save_json(path, day)
 

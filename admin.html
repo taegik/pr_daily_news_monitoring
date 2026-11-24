@@ -101,6 +101,15 @@
     .toast { bottom: calc(92px + var(--safe-b)); }
     .kwgroup h4 { margin: 14px 0 8px; font-size: .86rem; display: flex; align-items: center; gap: 8px; }
     .kwwrap { display: flex; flex-wrap: wrap; gap: 6px; }
+    .field > label small { font-weight: 600; color: var(--muted); margin-left: 4px; }
+    .chip small { font-weight: 700; opacity: .7; margin-left: 3px; font-size: .7rem; }
+    .pills.wrap { flex-wrap: wrap; overflow: visible; }
+    .rpt { border-top: 1px dashed var(--line); margin-top: 14px; padding-top: 14px; }
+    .rpt h4 { margin: 0 0 4px; font-size: .9rem; font-weight: 800; }
+    .rpt .hint2 { margin: 0 0 10px; font-size: .76rem; color: var(--muted); line-height: 1.5; }
+    .rpt .sub { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px 2px; margin-bottom: 10px; background: var(--card-2); }
+    .rpt .sub > b { display: block; margin-bottom: 8px; font-size: .8rem; }
+    .rpt textarea.textarea { min-height: 60px; }
   </style>
 </head>
 <body>
@@ -171,18 +180,30 @@
         <div class="box">
           <h3>🔍 뉴스 수집 실행</h3>
           <p class="hint">GitHub Actions에서 네이버 검색 API로 수집합니다(실패 시 구글 보조). 평일 아침 자동 수집도 돌고 있으며, 누락되었거나 기간을 바꿔 다시 모으고 싶을 때 사용하세요.</p>
+          <div class="field"><label>수집 대상 <small id="runSelSummary"></small></label>
+            <div class="pills wrap" id="runTargets"></div>
+            <div class="pills wrap" id="runPresets" style="margin-top:6px;">
+              <button class="chip" data-tp="weekday">평일 기본</button>
+              <button class="chip" data-tp="all">전체</button>
+              <button class="chip" data-tp="neurobiogen">뉴로바이오젠만</button>
+              <button class="chip" data-tp="csr">사회공헌만</button>
+              <button class="chip" data-tp="cur">현재 선택한 구분값만</button>
+            </div>
+            <p class="hint" style="margin:8px 0 0;">여러 곳을 눌러 함께 선택할 수 있습니다. 뉴로바이오젠·사회공헌은 주 1회(금요일) 발행이라 따로 골라 수집할 수 있습니다.</p>
+          </div>
           <div class="grid2">
             <div class="field"><label>시작일</label><input class="input" type="date" id="dStart"></div>
             <div class="field"><label>종료일</label><input class="input" type="date" id="dEnd"></div>
           </div>
-          <div class="pills" style="margin-bottom:12px;">
+          <div class="pills" style="margin-bottom:8px;">
+            <button class="chip" data-preset="auto">자동(권장)</button>
             <button class="chip" data-preset="yd">전일~오늘</button>
             <button class="chip" data-preset="we">주말 포함(금~월)</button>
             <button class="chip" data-preset="d3">최근 3일</button>
+            <button class="chip" data-preset="d7">최근 7일</button>
             <button class="chip" data-preset="td">오늘만</button>
           </div>
-          <div class="field"><label>수집 대상</label>
-            <select class="select" id="scopeSel"><option value="cur">현재 계열사만</option><option value="all">전체 계열사</option></select></div>
+          <p class="hint" id="rangeHint"></p>
           <button class="btn btn-primary" id="btnRun" style="width:100%;">수집 시작</button>
           <div class="status warn" id="runStatus" style="margin:12px 0 0;" hidden></div>
         </div>
@@ -194,11 +215,11 @@
       <section class="panel" id="p-kw" hidden>
         <div class="box">
           <h3>🏷️ 검색 키워드 · <span id="kwAffName"></span></h3>
-          <p class="hint">자사 → 경쟁사 → 업계 순으로 분류됩니다. 제목에 자사/경쟁사 키워드가 있으면 해당 분류로 자동 지정됩니다. 변경 후 [저장소에 저장]을 눌러야 다음 수집부터 반영됩니다.</p>
+          <p class="hint" id="kwHint">자사 → 경쟁사 → 업계 순으로 분류됩니다. 제목에 자사/경쟁사 키워드가 있으면 해당 분류로 자동 지정됩니다. 변경 후 [저장소에 저장]을 눌러야 다음 수집부터 반영됩니다.</p>
           <div id="kwGroups"></div>
           <div class="row nowrap" style="margin-top:14px;">
             <input class="input grow" id="kwNew" placeholder="새 키워드 (쉼표로 여러 개)">
-            <select class="select" id="kwGroup" style="width:92px;"><option value="own">자사</option><option value="comp">경쟁사</option><option value="ind">업계</option></select>
+            <select class="select" id="kwGroup" style="width:110px;"><option value="own">자사</option><option value="comp">경쟁사</option><option value="ind">업계</option></select>
             <button class="btn" id="kwAdd">추가</button>
           </div>
           <button class="btn btn-primary" id="kwSave" style="width:100%;margin-top:14px;">💾 키워드 저장소에 저장</button>
@@ -217,7 +238,7 @@
         </div>
         <div class="box">
           <h3>⚡ 자동 선정 기준</h3>
-          <p class="hint">[자동 선정]을 누르면 이 기준으로 추천 순위 상위 기사를 균형 있게 고릅니다(언론사당 최대 2건, 유사 기사 제외).</p>
+          <p class="hint">[자동 선정]을 누르면 이 기준으로 추천 순위 상위 기사를 균형 있게 고릅니다(언론사당 최대 2건, 유사 기사 제외). 사회공헌 리포트는 별도 기준(총 9건, 구분당 3건)이 적용됩니다.</p>
           <div class="grid2">
             <div class="field"><label>목표 건수</label><input class="input" type="number" id="qTarget" min="5" max="30"></div>
             <div class="field"><label>자사 최대</label><input class="input" type="number" id="qOwn" min="0" max="30"></div>
@@ -260,9 +281,44 @@
       <div class="status ok" id="pubSummary"></div>
       <div class="grid2">
         <div class="field"><label>발행일</label><input class="input" id="pubDate" placeholder="YYYY.MM.DD"></div>
-        <div class="field"><label>명언 인물</label><input class="input" id="pubAuthor"></div>
+        <div class="field" id="pubAuthorWrap"><label>명언 인물</label><input class="input" id="pubAuthor"></div>
       </div>
-      <div class="field"><label>오늘의 한마디</label><textarea class="textarea" id="pubQuote" rows="2"></textarea></div>
+      <div class="field" id="pubQuoteWrap"><label>오늘의 한마디</label><textarea class="textarea" id="pubQuote" rows="2"></textarea></div>
+
+      <!-- 사회공헌(주간 리포트) 전용 입력 -->
+      <div class="rpt" id="pubReport" hidden>
+        <h4>🌱 주간 리포트 구성</h4>
+        <p class="hint2">비워 두면 임직원 화면에서 해당 부분이 표시되지 않습니다. 선정한 기사는 구분(SI 고정 / Weekly SI / CSR 트렌드)별 섹션으로 자동 배치됩니다.</p>
+        <div class="field"><label>회차 표기 <small>(비우면 발행일 기준 자동)</small></label><input class="input" id="rWeek" placeholder="26년 11월 3주차"></div>
+        <div class="field"><label>상상인 SI 키워드 <small>(고정 · 쉼표로 구분)</small></label><input class="input" id="rFixed"></div>
+        <div class="field"><label>Weekly SI 키워드 <small>(이번 주 · 쉼표로 구분)</small></label><input class="input" id="rWeekly"></div>
+        <div class="sub"><b>💬 금주의 코멘트</b>
+          <div class="field"><label>인용문</label><textarea class="textarea" id="rcQuote" rows="2"></textarea></div>
+          <div class="field"><label>인물 · 직함</label><input class="input" id="rcAuthor" placeholder="예) 홍길동 OO협회 회장"></div>
+          <div class="field"><label>한 줄 해설</label><textarea class="textarea" id="rcNote" rows="2"></textarea></div>
+        </div>
+        <div class="sub"><b id="rsTitle0">섹션 ①</b>
+          <div class="field"><label>섹션 제목</label><input class="input" id="rsT0"></div>
+          <div class="field"><label>섹션 설명</label><textarea class="textarea" id="rsS0" rows="2"></textarea></div>
+        </div>
+        <div class="sub"><b id="rsTitle1">섹션 ②</b>
+          <div class="field"><label>섹션 제목</label><input class="input" id="rsT1"></div>
+          <div class="field"><label>섹션 설명</label><textarea class="textarea" id="rsS1" rows="2"></textarea></div>
+        </div>
+        <div class="sub"><b id="rsTitle2">섹션 ③</b>
+          <div class="field"><label>섹션 제목</label><input class="input" id="rsT2"></div>
+          <div class="field"><label>섹션 설명</label><textarea class="textarea" id="rsS2" rows="2"></textarea></div>
+        </div>
+        <div class="sub"><b>🔎 종합 인사이트 <small style="font-weight:600;color:var(--muted);">(최대 3개)</small></b>
+          <div class="field"><label>① 제목</label><input class="input" id="riT0"></div>
+          <div class="field"><label>① 내용</label><textarea class="textarea" id="riB0" rows="3"></textarea></div>
+          <div class="field"><label>② 제목</label><input class="input" id="riT1"></div>
+          <div class="field"><label>② 내용</label><textarea class="textarea" id="riB1" rows="3"></textarea></div>
+          <div class="field"><label>③ 제목</label><input class="input" id="riT2"></div>
+          <div class="field"><label>③ 내용</label><textarea class="textarea" id="riB2" rows="3"></textarea></div>
+        </div>
+        <div class="field"><label>마무리 문구</label><textarea class="textarea" id="rClosing" rows="2"></textarea></div>
+      </div>
       <div class="row">
         <button class="btn grow" id="btnPreview">👀 미리보기</button>
         <button class="btn btn-primary grow" id="btnDoPublish">🚀 발행하기</button>
@@ -333,12 +389,15 @@
       aff: 'medica', pool: null, kw: {}, pub: null,
       sel: {}, catOv: {}, order: [],          // 현재 계열사의 선정 상태 (key -> true / 분류 덮어쓰기 / 순서)
       filter: 'all', kwFilter: '', q: '', sort: 'smart', hideDup: true, limit: 40,
-      tab: 'cand'
+      tab: 'cand', runSel: null, preset: 'auto'     // runSel: 수집 대상 선택 (null = 현재 선택한 구분값 하나)
     };
     var quota = Object.assign({ target: 15, own: 6, comp: 5, press: 2 }, store.get('pr_quota', {}));
 
     function gh() { return { repo: store.get('pr_gh_repo', 'taegik/pr_daily_news_monitoring'), token: store.get('pr_gh_token', '') }; }
     function cfg() { return P.AFFILIATES[A.aff]; }
+    function L(c) { return P.catLabel(A.aff, c); }               // 분류 이름 (사회공헌은 SI 고정 / Weekly SI / CSR 트렌드)
+    function quotaNow() { var c = cfg(); return (c.type === 'report' && c.quota) ? c.quota : quota; }
+    var CIRC = ['①', '②', '③'], CATS3 = ['own', 'comp', 'ind'];
     function key(a) { return P.shortHash(a.url + '|' + a.title); }
 
     /* ═════════ 저장소 I/O ═════════ */
@@ -387,7 +446,7 @@
       var n = Object.keys(matched).length, ks = Math.min(36, 12 + n * 10);
       if (n >= 2) reasons.push('키워드 ' + n + '개 일치');
       var own = kwGroups().own;
-      if (own.some(function (k) { return k && t.indexOf(k.toLowerCase()) >= 0; })) { ks += 12; reasons.push('자사명 제목 포함'); }
+      if (own.some(function (k) { return k && t.indexOf(k.toLowerCase()) >= 0; })) { ks += 12; reasons.push(cfg().type === 'report' ? 'SI 고정 키워드 포함' : '자사명 제목 포함'); }
       var qb = 0;
       if (/\[단독\]|\[기획\]|특징주|실적|수출|승인|임상|허가|약가|공시|MOU|인수|투자/.test(a.title || '')) { qb += 6; reasons.push('핵심 이슈어'); }
       if (/\[포토\]|\[인사\]|\[부고\]|\[동정\]|이벤트|프로모션/.test(a.title || '')) qb -= 10;
@@ -448,7 +507,7 @@
     function renderPills() {
       var list = cands(), c = { all: 0, selected: 0, own: 0, comp: 0, ind: 0 };
       list.forEach(function (a) { if (A.hideDup && a.duplicate && !A.sel[a._k]) return; c.all++; if (A.sel[a._k]) c.selected++; c[catOf(a)]++; });
-      var defs = [['all', '전체'], ['selected', '선택됨'], ['own', '자사'], ['comp', '경쟁사'], ['ind', '업계']];
+      var defs = [['all', '전체'], ['selected', '선택됨'], ['own', L('own')], ['comp', L('comp')], ['ind', L('ind')]];
       $('catPills').innerHTML = defs.map(function (d) { return '<button class="chip" data-f="' + d[0] + '" aria-pressed="' + (A.filter === d[0]) + '">' + d[1] + ' ' + c[d[0]] + '</button>'; }).join('');
     }
     function renderKwBar() {
@@ -466,7 +525,7 @@
       (a._why || []).filter(function (w) { return w !== '주요 언론사'; }).slice(0, 2).forEach(function (w) { tags += '<span class="tg reason">' + esc(w) + '</span>'; });
       return '<div class="cand' + (on ? ' sel' : '') + (a.duplicate ? ' dup' : '') + '" data-k="' + a._k + '" role="checkbox" aria-checked="' + on + '" tabindex="0">' +
         '<span class="check">' + CHECK + '</span><div class="cand-main"><div class="cand-top">' +
-        '<button class="badge badge-' + cat + ' catbtn" data-cat="' + a._k + '" aria-label="분류 변경">' + P.CATS[cat].label + ' ⇄</button>' +
+        '<button class="badge badge-' + cat + ' catbtn" data-cat="' + a._k + '" aria-label="분류 변경">' + L(cat) + ' ⇄</button>' +
         '<span class="press">' + esc(a.press) + '</span><span>' + esc((a.time || '').slice(5)) + '</span><span class="score ' + hi + '">' + a._score + '점</span></div>' +
         '<a class="cand-title" href="' + esc(P.safeUrl(a.url)) + '" target="_blank" rel="noopener noreferrer">' + esc(a.title) + '</a>' +
         (a.summary ? '<p class="cand-sum">' + esc(a.summary) + '</p>' : '') + (tags ? '<div class="tags">' + tags + '</div>' : '') + '</div></div>';
@@ -490,9 +549,10 @@
     }
     function renderBar() {
       var l = selectedList(), c = { own: 0, comp: 0, ind: 0 }; l.forEach(function (a) { c[catOf(a)]++; });
-      $('selCnt').textContent = l.length; $('selCnt').className = l.length > P.TARGET_COUNT ? 'over' : '';
-      $('selTarget').textContent = P.TARGET_COUNT;
-      $('selBreak').textContent = '자사 ' + c.own + ' · 경쟁사 ' + c.comp + ' · 업계 ' + c.ind + (l.length && l.length < P.MIN_COUNT ? ' · 최소 ' + P.MIN_COUNT + '건 권장' : '');
+      var tg = P.targetOf(A.aff), mn = P.minOf(A.aff);
+      $('selCnt').textContent = l.length; $('selCnt').className = l.length > tg ? 'over' : '';
+      $('selTarget').textContent = tg;
+      $('selBreak').textContent = L('own') + ' ' + c.own + ' · ' + L('comp') + ' ' + c.comp + ' · ' + L('ind') + ' ' + c.ind + (l.length && l.length < mn ? ' · 최소 ' + mn + '건 권장' : '');
     }
     function renderCand() { renderPoolStatus(); renderPills(); renderKwBar(); renderList(); renderBar(); }
 
@@ -509,11 +569,12 @@
         grams.push(g); kept.push(a);
       });
       var picked = [], pressCnt = {}, catCnt = { own: 0, comp: 0, ind: 0 };
-      var caps = { own: quota.own, comp: quota.comp, ind: 99 };
+      var Q = quotaNow();
+      var caps = { own: Q.own, comp: Q.comp, ind: Q.ind != null ? Q.ind : 99 };
       var tryAdd = function (a, respectCap) {
-        if (picked.length >= quota.target || picked.indexOf(a) >= 0) return;
+        if (picked.length >= Q.target || picked.indexOf(a) >= 0) return;
         var c = catOf(a), p = a.press || '';
-        if ((pressCnt[p] || 0) >= quota.press) return;
+        if ((pressCnt[p] || 0) >= Q.press) return;
         if (respectCap && catCnt[c] >= caps[c]) return;
         picked.push(a); pressCnt[p] = (pressCnt[p] || 0) + 1; catCnt[c]++;
       };
@@ -537,7 +598,7 @@
       var l = selectedList(); $('selSheetCnt').textContent = l.length + '건';
       $('selBody').innerHTML = l.length ? l.map(function (a, i) {
         var c = catOf(a);
-        return '<div class="sel-item"><span class="badge badge-' + c + '">' + P.CATS[c].label + '</span><div class="t">' + esc(a.title) + '<small>' + esc(a.press) + '</small></div>' +
+        return '<div class="sel-item"><span class="badge badge-' + c + '">' + L(c) + '</span><div class="t">' + esc(a.title) + '<small>' + esc(a.press) + '</small></div>' +
           '<button class="mini" data-mv="up" data-k="' + a._k + '" aria-label="위로"' + (i === 0 ? ' disabled' : '') + '>▲</button>' +
           '<button class="mini" data-mv="down" data-k="' + a._k + '" aria-label="아래로"' + (i === l.length - 1 ? ' disabled' : '') + '>▼</button>' +
           '<button class="mini" data-rm="' + a._k + '" aria-label="선정 해제">✕</button></div>';
@@ -553,11 +614,45 @@
         if (a.naverUrl) o.naverUrl = a.naverUrl; if (a.summary) o.summary = a.summary; if (a.pubDateISO) o.pubDateISO = a.pubDateISO;
         return o;
       });
-      return {
+      var e = {
         affiliate: A.aff, name: cfg().name, manager: cfg().manager, cycle: cfg().cycle, date: date,
         dayLabel: P.dayLabel(iso), scrapeWindow: cfg().cycle + ' · 담당: ' + cfg().manager + ' · 확정 ' + arts.length + '건',
         quote: $('pubQuote').value.trim(), author: $('pubAuthor').value.trim(), articles: arts
       };
+      if (P.isReport(A.aff)) addReport(e, iso);
+      return e;
+    }
+
+    /* ── 사회공헌(주간 리포트) 입력값 ── */
+    function kwList(v) { return String(v || '').split(/[,，\n]/).map(function (x) { return x.trim().replace(/^#/, ''); }).filter(Boolean); }
+    function rptKey() { return 'pr_rpt_draft_' + P.weekLabel(P.todayIso()); }
+    var RPT_IDS = ['rWeek', 'rFixed', 'rWeekly', 'rcQuote', 'rcAuthor', 'rcNote', 'rsT0', 'rsS0', 'rsT1', 'rsS1', 'rsT2', 'rsS2', 'riT0', 'riB0', 'riT1', 'riB1', 'riT2', 'riB2', 'rClosing'];
+    function saveRptDraft() { var d = {}; RPT_IDS.forEach(function (id) { d[id] = $(id).value; }); store.set(rptKey(), d); }
+    function fillReportForm(l) {
+      var c = cfg(), last = (A.pub && A.pub.published && A.pub.published[A.aff]) || {}, d = store.get(rptKey(), null), cnt = { own: 0, comp: 0, ind: 0 };
+      l.forEach(function (a) { cnt[catOf(a)]++; });
+      var defs = {
+        rWeek: P.weekLabel(P.toIso($('pubDate').value)),
+        rFixed: (last.fixedKeywords || c.fixedKeywords || []).join(', '),
+        rWeekly: (last.weeklyKeywords || c.weeklyKeywords || []).join(', '),
+        rClosing: last.closing != null ? last.closing : (c.closing || '')
+      };
+      CATS3.forEach(function (k, i) { defs['rsT' + i] = (last.sections && last.sections[k] && last.sections[k].title) || c.sectionTitles[k]; });
+      RPT_IDS.forEach(function (id) { $(id).value = d && d[id] != null ? d[id] : (defs[id] != null ? defs[id] : ''); });
+      CATS3.forEach(function (k, i) { $('rsTitle' + i).textContent = '섹션 ' + CIRC[i] + ' · ' + L(k) + ' (' + cnt[k] + '건)' + (cnt[k] ? '' : ' — 기사가 없으면 표시되지 않습니다'); });
+    }
+    function addReport(e, iso) {
+      var c = cfg(), secs = {}, ins = [];
+      CATS3.forEach(function (k, i) { secs[k] = { title: $('rsT' + i).value.trim() || c.sectionTitles[k], summary: $('rsS' + i).value.trim() }; });
+      for (var i = 0; i < 3; i++) { var t = $('riT' + i).value.trim(), b = $('riB' + i).value.trim(); if (t || b) ins.push({ title: t, body: b }); }
+      var cq = $('rcQuote').value.trim();
+      e.report = true;
+      e.weekLabel = $('rWeek').value.trim() || P.weekLabel(iso);
+      e.fixedKeywords = kwList($('rFixed').value);
+      e.weeklyKeywords = kwList($('rWeekly').value);
+      if (cq) e.comment = { quote: cq, author: $('rcAuthor').value.trim(), note: $('rcNote').value.trim() };
+      e.sections = secs; e.insights = ins; e.closing = $('rClosing').value.trim();
+      e.quote = cq; e.author = $('rcAuthor').value.trim();
     }
     function openPublish() {
       var l = selectedList(); if (!l.length) { P.toast('⚠️ 최소 1건 이상의 기사를 선정해주세요.'); return; }
@@ -566,9 +661,12 @@
       $('pubQuote').value = store.get('pr_pub_quote', '') || common.quote || cfg().quote;
       $('pubAuthor').value = store.get('pr_pub_author', '') || common.author || cfg().author;
       var c = { own: 0, comp: 0, ind: 0 }; l.forEach(function (a) { c[catOf(a)]++; });
-      var warn = l.length > P.TARGET_COUNT ? ' (권장 ' + P.MIN_COUNT + '~' + P.TARGET_COUNT + '건 초과)' : (l.length < P.MIN_COUNT ? ' (권장 ' + P.MIN_COUNT + '건 미만)' : '');
+      var tg = P.targetOf(A.aff), mn = P.minOf(A.aff), rep = P.isReport(A.aff);
+      var warn = l.length > tg ? ' (권장 ' + mn + '~' + tg + '건 초과)' : (l.length < mn ? ' (권장 ' + mn + '건 미만)' : '');
       $('pubSummary').className = 'status ' + (warn ? 'warn' : 'ok');
-      $('pubSummary').innerHTML = '<div class="grow"><b>' + esc(cfg().name) + '</b> · ' + l.length + '건' + warn + '<br>자사 ' + c.own + ' · 경쟁사 ' + c.comp + ' · 업계 ' + c.ind + '</div>';
+      $('pubSummary').innerHTML = '<div class="grow"><b>' + esc(cfg().name) + '</b> · ' + l.length + '건' + warn + '<br>' + L('own') + ' ' + c.own + ' · ' + L('comp') + ' ' + c.comp + ' · ' + L('ind') + ' ' + c.ind + '</div>';
+      $('pubReport').hidden = !rep; $('pubQuoteWrap').hidden = rep; $('pubAuthorWrap').hidden = rep;
+      if (rep) fillReportForm(l);
       showSheet('pubSheet');
     }
     function openPreview() {
@@ -584,22 +682,24 @@
     async function doPublish() {
       var e = buildEntry();
       if (!/^\d{4}\.\d{2}\.\d{2}$/.test(e.date)) { P.toast('⚠️ 발행일을 YYYY.MM.DD 형식으로 입력해주세요.'); return; }
-      if (!e.quote) { P.toast('⚠️ 오늘의 한마디를 입력해주세요.'); return; }
+      var rep = P.isReport(A.aff), tg = P.targetOf(A.aff);
+      if (!rep && !e.quote) { P.toast('⚠️ 오늘의 한마디를 입력해주세요.'); return; }
       if (e.date !== P.toDot(P.todayIso()) && !confirm('발행일이 오늘(' + P.toDot(P.todayIso()) + ')이 아닌 ' + e.date + ' 입니다. 계속할까요?')) return;
-      if (e.articles.length > P.TARGET_COUNT && !confirm('권장 건수(' + P.TARGET_COUNT + '건)를 넘었습니다. 그대로 발행할까요?')) return;
+      if (e.articles.length > tg && !confirm('권장 건수(' + tg + '건)를 넘었습니다. 그대로 발행할까요?')) return;
       var btn = $('btnDoPublish'); btn.disabled = true; btn.textContent = '⏳ 발행 중…';
       try {
         var pubJson = { history: {}, published: {} };
         try { pubJson = await readJson('published_data.json'); } catch (x) {}
         pubJson.published = pubJson.published || {}; pubJson.history = pubJson.history || {};
         pubJson.published[A.aff] = e;                          // 다른 계열사의 발행분/날짜는 건드리지 않음
-        pubJson.common = { date: e.date, quote: e.quote, author: e.author };
+        if (!rep) pubJson.common = { date: e.date, quote: e.quote, author: e.author };   // 주간 리포트(사회공헌)는 매일 한마디를 덮어쓰지 않음
         var set = new Set(pubJson.history[A.aff] || []);
         e.articles.forEach(function (a) { var n = P.normTitle(a.title); if (n) set.add(n); });
         pubJson.history[A.aff] = Array.from(set).slice(-800);
         await putJson('published_data.json', pubJson, 'publish: ' + e.name + ' daily news (' + e.date + ')');
         A.pub = pubJson;
-        store.set('pr_pub_quote', e.quote); store.set('pr_pub_author', e.author); store.set('pr_pub_date_' + P.todayIso(), e.date);
+        if (!rep) { store.set('pr_pub_quote', e.quote); store.set('pr_pub_author', e.author); }
+        store.set('pr_pub_date_' + P.todayIso(), e.date);
         closeSheets(); P.toast('🚀 [' + e.name + '] 발행 완료! 지난 기사 보관은 약 1분 뒤 반영됩니다.', 4200);
         renderCand();
       } catch (x) { P.toast('❌ 발행 오류: ' + x.message, 4200); }
@@ -608,11 +708,41 @@
 
     /* ═════════ 수집 탭 ═════════ */
     function setPreset(p) {
+      A.preset = p;
+      document.querySelectorAll('[data-preset]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.preset === p); });
       var t = new Date(), s = new Date(t);
+      if (p === 'auto') { $('dStart').value = ''; $('dEnd').value = ''; renderRangeHint(); return; }
       if (p === 'yd') s.setDate(t.getDate() - 1);
       if (p === 'we') { var back = t.getDay() === 1 ? 3 : (t.getDay() === 0 ? 2 : (t.getDay() === 6 ? 1 : (t.getDay() === 5 ? 0 : 1))); s.setDate(t.getDate() - (back || 1)); }
       if (p === 'd3') s.setDate(t.getDate() - 3);
-      $('dStart').value = P.fmtIso(s); $('dEnd').value = P.fmtIso(t);
+      if (p === 'd7') s.setDate(t.getDate() - 7);
+      $('dStart').value = P.fmtIso(s); $('dEnd').value = P.fmtIso(t); renderRangeHint();
+    }
+    function renderRangeHint() {
+      var s = $('dStart').value, e = $('dEnd').value, h = $('rangeHint'), t = runTargets();
+      if (!s && !e) { h.textContent = '기간을 비워 두면(자동) 매일 발행 대상은 전일~현재(월요일은 금요일부터), 주간 발행 대상(뉴로바이오젠·사회공헌)은 최근 7일을 수집합니다.'; return; }
+      var msg = '선택한 기간(' + P.toDot(s || '?') + ' ~ ' + P.toDot(e || '?') + ')이 선택한 모든 대상에 똑같이 적용됩니다.';
+      if (t.some(function (k) { return P.isWeekly(k); }) && s && e && P.parseIso(e) - P.parseIso(s) < 6 * 864e5) msg += ' 주간 발행 대상은 7일 이상 권장합니다.';
+      h.textContent = msg;
+    }
+    /* 수집 대상 선택 (여러 곳 동시 선택 · 뉴로바이오젠/사회공헌은 따로 선택 가능) */
+    function affKeys() { return Object.keys(P.AFFILIATES); }
+    function runTargets() { return A.runSel ? A.runSel.slice() : [A.aff]; }
+    function orderKeys(arr) { return affKeys().filter(function (k) { return arr.indexOf(k) >= 0; }); }
+    function renderRunTargets() {
+      var sel = runTargets();
+      $('runTargets').innerHTML = affKeys().map(function (k) {
+        return '<button class="chip" data-rt="' + k + '" aria-pressed="' + (sel.indexOf(k) >= 0) + '">' + esc(P.AFFILIATES[k].name) + (P.isWeekly(k) ? '<small>주1회</small>' : '') + '</button>';
+      }).join('');
+      $('runSelSummary').textContent = '· ' + sel.length + '곳 선택';
+      renderRangeHint();
+    }
+    function setTargetPreset(tp) {
+      if (tp === 'cur') A.runSel = null;
+      else if (tp === 'all') A.runSel = affKeys();
+      else if (tp === 'weekday') A.runSel = ['sangsangin', 'mitech', 'synergy', 'medica'];
+      else A.runSel = [tp];
+      renderRunTargets();
     }
     function renderDiag() {
       var d = A.pool && A.pool.diagnostics, el = $('diag');
@@ -640,25 +770,27 @@
     }
     async function runScrape() {
       var g = gh(); if (!g.token) { P.toast('🔑 먼저 [설정]에서 GitHub 토큰을 등록해주세요.'); setTab('set'); return; }
-      var s = $('dStart').value, e = $('dEnd').value;
-      if (!s || !e) { P.toast('⚠️ 시작일과 종료일을 선택해주세요.'); return; }
-      if (s > e) { P.toast('⚠️ 시작일이 종료일보다 늦을 수 없습니다.'); return; }
+      var s = $('dStart').value, e = $('dEnd').value, targets = orderKeys(runTargets());
+      if (!targets.length) { P.toast('⚠️ 수집 대상을 하나 이상 선택해주세요.'); return; }
+      if ((s && !e) || (!s && e)) { P.toast('⚠️ 시작일과 종료일을 둘 다 선택하거나, 둘 다 비워 [자동]으로 수집하세요.'); return; }
+      if (s && e && s > e) { P.toast('⚠️ 시작일이 종료일보다 늦을 수 없습니다.'); return; }
+      var names = targets.map(function (k) { return P.AFFILIATES[k].name; }).join(', ');
       var btn = $('btnRun'), st = $('runStatus'); btn.disabled = true;
       var since = Date.now() - 8000;
       try {
         var r = await ghFetch('/repos/' + g.repo + '/actions/workflows/naver_scrape.yml/dispatches', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ref: 'main', inputs: { affiliate: $('scopeSel').value === 'all' ? 'all' : A.aff, start_date: s, end_date: e } }) });
+          body: JSON.stringify({ ref: 'main', inputs: { affiliate: targets.join(','), start_date: s || '', end_date: e || '' } }) });
         if (!r.ok) throw new Error(r.status === 404 ? '워크플로를 찾지 못했습니다(.github/workflows/naver_scrape.yml 확인)' : r.status === 403 || r.status === 401 ? '토큰 권한(Actions: Read and write)을 확인하세요' : '실행 실패 (' + r.status + ')');
-        st.hidden = false; st.className = 'status warn'; st.textContent = '⏳ 수집 중입니다… 보통 1~3분 걸립니다. 이 화면을 닫지 마세요.';
+        st.hidden = false; st.className = 'status warn'; st.textContent = '⏳ [' + names + '] 수집 중입니다… 대상이 많으면 3~8분 걸립니다. 이 화면을 닫지 마세요.';
         var done = false;
-        for (var i = 0; i < 60 && !done; i++) {
+        for (var i = 0; i < 100 && !done; i++) {
           await new Promise(function (res) { setTimeout(res, 6000); });
           var rr = await ghFetch('/repos/' + g.repo + '/actions/workflows/naver_scrape.yml/runs?event=workflow_dispatch&per_page=3');
           if (!rr.ok) continue;
           var w = ((await rr.json()).workflow_runs || []).filter(function (x) { return new Date(x.created_at).getTime() >= since; })[0];
           if (w && w.status === 'completed') {
             done = true;
-            if (w.conclusion === 'success') { st.className = 'status ok'; st.textContent = '✅ 수집이 완료되었습니다. 후보 기사를 새로 불러옵니다.'; }
+            if (w.conclusion === 'success') { st.className = 'status ok'; st.textContent = '✅ [' + names + '] 수집이 완료되었습니다. 후보 기사를 새로 불러옵니다.'; }
             else { st.className = 'status bad'; st.innerHTML = '❌ 수집에 실패했거나 0건이었습니다. 아래 [연동 진단]과 <a href="' + esc(w.html_url) + '" target="_blank" rel="noopener">실행 로그 ↗</a>를 확인하세요.'; }
           }
         }
@@ -673,9 +805,17 @@
       $('kwAffName').textContent = cfg().name;
       var g = kwGroups(), cnt = {}; cands().forEach(function (a) { if (a.matchedKw) cnt[a.matchedKw] = (cnt[a.matchedKw] || 0) + 1; });
       $('kwGroups').innerHTML = ['own', 'comp', 'ind'].map(function (c) {
-        return '<div class="kwgroup"><h4><span class="badge badge-' + c + '">' + P.CATS[c].label + '</span><small style="color:var(--muted);font-weight:600;">' + g[c].length + '개</small></h4><div class="kwwrap">' +
+        return '<div class="kwgroup"><h4><span class="badge badge-' + c + '">' + L(c) + '</span><small style="color:var(--muted);font-weight:600;">' + g[c].length + '개</small></h4><div class="kwwrap">' +
           (g[c].map(function (k, i) { return '<span class="kw">' + esc(k) + (cnt[k] != null ? ' <span class="c">' + cnt[k] + '</span>' : '') + '<button class="x" data-kwdel="' + c + ':' + i + '" aria-label="' + esc(k) + ' 삭제">×</button></span>'; }).join('') || '<span style="color:var(--muted);font-size:.82rem;">없음</span>') + '</div></div>';
       }).join('');
+    }
+    function syncAffUi() {      // 구분값(계열사/사회공헌)이 바뀔 때 라벨·안내문 갱신
+      var rep = P.isReport(A.aff);
+      CATS3.forEach(function (c) { var o = $('kwGroup').querySelector('option[value="' + c + '"]'); if (o) o.textContent = L(c); });
+      $('kwHint').textContent = rep
+        ? 'SI 고정 → Weekly SI → CSR 트렌드 3묶음이며, 여기 키워드는 기사 검색에 쓰입니다. (임직원 화면 상단의 키워드 칩은 발행할 때 따로 입력합니다.) 변경 후 [저장소에 저장]을 눌러야 다음 수집부터 반영됩니다.'
+        : '자사 → 경쟁사 → 업계 순으로 분류됩니다. 제목에 자사/경쟁사 키워드가 있으면 해당 분류로 자동 지정됩니다. 변경 후 [저장소에 저장]을 눌러야 다음 수집부터 반영됩니다.';
+      if (!A.runSel) renderRunTargets();
     }
     function kwObj() { if (!A.kw[A.aff]) A.kw[A.aff] = { own: [], comp: [], ind: [] }; ['own', 'comp', 'ind'].forEach(function (c) { A.kw[A.aff][c] = A.kw[A.aff][c] || []; }); return A.kw[A.aff]; }
 
@@ -691,7 +831,7 @@
       A.tab = t;
       document.querySelectorAll('.tab').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.tab === t); });
       ['cand', 'collect', 'kw', 'set'].forEach(function (x) { $('p-' + x).hidden = x !== t; });
-      if (t === 'collect') { renderDiag(); loadRuns(); }
+      if (t === 'collect') { renderRunTargets(); renderDiag(); loadRuns(); }
       if (t === 'kw') renderKw();
       if (t === 'set') renderSettings();
       window.scrollTo(0, 0);
@@ -701,18 +841,25 @@
       loadSel(); renderCand(); renderDiag();
     }
     async function boot() {
-      renderAff(); renderSettings(); setPreset('we');
+      renderAff(); renderSettings(); setPreset('auto'); renderRunTargets(); syncAffUi();
       var res = await Promise.all([readJson('keywords.json').catch(function () { return null; }), readJson('published_data.json').catch(function () { return null; })]);
       A.kw = res[0] || {}; A.pub = res[1];
       var q = new URLSearchParams(location.search).get('corp'); if (q && P.AFFILIATES[q]) A.aff = q;
-      renderAff(); await loadPool();
+      renderAff(); syncAffUi(); await loadPool();
       if (!A.kw[A.aff] && A.pool && A.pool.keywords) A.kw = A.pool.keywords;
+      Object.keys(P.DEFAULT_KW || {}).forEach(function (k) { if (!A.kw[k]) A.kw[k] = JSON.parse(JSON.stringify(P.DEFAULT_KW[k])); });
     }
 
     /* ═════════ 이벤트 ═════════ */
     document.addEventListener('click', function (ev) {
       var t = ev.target, q = function (s) { return t.closest ? t.closest(s) : null; }, el;
-      if ((el = q('[data-aff]'))) { A.aff = el.dataset.aff; A.filter = 'all'; A.kwFilter = ''; A.limit = 40; renderAff(); loadSel(); renderCand(); if (A.tab === 'kw') renderKw(); return; }
+      if ((el = q('[data-aff]'))) { A.aff = el.dataset.aff; A.filter = 'all'; A.kwFilter = ''; A.limit = 40; renderAff(); syncAffUi(); loadSel(); renderCand(); if (A.tab === 'kw') renderKw(); return; }
+      if ((el = q('[data-rt]'))) {
+        var cur = runTargets(), rk = el.dataset.rt, ri = cur.indexOf(rk);
+        if (ri >= 0) cur.splice(ri, 1); else cur.push(rk);
+        A.runSel = orderKeys(cur); renderRunTargets(); return;
+      }
+      if ((el = q('[data-tp]'))) { setTargetPreset(el.dataset.tp); return; }
       if ((el = q('[data-f]'))) { A.filter = el.dataset.f; A.limit = 40; renderCand(); return; }
       if ((el = q('[data-kwf]'))) { A.kwFilter = A.kwFilter === el.dataset.kwf ? '' : el.dataset.kwf; A.limit = 40; renderKwBar(); renderList(); return; }
       if ((el = q('[data-cat]'))) {
@@ -748,6 +895,8 @@
     $('btnPreview').addEventListener('click', openPreview);
     $('btnDoPublish').addEventListener('click', doPublish);
     $('btnRun').addEventListener('click', runScrape);
+    ['dStart', 'dEnd'].forEach(function (id) { $(id).addEventListener('input', function () { A.preset = ''; document.querySelectorAll('[data-preset]').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); renderRangeHint(); }); });
+    $('pubReport').addEventListener('input', saveRptDraft);
     $('kwAdd').addEventListener('click', function () {
       var raw = $('kwNew').value, g = $('kwGroup').value, o = kwObj();
       raw.split(/[,\n]/).map(function (s) { return s.trim(); }).filter(Boolean).forEach(function (k) {

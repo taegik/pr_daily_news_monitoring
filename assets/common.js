@@ -6,7 +6,7 @@
     // ── 관리자 비밀번호 해시 ─────────────────────────────────────────────
     // 비어 있으면 admin.html 이 '비밀번호 설정' 화면을 보여줍니다.
     // 설정 화면에서 생성한 값을 아래에 붙여넣고 저장소에 올리면 활성화됩니다.
-    ADMIN_PW_HASH: '488bd710ee6105885424ac435b4725567ea25ba888d2f106c6ebc1f1a4ad5bd7',
+    ADMIN_PW_HASH: '',
     ADMIN_PW_SALT: 'sangsangin-pr-news-v1',
     ADMIN_PW_ITER: 250000,
 
@@ -21,17 +21,53 @@
       medica:      { name: '메디카코리아',    manager: '김태기 과장', cycle: '매일 오전 9시~9시반', publishHour: 9,
                      quote: '나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.', author: '토머스 에디슨' },
       neurobiogen: { name: '뉴로바이오젠',    manager: '김성목 대리', cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
-                     quote: '과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.', author: '알베르트 아인슈타인' }
+                     quote: '과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.', author: '알베르트 아인슈타인' },
+      // 사회공헌: 계열사가 아니라 '주간 리포트' 형태의 구분값입니다 (매주 금요일 발행).
+      // type: 'report' 이면 임직원 화면이 주간 리포트 레이아웃(키워드·금주의 코멘트·섹션·종합 인사이트)으로 바뀝니다.
+      csr:         { name: '사회공헌',        type: 'report', title: '상상인 위클리 소셜임팩트', manager: 'PR팀 사회공헌담당',
+                     cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
+                     target: 9, min: 6, quota: { target: 9, own: 3, comp: 3, ind: 3, press: 2 },
+                     quote: '', author: '',
+                     catLabels: { own: 'SI 고정', comp: 'Weekly SI', ind: 'CSR 트렌드' },
+                     catDescs:  { own: '상상인 SI 고정 키워드', comp: 'CSR 트렌드 관련 비고정 키워드', ind: '사회공헌 전반 동향' },
+                     sectionTitles: { own: 'SI 고정 키워드 이슈', comp: 'Weekly SI 키워드 이슈', ind: '사회공헌 트렌드' },
+                     fixedKeywords: ['휠체어', '이동성', '자립지원', '조직문화', '임직원참여'],
+                     weeklyKeywords: ['비즈니스기반', '지역사회', 'IT사회공헌', '의료사회공헌'],
+                     closing: '회사와 사회를 위한 따뜻한 마음에 언제나 귀기울입니다.\n사회공헌활동에 많은 관심과 다양한 의견 부탁 드립니다.' }
     },
     CATS: {
       own:  { label: '자사',   desc: '자사 직접 보도' },
       comp: { label: '경쟁사', desc: '주요 경쟁사 동향' },
       ind:  { label: '업계',   desc: '정책·규제·산업 전반' }
     },
+    // keywords.json 에 없는 구분값의 기본 검색 키워드 (관리자 ▸ 키워드 탭에서 저장하면 keywords.json 이 우선)
+    DEFAULT_KW: {
+      csr: {
+        own: ['휠체어', '이동권', '자립지원', '조직문화 사회공헌', '임직원 참여 사회공헌'],
+        comp: ['비즈니스 기반 사회공헌', '지역사회 사회공헌', 'IT 사회공헌', '의료 사회공헌'],
+        ind: ['사회공헌', 'CSR', '소셜임팩트', '임직원 봉사활동', 'ESG 사회공헌', '사회적가치']
+      }
+    },
     DAYS: ['일', '월', '화', '수', '목', '금', '토'],
     TARGET_COUNT: 15,
     MIN_COUNT: 10
   };
+
+  // ── 구분값(계열사/사회공헌) 도우미 ────────────────────────────────────
+  PRM.isReport = function (aff) { var c = PRM.AFFILIATES[aff]; return !!(c && c.type === 'report'); };
+  PRM.catLabel = function (aff, cat) {
+    var c = PRM.AFFILIATES[aff];
+    if (c && c.catLabels && c.catLabels[cat]) return c.catLabels[cat];
+    return PRM.CATS[cat] ? PRM.CATS[cat].label : '업계';
+  };
+  PRM.catDesc = function (aff, cat) {
+    var c = PRM.AFFILIATES[aff];
+    if (c && c.catDescs && c.catDescs[cat]) return c.catDescs[cat];
+    return PRM.CATS[cat] ? PRM.CATS[cat].desc : '';
+  };
+  PRM.targetOf = function (aff) { var c = PRM.AFFILIATES[aff]; return (c && c.target) || PRM.TARGET_COUNT; };
+  PRM.minOf = function (aff) { var c = PRM.AFFILIATES[aff]; return (c && c.min) || PRM.MIN_COUNT; };
+  PRM.isWeekly = function (aff) { var c = PRM.AFFILIATES[aff]; return !!(c && c.weeklyDay); };
 
   // ── 날짜 유틸 ('2026.11.13' <-> '2026-11-13') ─────────────────────────
   PRM.toIso = function (s) { return (s || '').trim().replace(/\./g, '-'); };
@@ -47,6 +83,13 @@
   PRM.todayIso = function () { return PRM.fmtIso(new Date()); };
   PRM.addDays = function (iso, n) { var d = PRM.parseIso(iso); d.setDate(d.getDate() + n); return PRM.fmtIso(d); };
   PRM.shortDate = function (iso) { var d = PRM.parseIso(iso); return d ? (d.getMonth() + 1) + '.' + d.getDate() : ''; };
+  // 주차 표기: 월요일 시작, 그 주의 목요일이 속한 달·주차 기준 (예: 2026-11-20 → '26년 11월 3주차')
+  PRM.weekLabel = function (iso) {
+    var d = PRM.parseIso(iso); if (!d) return '';
+    var dow = (d.getDay() + 6) % 7;                      // 월=0 … 일=6
+    var thu = new Date(d.getFullYear(), d.getMonth(), d.getDate() - dow + 3);
+    return String(thu.getFullYear()).slice(2) + '년 ' + (thu.getMonth() + 1) + '월 ' + Math.ceil(thu.getDate() / 7) + '주차';
+  };
 
   // ── 보안 유틸 ────────────────────────────────────────────────────────
   PRM.esc = function (s) {
