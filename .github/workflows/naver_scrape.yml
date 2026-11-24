@@ -2,11 +2,11 @@ name: Daily News Scrape
 
 on:
   schedule:
-    # 평일 아침 자동 수집 (UTC 기준, 한국시간 = UTC+9)
-    #  - 22:35 UTC (일~목) = KST 07:35 (월~금) : 상상인 (8시 발행 전)
-    #  - 23:35 UTC (일~목) = KST 08:35 (월~금) : 엠아이텍·시너지이노베이션·메디카코리아 (+금요일 뉴로바이오젠·사회공헌)
-    - cron: '35 22 * * 0-4'
-    - cron: '35 23 * * 0-4'
+    # 매일 오전 7시(한국시간 = UTC+9) 자동 수집: 22:07 UTC = KST 07:07
+    # 주말·공휴일·회사 휴무일은 프로그램이 알아서 건너뛰고, 다음 영업일에 쉬는 기간까지 함께 수집합니다.
+    #  - 상상인·엠아이텍·시너지이노베이션·메디카코리아 : 직전 영업일 00:00 ~ 당일 07:00
+    #  - 뉴로바이오젠·사회공헌 : 그 주 마지막 영업일(보통 금요일) 에만, 지난주 같은 요일 00:00 ~ 당일 07:00
+    - cron: '7 22 * * *'
   workflow_dispatch:
     inputs:
       affiliate:
@@ -14,7 +14,7 @@ on:
         required: false
         default: 'all'
       start_date:
-        description: '시작일 YYYY-MM-DD (비우면 자동: 전일~현재·월요일은 금요일부터, 주 1회 발행 대상은 최근 7일)'
+        description: '시작일 YYYY-MM-DD (비우면 자동: 직전 영업일 00:00~지금, 주 1회 발행 대상은 최근 7일)'
         required: false
         default: ''
       end_date:
@@ -48,6 +48,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Install holiday calendar
+        run: pip install holidays || echo "holidays 설치 실패 - 내장 공휴일 목록을 사용합니다"
 
       - name: Run news scraper
         id: scrape
