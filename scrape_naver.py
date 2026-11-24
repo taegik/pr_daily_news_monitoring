@@ -353,22 +353,33 @@ class NaverAuthError(Exception):
 
 
 def _read_http_error(e):
+    """HTTP 오류 본문을 사람이 읽을 수 있게 요약 (개발자센터/NAVER API HUB 응답 형식 모두 대응)"""
     try:
-        body = e.read().decode('utf-8', errors='replace')
-        j = json.loads(body)
-        return f"HTTP {e.code} errorCode={j.get('errorCode')} message={j.get('errorMessage')}"
+        body = e.read().decode('utf-8', errors='replace').strip()
     except Exception:
         return f"HTTP {e.code}"
+    try:
+        j = json.loads(body)
+        err = j.get('error') if isinstance(j.get('error'), dict) else j
+        code = err.get('errorCode') or err.get('code')
+        msg = err.get('errorMessage') or err.get('message')
+        if code or msg:
+            return f"HTTP {e.code} errorCode={code} message={msg}"
+    except Exception:
+        pass
+    return f"HTTP {e.code} {body[:160]}" if body else f"HTTP {e.code}"
 
 
 class NaverClient:
+    # 현재 표준: 네이버 클라우드 플랫폼 NAVER API HUB (개발자센터 검색 API는 여기로 이관됨)
+    HUB = "https://naverapihub.apigw.ntruss.com/search/v1/news"
+    # 이전 방식(개발자센터 발급 키) - 예전 키가 남아 있는 경우만 보조로 사용
     OPENAPI = "https://openapi.naver.com/v1/search/news.json"
-    HUB = "https://naveropenapi.apigw.ntruss.com/search/v1/news.json"
 
     def __init__(self, client_id, client_secret):
         self.cid = client_id
         self.secret = client_secret
-        self.base = 'openapi'
+        self.base = 'hub'
         self.calls = 0
 
     def _build(self, base, query, display, start):
@@ -408,11 +419,11 @@ class NaverClient:
         try:
             return self._call(self.base, query, display, start)
         except NaverAuthError as first:
-            # 일반 개발자센터 키로 실패하면 NCP 게이트웨이 방식으로 한 번 더 시도
-            if self.base == 'openapi':
+            # NAVER API HUB 키로 실패하면, 예전 개발자센터 키일 가능성을 생각해 한 번 더 시도
+            if self.base == 'hub':
                 try:
-                    items = self._call('hub', query, display, start)
-                    self.base = 'hub'
+                    items = self._call('openapi', query, display, start)
+                    self.base = 'openapi'
                     return items
                 except NaverAuthError:
                     pass
