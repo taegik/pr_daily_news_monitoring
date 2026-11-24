@@ -7,7 +7,8 @@
 ## 2. 네이버 연동 확인 (가장 먼저)
 1. 저장소 ▸ Settings ▸ Secrets and variables ▸ Actions 에 아래 두 개가 **이름 그대로** 있는지 확인
    - `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` (값 앞뒤 공백 주의)
-2. 네이버 개발자센터 ▸ 내 애플리케이션 ▸ **사용 API에 '검색'** 이 추가되어 있는지 확인
+2. 네이버 클라우드 플랫폼(console.ncloud.com) ▸ Application Services ▸ **NAVER API HUB** ▸ Application 에 **검색(뉴스)** API가 등록되어 있는지, 그리고 그 Application의 **인증 정보**에서 Client ID/Secret 을 복사했는지 확인
+   (네이버 개발자센터의 검색 API는 NAVER API HUB로 이관되어 예전 개발자센터 키는 더 이상 쓰이지 않습니다)
 3. Actions ▸ *Daily News Scrape* ▸ Run workflow 로 1회 수동 실행
 4. 관리자 ▸ [수집] 탭 ▸ **네이버 연동 진단**에서 결과 확인 (실패 원인이 문장으로 표시됩니다)
 

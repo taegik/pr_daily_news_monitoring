@@ -619,7 +619,7 @@
       if (!d) { el.innerHTML = '<div class="status warn">아직 진단 정보가 없습니다. 수집을 한 번 실행하면 네이버 연동 상태가 표시됩니다.</div>'; return; }
       var lines = [], cls = 'ok', head;
       if (!d.naverConfigured) { cls = 'bad'; head = '❌ 네이버 API 키가 전달되지 않았습니다.'; lines.push('GitHub 저장소 ▸ Settings ▸ Secrets and variables ▸ Actions 에 <b>NAVER_CLIENT_ID</b>, <b>NAVER_CLIENT_SECRET</b> 이름 그대로(오타·공백 없이) 등록되어 있는지 확인하세요.'); }
-      else if (d.authError) { cls = 'bad'; head = '❌ 네이버 인증/권한 오류'; lines.push('<code>' + esc(d.authError) + '</code>'); lines.push('① 네이버 개발자센터 ▸ 내 애플리케이션에서 <b>사용 API에 「검색」</b>이 추가되어 있는지 ② Client ID/Secret 값이 정확한지(앞뒤 공백 없이) ③ 일일 호출 한도(25,000회) 초과 여부를 확인하세요.'); }
+      else if (d.authError) { cls = 'bad'; head = '❌ 네이버 인증/권한 오류'; lines.push('<code>' + esc(d.authError) + '</code>'); lines.push('① 네이버 클라우드 플랫폼 ▸ NAVER API HUB ▸ Application에 <b>검색(뉴스) API</b>가 등록되어 있는지 ② 그 Application의 <b>인증 정보</b>에서 복사한 Client ID/Secret 인지(앞뒤 공백 없이) ③ 사용 한도 초과·이용 신청/결제수단 등록 여부를 확인하세요.'); }
       else if (d.naverKeywordsFailed > 0) { cls = 'warn'; head = '⚠️ 일부 키워드에서 네이버 호출이 실패해 구글로 보완했습니다.'; }
       else { head = '✅ 네이버 API 정상 (키워드 ' + d.naverKeywordsOk + '개 수집, API 호출 ' + d.naverApiCalls + '회)'; }
       (d.errors || []).slice(0, 4).forEach(function (m) { lines.push('· ' + esc(m)); });
