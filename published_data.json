@@ -27,7 +27,21 @@
       "대웅제약자가면역신약플로디시티닙임상1상서효과확인",
       "대웅제약다중타깃자가면역신약플로디시티닙임상1상성과공개",
       "현대바이오항암제후보물질치료목적사용승인획득",
-      "ai로건기식원료값알아낸대기업설자리좁아진다머니투데이"
+      "ai로건기식원료값알아낸대기업설자리좁아진다머니투데이",
+      "24년독점노르믹스첫후발약개발시동규제변화에정교해진틈새",
+      "종근당대웅제약rd투자12위약가인하방어전본격화",
+      "메디톡스실적반등의조건3공장해외판매소송종료",
+      "중국데이터편중에발목잡힌이보네시맙fda서밋허가신청",
+      "대웅제약서울백강병원에ai환자모니터링씽크도입",
+      "정부혁신형제약기업추가선정약가개편속맞춤형지원필요",
+      "3년째읽씹성남시복지부에시의료원대학병원위탁승인재촉",
+      "전이암은불치병80년정설깼다현대바이오가짜내성신약임상",
+      "코아스템켐온시장의궁금증셋가속승인rmat3b상일정은",
+      "현대바이오서울대병원전립선암임상서정상조직수준회복확인",
+      "울쎄라슈링크비켜장원영홈케어디바이스이름날리더니",
+      "1분만에놓는항암제주사기술수출속도",
+      "lh자립준비청년200명에보증금가전비200만원지원",
+      "면류간편식등식약처해썹가이드라인마련"
     ],
     "mitech": [
       "의료기기주혼조속종목별차별화수술로봇진단미용기기시장주목을"
@@ -56,41 +70,135 @@
       "name": "메디카코리아",
       "manager": "김태기 과장",
       "cycle": "매일 오전 9시~9시반",
-      "date": "2026.11.13",
+      "date": "2026.11.24",
       "dayLabel": "화",
-      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 김태기 과장 · 확정 5건",
+      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 김태기 과장 · 확정 14건",
       "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
       "author": "토머스 에디슨",
       "articles": [
         {
-          "category": "ind",
-          "press": "서울경제TV",
-          "title": "대웅제약, 자가면역 신약 ‘플로디시티닙’ 임상 1상서 효과 확인",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBIUHdmVk1EbnNWbGRrbkNERjBQUjF5V1VmODJJX000SWtlcktqT3Z4bTNHYnFJX1E5ZUFpS3ZmY05kSGhDN0ZWWnJMakdSWWpSVmRhSlR1YU5kRnFDVjhfZWJOUHY?oc=5"
+          "category": "own",
+          "press": "apsk",
+          "title": "24년 독점 '노르믹스' 첫 후발약 개발 시동…규제 변화에 정교해진 틈새...",
+          "url": "https://www.apsk.co.kr/news/articleView.html?idxno=541123",
+          "summary": "메디카코리아가 노르믹스정을 대조약으로 한 '리팍심정'의 생동시험을 식품의약품안전처로부터 승인받으면서다. 제네릭 약가 산정률이 낮아지고 다품목 등재에 따른 추가 약가 인하까지 예고된 가운데, 이번 개발은...",
+          "pubDateISO": "2026-11-24T05:56:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "전자신문",
+          "title": "종근당·대웅제약, R&D 투자 1·2위…약가 인하 방어전 본격화",
+          "url": "https://www.ngetnews.com/news/articleView.html?idxno=556194",
+          "summary": "증가액 기준으로는 종근당이 지난해 1265억원에서 올해 1610억원으로 346억원 늘리며 가장 큰 폭의 확대를 기록했다. 대웅제약은 1592억원에서 1829억원으로 238억원 증가하며 뒤를 이었다. 삼천당제약은 227억원...",
+          "pubDateISO": "2026-11-23T14:54:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "파이낸셜뉴스",
+          "title": "메디톡스 실적 반등의 조건…3공장·해외 판매·소송 종료",
+          "url": "https://www.fnnews.com/news/202611230834333709",
+          "naverUrl": "https://n.news.naver.com/mnews/article/014/0005607990?sid=101",
+          "summary": "휴젤과의 미국 국제무역위원회(ITC) 항소 및 국제 분쟁, 대웅제약과의 국내 소송이 이어지는 가운데 올해 하반기에는 관련 절차 감소로 법무비 지출이 줄어든 것으로 분석됐다. 사업별로는 해외 톡신과 필러가...",
+          "pubDateISO": "2026-11-23T08:41:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "헤럴드경제",
+          "title": "‘중국 데이터 편중’에 발목 잡힌 이보네시맙…美 FDA, 서밋 허가 신청...",
+          "url": "https://biz.heraldcorp.com/article/10945301?ref=naver",
+          "naverUrl": "https://n.news.naver.com/mnews/article/016/0002726805?sid=101",
+          "summary": "1차 치료제 시장에서는 유한양행이 기술수출한 ‘렉라자(레이저티닙)’와 리브리반트 병용요법이 글로벌 3상(MARIPOSA)에서 오시머티닙 대비 사망 위험을 25% 낮춘 결과(위험비 0.75)를 확보하며 영역을 넓히고 있다....",
+          "pubDateISO": "2026-11-23T06:00:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "뉴스1",
+          "title": "대웅제약, 서울백강병원에 AI 환자 모니터링 '씽크' 도입",
+          "url": "https://www.news1.kr/bio/pharmaceutical-bio/6363671",
+          "naverUrl": "https://n.news.naver.com/mnews/article/421/0009306169?sid=103",
+          "summary": "대웅제약은 경기 성남시 서울백강병원이 간호·간병통합서비스 병동에 인공지능(AI) 스마트 모니터링 시스템 '씽크'(thynC)를 도입했다고 24일 밝혔다. 서울백강병원은 전체 60병상 중 간호·간병통합서비스 병동 30병상에...",
+          "pubDateISO": "2026-11-24T09:02:00+09:00"
         },
         {
           "category": "ind",
-          "press": "한국경제",
-          "title": "대웅제약, 다중타깃 자가면역 신약 ‘플로디시티닙’ 임상 1상 성과 공개",
-          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE00a3VVV3RiOG1zT1B6a0dYMmF4OUZmbGNpTFhTNU9sVTJNQWJMQTc0Mk1zQXVySXQ2LXdJb2k5Ry0xeUlPdjlYZkpFU2ZmTGk4MUhkdGtCX29BQQ?oc=5"
-        },
-        {
-          "category": "ind",
-          "press": "연합뉴스",
-          "title": "현대바이오, 항암제 후보물질 '치료목적 사용승인' 획득",
-          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFAydW4tMENzb09BWDg4RHBMbEFhRjFfRzVvbmZiTDV5SjJjN0xGS1g1YjBoU0czN0NzVElWYmV0UDRMemc5OTZQeUh5ZUIwWDVrNEFGTElQSkZiZXfSAWBBVV95cUxQN2xYY2hlWWNXU2JzZy1tZjk1Wl9NNVNJYUxySWE0M09MN3JPWGY3cEQ0ekk4NUtoNnNRQWV6OFM4VFBpQkNMc0hidXhYRHZ4dVVDeGdHZkU0VDYwemZYcHg?oc=5"
+          "press": "뉴스1",
+          "title": "정부 '혁신형 제약기업' 추가 선정…약가 개편 속 \"맞춤형 지원 필요\"",
+          "url": "https://www.news1.kr/bio/pharmaceutical-bio/6363391",
+          "naverUrl": "https://n.news.naver.com/mnews/article/421/0009306021?sid=103",
+          "summary": "제네릭 의약품 생산에 주력하던 기업이 개량신약을 거쳐 신약 개발 기업으로 성장할 수 있도록 단계별 지원체계를 마련한다는 점에서다. 업계 관계자는 \"새로운 인증 유형은 국내 제약기업이 제네릭에서 개량신약, 신약...",
+          "pubDateISO": "2026-11-24T06:20:00+09:00"
         },
         {
           "category": "ind",
           "press": "머니투데이",
-          "title": "[단독] AI로 건기식 원료값 알아낸 대기업…中企 설 자리 좁아진다 - 머니투데이",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE55X2lKbjZqSTJycDRacHV2eDRvSHVnU2xfNkZOZ1FhSkp6am9oR1FiemRwZXBNakM4SDdUNkNJTUJXd056QWhyc21SdUhSd3EwNF8tM1dMWnZDV2V0UkQ1S1pLNGlPQ3RVWUd1S9IBckFVX3lxTE1Cc1htTTdmcFZPeXp4MjQ4UXA1eUZFdUtldUs3Z0VSVEdjbjBQNnhVWk40RFlLdTg3LVFfdTBEWVlOSU5Hb0RuUGNWRS13NHB4VlVvUEJNU2U3NHpBZ2lVSDllM3B3eGM1UUdIT1JpYXdUdw?oc=5"
+          "title": "\"3년째 읽씹\" 성남시, 복지부에 시 의료원 대학병원 위탁 승인 재촉",
+          "url": "https://www.mt.co.kr/policy/2026/11/23/2026112317104470740",
+          "naverUrl": "https://n.news.naver.com/mnews/article/008/0005445192?sid=102",
+          "summary": "경기 성남시가 성남시의료원 운영 정상화를 위해 보건복지부에 대학병원 위탁운영 승인을 거듭 촉구했다고 23일 밝혔다. 시는 지난 20일 보건복지부를 방문해 장기간 승인 지연에 따른 의료원 운영의 어려움과...",
+          "pubDateISO": "2026-11-23T17:29:00+09:00"
         },
         {
           "category": "ind",
-          "press": "연합뉴스",
-          "title": "[바이오스냅] 대원제약, '펠루비정' 소아용 시럽 임상시험",
-          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE93NGtVNVU4MmItajdEWnk2SWYzVG5WY0lwUzNwbXpaVVhEaGFidUszQk16aG1lcXdFSVd3VllwZUQ5d0VZdWRMdkRNVGJHckpYdFNuQ1FQRThVWjTSAWBBVV95cUxQVl95T2h0WXFLd1lEU05NOG1jeFl6ZEFXNUNUZ1hqQWo1cjlhODhpeEYwaUNKWmE5MTUzc3dFTFlTQlZIdEdnS2VSRDB1dTgteGFMOXgwUEpHR1hPUGlRMHY?oc=5"
+          "press": "이데일리",
+          "title": "“전이암은 불치병” 80년 정설 깼다…현대바이오, 가짜내성 신약 임상...",
+          "url": "https://www.edaily.co.kr/News/Read?newsId=02197606645648672&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+          "naverUrl": "https://n.news.naver.com/mnews/article/018/0006414097?sid=101",
+          "summary": "이 환자는 해당 결과를 토대로 최근 식품의약품안전처로부터 개인별 치료목적 사용승인을 받아 연장 치료에 돌입했다. 과거 엔잘루타마이드 복용 중 PSA 상승으로 치료에 실패해 투약을 중단했던 두 번째 환자 역시...",
+          "pubDateISO": "2026-11-23T11:46:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "이데일리",
+          "title": "코아스템켐온, 시장의 궁금증 셋…가속승인·RMAT·3b상 일정은?",
+          "url": "https://www.edaily.co.kr/News/Read?newsId=02145126645648672&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+          "naverUrl": "https://n.news.naver.com/mnews/article/018/0006414082?sid=105",
+          "summary": "코아스템켐온은 이달 말 국내 식품의약품안전처에 임상시험계획(IND)을 신청하고, 내년 1분기에는 FDA에 타입D 미팅을 신청할 계획이다. 타입D 미팅에서는 앞선 타입C 미팅에서 논의한 환자 선정기준과 평가변수 등...",
+          "pubDateISO": "2026-11-23T11:32:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "머니투데이",
+          "title": "현대바이오, 서울대병원 전립선암 임상서 '정상조직 수준 회복' 확인",
+          "url": "https://www.mt.co.kr/stock/2026/11/23/2026112309432487534",
+          "naverUrl": "https://n.news.naver.com/mnews/article/008/0005444815?sid=101",
+          "summary": "이 환자는 해당 임상 결과를 근거로 투약 종료 후 식품의약품안전처로부터 개인별 치료목적 사용승인을 받아 치료를 지속하게 됐다. 과거 엔잘루타마이드 복용 중 PSA 상승으로 치료에 실패해 투약을 중단했던...",
+          "pubDateISO": "2026-11-23T09:51:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "아시아경제",
+          "title": "[단독]\"울쎄라·슈링크 비켜\"…'장원영 홈케어 디바이스' 이름 날리더니...",
+          "url": "https://view.asiae.co.kr/article/2026112309245286579",
+          "naverUrl": "https://n.news.naver.com/mnews/article/277/0005846260?sid=101",
+          "summary": "에이피알팩토리는 지난 8월 식품의약품안전처로부터 맥스트리의 3등급 의료기기 제조품목 허가를 받았다. 허가 품목명은 '집속형 초음파 자극 시스템'이다. 맥스트리 생산에는 에이지알을 만들며 구축한 자체 제조...",
+          "pubDateISO": "2026-11-23T09:42:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "매일경제",
+          "title": "1분 만에 놓는 항암제 주사, 기술수출 속도",
+          "url": "https://www.mk.co.kr/article/12215585",
+          "naverUrl": "https://n.news.naver.com/mnews/article/009/0005767356?sid=105",
+          "summary": "미국 정부의 약가 인하 정책에 대해서도 긍정적인 전망을 유지했다. 최근 미국 메디케어·메디케이드서비스센터(CMS)는 기존 정맥주사 의약품을 피하주사로 전환하더라도 별도 신약으로 인정하지 않는 방향으로 약가...",
+          "pubDateISO": "2026-11-23T06:01:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "파이낸셜뉴스",
+          "title": "LH, 자립준비청년 200명에 보증금·가전비 200만원 지원",
+          "url": "https://www.fnnews.com/news/202611240852433759",
+          "naverUrl": "https://n.news.naver.com/mnews/article/014/0005608652?sid=101",
+          "summary": "10월에는 보건복지부와 국민체육진흥공단, 유한킴벌리, 아성다이소, 네이버 해피빈, 월드비전이 참여하는 '온:청년' 사업을 꾸려 지원 범위를 주거·경제에서 생활·정서 분야로 넓혔다. 이 사업을 통해 3개월간 매달...",
+          "pubDateISO": "2026-11-24T08:55:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "뉴시스",
+          "title": "\"면류·간편식 등\"…식약처, 해썹 가이드라인 마련",
+          "url": "https://www.newsis.com/view/NISX20261124_0003880280",
+          "naverUrl": "https://n.news.naver.com/mnews/article/003/0014341039?sid=102",
+          "summary": "식품의약품안전처가 면류와 레토르트 식품 등 4개 식품유형의 제조 과정에서 발생할 수 있는 위해요소를 줄이기 위한 안전관리 지침을 마련했다. 소규모 식품 제조업체에서도 개선된 관리방안을 현장에 적용할 수 있도록...",
+          "pubDateISO": "2026-11-24T08:49:00+09:00"
         }
       ]
     },
