@@ -44,7 +44,22 @@
       "면류간편식등식약처해썹가이드라인마련"
     ],
     "mitech": [
-      "의료기기주혼조속종목별차별화수술로봇진단미용기기시장주목을"
+      "의료기기주혼조속종목별차별화수술로봇진단미용기기시장주목을",
+      "제약바이오중소벤처혁신기술세계임상투자시장과연결고리만든다",
+      "시너지ib투자중기부와k바이오스타트업글로벌진출지원7개기관",
+      "중기부제약바이오유망기업발굴부터임상투자해외진출까지지원",
+      "중기부대학병원제약사등과손잡고오픈이노베이션협력",
+      "중기부제약바이오중소벤처기업기술사업화해외진출지원",
+      "중기부대웅제약경희의료원맞손제약바이오해외진출지",
+      "중동공략확대하는원텍uae서의료기기3종추가허가",
+      "췌장암만큼무서운암담도암피하려면이생선먹지말아야",
+      "동운아나텍타액당측정디썰라이프식약처인정",
+      "식약처해썹업체대상가이드라인마련",
+      "eu재생원료규제강화에도수출기업절반이상대응계획없다",
+      "의약품특허를연장하는허가의시간",
+      "웰레스트빅썸바이오개별인정형신소재공동사업화협력mou",
+      "의료용마약류허가때부터중독방지계획낸다",
+      "선정화큐리바이오대표동물실험대신사람3d조직으로보톡스비"
     ],
     "sangsangin": [
       "상상인hmm운임상승에실적호조목표가2만6000원유지",
@@ -222,17 +237,146 @@
       "name": "엠아이텍",
       "manager": "박한솔 대리",
       "cycle": "매일 오전 9시~9시반",
-      "date": "2026.11.13",
-      "dayLabel": "금",
-      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 박한솔 대리 · 확정 1건",
-      "quote": "나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.",
-      "author": "토머스 에디슨",
+      "date": "2026.11.25",
+      "dayLabel": "수",
+      "scrapeWindow": "매일 오전 9시~9시반 · 담당: 박한솔 대리 · 확정 15건",
+      "quote": "천 리 길도 한 걸음부터 시작된다.",
+      "author": "노자",
       "articles": [
         {
+          "category": "own",
+          "press": "머니투데이",
+          "title": "제약바이오 중소벤처 혁신기술, 세계 임상·투자시장과 연결고리 만든다",
+          "url": "https://www.mt.co.kr/economy/2026/11/24/2026112417235579002",
+          "naverUrl": "https://n.news.naver.com/mnews/article/008/0005445834?sid=101",
+          "summary": "중기부는 24일 경희대학교 캠퍼스타운 온실에서 홍릉강소특구, 경희대학교, 경희의료원, 대웅제약, 엠아이텍... 대웅제약과 엠아이텍은 기술 수요를 제시하고 유망 중소벤처기업과 공동기술개발 및 기술 적용을 추진한다....",
+          "pubDateISO": "2026-11-24T17:46:00+09:00"
+        },
+        {
+          "category": "own",
+          "press": "머니투데이",
+          "title": "시너지IB투자, 중기부와 K-바이오 스타트업 글로벌 진출 지원…7개 기관...",
+          "url": "https://www.mt.co.kr/industry/2026/11/24/2026112411014494416",
+          "naverUrl": "https://n.news.naver.com/mnews/article/008/0005445806?sid=101",
+          "summary": "첨단기술비즈니스대학원 △경희의료원 △대웅제약 △엠아이텍 △시너지IB투자가 참여했다. 각 기관은 기술... 수요기업으로 참여한 대웅제약과 엠아이텍은 산업 현장의 기술 수요를 바탕으로 스타트업과 공동개발 및...",
+          "pubDateISO": "2026-11-24T17:16:00+09:00"
+        },
+        {
+          "category": "own",
+          "press": "뉴스1",
+          "title": "중기부, 제약바이오 유망기업 발굴부터 임상·투자·해외진출까지 지원",
+          "url": "https://www.news1.kr/industry/sb-founded/6363739",
+          "naverUrl": "https://n.news.naver.com/mnews/article/421/0009306976?sid=101",
+          "summary": "중기부는 24일 서울 동대문구 경희대학교에서 홍릉강소특구, 경희대학교, 경희의료원, 대웅제약, 엠아이텍... 대웅제약과 엠아이텍은 기술 수요를 제시하고 유망 중소벤처기업과 공동기술개발 및 기술 적용을 추진한다....",
+          "pubDateISO": "2026-11-24T12:00:00+09:00"
+        },
+        {
+          "category": "own",
+          "press": "서울경제",
+          "title": "중기부, 대학·병원·제약사 등과 손잡고 오픈이노베이션 협력",
+          "url": "https://www.sedaily.com/article/20118300?ref=naver",
+          "naverUrl": "https://n.news.naver.com/mnews/article/011/0004685589?sid=101",
+          "summary": "(069620), 엠아이텍(179290), 시너지아이비투자와 함께 유망 제약바이오 중소벤처기업의 기술사업화와 해외 시장... 대웅제약과 엠아이텍은 기술 수요를 제시하고, 유망 중소벤처기업과 공동기술개발 및 기술 적용을 추진한다....",
+          "pubDateISO": "2026-11-24T15:30:00+09:00"
+        },
+        {
+          "category": "own",
+          "press": "조선비즈",
+          "title": "중기부, 제약·바이오 중소벤처기업 기술사업화·해외 진출 지원",
+          "url": "https://biz.chosun.com/industry/business-venture/2026/11/24/WHSLQOHATBHVJED2YMPJWNVX24/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+          "naverUrl": "https://n.news.naver.com/mnews/article/366/0001206992?sid=101",
+          "summary": "협약에는 임상 검증과 기술 사업화를 지원하는 홍릉강소특구와 경희대, 경희의료원, 대웅제약, 엠아이텍, 시너지아이비투자가 참여했다. 참여 기관들은 유망 기업을 함께 발굴하고 각 기관의 전문성과 자원을 활용해 기술...",
+          "pubDateISO": "2026-11-24T14:56:00+09:00"
+        },
+        {
+          "category": "own",
+          "press": "헤럴드경제",
+          "title": "중기부·대웅제약·경희의료원 ‘맞손’…제약바이오 中企 해외 진출 지...",
+          "url": "https://biz.heraldcorp.com/article/10946875?ref=naver",
+          "naverUrl": "https://n.news.naver.com/mnews/article/016/0002727711?sid=101",
+          "summary": "중기부는 24일 경희대학교 캠퍼스타운 온실에서 홍릉강소특구, 경희대학교, 경희의료원, 대웅제약, 엠아이텍... 대웅제약과 의료기기 기업 엠아이텍은 기술 수요를 제시하고 중소벤처기업과 공동개발 및 기술 적용을...",
+          "pubDateISO": "2026-11-24T12:01:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "파이낸셜뉴스",
+          "title": "중동 공략 확대하는 원텍, UAE서 의료기기 3종 추가 허가",
+          "url": "https://www.fnnews.com/news/202611241559257669",
+          "naverUrl": "https://n.news.naver.com/mnews/article/014/0005609044?sid=103",
+          "summary": "원텍은 최근 UAE 보건당국으로부터 고주파 의료기기 '올리지오 X', 고강도 집속 초음파(HIFU) 장비 '울트라스킨 타이탄', 듀얼 파장 레이저 의료기기 '벨라스타'의 인허가를 획득했다고 24일 밝혔다. 올리지오 X는 기존...",
+          "pubDateISO": "2026-11-24T16:02:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "조선일보",
+          "title": "“췌장암만큼 무서운 암”… 담도암 피하려면 ‘이 생선’ 먹지 말아야",
+          "url": "https://health.chosun.com/site/data/html_dir/2026/11/24/2026112403072.html",
+          "naverUrl": "https://n.news.naver.com/mnews/article/346/0000119408?sid=103",
+          "summary": "신일상 교수는 “이 경우 내시경역행담췌관조영술(ERCP)을 통한 스텐트 삽입 등 담도배액술로 담즙 흐름을 회복시킨다”며 “기존 방법으로 배액이 어려우면 내시경초음파 유도 담도배액술(EUS-BD) 등 고난도 시술을...",
+          "pubDateISO": "2026-11-24T19:31:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "매일경제",
+          "title": "동운아나텍, 타액 당 측정 ‘디썰라이프’ 식약처 인정",
+          "url": "https://www.mk.co.kr/article/12217016",
+          "naverUrl": "https://n.news.naver.com/mnews/article/009/0005768137?sid=103",
+          "summary": "디지털의료기기 제조 및 품질관리기준(GMP) 적합인정을 받았다고 24일 밝혔다. 지난 7월 체외진단의료기기 임상 GMP 적합인정을 획득한 데 이은 성과다. 디지털의료기기 제조 GMP는 2025년 시행된 디지털의료제품법에 따라...",
+          "pubDateISO": "2026-11-24T13:23:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "연합뉴스",
+          "title": "[바이오스냅] 식약처, 해썹 업체 대상 가이드라인 마련",
+          "url": "https://www.yna.co.kr/view/AKR20261124048300017?input=1195m",
+          "naverUrl": "https://n.news.naver.com/mnews/article/001/0016459716?sid=101",
+          "summary": "허가된 제품은 고주파 의료기기 '올리지오 x', 집속 초음파 장비 '울트라스킨 타이탄', 레이저 의료기기 '벨라스타'다. ▲ 헤일리온은 종합 비타민 제품인 '센트룸 플러스+' 4종을 새롭게 출시했다고 24일 밝혔다. 신제품은...",
+          "pubDateISO": "2026-11-24T09:49:00+09:00"
+        },
+        {
+          "category": "comp",
+          "press": "이데일리",
+          "title": "EU 재생원료 규제 강화에도 수출기업 절반 이상 \"대응계획 없다\"",
+          "url": "https://www.edaily.co.kr/News/Read?newsId=01289046645649328&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+          "naverUrl": "https://n.news.naver.com/mnews/article/018/0006415070?sid=101",
+          "summary": "업종별로는 △의약품·바이오·의료기기(87.4%) △식품·음료(81.8%) △화학·플라스틱·화장품(75.0%) 등에서 포장재 규제에 대한 우려가 컸다. 자동차·운송장비(67.4%)와 철강·금속제품(42.1%) 업종은 차량순환성 및...",
+          "pubDateISO": "2026-11-25T06:02:00+09:00"
+        },
+        {
           "category": "ind",
-          "press": "핀포인트뉴스",
-          "title": "의료기기주 혼조 속 종목별 차별화… 수술 로봇·진단·미용기기 시장 주목을",
-          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFAtZS1LcVdMcGxnQW8xZ2p5X2ZEVHFEUXZUS0RfVWc4dTdNTUFuUU9XN2Z0VVpxc1FDcWJETUNzOWsxVVN1MDFxbFFwMjVWTkVPZlc2VEc1OE9kbHpyUXhOM0FrSXdmZzNfUFVwVE1lR0pveGw0c2U40gF3QVVfeXFMUC1lLUtxV0xwbGdBbzFnanlfZkRUcURRdlRLRF9VZzh1N01NQW5RT1c3ZnRVWnFzUUNxYkRNQ3M5azFVU3UwMXFsUXAyNVZORU9mVzZURzU4T2RsenJReE4zQWtJd2ZnM19QVXBUTWVHSm94bDRzZTg?oc=5"
+          "press": "한국경제",
+          "title": "의약품 특허를 연장하는 '허가의 시간' [지식재산의 광장]",
+          "url": "https://www.hankyung.com/article/202611233894i",
+          "naverUrl": "https://n.news.naver.com/mnews/article/015/0005357838?sid=102",
+          "summary": "'식약처 품목허가' 지연 인정 의약품을 시중에 유통하려면 식품의약품안전처(식약처)의 품목허가를 받아야 한다. 전임상시험(동물시험 등)과 임상시험으로 안전성과 유효성을 입증하고, 제조소의 품질관리체계(GMP) 등...",
+          "pubDateISO": "2026-11-25T07:01:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "아시아경제",
+          "title": "웰레스트-빅썸바이오, 개별인정형 신소재 공동 사업화 협력 MOU",
+          "url": "https://view.asiae.co.kr/article/2026112415020130366",
+          "naverUrl": "https://n.news.naver.com/mnews/article/277/0005847134?sid=101",
+          "summary": "개별인정형 원료는 식약처가 업체의 신청을 받아 안전성과 기능성 등을 심사해 인정하는 원료다. 허가를 받으면 인정받은 기능성을 내세운 건강기능식품 개발과 판매가 가능하다. 양사는 이번 협약을 통해 두 소재의 허가...",
+          "pubDateISO": "2026-11-24T15:02:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "뉴스1",
+          "title": "의료용 마약류, 허가 때부터 중독 방지계획 낸다",
+          "url": "https://www.news1.kr/bio/welfare-medical/6363599",
+          "naverUrl": "https://n.news.naver.com/mnews/article/421/0009306109?sid=105",
+          "summary": "마약류 제조업자와 수출입업자는 계획에 따라 위해성 관리를 실시하고 결과를 식약처장에게 제출해야 한다.... 식약처장이 계획 수립과 실시에 필요한 행정적·기술적 지원을 할 수 있는 근거도 마련했다. 백 의원은 \"의료용...",
+          "pubDateISO": "2026-11-24T08:31:00+09:00"
+        },
+        {
+          "category": "ind",
+          "press": "이데일리",
+          "title": "선정화 큐리바이오 대표 “동물실험 대신 사람 3D 조직으로, 보톡스·비...",
+          "url": "https://www.edaily.co.kr/News/Read?newsId=01685926645649328&mediaCodeNo=257&utm_source=naver&utm_medium=referral&utm_campaign=news_syndication&utm_content=original_article",
+          "naverUrl": "https://n.news.naver.com/mnews/article/018/0006415089?sid=105",
+          "summary": "국내에서도 식약처가 최근 동물 사용을 없애거나 사용 동물 수를 줄이는 시험법을 생물학적제제의 기준·시험방법으로 활용할 수 있도록 명확히 하는 개정안을 행정 예고했다. 선 대표는 “지난 3년간 업계 전반에서...",
+          "pubDateISO": "2026-11-25T07:32:00+09:00"
         }
       ]
     },
