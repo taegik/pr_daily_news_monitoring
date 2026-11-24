@@ -154,6 +154,7 @@
         <button class="tab" role="tab" data-tab="cand" aria-selected="true">후보 기사</button>
         <button class="tab" role="tab" data-tab="collect" aria-selected="false">수집</button>
         <button class="tab" role="tab" data-tab="kw" aria-selected="false">키워드</button>
+        <button class="tab" role="tab" data-tab="quote" aria-selected="false">명언</button>
         <button class="tab" role="tab" data-tab="set" aria-selected="false">설정</button>
       </div>
     </div>
@@ -226,6 +227,31 @@
         </div>
       </section>
 
+      <!-- 명언 (전 계열사 공통, 날짜별 예약) -->
+      <section class="panel" id="p-quote" hidden>
+        <div class="box">
+          <h3>💬 오늘의 명언 <small style="color:var(--muted);font-weight:700;">전 계열사 공통</small></h3>
+          <p class="hint">날짜별로 미리 등록해 두면, 그날 발행하는 모든 계열사 화면에 <b>같은 명언</b>이 자동으로 표시됩니다. 발행할 때마다 따로 입력하지 않아도 됩니다. (사회공헌 주간 리포트는 별도의 [금주의 코멘트]를 사용합니다.)</p>
+          <div class="status ok" id="qSummary"></div>
+        </div>
+        <div class="box">
+          <h3>➕ 명언 한꺼번에 등록</h3>
+          <p class="hint">한 줄에 명언 하나씩 붙여 넣으세요. 인물은 <code>-</code> 또는 <code>|</code> 뒤에 적습니다. 날짜를 적지 않으면 아래 시작 날짜부터 <b>평일(주말 제외)</b> 순서대로 자동 배정됩니다. 엑셀에서 [날짜 / 명언 / 인물] 3칸을 복사해 붙여 넣어도 됩니다.</p>
+          <div class="field"><textarea class="textarea" id="qBulk" rows="7" placeholder="나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다. - 토머스 에디슨&#10;위기는 곧 기회의 다른 이름이다. | 윈스턴 처칠&#10;2026-12-24 | 날짜를 직접 지정할 수도 있습니다 | 인물"></textarea></div>
+          <div class="grid2">
+            <div class="field"><label>시작 날짜 <small>(날짜 없는 줄에 적용)</small></label><input class="input" type="date" id="qStart"></div>
+            <div class="field"><label>또는 파일 불러오기</label><input class="input" type="file" id="qFile" accept=".txt,.csv,.tsv,text/plain" style="padding:9px 10px;"></div>
+          </div>
+          <div class="status warn" id="qBulkHint" style="margin-bottom:10px;" hidden></div>
+          <button class="btn btn-primary" id="btnQAdd" style="width:100%;">💾 저장소에 등록하기</button>
+        </div>
+        <div class="box">
+          <div class="row" style="justify-content:space-between;margin-bottom:6px;"><h3 style="margin:0;">📅 등록된 명언</h3><button class="btn btn-sm" id="btnQOne">+ 한 건 추가</button></div>
+          <div id="qList"></div>
+          <button class="btn" id="qPastToggle" style="width:100%;margin-top:8px;" hidden>지난 명언 보기</button>
+        </div>
+      </section>
+
       <!-- 설정 -->
       <section class="panel" id="p-set" hidden>
         <div class="box">
@@ -273,17 +299,26 @@
     <div class="sheet-body" id="selBody"></div>
   </section>
 
+  <!-- 명언 한 건 편집 -->
+  <section class="sheet" id="quoteSheet" role="dialog" aria-label="명언 편집">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 class="sheet-title" id="qsTitle">명언 편집</h2><button class="icon-btn" data-close aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="sheet-body">
+      <div class="field"><label>날짜</label><input class="input" type="date" id="qsDate"></div>
+      <div class="field"><label>명언</label><textarea class="textarea" id="qsText" rows="3"></textarea></div>
+      <div class="field"><label>인물</label><input class="input" id="qsAuthor" placeholder="예) 토머스 에디슨"></div>
+      <div class="row"><button class="btn btn-danger" id="qsDel" hidden>삭제</button><button class="btn btn-primary grow" id="qsSave">💾 저장</button></div>
+    </div>
+  </section>
+
   <!-- 발행 -->
   <section class="sheet" id="pubSheet" role="dialog" aria-label="발행">
     <div class="sheet-grip"></div>
     <div class="sheet-head"><h2 class="sheet-title">전 직원 페이지에 발행</h2><button class="icon-btn" data-close aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="sheet-body">
       <div class="status ok" id="pubSummary"></div>
-      <div class="grid2">
-        <div class="field"><label>발행일</label><input class="input" id="pubDate" placeholder="YYYY.MM.DD"></div>
-        <div class="field" id="pubAuthorWrap"><label>명언 인물</label><input class="input" id="pubAuthor"></div>
-      </div>
-      <div class="field" id="pubQuoteWrap"><label>오늘의 한마디</label><textarea class="textarea" id="pubQuote" rows="2"></textarea></div>
+      <div class="field"><label>발행일</label><input class="input" id="pubDate" placeholder="YYYY.MM.DD"></div>
+      <div class="status ok" id="pubQuoteInfo"></div>
 
       <!-- 사회공헌(주간 리포트) 전용 입력 -->
       <div class="rpt" id="pubReport" hidden>
@@ -605,6 +640,131 @@
       }).join('') + '<button class="btn btn-danger" id="clearAll" style="width:100%;margin-top:14px;">전체 해제</button>' : '<div style="padding:30px 0;text-align:center;color:var(--muted);font-weight:600;">선정한 기사가 없습니다.</div>';
     }
 
+    /* ═════════ 명언 (전 계열사 공통 · 날짜별 예약) ═════════ */
+    function qNorm(d) {
+      var m = {}; ((d && d.items) || []).forEach(function (x) { if (x && /^\d{4}-\d{2}-\d{2}$/.test(x.date) && x.quote) m[x.date] = { date: x.date, quote: String(x.quote).trim(), author: String(x.author || '').trim() }; });
+      return { items: Object.keys(m).sort().map(function (k) { return m[k]; }) };
+    }
+    function quoteOn(iso) { var it = (A.quotes && A.quotes.items) || []; for (var i = 0; i < it.length; i++) if (it[i].date === iso) return it[i]; return null; }
+    function isWeekend(iso) { var d = P.parseIso(iso).getDay(); return d === 0 || d === 6; }
+    function nextWeekday(iso) { var x = iso; while (isWeekend(x)) x = P.addDays(x, 1); return x; }
+    function afterDay(iso) { return nextWeekday(P.addDays(iso, 1)); }
+    function shortDate(iso) { var p = iso.split('-'); return p[1] + '.' + p[2] + '(' + P.dayLabel(iso) + ')'; }
+    function normDate(t) {
+      var m = /^(\d{4})[-./](\d{1,2})[-./](\d{1,2})$/.exec(String(t).trim()); if (!m) return null;
+      return m[1] + '-' + ('0' + m[2]).slice(-2) + '-' + ('0' + m[3]).slice(-2);
+    }
+    function cleanQ(t) {      // 앞뒤를 감싼 따옴표만 제거 (문장 안의 따옴표는 유지)
+      t = String(t || '').trim();
+      var m = /^(["“‘'])([\s\S]*)(["”’'])$/.exec(t); if (m && m[2].indexOf(m[1]) < 0 && m[2].indexOf(m[3]) < 0) t = m[2].trim();
+      return t;
+    }
+    function qDefaultStart() {
+      var it = A.quotes.items, today = P.todayIso(), last = it.length ? it[it.length - 1].date : '';
+      return last && last >= today ? afterDay(last) : nextWeekday(today);
+    }
+    function parseQuoteText(text, startIso) {
+      var rows = [], bad = 0, cur = startIso || qDefaultStart(), first = true, prev = null;
+      String(text || '').split(/\r?\n/).forEach(function (raw) {
+        var line = raw.replace(/^﻿/, '').trim(); if (!line) return;
+        var parts;
+        if (line.indexOf('\t') >= 0) parts = line.split('\t'); else if (line.indexOf('|') >= 0) parts = line.split('|'); else if (line.indexOf(',') >= 0 && /^\d{4}[-./]\d/.test(line)) parts = line.split(',');
+        else { var i = Math.max(line.lastIndexOf(' - '), line.lastIndexOf(' – '), line.lastIndexOf(' — ')); parts = i > 0 ? [line.slice(0, i), line.slice(i + 3)] : [line]; }
+        parts = parts.map(function (x) { return x.trim(); }).filter(function (x, k) { return x !== '' || k === 0; });
+        var d = normDate(parts[0]); if (d) parts.shift();
+        var quote = cleanQ(parts[0]), author = (parts[1] || '').replace(/^[-–—~\s]+/, '').trim();
+        if (!quote) { bad++; return; }
+        if (d) cur = d; else if (prev !== null) cur = afterDay(prev); else cur = nextWeekday(cur);
+        rows.push({ date: cur, quote: quote, author: author }); prev = cur;
+      });
+      return { rows: rows, bad: bad };
+    }
+    function qMissing() {      // 오늘 이후 ~ 마지막 등록일 사이 비어 있는 평일
+      var it = A.quotes.items, today = P.todayIso(), out = [];
+      if (!it.length) return out; var last = it[it.length - 1].date;
+      for (var d = nextWeekday(today); d <= last; d = afterDay(d)) { if (!quoteOn(d)) out.push(d); }
+      return out;
+    }
+    function renderQuotes() {
+      if (!A.quotes) A.quotes = { items: [] };
+      var it = A.quotes.items, today = P.todayIso(), up = it.filter(function (x) { return x.date >= today; }), past = it.filter(function (x) { return x.date < today; });
+      var todayQ = quoteOn(today), last = it.length ? it[it.length - 1].date : '', miss = qMissing();
+      var days = 0; for (var d = nextWeekday(today); last && d <= last; d = afterDay(d)) days++;
+      var low = !last || last < P.addDays(today, 30), html;
+      html = '<div class="grow">' +
+        (todayQ ? '<b>오늘(' + shortDate(today) + ')의 명언</b><br>“' + esc(todayQ.quote) + '”' + (todayQ.author ? ' - ' + esc(todayQ.author) : '') : '<b>오늘(' + shortDate(today) + ') 등록된 명언이 없습니다.</b>') +
+        '<br><span style="font-weight:700;">' + (last && last >= today ? '앞으로 평일 ' + days + '일치(~' + shortDate(last) + ')까지 등록됨' : '앞으로 등록된 명언이 없습니다') + (low ? ' · 한 달 이상(약 22일치) 미리 등록해 두는 것을 권장합니다' : '') + '</span>' +
+        (miss.length ? '<br>⚠️ 비어 있는 평일 ' + miss.length + '일: ' + miss.slice(0, 6).map(shortDate).join(', ') + (miss.length > 6 ? ' 외' : '') : '') + '</div>';
+      $('qSummary').className = 'status ' + (low || miss.length || !todayQ ? 'warn' : 'ok'); $('qSummary').innerHTML = html;
+      var row = function (x) {
+        return '<div class="sel-item"><div class="t"><small style="color:' + (x.date === today ? 'var(--brand-700)' : 'var(--muted)') + ';">' + shortDate(x.date) + (x.date === today ? ' · 오늘' : '') + '</small>“' + esc(x.quote) + '”' + (x.author ? '<small>- ' + esc(x.author) + '</small>' : '') + '</div>' +
+          '<button class="mini" data-qedit="' + x.date + '" aria-label="수정">✎</button></div>';
+      };
+      $('qList').innerHTML = (up.length ? up.map(row).join('') : '<div style="padding:22px 0;text-align:center;color:var(--muted);font-weight:600;">등록된 예정 명언이 없습니다.</div>') +
+        (A.qPast && past.length ? '<div style="margin:14px 0 4px;font-size:.78rem;font-weight:800;color:var(--muted);">지난 명언 (최근 ' + Math.min(past.length, 30) + '개)</div>' + past.slice(-30).reverse().map(row).join('') : '');
+      $('qPastToggle').hidden = !past.length; $('qPastToggle').textContent = A.qPast ? '지난 명언 접기' : '지난 명언 보기 (' + past.length + '개)';
+      if (!$('qStart').value) $('qStart').value = qDefaultStart();
+      renderQBulkHint();
+    }
+    function renderQBulkHint() {
+      var t = $('qBulk').value, el = $('qBulkHint'); if (!t.trim()) { el.hidden = true; return; }
+      var r = parseQuoteText(t, $('qStart').value || undefined); el.hidden = false;
+      if (!r.rows.length) { el.className = 'status bad'; el.textContent = '등록할 수 있는 줄이 없습니다. 한 줄에 명언 하나씩 적어주세요.'; return; }
+      var ow = r.rows.filter(function (x) { return quoteOn(x.date); }).length, ds = r.rows.map(function (x) { return x.date; }).sort();
+      el.className = 'status ' + (ow || r.bad ? 'warn' : 'ok');
+      el.innerHTML = '<div class="grow">' + r.rows.length + '개 → ' + shortDate(ds[0]) + ' ~ ' + shortDate(ds[ds.length - 1]) + (ow ? '<br>이미 등록된 날짜 ' + ow + '건은 새 내용으로 덮어씁니다.' : '') + (r.bad ? '<br>내용이 비어 건너뛴 줄 ' + r.bad + '개' : '') + '</div>';
+    }
+    async function saveQuotes(msg) {
+      A.quotes = qNorm(A.quotes);
+      await putJson('quotes.json', { updatedAt: new Date().toISOString().slice(0, 10), items: A.quotes.items }, msg);
+    }
+    async function addQuotes() {
+      var r = parseQuoteText($('qBulk').value, $('qStart').value || undefined);
+      if (!r.rows.length) { P.toast('⚠️ 등록할 명언을 한 줄에 하나씩 입력해주세요.'); return; }
+      var ow = r.rows.filter(function (x) { return quoteOn(x.date); }).length;
+      if (ow && !confirm('이미 등록된 날짜 ' + ow + '건은 새 내용으로 덮어씁니다. 계속할까요?')) return;
+      var btn = $('btnQAdd'), bak = A.quotes; btn.disabled = true; btn.textContent = '⏳ 저장 중…';
+      try {
+        var cur = {}; A.quotes.items.forEach(function (x) { cur[x.date] = x; }); r.rows.forEach(function (x) { cur[x.date] = x; });
+        A.quotes = { items: Object.keys(cur).map(function (k) { return cur[k]; }) };
+        await saveQuotes('quotes: ' + r.rows.length + '건 등록');
+        $('qBulk').value = ''; $('qStart').value = ''; P.toast('✅ 명언 ' + r.rows.length + '개를 등록했습니다.'); renderQuotes();
+      } catch (x) { A.quotes = bak; P.toast('❌ 저장 오류: ' + x.message, 4200); }
+      btn.disabled = false; btn.textContent = '💾 저장소에 등록하기';
+    }
+    function openQuoteSheet(iso) {
+      var x = iso ? quoteOn(iso) : null; A.qEdit = iso || '';
+      $('qsTitle').textContent = x ? '명언 수정' : '명언 한 건 추가';
+      $('qsDate').value = x ? x.date : qDefaultStart(); $('qsText').value = x ? x.quote : ''; $('qsAuthor').value = x ? x.author : '';
+      $('qsDel').hidden = !x; showSheet('quoteSheet');
+    }
+    async function saveQuoteOne() {
+      var d = $('qsDate').value, t = cleanQ($('qsText').value), au = $('qsAuthor').value.trim();
+      if (!d) { P.toast('⚠️ 날짜를 선택해주세요.'); return; } if (!t) { P.toast('⚠️ 명언을 입력해주세요.'); return; }
+      if (d !== A.qEdit && quoteOn(d) && !confirm(shortDate(d) + ' 에는 이미 다른 명언이 있습니다. 덮어쓸까요?')) return;
+      var bak = A.quotes, btn = $('qsSave'); btn.disabled = true;
+      try {
+        var cur = {}; A.quotes.items.forEach(function (x) { cur[x.date] = x; }); if (A.qEdit) delete cur[A.qEdit]; cur[d] = { date: d, quote: t, author: au };
+        A.quotes = { items: Object.keys(cur).map(function (k) { return cur[k]; }) };
+        await saveQuotes('quotes: ' + d + ' 저장'); closeSheets(); P.toast('✅ 저장했습니다.'); renderQuotes();
+      } catch (x) { A.quotes = bak; P.toast('❌ 저장 오류: ' + x.message, 4200); }
+      btn.disabled = false;
+    }
+    async function delQuoteOne() {
+      if (!A.qEdit || !confirm(shortDate(A.qEdit) + ' 명언을 삭제할까요?')) return;
+      var bak = A.quotes;
+      try {
+        A.quotes = { items: A.quotes.items.filter(function (x) { return x.date !== A.qEdit; }) };
+        await saveQuotes('quotes: ' + A.qEdit + ' 삭제'); closeSheets(); P.toast('🗑️ 삭제했습니다.'); renderQuotes();
+      } catch (x) { A.quotes = bak; P.toast('❌ 삭제 오류: ' + x.message, 4200); }
+    }
+    function renderPubQuote() {
+      var iso = P.toIso($('pubDate').value), q = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? quoteOn(iso) : null, el = $('pubQuoteInfo');
+      el.className = 'status ' + (q ? 'ok' : 'warn');
+      el.innerHTML = q ? '<div class="grow"><b>💬 이날의 명언 (전 계열사 공통)</b><br>“' + esc(q.quote) + '”' + (q.author ? ' - ' + esc(q.author) : '') + '</div>'
+        : '<div class="grow"><b>💬 이 날짜에 등록된 명언이 없습니다.</b><br>[명언] 탭에서 등록하면 자동으로 표시됩니다. 지금 발행하면 명언 없이(기본 문구로) 나갑니다.</div>';
+    }
+
     /* ═════════ 발행 / 미리보기 ═════════ */
     function buildEntry() {
       var l = selectedList(), date = $('pubDate').value.trim(), iso = P.toIso(date);
@@ -617,7 +777,7 @@
       var e = {
         affiliate: A.aff, name: cfg().name, manager: cfg().manager, cycle: cfg().cycle, date: date,
         dayLabel: P.dayLabel(iso), scrapeWindow: cfg().cycle + ' · 담당: ' + cfg().manager + ' · 확정 ' + arts.length + '건',
-        quote: $('pubQuote').value.trim(), author: $('pubAuthor').value.trim(), articles: arts
+        quote: (quoteOn(iso) || {}).quote || '', author: (quoteOn(iso) || {}).author || '', articles: arts
       };
       if (P.isReport(A.aff)) addReport(e, iso);
       return e;
@@ -656,16 +816,14 @@
     }
     function openPublish() {
       var l = selectedList(); if (!l.length) { P.toast('⚠️ 최소 1건 이상의 기사를 선정해주세요.'); return; }
-      var common = (A.pub && A.pub.common) || {};
       $('pubDate').value = store.get('pr_pub_date_' + P.todayIso(), '') || P.toDot(P.todayIso());
-      $('pubQuote').value = store.get('pr_pub_quote', '') || common.quote || cfg().quote;
-      $('pubAuthor').value = store.get('pr_pub_author', '') || common.author || cfg().author;
       var c = { own: 0, comp: 0, ind: 0 }; l.forEach(function (a) { c[catOf(a)]++; });
       var tg = P.targetOf(A.aff), mn = P.minOf(A.aff), rep = P.isReport(A.aff);
       var warn = l.length > tg ? ' (권장 ' + mn + '~' + tg + '건 초과)' : (l.length < mn ? ' (권장 ' + mn + '건 미만)' : '');
       $('pubSummary').className = 'status ' + (warn ? 'warn' : 'ok');
       $('pubSummary').innerHTML = '<div class="grow"><b>' + esc(cfg().name) + '</b> · ' + l.length + '건' + warn + '<br>' + L('own') + ' ' + c.own + ' · ' + L('comp') + ' ' + c.comp + ' · ' + L('ind') + ' ' + c.ind + '</div>';
-      $('pubReport').hidden = !rep; $('pubQuoteWrap').hidden = rep; $('pubAuthorWrap').hidden = rep;
+      $('pubReport').hidden = !rep; $('pubQuoteInfo').hidden = rep;
+      if (!rep) renderPubQuote();
       if (rep) fillReportForm(l);
       showSheet('pubSheet');
     }
@@ -683,7 +841,7 @@
       var e = buildEntry();
       if (!/^\d{4}\.\d{2}\.\d{2}$/.test(e.date)) { P.toast('⚠️ 발행일을 YYYY.MM.DD 형식으로 입력해주세요.'); return; }
       var rep = P.isReport(A.aff), tg = P.targetOf(A.aff);
-      if (!rep && !e.quote) { P.toast('⚠️ 오늘의 한마디를 입력해주세요.'); return; }
+      if (!rep && !e.quote && !confirm('이 날짜(' + e.date + ')에 등록된 명언이 없습니다.\n[명언] 탭에서 먼저 등록하면 모든 계열사에 공통 적용됩니다.\n\n명언 없이(기본 문구로) 발행할까요?')) return;
       if (e.date !== P.toDot(P.todayIso()) && !confirm('발행일이 오늘(' + P.toDot(P.todayIso()) + ')이 아닌 ' + e.date + ' 입니다. 계속할까요?')) return;
       if (e.articles.length > tg && !confirm('권장 건수(' + tg + '건)를 넘었습니다. 그대로 발행할까요?')) return;
       var btn = $('btnDoPublish'); btn.disabled = true; btn.textContent = '⏳ 발행 중…';
@@ -692,13 +850,11 @@
         try { pubJson = await readJson('published_data.json'); } catch (x) {}
         pubJson.published = pubJson.published || {}; pubJson.history = pubJson.history || {};
         pubJson.published[A.aff] = e;                          // 다른 계열사의 발행분/날짜는 건드리지 않음
-        if (!rep) pubJson.common = { date: e.date, quote: e.quote, author: e.author };   // 주간 리포트(사회공헌)는 매일 한마디를 덮어쓰지 않음
         var set = new Set(pubJson.history[A.aff] || []);
         e.articles.forEach(function (a) { var n = P.normTitle(a.title); if (n) set.add(n); });
         pubJson.history[A.aff] = Array.from(set).slice(-800);
         await putJson('published_data.json', pubJson, 'publish: ' + e.name + ' daily news (' + e.date + ')');
         A.pub = pubJson;
-        if (!rep) { store.set('pr_pub_quote', e.quote); store.set('pr_pub_author', e.author); }
         store.set('pr_pub_date_' + P.todayIso(), e.date);
         closeSheets(); P.toast('🚀 [' + e.name + '] 발행 완료! 지난 기사 보관은 약 1분 뒤 반영됩니다.', 4200);
         renderCand();
@@ -830,9 +986,10 @@
     function setTab(t) {
       A.tab = t;
       document.querySelectorAll('.tab').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.tab === t); });
-      ['cand', 'collect', 'kw', 'set'].forEach(function (x) { $('p-' + x).hidden = x !== t; });
+      ['cand', 'collect', 'kw', 'quote', 'set'].forEach(function (x) { $('p-' + x).hidden = x !== t; });
       if (t === 'collect') { renderRunTargets(); renderDiag(); loadRuns(); }
       if (t === 'kw') renderKw();
+      if (t === 'quote') renderQuotes();
       if (t === 'set') renderSettings();
       window.scrollTo(0, 0);
     }
@@ -842,8 +999,8 @@
     }
     async function boot() {
       renderAff(); renderSettings(); setPreset('auto'); renderRunTargets(); syncAffUi();
-      var res = await Promise.all([readJson('keywords.json').catch(function () { return null; }), readJson('published_data.json').catch(function () { return null; })]);
-      A.kw = res[0] || {}; A.pub = res[1];
+      var res = await Promise.all([readJson('keywords.json').catch(function () { return null; }), readJson('published_data.json').catch(function () { return null; }), readJson('quotes.json').catch(function () { return null; })]);
+      A.kw = res[0] || {}; A.pub = res[1]; A.quotes = qNorm(res[2]);
       var q = new URLSearchParams(location.search).get('corp'); if (q && P.AFFILIATES[q]) A.aff = q;
       renderAff(); syncAffUi(); await loadPool();
       if (!A.kw[A.aff] && A.pool && A.pool.keywords) A.kw = A.pool.keywords;
@@ -860,6 +1017,7 @@
         A.runSel = orderKeys(cur); renderRunTargets(); return;
       }
       if ((el = q('[data-tp]'))) { setTargetPreset(el.dataset.tp); return; }
+      if ((el = q('[data-qedit]'))) { openQuoteSheet(el.dataset.qedit); return; }
       if ((el = q('[data-f]'))) { A.filter = el.dataset.f; A.limit = 40; renderCand(); return; }
       if ((el = q('[data-kwf]'))) { A.kwFilter = A.kwFilter === el.dataset.kwf ? '' : el.dataset.kwf; A.limit = 40; renderKwBar(); renderList(); return; }
       if ((el = q('[data-cat]'))) {
@@ -897,6 +1055,16 @@
     $('btnRun').addEventListener('click', runScrape);
     ['dStart', 'dEnd'].forEach(function (id) { $(id).addEventListener('input', function () { A.preset = ''; document.querySelectorAll('[data-preset]').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); renderRangeHint(); }); });
     $('pubReport').addEventListener('input', saveRptDraft);
+    $('pubDate').addEventListener('input', function () { if (!$('pubQuoteInfo').hidden) renderPubQuote(); });
+    $('qBulk').addEventListener('input', renderQBulkHint); $('qStart').addEventListener('input', renderQBulkHint);
+    $('btnQAdd').addEventListener('click', addQuotes); $('btnQOne').addEventListener('click', function () { openQuoteSheet(''); });
+    $('qsSave').addEventListener('click', saveQuoteOne); $('qsDel').addEventListener('click', delQuoteOne);
+    $('qPastToggle').addEventListener('click', function () { A.qPast = !A.qPast; renderQuotes(); });
+    $('qFile').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0]; if (!f) return;
+      var rd = new FileReader(); rd.onload = function () { $('qBulk').value = String(rd.result || ''); renderQBulkHint(); P.toast('📄 파일 내용을 불러왔습니다. 확인 후 [등록하기]를 눌러주세요.'); e.target.value = ''; };
+      rd.readAsText(f, 'utf-8');
+    });
     $('kwAdd').addEventListener('click', function () {
       var raw = $('kwNew').value, g = $('kwGroup').value, o = kwObj();
       raw.split(/[,\n]/).map(function (s) { return s.trim(); }).filter(Boolean).forEach(function (k) {

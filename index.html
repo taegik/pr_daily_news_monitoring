@@ -388,8 +388,16 @@
       return Promise.all([
         getJson('published_data.json').catch(function () { return null; }),
         getJson('archive/index.json').catch(function () { return null; }),
-        getJson('archive/stats.json').catch(function () { return null; })
-      ]).then(function (r) { S.pub = r[0]; S.archive = r[1]; S.stats = r[2]; });
+        getJson('archive/stats.json').catch(function () { return null; }),
+        getJson('quotes.json').catch(function () { return null; })
+      ]).then(function (r) { S.pub = r[0]; S.archive = r[1]; S.stats = r[2]; S.quotes = r[3]; });
+    }
+    /* 오늘의 명언: 날짜별 공통 명언(quotes.json) → 발행 당시 저장된 명언 → 기본 문구 순 */
+    function quoteFor(iso, e) {
+      var it = S.quotes && S.quotes.items || [];
+      for (var i = 0; i < it.length; i++) if (it[i].date === iso && it[i].quote) return { quote: it[i].quote, author: it[i].author || '' };
+      if (e && e.quote) return { quote: e.quote, author: e.author || '' };
+      var cfg = P.AFFILIATES[S.aff] || {}; return { quote: cfg.quote || '', author: cfg.author || '' };
     }
     function latestPublished(aff) { return S.pub && S.pub.published && S.pub.published[aff] || null; }
     function datesFor(aff) {
@@ -504,7 +512,8 @@
         ? '<span class="stat">전체<b>' + c.all + '</b></span><span class="stat">' + lb('own') + '<b>' + c.own + '</b></span><span class="stat">' + lb('comp') + '<b>' + c.comp + '</b></span><span class="stat">' + lb('ind') + '<b>' + c.ind + '</b></span>'
         : '';
       $('quoteBox').hidden = rep;
-      var q = e && e.quote || cfg.quote, au = e && e.author || cfg.author;
+      var qo = quoteFor(S.iso, e), q = qo.quote, au = qo.author;
+      $('quoteBox').hidden = rep || !q;
       $('quoteText').textContent = q ? '“' + q + '”' : '';
       $('quoteAuthor').textContent = au ? '- ' + au : '';
     }
@@ -719,7 +728,8 @@
     function smsText() {
       var cfg = P.AFFILIATES[S.aff], e = S.entry; if (!e) return '';
       if (isRep()) return smsReport(cfg, e);
-      var L = ['[' + P.toDot(S.iso) + '] ' + cfg.name + ' 모니터링', '', e.quote || cfg.quote, '- ' + (e.author || cfg.author), ''];
+      var qo = quoteFor(S.iso, e), L = ['[' + P.toDot(S.iso) + '] ' + cfg.name + ' 모니터링', ''];
+      if (qo.quote) { L.push(qo.quote); if (qo.author) L.push('- ' + qo.author); L.push(''); }
       ['own', 'comp', 'ind'].forEach(function (cat) {
         L.push('[' + P.catLabel(S.aff, cat) + ']');
         var items = (e.articles || []).filter(function (a) { return a.category === cat; });
