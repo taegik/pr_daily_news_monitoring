@@ -21,6 +21,10 @@ on:
         description: '종료일 YYYY-MM-DD (비우면 현재)'
         required: false
         default: ''
+      add_urls:
+        description: '[URL 직접 추가용] 기사 주소(공백으로 구분). 입력하면 수집 대신 이 기사만 추가합니다. 구분값은 위 affiliate 한 곳.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -51,7 +55,8 @@ jobs:
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
-          RUN_MODE: scrape
+          RUN_MODE: ${{ github.event.inputs.add_urls && 'addurls' || 'scrape' }}
+          ADD_URLS: ${{ github.event.inputs.add_urls || '' }}
           TARGET_AFFILIATE: ${{ github.event.inputs.affiliate || 'all' }}
           START_DATE: ${{ github.event.inputs.start_date || '' }}
           END_DATE: ${{ github.event.inputs.end_date || '' }}
