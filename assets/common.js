@@ -10,6 +10,11 @@
     ADMIN_PW_SALT: 'sangsangin-pr-news-v1',
     ADMIN_PW_ITER: 250000,
 
+    // ── 메인 관리자 비밀번호 (수동 뉴스 수집 잠금) ───────────────────────
+    // 네이버 검색 한도 보호용입니다. 평문은 저장하지 않고 해시만 저장합니다.
+    MAIN_PW_HASH: 'ab628547ca18ae041251c4c5c0e62d4cfaf992b5b85bc67c084c3f31d12bbf01',
+    MAIN_PW_SALT: 'sangsangin-pr-main-v1',
+
     // ── 계열사 ───────────────────────────────────────────────────────────
     AFFILIATES: {
       sangsangin:  { name: '상상인',          manager: '박슬기 과장', cycle: '매일 오전 8시~8시반', publishHour: 8,
@@ -20,11 +25,11 @@
                      quote: '시너지는 전체가 부분의 합보다 크다는 것을 증명한다.', author: '스티븐 코비' },
       medica:      { name: '메디카코리아',    manager: '김태기 과장', cycle: '매일 오전 9시~9시반', publishHour: 9,
                      quote: '나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.', author: '토머스 에디슨' },
-      neurobiogen: { name: '뉴로바이오젠',    manager: '김성목 대리', cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
+      neurobiogen: { name: '뉴로바이오젠',    title: '뉴로바이오젠 위클리 모니터링', manager: '김성목 대리', cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
                      quote: '과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.', author: '알베르트 아인슈타인' },
       // 사회공헌: 계열사가 아니라 '주간 리포트' 형태의 구분값입니다 (매주 금요일 발행).
       // type: 'report' 이면 임직원 화면이 주간 리포트 레이아웃(키워드·금주의 코멘트·섹션·종합 인사이트)으로 바뀝니다.
-      csr:         { name: '사회공헌',        type: 'report', title: '상상인 위클리 소셜임팩트', manager: 'PR팀 사회공헌담당',
+      csr:         { name: '사회공헌',        type: 'report', title: '사회공헌 위클리 모니터링', manager: 'PR팀 사회공헌담당',
                      cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
                      target: 9, min: 6, quota: { target: 9, own: 3, comp: 3, ind: 3, press: 2 },
                      quote: '', author: '',
@@ -115,6 +120,14 @@
     var enc = new TextEncoder();
     var key = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']);
     var bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(PRM.ADMIN_PW_SALT), iterations: PRM.ADMIN_PW_ITER }, key, 256);
+    return Array.prototype.map.call(new Uint8Array(bits), function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  };
+
+  PRM.hashMain = async function (pw) {
+    if (!(global.crypto && global.crypto.subtle)) throw new Error('이 브라우저(또는 http 주소)에서는 확인할 수 없습니다. https 주소에서 사용하세요.');
+    var enc = new TextEncoder();
+    var key = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']);
+    var bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(PRM.MAIN_PW_SALT), iterations: PRM.ADMIN_PW_ITER }, key, 256);
     return Array.prototype.map.call(new Uint8Array(bits), function (b) { return b.toString(16).padStart(2, '0'); }).join('');
   };
 
