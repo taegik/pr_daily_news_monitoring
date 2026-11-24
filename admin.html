@@ -504,15 +504,28 @@
       }
       return fetch(path, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
     }
-    async function putJson(path, obj, message) {
+    /* 저장소 파일 읽기-수정-쓰기. 다른 사람/자동 작업이 그 사이에 파일을 바꿔 충돌(409)이 나면
+       최신 내용을 다시 읽어 수정을 다시 적용한 뒤 재시도합니다. (GitHub API 응답은 최대 60초 캐시되므로 no-store 로 항상 새로 읽음) */
+    async function updateJson(path, mutate, message) {
       var g = gh(); if (!g.token) throw new Error('먼저 [설정]에서 GitHub 토큰을 등록해주세요.');
-      var sha = null, ex = await ghFetch('/repos/' + g.repo + '/contents/' + path + '?ref=main');
-      if (ex.status === 200) sha = (await ex.json()).sha; else if (ex.status !== 404) throw new Error('GitHub 조회 오류 (' + ex.status + ')');
-      var body = { message: message, content: b64(JSON.stringify(obj, null, 2)), branch: 'main' }; if (sha) body.sha = sha;
-      var r = await ghFetch('/repos/' + g.repo + '/contents/' + path, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      if (!r.ok) { var e = await r.json().catch(function () { return {}; }); throw new Error(e.message || ('GitHub 저장 실패 (' + r.status + ')')); }
-      return r.json();
+      for (var i = 0; i < 4; i++) {
+        var ex = await ghFetch('/repos/' + g.repo + '/contents/' + path + '?ref=main&_=' + Date.now(), { cache: 'no-store' });
+        var sha = null, cur = null;
+        if (ex.status === 200) {
+          var j = await ex.json(); sha = j.sha;
+          try { if (j.content) cur = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(String(j.content).replace(/\s/g, '')), function (c) { return c.charCodeAt(0); }))); } catch (e) { cur = null; }
+          if (cur === null) { try { var rr = await ghFetch('/repos/' + g.repo + '/contents/' + path + '?ref=main&_=' + Date.now(), { headers: { Accept: 'application/vnd.github.raw+json' }, cache: 'no-store' }); if (rr.ok) cur = await rr.json(); } catch (e) {} }
+        } else if (ex.status !== 404) throw new Error('GitHub 조회 오류 (' + ex.status + ')');
+        var obj = mutate(cur);
+        var body = { message: message, content: b64(JSON.stringify(obj, null, 2)), branch: 'main' }; if (sha) body.sha = sha;
+        var r = await ghFetch('/repos/' + g.repo + '/contents/' + path, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        if (r.ok) return { json: obj, res: await r.json() };
+        var e = await r.json().catch(function () { return {}; });
+        if ((r.status === 409 || (r.status === 422 && /sha/i.test(e.message || ''))) && i < 3) { await new Promise(function (res) { setTimeout(res, 1500 * (i + 1)); }); continue; }
+        throw new Error(r.status === 409 ? '다른 담당자(또는 자동 작업)가 동시에 저장 중입니다. 1분 뒤 다시 시도해주세요.' : (e.message || ('GitHub 저장 실패 (' + r.status + ')')));
+      }
     }
+    async function putJson(path, obj, message) { return (await updateJson(path, function () { return obj; }, message)).res; }
 
     /* ═════════ 자동 수집 현황 · 메인 관리자 잠금 · 휴무일 ═════════ */
     function mainOk() { try { return sessionStorage.getItem('pr_main_ok') === '1'; } catch (e) { return false; } }
@@ -1014,14 +1027,16 @@
       if (e.articles.length > tg && !confirm('권장 건수(' + tg + '건)를 넘었습니다. 그대로 발행할까요?')) return;
       var btn = $('btnDoPublish'); btn.disabled = true; btn.textContent = '⏳ 발행 중…';
       try {
-        var pubJson = { history: {}, published: {} };
-        try { pubJson = await readJson('published_data.json'); } catch (x) {}
-        pubJson.published = pubJson.published || {}; pubJson.history = pubJson.history || {};
-        pubJson.published[A.aff] = e;                          // 다른 계열사의 발행분/날짜는 건드리지 않음
-        var set = new Set(pubJson.history[A.aff] || []);
-        e.articles.forEach(function (a) { var n = P.normTitle(a.title); if (n) set.add(n); });
-        pubJson.history[A.aff] = Array.from(set).slice(-800);
-        await putJson('published_data.json', pubJson, 'publish: ' + e.name + ' daily news (' + e.date + ')');
+        var out = await updateJson('published_data.json', function (cur) {     // 저장 직전 최신 파일을 읽어 내 계열사 부분만 갱신 (충돌 시 자동 재시도)
+          var pubJson = cur || { history: {}, published: {} };
+          pubJson.published = pubJson.published || {}; pubJson.history = pubJson.history || {};
+          pubJson.published[A.aff] = e;                          // 다른 계열사의 발행분/날짜는 건드리지 않음
+          var set = new Set(pubJson.history[A.aff] || []);
+          e.articles.forEach(function (a) { var n = P.normTitle(a.title); if (n) set.add(n); });
+          pubJson.history[A.aff] = Array.from(set).slice(-800);
+          return pubJson;
+        }, 'publish: ' + e.name + ' daily news (' + e.date + ')');
+        var pubJson = out.json;
         A.pub = pubJson;
         store.set('pr_pub_date_' + P.todayIso(), e.date);
         closeSheets(); P.toast('🚀 [' + e.name + '] 발행 완료! 지난 기사 보관은 약 1분 뒤 반영됩니다.', 4200);
