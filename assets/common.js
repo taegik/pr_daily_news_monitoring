@@ -6,7 +6,7 @@
     // ── 관리자 비밀번호 해시 ─────────────────────────────────────────────
     // 비어 있으면 admin.html 이 '비밀번호 설정' 화면을 보여줍니다.
     // 설정 화면에서 생성한 값을 아래에 붙여넣고 저장소에 올리면 활성화됩니다.
-    ADMIN_PW_HASH: '',
+    ADMIN_PW_HASH: '488bd710ee6105885424ac435b4725567ea25ba888d2f106c6ebc1f1a4ad5bd7',
     ADMIN_PW_SALT: 'sangsangin-pr-news-v1',
     ADMIN_PW_ITER: 250000,
 
