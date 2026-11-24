@@ -4,17 +4,17 @@ on:
   schedule:
     # 평일 아침 자동 수집 (UTC 기준, 한국시간 = UTC+9)
     #  - 22:35 UTC (일~목) = KST 07:35 (월~금) : 상상인 (8시 발행 전)
-    #  - 23:35 UTC (일~목) = KST 08:35 (월~금) : 엠아이텍·시너지이노베이션·메디카코리아 (+금요일 뉴로바이오젠)
+    #  - 23:35 UTC (일~목) = KST 08:35 (월~금) : 엠아이텍·시너지이노베이션·메디카코리아 (+금요일 뉴로바이오젠·사회공헌)
     - cron: '35 22 * * 0-4'
     - cron: '35 23 * * 0-4'
   workflow_dispatch:
     inputs:
       affiliate:
-        description: '수집 대상 (all 또는 sangsangin / mitech / synergy / medica / neurobiogen)'
+        description: '수집 대상 (all, 또는 쉼표로 여러 개: sangsangin,mitech,synergy,medica,neurobiogen,csr)'
         required: false
         default: 'all'
       start_date:
-        description: '시작일 YYYY-MM-DD (비우면 전일~현재, 월요일은 금요일부터)'
+        description: '시작일 YYYY-MM-DD (비우면 자동: 전일~현재·월요일은 금요일부터, 주 1회 발행 대상은 최근 7일)'
         required: false
         default: ''
       end_date:
