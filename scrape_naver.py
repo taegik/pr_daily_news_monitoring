@@ -723,6 +723,10 @@ def run_scrape():
         n_naver = sum(1 for a in collected if a.get('source') == 'naver')
         n_google = len(collected) - n_naver
         used = f"NAVER API {n_naver}건 / Google 보조 {n_google}건"
+        # 관리자가 URL로 직접 추가한 기사(최근 3일)는 재수집해도 후보에 남겨 둡니다
+        kept_manual = keep_recent_manual((affiliates_out.get(aff_key) or {}).get('articles', []), now_dt, collected)
+        if kept_manual:
+            collected = kept_manual + collected
         affiliates_out[aff_key] = {
             "scrapedAt": f"{now_dt.strftime('%Y-%m-%d %H:%M:%S KST')} ({used})",
             "dateRange": a_label,
@@ -759,6 +763,255 @@ def run_scrape():
         log("[FAIL] 모든 대상 계열사에서 0건이 수집되었습니다.")
         return 2
     return 0
+
+
+# ---------------------------------------------------------------------------
+# URL로 기사 직접 추가 (관리자 ▸ 후보 기사 ▸ [URL로 기사 추가])
+# ---------------------------------------------------------------------------
+MANUAL_KEEP_DAYS = 3
+MAX_MANUAL_URLS = 10
+
+
+def keep_recent_manual(old_articles, now_dt, new_articles):
+    """이전 풀에서 직접 추가한(manual) 기사 중 최근 N일 이내인 것만 남기고, 새로 수집된 기사와 제목이 겹치면 제외"""
+    cutoff = now_dt.timestamp() - MANUAL_KEEP_DAYS * 86400
+    have = {normalize_title(a.get('title', '')) for a in new_articles}
+    out = []
+    for a in old_articles or []:
+        if a.get('manual') and a.get('addedTs', 0) >= cutoff and normalize_title(a.get('title', '')) not in have:
+            out.append(a)
+    return out
+
+
+class ArticleParser(HTMLParser):
+    """제목·메타태그·본문 첫 문단을 한 번에 추출"""
+    def __init__(self):
+        super().__init__()
+        self.meta = {}
+        self.title = ''
+        self.paras = []
+        self._in_title = False
+        self._skip = 0
+        self._in_p = False
+        self._buf = []
+
+    def handle_starttag(self, tag, attrs):
+        tag = tag.lower()
+        a = {k.lower(): (v or '') for k, v in attrs if k}
+        if tag == 'meta':
+            key = (a.get('property') or a.get('name') or a.get('itemprop') or '').strip().lower()
+            val = a.get('content', '').strip()
+            if key and val and key not in self.meta:
+                self.meta[key] = val
+        elif tag == 'title':
+            self._in_title = True
+        elif tag in ('script', 'style', 'noscript', 'nav', 'header', 'footer', 'aside', 'form', 'button'):
+            self._skip += 1
+        elif tag == 'p' and not self._skip:
+            self._in_p = True
+            self._buf = []
+
+    def handle_endtag(self, tag):
+        tag = tag.lower()
+        if tag == 'title':
+            self._in_title = False
+        elif tag in ('script', 'style', 'noscript', 'nav', 'header', 'footer', 'aside', 'form', 'button'):
+            self._skip = max(0, self._skip - 1)
+        elif tag == 'p' and self._in_p:
+            self._in_p = False
+            text = re.sub(r'\s+', ' ', ''.join(self._buf)).strip()
+            if len(text) >= 40 and len(self.paras) < 8:
+                self.paras.append(text)
+
+    def handle_data(self, data):
+        if self._in_title:
+            self.title += data
+        elif self._in_p and not self._skip:
+            self._buf.append(data)
+
+
+def _decode_page(raw, headers):
+    charset = headers.get_content_charset()
+    if not charset:
+        head = raw[:4096].decode('ascii', errors='ignore').lower()
+        m = re.search(r'charset=["\']?([\w-]+)', head)
+        charset = m.group(1) if m else ''
+    if charset in ('euc-kr', 'ks_c_5601-1987', 'ksc5601'):
+        charset = 'cp949'
+    if charset:
+        try:
+            return raw.decode(charset, errors='replace')
+        except LookupError:
+            pass
+    try:                       # 선언이 없으면 UTF-8 → 실패 시 한국 사이트에 흔한 CP949
+        return raw.decode('utf-8')
+    except UnicodeDecodeError:
+        return raw.decode('cp949', errors='replace')
+
+
+def _parse_meta_date(meta, now_dt):
+    for k in ('article:published_time', 'og:article:published_time', 'datepublished', 'pubdate',
+              'article:published', 'date', 'dc.date', 'dc.date.issued', 'og:regdate', 'article:modified_time'):
+        v = meta.get(k)
+        if not v:
+            continue
+        v = v.strip()
+        try:
+            dt = datetime.fromisoformat(v.replace('Z', '+00:00').replace(' ', 'T', 1))
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=KST)
+            return dt.astimezone(KST)
+        except Exception:
+            pass
+        m = re.search(r'(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})(?:\D+(\d{1,2}):(\d{2}))?', v)
+        if m:
+            try:
+                return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)),
+                                int(m.group(4) or 0), int(m.group(5) or 0), tzinfo=KST)
+            except Exception:
+                pass
+    return now_dt
+
+
+def first_sentences(text, limit=200):
+    """본문 앞부분 1~2문장을 limit 글자 안에서 자연스럽게 자른다"""
+    text = re.sub(r'\s+', ' ', clean_html(text or '')).strip()
+    # '(서울=연합뉴스) 홍길동 기자 =' 같은 머리말 제거
+    text = re.sub(r'^\([^)]{1,25}\)\s*(?=[^.]{0,30}=)', '', text)
+    text = re.sub(r'^([가-힣]{2,4}\s*)?(기자|특파원)\s*=\s*', '', text)
+    if len(text) <= limit:
+        return text
+    cut = text[:limit]
+    m = list(re.finditer(r'[.!?。]|다\s', cut))
+    if m and m[-1].end() >= 40:
+        return cut[:m[-1].end()].strip()
+    return cut.rstrip() + '…'
+
+
+def clean_article_title(title, press, site_name):
+    t = html.unescape(re.sub(r'\s+', ' ', title or '')).strip()
+    names = [x for x in (press, site_name) if x]
+    for sep in (' - ', ' | ', ' :: ', ' – ', ' : ', ' ㅣ '):
+        if sep in t:
+            head, tail = t.rsplit(sep, 1)
+            if head and (any(n in tail or tail in n for n in names) or tail.endswith('뉴스') or tail.endswith('신문')):
+                t = head.strip()
+                break
+    return t
+
+
+def fetch_article_meta(url, now_dt):
+    """기사 URL → 제목/언론사/요약(첫 문장)/발행시각/대표이미지. 실패 시 ValueError"""
+    real = url
+    if 'news.google.com' in real:
+        real = resolve_google_news_url(real, title='', press='')
+        if 'news.google.com' in real:
+            raise ValueError('구글 뉴스 링크에서 원문 주소를 찾지 못했습니다. 언론사 기사 주소를 직접 붙여 넣어주세요.')
+    req = urllib.request.Request(real, headers=UA_HEADER)
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            raw = resp.read(600000)
+            final_url = resp.geturl() or real
+            page = _decode_page(raw, resp.headers)
+    except urllib.error.HTTPError as e:
+        raise ValueError(f'페이지를 열 수 없습니다 (HTTP {e.code}) — 접근이 제한된 사이트일 수 있습니다.')
+    except Exception as e:
+        raise ValueError(f'페이지를 열 수 없습니다 ({type(e).__name__})')
+    p = ArticleParser()
+    try:
+        p.feed(page)
+    except Exception:
+        pass
+    m = p.meta
+    title = m.get('og:title') or m.get('twitter:title') or p.title
+    if not title or not title.strip():
+        raise ValueError('제목을 찾지 못했습니다.')
+    host = urllib.parse.urlparse(final_url).netloc.lower()
+    site_name = html.unescape(m.get('og:site_name', '')).strip()
+    press = extract_press(final_url)
+    if 'naver.com' in host:     # 네이버 뉴스 페이지: 언론사명은 og:article:author('한국경제 | 네이버')에 있음
+        au = html.unescape(m.get('og:article:author', '') or m.get('twitter:creator', '')).split('|')[0].strip()
+        press = au or site_name or press
+    elif site_name and press not in set(DOMAIN_PRESS_MAP.values()):
+        press = site_name        # 도메인 매핑에 없는 매체는 사이트 이름을 사용
+    title = clean_article_title(title, press, site_name)
+    desc = m.get('og:description') or m.get('description') or m.get('twitter:description') or ''
+    summary = first_sentences(desc, 200)
+    if len(summary) < 25 and p.paras:
+        summary = first_sentences(p.paras[0], 200)
+    image = html.unescape(m.get('og:image') or m.get('twitter:image') or '').strip()
+    if image.startswith('//'):
+        image = 'https:' + image
+    elif image.startswith('/'):
+        u = urllib.parse.urlparse(final_url)
+        image = f"{u.scheme}://{u.netloc}{image}"
+    if not image.startswith('http'):
+        image = ''
+    return {
+        'title': title, 'press': press or '주요언론', 'summary': summary, 'image': image,
+        'url': final_url, 'pub_dt': _parse_meta_date(m, now_dt), 'naver': 'naver.com' in host,
+    }
+
+
+def run_add_urls():
+    now_dt = datetime.now(KST)
+    aff = os.environ.get('TARGET_AFFILIATE', '').strip().split(',')[0].strip()
+    urls = [u.strip() for u in re.split(r'[\s,]+', os.environ.get('ADD_URLS', '')) if u.strip().lower().startswith('http')]
+    urls = list(dict.fromkeys(urls))[:MAX_MANUAL_URLS]
+
+    pool_data = load_json(POOL_FILE, {"updatedAt": "", "keywords": {}, "affiliates": {}})
+    pub_data = load_json(PUBLISHED_FILE, {"history": {}, "published": {}})
+    all_keywords = load_keywords(pool_data)
+    if aff not in all_keywords:
+        log(f"[ERROR] 알 수 없는 구분값입니다: {aff!r}")
+        return 1
+    if not urls:
+        log("[ERROR] 추가할 URL이 없습니다.")
+        return 1
+
+    kw_groups = all_keywords[aff]
+    history_set = set(pub_data.get('history', {}).get(aff, []))
+    bucket = pool_data.setdefault('affiliates', {}).setdefault(aff, {"scrapedAt": "", "count": 0, "articles": []})
+    articles = bucket.setdefault('articles', [])
+    results, added = [], 0
+    for i, url in enumerate(urls):
+        item = {'url': url, 'ok': False, 'title': '', 'error': ''}
+        try:
+            meta = fetch_article_meta(url, now_dt)
+            title = meta['title']
+            norm = normalize_title(title)
+            art = {
+                "id": int(now_dt.timestamp() * 1000) + i,
+                "category": classify(title, meta['summary'], '', kw_groups),
+                "press": meta['press'], "title": title, "url": meta['url'],
+                "pubDateISO": meta['pub_dt'].isoformat(), "time": meta['pub_dt'].strftime('%Y.%m.%d %H:%M'),
+                "pubTs": meta['pub_dt'].timestamp(), "matchedKw": "", "source": "manual", "manual": True,
+                "srcUrl": url, "addedTs": now_dt.timestamp(), "rank": 999,
+                "duplicate": bool(norm) and norm in history_set, "selected": False,
+            }
+            if meta['summary']:
+                art["summary"] = meta['summary']
+            if meta['image']:
+                art["image"] = meta['image']
+            if meta['naver']:
+                art["naverUrl"] = meta['url']
+            # 같은 제목/주소의 기존 후보는 새 정보로 교체
+            articles[:] = [a for a in articles if not (normalize_title(a.get('title', '')) == norm or a.get('url') == art['url'])]
+            articles.insert(0, art)
+            item.update(ok=True, title=title, press=meta['press'])
+            added += 1
+            log(f"[OK] 추가: [{meta['press']}] {title}")
+        except Exception as e:
+            item['error'] = str(e)
+            warn(f"추가 실패: {url} — {e}")
+        results.append(item)
+        time.sleep(0.3)
+
+    bucket['count'] = len(articles)
+    pool_data['manualAdd'] = {"runAt": now_dt.strftime('%Y-%m-%d %H:%M:%S KST'), "affiliate": aff, "items": results}
+    save_json(POOL_FILE, pool_data)
+    log(f"[INFO] 요청 {len(urls)}건 중 {added}건 추가")
+    return 0 if added else 2
 
 
 # ---------------------------------------------------------------------------
@@ -898,6 +1151,8 @@ def main():
     mode = os.environ.get("RUN_MODE", "scrape").strip()
     if mode in ("archive", "enrich_published"):
         return run_archive()
+    if mode == "addurls":
+        return run_add_urls()
     return run_scrape()
 
 

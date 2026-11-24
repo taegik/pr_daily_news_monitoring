@@ -171,6 +171,7 @@
           </select>
         </div>
         <label class="row" style="margin:10px 2px 0;font-size:.84rem;font-weight:700;color:var(--ink-2);"><input type="checkbox" id="hideDup" checked style="width:18px;height:18px;"> 과거 발행과 중복된 기사 숨기기</label>
+        <button class="btn" id="btnAddUrl" style="width:100%;margin-top:10px;">🔗 URL로 기사 직접 추가</button>
         <div class="kwbar" id="kwbar"></div>
         <div id="candList" style="margin-top:8px;"></div>
         <button class="btn" id="more" style="width:100%;margin-top:6px;" hidden>더 보기</button>
@@ -297,6 +298,31 @@
     <div class="sheet-grip"></div>
     <div class="sheet-head"><h2 class="sheet-title">선정한 기사 <span id="selSheetCnt" style="color:var(--muted);font-weight:700;"></span></h2><button class="icon-btn" data-close aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="sheet-body" id="selBody"></div>
+  </section>
+
+  <!-- URL로 기사 직접 추가 -->
+  <section class="sheet" id="addSheet" role="dialog" aria-label="URL로 기사 추가">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 class="sheet-title">URL로 기사 추가</h2><button class="icon-btn" data-close aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="sheet-body">
+      <p class="hint2" style="margin:0 0 12px;font-size:.82rem;color:var(--muted);line-height:1.55;">수집되지 않은 기사도 주소만 붙여 넣으면 <b>제목·언론사·첫 문장(요약)</b>을 자동으로 가져와 후보에 넣고 <b>선정까지</b> 해 드립니다. 현재 구분값: <b id="auAff"></b></p>
+      <div class="field"><label>기사 주소 <small>(여러 개는 줄을 바꿔 입력 · 최대 10개)</small></label><textarea class="textarea" id="auUrls" rows="3" placeholder="https://n.news.naver.com/article/…&#10;https://www.hankyung.com/article/…"></textarea></div>
+      <div class="field"><label>분류</label><select class="select" id="auCat"></select></div>
+      <button class="btn btn-primary" id="btnAuFetch" style="width:100%;">⬇️ 기사 정보 가져오기</button>
+      <div class="status warn" id="auStatus" style="margin:12px 0 0;" hidden></div>
+      <div class="rpt" style="margin-top:18px;">
+        <h4>✍️ 자동으로 안 될 때 · 직접 입력</h4>
+        <p class="hint2" style="margin:0 0 10px;font-size:.8rem;color:var(--muted);line-height:1.5;">접근이 제한된 사이트이거나 가져오기에 실패하면 아래에 직접 적어 추가하세요. (이 기기에서 오늘 발행할 때까지만 후보에 보입니다.)</p>
+        <div class="field"><label>기사 주소 <small>(필수)</small></label><input class="input" id="auUrl" placeholder="https://"></div>
+        <div class="field"><label>제목 <small>(필수)</small></label><input class="input" id="auTitle"></div>
+        <div class="grid2">
+          <div class="field"><label>언론사</label><input class="input" id="auPress" placeholder="예) 한국경제"></div>
+          <div class="field"><label>발행일</label><input class="input" type="date" id="auDate"></div>
+        </div>
+        <div class="field"><label>첫 문장 · 요약</label><textarea class="textarea" id="auSum" rows="2"></textarea></div>
+        <button class="btn" id="btnAuManual" style="width:100%;">➕ 직접 입력한 기사 추가</button>
+      </div>
+    </div>
   </section>
 
   <!-- 명언 한 건 편집 -->
@@ -474,6 +500,7 @@
     function allKws() { var g = kwGroups(); return g.own.concat(g.comp, g.ind); }
     function scoreOf(a) {
       var t = (a.title || '').toLowerCase(), tier = tierOf(a.press), reasons = [];
+      if (a.manual) return { score: 99, tier: tier, reasons: ['직접 추가'] };
       var ps = tier === 1 ? 38 : (tier === 2 ? 28 : 14);
       if (tier === 1) reasons.push('주요 언론사'); else if (tier === 2) reasons.push('전문 매체');
       var matched = {}; if (a.matchedKw) matched[a.matchedKw] = 1;
@@ -490,7 +517,7 @@
       return { score: Math.max(10, Math.min(99, ps + ks + qb + rec)), tier: tier, reasons: reasons };
     }
     function cands() {
-      var list = (A.pool && A.pool.affiliates && A.pool.affiliates[A.aff] && A.pool.affiliates[A.aff].articles) || [];
+      var list = ((A.pool && A.pool.affiliates && A.pool.affiliates[A.aff] && A.pool.affiliates[A.aff].articles) || []).concat(A.extra || []);
       list.forEach(function (a) { if (!a._k) { a._k = key(a); var m = scoreOf(a); a._score = m.score; a._tier = m.tier; a._why = m.reasons; } });
       return list;
     }
@@ -499,6 +526,7 @@
     /* ═════════ 선정 상태 저장 ═════════ */
     function selKey() { return 'pr_sel_' + A.aff; }
     function loadSel() {
+      var ex = store.get('pr_extra_' + A.aff, null); A.extra = (ex && ex.day === P.todayIso() && ex.items) || [];
       var s = store.get(selKey(), null), today = P.todayIso();
       if (s && s.day === today) { A.sel = s.sel || {}; A.catOv = s.catOv || {}; A.order = s.order || []; }
       else { A.sel = {}; A.catOv = {}; A.order = []; }
@@ -525,7 +553,7 @@
     function filtered() {
       var q = A.q.toLowerCase(), dup = A.hideDup;
       var arr = cands().filter(function (a) {
-        if (dup && a.duplicate && !A.sel[a._k]) return false;
+        if (dup && a.duplicate && !a.manual && !A.sel[a._k]) return false;
         if (A.filter === 'selected' && !A.sel[a._k]) return false;
         if (A.filter !== 'all' && A.filter !== 'selected' && catOf(a) !== A.filter) return false;
         if (A.kwFilter && !((a.matchedKw || '') === A.kwFilter || (a.title || '').toLowerCase().indexOf(A.kwFilter.toLowerCase()) >= 0)) return false;
@@ -541,23 +569,24 @@
     }
     function renderPills() {
       var list = cands(), c = { all: 0, selected: 0, own: 0, comp: 0, ind: 0 };
-      list.forEach(function (a) { if (A.hideDup && a.duplicate && !A.sel[a._k]) return; c.all++; if (A.sel[a._k]) c.selected++; c[catOf(a)]++; });
+      list.forEach(function (a) { if (A.hideDup && a.duplicate && !a.manual && !A.sel[a._k]) return; c.all++; if (A.sel[a._k]) c.selected++; c[catOf(a)]++; });
       var defs = [['all', '전체'], ['selected', '선택됨'], ['own', L('own')], ['comp', L('comp')], ['ind', L('ind')]];
       $('catPills').innerHTML = defs.map(function (d) { return '<button class="chip" data-f="' + d[0] + '" aria-pressed="' + (A.filter === d[0]) + '">' + d[1] + ' ' + c[d[0]] + '</button>'; }).join('');
     }
     function renderKwBar() {
-      var cnt = {}; cands().forEach(function (a) { if (A.hideDup && a.duplicate && !A.sel[a._k]) return; if (a.matchedKw) cnt[a.matchedKw] = (cnt[a.matchedKw] || 0) + 1; });
+      var cnt = {}; cands().forEach(function (a) { if (A.hideDup && a.duplicate && !a.manual && !A.sel[a._k]) return; if (a.matchedKw) cnt[a.matchedKw] = (cnt[a.matchedKw] || 0) + 1; });
       var ks = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; }).slice(0, 24);
       $('kwbar').innerHTML = ks.map(function (k) { return '<button class="kw' + (A.kwFilter === k ? ' active' : '') + '" data-kwf="' + esc(k) + '">#' + esc(k) + ' <span class="c">' + cnt[k] + '</span></button>'; }).join('');
     }
     function candHtml(a) {
       var cat = catOf(a), on = !!A.sel[a._k], hi = a._score >= 80 ? 'hi' : (a._score >= 65 ? 'mid' : 'lo');
       var tags = '';
+      if (a.manual) tags += '<span class="tg">🔗 직접 추가</span>';
       if (a.duplicate) tags += '<span class="tg warn">과거 발행과 중복</span>';
       if (a.matchedKw) tags += '<span class="tg">#' + esc(a.matchedKw) + '</span>';
       if (a._tier === 1) tags += '<span class="tg">1등급 언론사</span>';
       if (a.source === 'google') tags += '<span class="tg">구글 보조</span>';
-      (a._why || []).filter(function (w) { return w !== '주요 언론사'; }).slice(0, 2).forEach(function (w) { tags += '<span class="tg reason">' + esc(w) + '</span>'; });
+      (a._why || []).filter(function (w) { return w !== '주요 언론사' && w !== '직접 추가'; }).slice(0, 2).forEach(function (w) { tags += '<span class="tg reason">' + esc(w) + '</span>'; });
       return '<div class="cand' + (on ? ' sel' : '') + (a.duplicate ? ' dup' : '') + '" data-k="' + a._k + '" role="checkbox" aria-checked="' + on + '" tabindex="0">' +
         '<span class="check">' + CHECK + '</span><div class="cand-main"><div class="cand-top">' +
         '<button class="badge badge-' + cat + ' catbtn" data-cat="' + a._k + '" aria-label="분류 변경">' + L(cat) + ' ⇄</button>' +
@@ -590,6 +619,73 @@
       $('selBreak').textContent = L('own') + ' ' + c.own + ' · ' + L('comp') + ' ' + c.comp + ' · ' + L('ind') + ' ' + c.ind + (l.length && l.length < mn ? ' · 최소 ' + mn + '건 권장' : '');
     }
     function renderCand() { renderPoolStatus(); renderPills(); renderKwBar(); renderList(); renderBar(); }
+
+    /* ═════════ URL로 기사 직접 추가 ═════════ */
+    function autoCat(title) {
+      var t = String(title || '').replace(/\s+/g, '').toLowerCase(), g = kwGroups(), hit = function (arr) { return (arr || []).some(function (k) { k = String(k || '').replace(/\s+/g, '').toLowerCase(); return k && t.indexOf(k) >= 0; }); };
+      return hit(g.own) ? 'own' : (hit(g.comp) ? 'comp' : 'ind');
+    }
+    function openAddSheet() {
+      $('auAff').textContent = cfg().name;
+      $('auCat').innerHTML = '<option value="auto">자동 분류</option>' + CATS3.map(function (c) { return '<option value="' + c + '">' + esc(L(c)) + '</option>'; }).join('');
+      $('auStatus').hidden = true; $('auDate').value = P.todayIso();
+      showSheet('addSheet');
+    }
+    function pickAdded(urls, cat) {
+      var added = cands().filter(function (a) { return a.manual && urls.indexOf(a.srcUrl) >= 0; });
+      added.forEach(function (a) { setSel(a._k, true); if (cat && cat !== 'auto') A.catOv[a._k] = cat; });
+      saveSel(); return added;
+    }
+    async function addByUrl() {
+      var g = gh(); if (!g.token) { P.toast('🔑 먼저 [설정]에서 GitHub 토큰을 등록해주세요.'); closeSheets(); setTab('set'); return; }
+      var urls = $('auUrls').value.split(/[\s,]+/).filter(Boolean), st = $('auStatus');
+      var bad = urls.filter(function (u) { return !/^https?:\/\/[^\s/]+\.[^\s/]+/i.test(u); });
+      urls = urls.filter(function (u, i) { return urls.indexOf(u) === i; });
+      if (!urls.length) { P.toast('⚠️ 기사 주소를 입력해주세요.'); return; }
+      if (bad.length) { P.toast('⚠️ http:// 또는 https:// 로 시작하는 주소만 입력할 수 있습니다.'); return; }
+      if (urls.length > 10) { P.toast('⚠️ 한 번에 최대 10개까지 추가할 수 있습니다.'); return; }
+      var btn = $('btnAuFetch'), cat = $('auCat').value, since = Date.now() - 8000; btn.disabled = true;
+      st.hidden = false; st.className = 'status warn'; st.textContent = '⏳ 기사 정보를 가져오는 중입니다… 보통 1~2분 걸립니다. 이 창을 닫지 마세요.';
+      try {
+        var r = await ghFetch('/repos/' + g.repo + '/actions/workflows/naver_scrape.yml/dispatches', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ref: 'main', inputs: { affiliate: A.aff, start_date: '', end_date: '', add_urls: urls.join(' ') } }) });
+        if (!r.ok) throw new Error(r.status === 422 ? 'GitHub의 워크플로 파일(naver_scrape.yml)이 아직 최신 버전이 아닙니다. 안내드린 새 버전으로 교체한 뒤 다시 시도하세요.' : r.status === 404 ? '워크플로를 찾지 못했습니다(.github/workflows/naver_scrape.yml 확인)' : r.status === 403 || r.status === 401 ? '토큰 권한(Actions: Read and write)을 확인하세요' : '실행 실패 (' + r.status + ')');
+        var w = null;
+        for (var i = 0; i < 75 && !(w && w.status === 'completed'); i++) {
+          await new Promise(function (res) { setTimeout(res, 4000); });
+          var rr = await ghFetch('/repos/' + g.repo + '/actions/workflows/naver_scrape.yml/runs?event=workflow_dispatch&per_page=3'); if (!rr.ok) continue;
+          w = ((await rr.json()).workflow_runs || []).filter(function (x) { return new Date(x.created_at).getTime() >= since; })[0] || null;
+        }
+        if (!(w && w.status === 'completed')) { st.className = 'status warn'; st.textContent = '⏳ 아직 처리 중입니다. 1~2분 뒤 후보 목록을 새로 열어 확인해 주세요.'; btn.disabled = false; return; }
+        await loadPool();
+        var added = pickAdded(urls, cat), res = (A.pool && A.pool.manualAdd) || {}, fails = (res.items || []).filter(function (x) { return !x.ok && urls.indexOf(x.url) >= 0; });
+        renderCand();
+        if (added.length) P.toast('✅ ' + added.length + '건을 추가하고 선정했습니다.', 3200);
+        if (fails.length || !added.length) {
+          st.className = 'status ' + (added.length ? 'warn' : 'bad');
+          st.innerHTML = '<div class="grow">' + (added.length ? '✅ ' + added.length + '건 추가·선정 완료<br>' : '') + '⚠️ 가져오지 못한 주소 ' + (fails.length || urls.length) + '건' +
+            (fails.length ? fails.map(function (x) { return '<br>· ' + esc(x.url.slice(0, 60)) + (x.url.length > 60 ? '…' : '') + ' — ' + esc(x.error || '알 수 없는 오류'); }).join('') : '<br><a href="' + esc(w.html_url) + '" target="_blank" rel="noopener">실행 로그 ↗</a>를 확인하세요.') +
+            '<br>아래 [직접 입력]으로 추가할 수 있습니다.</div>';
+          var ff = fails[0]; if (ff) $('auUrl').value = ff.url;
+        } else { closeSheets(); $('auUrls').value = ''; }
+      } catch (x) { st.hidden = false; st.className = 'status bad'; st.textContent = '❌ ' + x.message; }
+      btn.disabled = false;
+    }
+    function addManual() {
+      var url = $('auUrl').value.trim(), title = $('auTitle').value.trim(), press = $('auPress').value.trim(), sum = $('auSum').value.trim(), d = $('auDate').value || P.todayIso();
+      if (!/^https?:\/\/[^\s/]+\.[^\s/]+/i.test(url)) { P.toast('⚠️ 기사 주소를 http:// 또는 https:// 로 시작하게 입력해주세요.'); return; }
+      if (!title) { P.toast('⚠️ 제목을 입력해주세요.'); return; }
+      if (!press) { try { press = new URL(url).hostname.replace(/^www\./, ''); } catch (x) { press = '직접입력'; } }
+      var now = new Date(), hh = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+      var a = { category: $('auCat').value === 'auto' ? autoCat(title) : $('auCat').value, press: press, title: title, url: url, summary: sum.slice(0, 200),
+        pubDateISO: d + 'T' + hh + ':00+09:00', time: P.toDot(d) + ' ' + hh, pubTs: Date.parse(d + 'T' + hh + ':00+09:00') / 1000 || Date.now() / 1000,
+        matchedKw: '', source: 'manual', manual: true, duplicate: false };
+      A.extra = (A.extra || []).filter(function (x) { return x.url !== url; }); A.extra.push(a);
+      store.set('pr_extra_' + A.aff, { day: P.todayIso(), items: A.extra });
+      var k = cands().filter(function (x) { return x.url === url; })[0]; if (k) setSel(k._k, true);
+      ['auUrl', 'auTitle', 'auPress', 'auSum'].forEach(function (id) { $(id).value = ''; });
+      renderCand(); closeSheets(); P.toast('✅ 기사를 추가하고 선정했습니다.');
+    }
 
     /* ═════════ 자동 선정 ═════════ */
     function bigrams(t) { var s = P.normTitle(t), o = {}; for (var i = 0; i < s.length - 1; i++) o[s.substr(i, 2)] = 1; return o; }
@@ -1055,6 +1151,7 @@
     $('btnRun').addEventListener('click', runScrape);
     ['dStart', 'dEnd'].forEach(function (id) { $(id).addEventListener('input', function () { A.preset = ''; document.querySelectorAll('[data-preset]').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); renderRangeHint(); }); });
     $('pubReport').addEventListener('input', saveRptDraft);
+    $('btnAddUrl').addEventListener('click', openAddSheet); $('btnAuFetch').addEventListener('click', addByUrl); $('btnAuManual').addEventListener('click', addManual);
     $('pubDate').addEventListener('input', function () { if (!$('pubQuoteInfo').hidden) renderPubQuote(); });
     $('qBulk').addEventListener('input', renderQBulkHint); $('qStart').addEventListener('input', renderQBulkHint);
     $('btnQAdd').addEventListener('click', addQuotes); $('btnQOne').addEventListener('click', function () { openQuoteSheet(''); });
