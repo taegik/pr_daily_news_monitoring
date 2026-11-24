@@ -499,10 +499,11 @@
     function renderHero() {
       var cfg = P.AFFILIATES[S.aff], e = S.entry, rep = isRep();
       var dates = datesFor(S.aff), i = dates.indexOf(S.iso);
-      $('heroKicker').textContent = rep ? 'WEEKLY SOCIAL IMPACT' : 'DAILY NEWS MONITORING';
+      $('heroKicker').textContent = P.isWeekly(S.aff) ? 'WEEKLY NEWS MONITORING' : 'DAILY NEWS MONITORING';
       $('heroDate').textContent = S.iso ? ((rep ? ((e && e.weekLabel) || P.weekLabel(S.iso)) + ' · ' : '') + dateText(S.iso)) : '';
-      $('heroTitle').textContent = rep ? (cfg.title || (cfg.name + ' 리포트')) : cfg.name + ' 모니터링';
-      document.title = rep ? '[' + (S.iso ? P.toDot(S.iso) : '') + '] ' + (cfg.title || cfg.name) : '[' + (S.iso ? P.toDot(S.iso) : '') + '] ' + cfg.name + ' 데일리 뉴스모니터링';
+      var ttl = cfg.title || (rep ? cfg.name + ' 리포트' : cfg.name + ' 모니터링');
+      $('heroTitle').textContent = ttl;
+      document.title = '[' + (S.iso ? P.toDot(S.iso) : '') + '] ' + (cfg.title || cfg.name + (P.isWeekly(S.aff) ? ' 위클리 모니터링' : ' 데일리 뉴스모니터링'));
       $('btnCalText').textContent = S.iso ? '지난 기사 보기' : '날짜 선택';
       $('btnPrev').disabled = !(i >= 0 && i < dates.length - 1);   // 더 과거 존재
       $('btnNext').disabled = !(i > 0);
@@ -603,7 +604,7 @@
       var cfg = P.AFFILIATES[S.aff];
       $('foot').innerHTML = (isRep()
         ? '상상인그룹 PR팀 ' + esc(cfg.title || cfg.name) + '<br>그룹사 사회공헌 소식과 CSR 트렌드를 주 1회 전해드립니다.<br>'
-        : '상상인그룹 PR팀 데일리 뉴스모니터링 (권장 10~15건)<br>과거 모니터링과 중복된 기사는 자동 제외되었습니다.<br>') +
+        : (P.isWeekly(S.aff) ? '상상인그룹 PR팀 ' + esc(cfg.title || cfg.name) + ' (주 1회)<br>' : '상상인그룹 PR팀 데일리 뉴스모니터링 (권장 10~15건)<br>') + '과거 모니터링과 중복된 기사는 자동 제외되었습니다.<br>') +
         '담당 ' + esc(cfg.manager) + ' · ' + esc(cfg.cycle) + (PREVIEW ? '' : '<br><a href="./admin.html">관리자</a>');
     }
 
@@ -706,7 +707,7 @@
       P.copyText(text + '\n' + url).then(function (ok) { P.toast(ok ? '기사 제목과 링크를 복사했습니다.' : '복사에 실패했습니다.'); });
     }
     function sharePage() {
-      var cfg = P.AFFILIATES[S.aff], url = pageLink(), title = '[' + P.toDot(S.iso) + '] ' + (isRep() ? (cfg.title || cfg.name) : cfg.name + ' 모니터링');
+      var cfg = P.AFFILIATES[S.aff], url = pageLink(), title = '[' + P.toDot(S.iso) + '] ' + (cfg.title || cfg.name + ' 모니터링');
       if (navigator.share) { navigator.share({ title: title, url: url }).catch(function () {}); return; }
       P.copyText(title + '\n' + url).then(function (ok) { P.toast(ok ? '링크를 복사했습니다.' : '복사에 실패했습니다.'); });
     }
@@ -728,7 +729,7 @@
     function smsText() {
       var cfg = P.AFFILIATES[S.aff], e = S.entry; if (!e) return '';
       if (isRep()) return smsReport(cfg, e);
-      var qo = quoteFor(S.iso, e), L = ['[' + P.toDot(S.iso) + '] ' + cfg.name + ' 모니터링', ''];
+      var qo = quoteFor(S.iso, e), L = ['[' + P.toDot(S.iso) + '] ' + (cfg.title || cfg.name + ' 모니터링'), ''];
       if (qo.quote) { L.push(qo.quote); if (qo.author) L.push('- ' + qo.author); L.push(''); }
       ['own', 'comp', 'ind'].forEach(function (cat) {
         L.push('[' + P.catLabel(S.aff, cat) + ']');

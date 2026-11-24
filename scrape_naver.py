@@ -38,8 +38,25 @@ AFFILIATE_ORDER = ['sangsangin', 'mitech', 'synergy', 'medica', 'neurobiogen', '
 # 주 1회 발행하는 구분값: 기본 수집 기간이 '최근 7일', 일별 통계(급증 배지)에서는 제외
 WEEKLY_AFFILIATES = {'neurobiogen', 'csr'}
 
-CRON_MORNING_SANGSANGIN = '35 22 * * 0-4'   # KST 07:35 (상상인 8시 발행)
-CRON_MORNING_AFFILIATES = '35 23 * * 0-4'   # KST 08:35 (계열사 9시 발행)
+DAILY_AFFILIATES = ['sangsangin', 'mitech', 'synergy', 'medica']   # 매 영업일 발행
+CUTOFF_HOUR = 7            # 자동 수집의 종료 시각: 당일 오전 7시 (이후 기사는 다음 수집에 포함)
+HOLIDAY_FILE = 'holidays.json'   # {"add": ["YYYY-MM-DD"...], "remove": [...]} 회사 휴무일 추가/공휴일이지만 근무하는 날 제외
+# 'holidays' 패키지를 설치하지 못했을 때를 위한 비상용 목록 (2026~2027)
+FALLBACK_HOLIDAYS = {
+    '2026-01-01': '신정', '2026-02-16': '설날 연휴', '2026-02-17': '설날', '2026-02-18': '설날 연휴',
+    '2026-03-01': '삼일절', '2026-03-02': '삼일절 대체공휴일', '2026-05-01': '노동절', '2026-05-05': '어린이날',
+    '2026-05-24': '부처님오신날', '2026-05-25': '부처님오신날 대체공휴일', '2026-06-03': '지방선거일',
+    '2026-06-06': '현충일', '2026-07-17': '제헌절', '2026-08-15': '광복절', '2026-08-17': '광복절 대체공휴일',
+    '2026-09-24': '추석 연휴', '2026-09-25': '추석', '2026-09-26': '추석 연휴', '2026-10-03': '개천절',
+    '2026-10-05': '개천절 대체공휴일', '2026-10-09': '한글날', '2026-12-25': '성탄절',
+    '2027-01-01': '신정', '2027-02-06': '설날 연휴', '2027-02-07': '설날', '2027-02-08': '설날 연휴',
+    '2027-02-09': '설날 대체공휴일', '2027-03-01': '삼일절', '2027-05-01': '노동절', '2027-05-03': '노동절 대체공휴일',
+    '2027-05-05': '어린이날', '2027-05-13': '부처님오신날', '2027-06-06': '현충일', '2027-07-17': '제헌절',
+    '2027-07-19': '제헌절 대체공휴일', '2027-08-15': '광복절', '2027-08-16': '광복절 대체공휴일',
+    '2027-09-14': '추석 연휴', '2027-09-15': '추석', '2027-09-16': '추석 연휴', '2027-10-03': '개천절',
+    '2027-10-04': '개천절 대체공휴일', '2027-10-09': '한글날', '2027-10-11': '한글날 대체공휴일',
+    '2027-12-25': '성탄절', '2027-12-27': '성탄절 대체공휴일',
+}
 
 # 도메인 -> 언론사명 (구체적인 도메인이 먼저 매칭되도록 긴 것부터 검사)
 DOMAIN_PRESS_MAP = {
@@ -484,6 +501,77 @@ def fetch_google_rss_fallback(query, start_dt, end_dt):
 # ---------------------------------------------------------------------------
 # 수집 기간 / 대상 계열사
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 영업일 · 공휴일 · 수집 기간 계산
+# ---------------------------------------------------------------------------
+def load_holidays(year):
+    """{date: 이름} - 대한민국 공휴일(대체공휴일 포함) + 회사 휴무일(holidays.json 의 add) - 근무일 지정(remove)"""
+    names = {}
+    try:
+        import holidays as _hol
+        for d, n in _hol.KR(years=[year - 1, year, year + 1]).items():
+            names[d] = str(n)
+    except Exception as e:
+        warn(f"공휴일 패키지를 불러오지 못해 내장 목록(2026~2027)을 사용합니다: {e}")
+        for d, n in FALLBACK_HOLIDAYS.items():
+            names[datetime.strptime(d, '%Y-%m-%d').date()] = n
+    cfg = load_json(HOLIDAY_FILE, {}) or {}
+    for key, add in (('add', True), ('remove', False)):
+        for ds in cfg.get(key, []) or []:
+            try:
+                d = datetime.strptime(str(ds).strip()[:10], '%Y-%m-%d').date()
+            except Exception:
+                continue
+            if add:
+                names[d] = '회사 휴무일'
+            else:
+                names.pop(d, None)
+    return names
+
+
+def is_business_day(d, hol):
+    return d.weekday() < 5 and d not in hol
+
+
+def prev_business_day(d, hol):
+    x = d - timedelta(days=1)
+    for _ in range(30):
+        if is_business_day(x, hol):
+            return x
+        x -= timedelta(days=1)
+    return d - timedelta(days=1)
+
+
+def weekly_run_day(d, hol):
+    """그 주(월~금)의 마지막 영업일. 보통 금요일이고, 금요일이 휴일이면 앞선 영업일"""
+    monday = d - timedelta(days=d.weekday())
+    days = [monday + timedelta(days=i) for i in range(5)]
+    biz = [x for x in days if is_business_day(x, hol)]
+    return biz[-1] if biz else None
+
+
+def day_start(d):
+    return datetime(d.year, d.month, d.day, 0, 0, 0, tzinfo=KST)
+
+
+def auto_window(aff_key, now_dt, hol, scheduled):
+    """자동 수집 기간
+    - 매일 발행(상상인·엠아이텍·시너지이노베이션·메디카코리아): 직전 영업일 00:00 ~ 오늘 오전 7시
+      (화: 월 00:00~화 07:00 / 월: 금 00:00~월 07:00 / 연휴 다음 영업일: 연휴 직전 영업일 00:00부터)
+    - 주 1회 발행(뉴로바이오젠·사회공헌): 지난주 같은 요일 00:00 ~ 오늘 오전 7시 (금요일 실행 시 지난 금요일~이번 금요일 7시)
+    - 수동 실행은 끝 시각만 '지금'으로 합니다.
+    """
+    today = now_dt.date()
+    if aff_key in WEEKLY_AFFILIATES:
+        start = day_start(today - timedelta(days=7))
+    else:
+        start = day_start(prev_business_day(today, hol))
+    cutoff = datetime(today.year, today.month, today.day, CUTOFF_HOUR, 0, 0, tzinfo=KST)
+    end = min(cutoff, now_dt) if scheduled else now_dt
+    label = f"{start.strftime('%Y.%m.%d %H:%M')} ~ {end.strftime('%Y.%m.%d %H:%M')}"
+    return start, end, label
+
+
 def get_date_bounds(now_dt, start_str, end_str):
     start_dt = None
     end_dt = None
@@ -514,10 +602,11 @@ def get_date_bounds(now_dt, start_str, end_str):
     return start_dt, now_dt, f"{start_dt.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')}", False
 
 
-def resolve_targets(target, schedule, now_dt, available):
+def resolve_targets(target, schedule, now_dt, available, hol=None):
     """수집 대상 결정
     - target: 'all' 이거나, 쉼표로 구분한 계열사 키 목록 (예: 'sangsangin,mitech' / 'neurobiogen' / 'csr')
-    - 'all' 이고 자동 실행(schedule)이면 시각별 기본 대상, 수동 실행이면 전체
+    - 'all' 이고 자동 실행(schedule)이면: 영업일마다 매일 발행 4곳 + (그 주의 마지막 영업일이면) 뉴로바이오젠·사회공헌
+    - 'all' 이고 수동 실행이면 전체
     """
     raw = (target or 'all').strip()
     wanted = [t.strip() for t in re.split(r'[,\s]+', raw) if t.strip()]
@@ -527,12 +616,14 @@ def resolve_targets(target, schedule, now_dt, available):
             if t in available and t not in seen:
                 seen.append(t)
         return seen
-    if schedule == CRON_MORNING_SANGSANGIN:
-        picked = ['sangsangin']
-    elif schedule == CRON_MORNING_AFFILIATES:
-        picked = ['mitech', 'synergy', 'medica']
-        if now_dt.weekday() == 4:      # 뉴로바이오젠·사회공헌은 주 1회(금요일)
-            picked += ['neurobiogen', 'csr']
+    if schedule:
+        hol = hol if hol is not None else load_holidays(now_dt.year)
+        today = now_dt.date()
+        picked = []
+        if is_business_day(today, hol):
+            picked = list(DAILY_AFFILIATES)
+            if weekly_run_day(today, hol) == today:
+                picked += sorted(WEEKLY_AFFILIATES, key=lambda k: AFFILIATE_ORDER.index(k))
     else:
         picked = list(available)
     return [a for a in picked if a in available]
@@ -617,6 +708,9 @@ def collect_for_affiliate(aff_key, kw_groups, naver, state, start_dt, end_dt, no
             if not norm or norm in seen_norms:
                 continue
             seen_norms.add(norm)
+            if norm in history_set:          # 이미 발행했던 기사는 후보에서 제외
+                diag['dupExcluded'] = diag.get('dupExcluded', 0) + 1
+                continue
 
             seq += 1
             press_name = item.get('customPress') or extract_press(orig_link)
@@ -686,12 +780,20 @@ def run_scrape():
         log("[ERROR] keywords.json 에서 키워드를 찾을 수 없습니다.")
         return 1
 
-    targets = resolve_targets(target, schedule, now_dt, list(all_keywords.keys()))
+    scheduled = bool(schedule)
+    hol = load_holidays(now_dt.year)
+    today = now_dt.date()
+    if scheduled and not is_business_day(today, hol):
+        why = hol.get(today) or ('주말' if today.weekday() >= 5 else '휴무일')
+        log(f"[SKIP] 오늘({today}, {why})은 쉬는 날이라 자동 수집을 건너뜁니다. 다음 영업일 수집에서 이 기간까지 함께 모읍니다.")
+        return 0
+    targets = resolve_targets(target, schedule, now_dt, list(all_keywords.keys()), hol)
     if not targets:
         log(f"[INFO] 이번 실행 대상 계열사가 없습니다. (target={target}, schedule={schedule})")
         return 0
 
     start_dt, end_dt, range_label, explicit_range = get_date_bounds(now_dt, start_str, end_str)
+    kind = '자동(매일 07시)' if scheduled else '수동'
 
     naver = None
     if client_id and client_secret:
@@ -702,21 +804,22 @@ def run_scrape():
 
     state = {'naver_disabled': naver is None}
     diag = {'naverKeywordsOk': 0, 'naverKeywordsFailed': 0, 'googleKeywords': 0, 'googleFailed': 0,
-            'authError': '' if naver else 'API 키 미설정', 'errors': []}
+            'authError': '' if naver else 'API 키 미설정', 'errors': [], 'dupExcluded': 0}
 
     history_map = pub_data.get("history", {})
     affiliates_out = pool_data.get("affiliates", {})
     stats = load_json(STATS_FILE, {"days": {}})
     zero_targets = []
-    log(f"[INFO] 대상: {targets} / 기간: {range_label}")
+    windows = {}
+    log(f"[INFO] {kind} 수집 / 대상: {targets}")
 
     for aff_key in targets:
-        a_start, a_end, a_label = start_dt, end_dt, range_label
-        if aff_key in WEEKLY_AFFILIATES and not explicit_range:
-            # 주간 발행 구분값은 지난 7일 기사를 모읍니다 (전주 같은 요일 00:00 ~ 현재)
-            w = now_dt - timedelta(days=7)
-            a_start = datetime(w.year, w.month, w.day, 0, 0, 0, tzinfo=KST)
-            a_label = f"{a_start.strftime('%Y.%m.%d')} ~ {now_dt.strftime('%Y.%m.%d')}"
+        if explicit_range:
+            a_start, a_end, a_label = start_dt, end_dt, range_label
+        else:
+            a_start, a_end, a_label = auto_window(aff_key, now_dt, hol, scheduled)
+        windows[aff_key] = a_label
+        log(f"[INFO] {aff_key} 수집 기간: {a_label}")
         collected, total_found = collect_for_affiliate(
             aff_key, all_keywords[aff_key], naver, state, a_start, a_end, now_dt,
             set(history_map.get(aff_key, [])), diag)
@@ -739,12 +842,20 @@ def run_scrape():
             warn(f"{aff_key}: 수집된 기사가 0건입니다.")
         if not explicit_range and aff_key not in WEEKLY_AFFILIATES:
             update_stats(stats, now_dt.strftime('%Y-%m-%d'), aff_key, collected)
+        log(f"  → 이미 발행한 기사 제외 누계: {diag.get('dupExcluded', 0)}건")
 
     pool_data["updatedAt"] = now_dt.strftime('%Y-%m-%d %H:%M:%S KST')
     pool_data["keywords"] = {k: v for k, v in all_keywords.items()}
     pool_data["affiliates"] = affiliates_out
+    # 네이버 API 호출 횟수 누계 (일별, 최근 62일) - 무료 한도 관리용
+    usage = pool_data.get("usage") or {}
+    today_key = now_dt.strftime('%Y-%m-%d')
+    usage[today_key] = usage.get(today_key, 0) + (naver.calls if naver else 0)
+    cut = (now_dt - timedelta(days=62)).strftime('%Y-%m-%d')
+    pool_data["usage"] = {k: v for k, v in sorted(usage.items()) if k >= cut}
     pool_data["diagnostics"] = {
-        "runAt": pool_data["updatedAt"], "targets": targets, "range": range_label,
+        "runAt": pool_data["updatedAt"], "mode": kind, "targets": targets, "windows": windows,
+        "range": range_label if explicit_range else ' / '.join(f"{k}: {v}" for k, v in windows.items()),
         "naverConfigured": bool(naver), "naverApiCalls": naver.calls if naver else 0,
         **diag
     }

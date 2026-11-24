@@ -110,6 +110,8 @@
     .rpt .sub { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px 2px; margin-bottom: 10px; background: var(--card-2); }
     .rpt .sub > b { display: block; margin-bottom: 8px; font-size: .8rem; }
     .rpt textarea.textarea { min-height: 60px; }
+    .rules > div { font-size: .82rem; line-height: 1.55; color: var(--ink-2); padding: 8px 0; border-top: 1px solid var(--line); }
+    .rules > div:first-child { border-top: 0; padding-top: 2px; }
   </style>
 </head>
 <body>
@@ -180,12 +182,27 @@
       <!-- 수집 -->
       <section class="panel" id="p-collect" hidden>
         <div class="box">
-          <h3>🔍 뉴스 수집 실행</h3>
-          <p class="hint">GitHub Actions에서 네이버 검색 API로 수집합니다(실패 시 구글 보조). 평일 아침 자동 수집도 돌고 있으며, 누락되었거나 기간을 바꿔 다시 모으고 싶을 때 사용하세요.</p>
+          <h3>🤖 자동 수집 · 매일 오전 7시</h3>
+          <div class="rules">
+            <div><b>상상인 · 엠아이텍 · 시너지이노베이션 · 메디카코리아</b><br>영업일마다 <b>직전 영업일 00:00 ~ 당일 07:00</b> 기사 (예: 화 → 월~화 7시 / 월 → 금~월 7시)</div>
+            <div><b>뉴로바이오젠 · 사회공헌 (위클리)</b><br>매주 <b>금요일에만</b>, 지난주 금요일 00:00 ~ 금요일 07:00 기사</div>
+            <div><b>쉬는 날</b><br>주말·공휴일(대체공휴일 포함)·회사 휴무일은 건너뛰고, 다음 영업일에 쉬는 기간까지 함께 모읍니다.</div>
+            <div><b>중복</b><br>이미 발행한 기사는 후보에서 자동 제외됩니다.</div>
+          </div>
+          <div class="status ok" id="autoStatus" style="margin-top:10px;"></div>
+        </div>
+        <div class="box">
+          <h3>🔍 추가 수집 <small style="color:var(--muted);font-weight:700;">메인 관리자 전용</small></h3>
+          <p class="hint">네이버 검색 한도를 아끼기 위해 수동 수집은 잠겨 있습니다. 누락 기사를 다시 모으거나 기간을 바꿔 수집해야 할 때만 비밀번호를 입력해 사용하세요.</p>
+          <div id="runLock">
+            <div class="row nowrap"><input class="input grow" type="password" id="mainPw" placeholder="메인 관리자 비밀번호" autocomplete="off"><button class="btn btn-primary" id="btnMainUnlock">🔓 해제</button></div>
+          </div>
+          <div id="runWrap" hidden>
+          <div class="row" style="justify-content:space-between;margin-bottom:10px;"><span class="badge badge-own">🔓 잠금 해제됨 (이 탭을 닫으면 다시 잠깁니다)</span><button class="btn btn-sm" id="btnMainLock">🔒 잠그기</button></div>
           <div class="field"><label>수집 대상 <small id="runSelSummary"></small></label>
             <div class="pills wrap" id="runTargets"></div>
             <div class="pills wrap" id="runPresets" style="margin-top:6px;">
-              <button class="chip" data-tp="weekday">평일 기본</button>
+              <button class="chip" data-tp="weekday">매일 발행 4곳</button>
               <button class="chip" data-tp="all">전체</button>
               <button class="chip" data-tp="neurobiogen">뉴로바이오젠만</button>
               <button class="chip" data-tp="csr">사회공헌만</button>
@@ -208,6 +225,16 @@
           <p class="hint" id="rangeHint"></p>
           <button class="btn btn-primary" id="btnRun" style="width:100%;">수집 시작</button>
           <div class="status warn" id="runStatus" style="margin:12px 0 0;" hidden></div>
+          </div>
+        </div>
+        <div class="box" id="holBox" hidden>
+          <h3>📅 회사 휴무일 설정</h3>
+          <p class="hint">대한민국 공휴일(대체공휴일 포함)은 자동으로 반영됩니다. 회사만 쉬는 날은 [추가], 공휴일이지만 근무하는 날은 [근무일로 지정]에 한 줄에 하나씩 <b>YYYY-MM-DD</b> 형식으로 적고 저장하세요. 이 날들은 자동 수집에서 쉬는 날(또는 근무일)로 계산됩니다.</p>
+          <div class="grid2">
+            <div class="field"><label>회사 휴무일 추가</label><textarea class="textarea" id="holAdd" rows="4" placeholder="2026-12-31"></textarea></div>
+            <div class="field"><label>근무일로 지정</label><textarea class="textarea" id="holRemove" rows="4" placeholder="2026-07-17"></textarea></div>
+          </div>
+          <button class="btn btn-primary" id="btnHolSave" style="width:100%;">💾 휴무일 저장소에 저장</button>
         </div>
         <div class="box"><h3>🩺 네이버 연동 진단</h3><div id="diag">불러오는 중…</div></div>
         <div class="box"><h3>🕘 최근 실행 내역</h3><ul class="runs" id="runs"><li>토큰을 등록하면 표시됩니다.</li></ul></div>
@@ -417,7 +444,7 @@
       setTimeout(function () { (has ? $('gatePw') : $('setPw1')).focus(); }, 50);
     }
     function enter() { $('gate').hidden = true; $('root').hidden = false; try { sessionStorage.setItem('pr_admin_ok', '1'); } catch (e) {} boot(); }
-    function logout() { try { sessionStorage.removeItem('pr_admin_ok'); } catch (e) {} location.reload(); }
+    function logout() { try { sessionStorage.removeItem('pr_admin_ok'); sessionStorage.removeItem('pr_main_ok'); } catch (e) {} location.reload(); }
 
     $('gateBtn').addEventListener('click', login);
     $('gatePw').addEventListener('keydown', function (e) { if (e.key === 'Enter') login(); });
@@ -485,6 +512,51 @@
       var r = await ghFetch('/repos/' + g.repo + '/contents/' + path, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (!r.ok) { var e = await r.json().catch(function () { return {}; }); throw new Error(e.message || ('GitHub 저장 실패 (' + r.status + ')')); }
       return r.json();
+    }
+
+    /* ═════════ 자동 수집 현황 · 메인 관리자 잠금 · 휴무일 ═════════ */
+    function mainOk() { try { return sessionStorage.getItem('pr_main_ok') === '1'; } catch (e) { return false; } }
+    function renderAutoInfo() {
+      var d = A.pool && A.pool.diagnostics, u = (A.pool && A.pool.usage) || {}, el = $('autoStatus'), today = P.todayIso(), ym = today.slice(0, 7);
+      var td = u[today] || 0, mo = Object.keys(u).filter(function (k) { return k.slice(0, 7) === ym; }).reduce(function (a, k) { return a + (u[k] || 0); }, 0);
+      el.className = 'status ' + (d ? 'ok' : 'warn');
+      el.innerHTML = '<div class="grow">' + (d ? '<b>마지막 수집</b> ' + esc(d.runAt || '-') + ' · ' + esc(d.mode || '') + '<br>대상 ' + (d.targets || []).map(function (k) { return esc((P.AFFILIATES[k] || {}).name || k); }).join(', ') : '아직 수집 기록이 없습니다.') +
+        '<br><b>네이버 API 호출</b> 오늘 ' + td + '회 · 이번 달 ' + mo + '회 <span style="font-weight:500;">(수집 실행 기준 집계)</span></div>';
+    }
+    function renderMainLock() {
+      var ok = mainOk(); $('runLock').hidden = ok; $('runWrap').hidden = !ok; $('holBox').hidden = !ok;
+      if (ok && !A.holLoaded) loadHolidays();
+    }
+    async function mainUnlock() {
+      var pw = $('mainPw').value; if (!pw) { P.toast('⚠️ 비밀번호를 입력해주세요.'); return; }
+      var btn = $('btnMainUnlock'); btn.disabled = true;
+      try {
+        var h = await P.hashMain(pw);
+        if (!P.MAIN_PW_HASH || h !== P.MAIN_PW_HASH) { P.toast('❌ 비밀번호가 맞지 않습니다.'); $('mainPw').value = ''; }
+        else { try { sessionStorage.setItem('pr_main_ok', '1'); } catch (e) {} $('mainPw').value = ''; renderMainLock(); P.toast('🔓 잠금을 해제했습니다.'); }
+      } catch (e) { P.toast('❌ ' + e.message, 4200); }
+      btn.disabled = false;
+    }
+    function mainLock() { try { sessionStorage.removeItem('pr_main_ok'); } catch (e) {} renderMainLock(); P.toast('🔒 다시 잠갔습니다.'); }
+    function parseDateLines(t) {
+      var out = [], bad = 0;
+      String(t || '').split(/[\r\n,;]+/).forEach(function (x) {
+        x = x.trim(); if (!x) return; var m = /^(\d{4})[-./](\d{1,2})[-./](\d{1,2})$/.exec(x);
+        if (!m) { bad++; return; } out.push(m[1] + '-' + ('0' + m[2]).slice(-2) + '-' + ('0' + m[3]).slice(-2));
+      });
+      return { list: out.filter(function (d, i) { return out.indexOf(d) === i; }).sort(), bad: bad };
+    }
+    async function loadHolidays() {
+      try { var h = await readJson('holidays.json'); $('holAdd').value = ((h && h.add) || []).join('\n'); $('holRemove').value = ((h && h.remove) || []).join('\n'); } catch (e) {}
+      A.holLoaded = true;
+    }
+    async function saveHolidays() {
+      var a = parseDateLines($('holAdd').value), r = parseDateLines($('holRemove').value);
+      if (a.bad || r.bad) { P.toast('⚠️ 날짜는 YYYY-MM-DD 형식으로 한 줄에 하나씩 입력해주세요. (예: 2026-12-31)', 4200); return; }
+      var btn = $('btnHolSave'); btn.disabled = true;
+      try { await putJson('holidays.json', { add: a.list, remove: r.list }, 'holidays: 회사 휴무일 설정'); $('holAdd').value = a.list.join('\n'); $('holRemove').value = r.list.join('\n'); P.toast('✅ 휴무일을 저장했습니다. 다음 자동 수집부터 반영됩니다.', 3600); }
+      catch (e) { P.toast('❌ 저장 오류: ' + e.message, 4200); }
+      btn.disabled = false;
     }
 
     /* ═════════ 점수 / 후보 ═════════ */
@@ -972,7 +1044,7 @@
     }
     function renderRangeHint() {
       var s = $('dStart').value, e = $('dEnd').value, h = $('rangeHint'), t = runTargets();
-      if (!s && !e) { h.textContent = '기간을 비워 두면(자동) 매일 발행 대상은 전일~현재(월요일은 금요일부터), 주간 발행 대상(뉴로바이오젠·사회공헌)은 최근 7일을 수집합니다.'; return; }
+      if (!s && !e) { h.textContent = '기간을 비워 두면(자동) 매일 발행 대상은 직전 영업일 00:00 ~ 지금(주말·휴일은 건너뜀), 주간 발행 대상(뉴로바이오젠·사회공헌)은 최근 7일을 수집합니다.'; return; }
       var msg = '선택한 기간(' + P.toDot(s || '?') + ' ~ ' + P.toDot(e || '?') + ')이 선택한 모든 대상에 똑같이 적용됩니다.';
       if (t.some(function (k) { return P.isWeekly(k); }) && s && e && P.parseIso(e) - P.parseIso(s) < 6 * 864e5) msg += ' 주간 발행 대상은 7일 이상 권장합니다.';
       h.textContent = msg;
@@ -1021,6 +1093,7 @@
       } catch (e) { ul.innerHTML = '<li>실행 내역을 불러오지 못했습니다 (' + esc(e.message) + ')</li>'; }
     }
     async function runScrape() {
+      if (!mainOk()) { P.toast('🔒 수동 수집은 메인 관리자 비밀번호가 필요합니다.'); renderMainLock(); return; }
       var g = gh(); if (!g.token) { P.toast('🔑 먼저 [설정]에서 GitHub 토큰을 등록해주세요.'); setTab('set'); return; }
       var s = $('dStart').value, e = $('dEnd').value, targets = orderKeys(runTargets());
       if (!targets.length) { P.toast('⚠️ 수집 대상을 하나 이상 선택해주세요.'); return; }
@@ -1083,7 +1156,7 @@
       A.tab = t;
       document.querySelectorAll('.tab').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.tab === t); });
       ['cand', 'collect', 'kw', 'quote', 'set'].forEach(function (x) { $('p-' + x).hidden = x !== t; });
-      if (t === 'collect') { renderRunTargets(); renderDiag(); loadRuns(); }
+      if (t === 'collect') { renderAutoInfo(); renderMainLock(); renderRunTargets(); renderDiag(); loadRuns(); }
       if (t === 'kw') renderKw();
       if (t === 'quote') renderQuotes();
       if (t === 'set') renderSettings();
@@ -1151,6 +1224,8 @@
     $('btnRun').addEventListener('click', runScrape);
     ['dStart', 'dEnd'].forEach(function (id) { $(id).addEventListener('input', function () { A.preset = ''; document.querySelectorAll('[data-preset]').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); renderRangeHint(); }); });
     $('pubReport').addEventListener('input', saveRptDraft);
+    $('btnMainUnlock').addEventListener('click', mainUnlock); $('btnMainLock').addEventListener('click', mainLock); $('btnHolSave').addEventListener('click', saveHolidays);
+    $('mainPw').addEventListener('keydown', function (e) { if (e.key === 'Enter') mainUnlock(); });
     $('btnAddUrl').addEventListener('click', openAddSheet); $('btnAuFetch').addEventListener('click', addByUrl); $('btnAuManual').addEventListener('click', addManual);
     $('pubDate').addEventListener('input', function () { if (!$('pubQuoteInfo').hidden) renderPubQuote(); });
     $('qBulk').addEventListener('input', renderQBulkHint); $('qStart').addEventListener('input', renderQBulkHint);
