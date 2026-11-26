@@ -18,15 +18,15 @@
 
     // ── 계열사 ───────────────────────────────────────────────────────────
     AFFILIATES: {
-      sangsangin:  { name: '상상인',          manager: '박슬기 과장', cycle: '매일 오전 8시~8시반', publishHour: 8,
+      sangsangin:  { name: '상상인',          manager: 'PR팀', cycle: '매일 오전 8시~8시반', publishHour: 8,
                      quote: '위기는 곧 기회의 다른 이름이다.', author: '워런 버핏' },
-      mitech:      { name: '엠아이텍',        manager: '박한솔 대리', cycle: '매일 오전 9시~9시반', publishHour: 9,
+      mitech:      { name: '엠아이텍',        manager: 'PR팀', cycle: '매일 오전 9시~9시반', publishHour: 9,
                      quote: '작은 디테일이 위대한 품질의 차이를 만든다.', author: '피터 드러커' },
-      synergy:     { name: '시너지이노베이션', manager: '박한솔 대리', cycle: '매일 오전 9시~9시반', publishHour: 9,
+      synergy:     { name: '시너지이노베이션', manager: 'PR팀', cycle: '매일 오전 9시~9시반', publishHour: 9,
                      quote: '시너지는 전체가 부분의 합보다 크다는 것을 증명한다.', author: '스티븐 코비' },
-      medica:      { name: '메디카코리아',    manager: '김태기 과장', cycle: '매일 오전 9시~9시반', publishHour: 9,
+      medica:      { name: '메디카코리아',    manager: 'PR팀', cycle: '매일 오전 9시~9시반', publishHour: 9,
                      quote: '나는 실패한 것이 아니다. 단지 효과가 없는 1만 가지 방법을 발견했을 뿐이다.', author: '토머스 에디슨' },
-      neurobiogen: { name: '뉴로바이오젠',    title: '뉴로바이오젠 위클리 모니터링', manager: '김성목 대리', cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
+      neurobiogen: { name: '뉴로바이오젠',    title: '뉴로바이오젠 위클리 모니터링', manager: 'PR팀', cycle: '주 1회 (매주 금요일)', publishHour: 9, weeklyDay: 5,
                      quote: '과학의 진보는 불가능해 보이는 질문을 던지는 데서 시작된다.', author: '알베르트 아인슈타인' },
       // 사회공헌: 계열사가 아니라 '주간 리포트' 형태의 구분값입니다 (매주 금요일 발행).
       // type: 'report' 이면 임직원 화면이 주간 리포트 레이아웃(키워드·금주의 코멘트·섹션·종합 인사이트)으로 바뀝니다.
