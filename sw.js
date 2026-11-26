@@ -1,5 +1,5 @@
 /* 임직원 페이지 오프라인/빠른 로딩용 서비스워커 (관리자 페이지와 데이터 JSON은 항상 최신을 우선) */
-const VERSION = 'pr-news-v4';
+const VERSION = 'pr-news-v5';
 const SHELL = ['./index.html', './assets/common.css', './assets/common.js', './icons/symbol.png', './icons/icon-192.png', './manifest.json'];
 
 self.addEventListener('install', (e) => {

@@ -1188,8 +1188,37 @@ def date_iso(d):
     return (d or '').strip().replace('.', '-')
 
 
+# 담당자 실명 정리: 발행 데이터·아카이브에 남아 있는 옛 담당자 이름(manager, scrapeWindow 항목)을 'PR팀'으로 바꿉니다.
+_NAME_PAT = re.compile(r'(박슬기|박한솔|김태기|김성목)\s*(과장|대리)?')
+
+
+def scrub_names(obj):
+    """manager / scrapeWindow 값 안의 담당자 실명을 'PR팀'으로 치환합니다. 바뀐 게 있으면 True."""
+    changed = False
+    if isinstance(obj, dict):
+        for k, v in list(obj.items()):
+            if k in ('manager', 'scrapeWindow') and isinstance(v, str):
+                nv = _NAME_PAT.sub('PR팀', v)
+                if nv != v:
+                    obj[k] = nv
+                    changed = True
+            elif isinstance(v, (dict, list)):
+                changed = scrub_names(v) or changed
+    elif isinstance(obj, list):
+        for v in obj:
+            changed = scrub_names(v) or changed
+    return changed
+
+
 def run_archive():
     pub = load_json(PUBLISHED_FILE, {"history": {}, "published": {}})
+    if scrub_names(pub):
+        save_json(PUBLISHED_FILE, pub)
+        log("[INFO] 발행 데이터의 담당자 실명을 정리했습니다")
+    for _p in glob.glob(os.path.join(ARCHIVE_DIR, '????-??-??.json')):
+        _day = load_json(_p, None)
+        if _day and scrub_names(_day):
+            save_json(_p, _day)
     published = pub.get('published', {})
     os.makedirs(ARCHIVE_DIR, exist_ok=True)
 
