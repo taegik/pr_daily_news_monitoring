@@ -39,7 +39,8 @@ AFFILIATE_ORDER = ['sangsangin', 'mitech', 'synergy', 'medica', 'neurobiogen', '
 WEEKLY_AFFILIATES = {'neurobiogen', 'csr'}
 
 DAILY_AFFILIATES = ['sangsangin', 'mitech', 'synergy', 'medica']   # 매 영업일 발행
-CUTOFF_HOUR = 7            # 자동 수집의 종료 시각: 당일 오전 7시 (이후 기사는 다음 수집에 포함)
+CUTOFF_HOUR = 6            # 자동 수집의 종료 시각: 당일 오전 6시 30분 (이후 기사는 다음 수집에 포함)
+CUTOFF_MINUTE = 30
 HOLIDAY_FILE = 'holidays.json'   # {"add": ["YYYY-MM-DD"...], "remove": [...]} 회사 휴무일 추가/공휴일이지만 근무하는 날 제외
 # 'holidays' 패키지를 설치하지 못했을 때를 위한 비상용 목록 (2026~2027)
 FALLBACK_HOLIDAYS = {
@@ -556,9 +557,9 @@ def day_start(d):
 
 def auto_window(aff_key, now_dt, hol, scheduled):
     """자동 수집 기간
-    - 매일 발행(상상인·엠아이텍·시너지이노베이션·메디카코리아): 직전 영업일 00:00 ~ 오늘 오전 7시
-      (화: 월 00:00~화 07:00 / 월: 금 00:00~월 07:00 / 연휴 다음 영업일: 연휴 직전 영업일 00:00부터)
-    - 주 1회 발행(뉴로바이오젠·사회공헌): 지난주 같은 요일 00:00 ~ 오늘 오전 7시 (금요일 실행 시 지난 금요일~이번 금요일 7시)
+    - 매일 발행(상상인·엠아이텍·시너지이노베이션·메디카코리아): 직전 영업일 00:00 ~ 오늘 오전 6시 30분
+      (화: 월 00:00~화 06:30 / 월: 금 00:00~월 06:30 / 연휴 다음 영업일: 연휴 직전 영업일 00:00부터)
+    - 주 1회 발행(뉴로바이오젠·사회공헌): 지난주 같은 요일 00:00 ~ 오늘 오전 6시 30분 (금요일 실행 시 지난 금요일~이번 금요일 6시 30분)
     - 수동 실행은 끝 시각만 '지금'으로 합니다.
     """
     today = now_dt.date()
@@ -566,7 +567,7 @@ def auto_window(aff_key, now_dt, hol, scheduled):
         start = day_start(today - timedelta(days=7))
     else:
         start = day_start(prev_business_day(today, hol))
-    cutoff = datetime(today.year, today.month, today.day, CUTOFF_HOUR, 0, 0, tzinfo=KST)
+    cutoff = datetime(today.year, today.month, today.day, CUTOFF_HOUR, CUTOFF_MINUTE, 0, tzinfo=KST)
     end = min(cutoff, now_dt) if scheduled else now_dt
     label = f"{start.strftime('%Y.%m.%d %H:%M')} ~ {end.strftime('%Y.%m.%d %H:%M')}"
     return start, end, label
@@ -793,7 +794,7 @@ def run_scrape():
         return 0
 
     start_dt, end_dt, range_label, explicit_range = get_date_bounds(now_dt, start_str, end_str)
-    kind = '자동(매일 07시)' if scheduled else '수동'
+    kind = '자동(매일 06:30)' if scheduled else '수동'
 
     naver = None
     if client_id and client_secret:
