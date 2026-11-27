@@ -1,0 +1,49 @@
+name: Deploy Employee Site (GitHub Pages)
+
+# 임직원 페이지(GitHub Pages) 배포. 관리자 페이지(admin.html)는 여기서 빼고,
+# 이메일 인증이 걸린 별도 주소(Cloudflare Pages)에서만 열리게 합니다.
+on:
+  push:
+    branches: [main]
+  # 자동 수집 커밋은 [skip ci] 라 push 로는 배포가 안 되므로, 수집/아카이브 작업이 끝나면 배포
+  workflow_run:
+    workflows: ['Daily News Scrape', 'Archive Published News']
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Build site (관리자·내부 파일 제외)
+        run: |
+          mkdir -p _site
+          rsync -a ./ _site/ \
+            --exclude '.git' --exclude '.github' --exclude '_site' \
+            --exclude 'admin.html' --exclude 'SETUP.md' --exclude 'scrape_naver.py'
+          touch _site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

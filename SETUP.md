@@ -40,3 +40,21 @@ GitHub 스케줄은 혼잡 시 수 분~수십 분 늦을 수 있습니다. 수�
 - `published_data.json` : 계열사별 최신 발행분
 - `archive/` : 날짜별 발행 기록(최근 90일), `index.json`(날짜 목록) · `search.json`(검색용) · `stats.json`(추이 통계)
 - 색상 변경: `assets/common.css` 상단의 `--brand` 등 변수만 수정
+
+## 6. 관리자 페이지 주소 분리 (담당자만 접속)
+임직원 페이지(GitHub Pages)에서는 관리자 페이지와 링크가 빠집니다. 관리자 페이지는 회사 이메일 인증을 거쳐야 열리는 별도 주소에서만 씁니다.
+
+1. **GitHub Pages 배포 방식 변경**: 저장소 ▸ Settings ▸ Pages ▸ *Build and deployment* ▸ Source 를 **GitHub Actions** 로 변경
+   (이후 `.github/workflows/pages.yml` 이 관리자 파일을 뺀 채로 임직원 페이지를 배포합니다. 기존 주소의 `/admin.html` 은 404가 됩니다.)
+2. **Cloudflare Pages 연결** (dash.cloudflare.com, 무료 가입)
+   - Workers & Pages ▸ Create ▸ Pages ▸ *Connect to Git* ▸ 이 저장소 선택
+   - Framework preset: None / Build command: 비움 / Build output directory: `/`
+   - 배포가 끝나면 `https://<프로젝트이름>.pages.dev/admin.html` 이 새 관리자 주소입니다.
+3. **이메일 인증 걸기** (Cloudflare Zero Trust, 50명까지 무료)
+   - Zero Trust ▸ Access ▸ Applications ▸ Add ▸ *Self-hosted*
+   - Domain: `<프로젝트이름>.pages.dev` 와 `*.<프로젝트이름>.pages.dev` (미리보기 주소) 두 개 추가
+   - Policy: Action *Allow*, Include ▸ *Emails* 에 PR팀 담당자 이메일 입력
+   - Settings ▸ Authentication 에서 *One-time PIN* (이메일로 받는 6자리 코드) 사용
+4. 담당자에게 새 주소를 공유합니다. 새 주소에서는 [설정] 탭에서 GitHub 토큰을 한 번 다시 등록해야 합니다.
+
+기존 관리자 비밀번호 화면은 이메일 인증 뒤의 2차 잠금으로 그대로 남습니다.

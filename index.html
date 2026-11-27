@@ -324,8 +324,6 @@
         <div class="seg" id="segLink"><button data-v="orig">원문</button><button data-v="naver">네이버</button></div></div>
       <div class="set-row"><div><div class="lbl">읽음 표시 초기화</div><div class="desc">읽은 기사 표시를 모두 지웁니다</div></div>
         <button class="btn btn-sm" id="mClearRead">초기화</button></div>
-      <div class="set-row"><div><div class="lbl">PR팀 관리자</div><div class="desc">기사 선정·발행 (인증 필요)</div></div>
-        <a class="btn btn-sm" href="./admin.html" id="mAdmin">관리자 ↗</a></div>
     </div>
   </section>
 
@@ -605,7 +603,7 @@
       $('foot').innerHTML = (isRep()
         ? '상상인그룹 PR팀 ' + esc(cfg.title || cfg.name) + '<br>그룹사 사회공헌 소식과 CSR 트렌드를 주 1회 전해드립니다.<br>'
         : (P.isWeekly(S.aff) ? '상상인그룹 PR팀 ' + esc(cfg.title || cfg.name) + ' (주 1회)<br>' : '상상인그룹 PR팀 데일리 뉴스모니터링 (권장 10~15건)<br>') + '과거 모니터링과 중복된 기사는 자동 제외되었습니다.<br>') +
-        '담당 ' + esc(cfg.manager) + ' · ' + esc(cfg.cycle) + (PREVIEW ? '' : '<br><a href="./admin.html">관리자</a>');
+        '담당 ' + esc(cfg.manager) + ' · ' + esc(cfg.cycle);
     }
 
     function renderAll() {
@@ -899,7 +897,6 @@
     /* ───────── 관리자 미리보기 연동 ───────── */
     if (PREVIEW) {
       $('previewBanner').hidden = false;
-      $('mAdmin').closest('.set-row').style.display = 'none';
       window.addEventListener('message', function (e) {
         if (e.origin !== location.origin || !e.data || e.data.type !== 'pr-preview') return;
         var pl = e.data.payload || {};
