@@ -38,23 +38,27 @@ GitHub 스케줄은 혼잡 시 수 분~수십 분 늦을 수 있습니다. 수�
 - `keywords.json` : 계열사별 자사/경쟁사/업계 키워드 (관리자 [키워드] 탭에서 수정)
 - `scraped_pool.json` : 오늘 수집된 후보 기사 + 네이버 연동 진단
 - `published_data.json` : 계열사별 최신 발행분
-- `archive/` : 날짜별 발행 기록(최근 90일), `index.json`(날짜 목록) · `search.json`(검색용) · `stats.json`(추이 통계)
+- `archive/` : 날짜별 발행 기록(최근 90일, 발행할 때마다 `.github/workflows/archive.yml` 이 자동 갱신), `index.json`(날짜 목록) · `search.json`(검색용) · `stats.json`(추이 통계)
 - 색상 변경: `assets/common.css` 상단의 `--brand` 등 변수만 수정
 
-## 6. 관리자 페이지 주소 분리 (담당자만 접속)
-임직원 페이지(GitHub Pages)에서는 관리자 페이지와 링크가 빠집니다. 관리자 페이지는 회사 이메일 인증을 거쳐야 열리는 별도 주소에서만 씁니다.
+## 6. 관리자 페이지 (담당자만 접속)
+- **관리자 주소: https://ssi-pr.sioll.workers.dev/admin.html**
+- 임직원 페이지(GitHub Pages)에는 관리자 페이지와 링크가 없습니다. 기존 주소의 `/admin.html` 은 404입니다.
+  임직원 페이지는 `.github/workflows/pages.yml` 이 관리자·내부 파일을 뺀 채로 배포합니다. (Settings ▸ Pages ▸ Source = GitHub Actions)
 
-1. **GitHub Pages 배포 방식 변경**: 저장소 ▸ Settings ▸ Pages ▸ *Build and deployment* ▸ Source 를 **GitHub Actions** 로 변경
-   (이후 `.github/workflows/pages.yml` 이 관리자 파일을 뺀 채로 임직원 페이지를 배포합니다. 기존 주소의 `/admin.html` 은 404가 됩니다.)
-2. **Cloudflare Pages 연결** (dash.cloudflare.com, 무료 가입)
-   - Workers & Pages ▸ Create ▸ Pages ▸ *Connect to Git* ▸ 이 저장소 선택
-   - Framework preset: None / Build command: 비움 / Build output directory: `/`
-   - 배포가 끝나면 `https://<프로젝트이름>.pages.dev/admin.html` 이 새 관리자 주소입니다.
-3. **이메일 인증 걸기** (Cloudflare Zero Trust, 50명까지 무료)
-   - Zero Trust ▸ Access ▸ Applications ▸ Add ▸ *Self-hosted*
-   - Domain: `<프로젝트이름>.pages.dev` 와 `*.<프로젝트이름>.pages.dev` (미리보기 주소) 두 개 추가
-   - Policy: Action *Allow*, Include ▸ *Emails* 에 PR팀 담당자 이메일 입력
-   - Settings ▸ Authentication 에서 *One-time PIN* (이메일로 받는 6자리 코드) 사용
-4. 담당자에게 새 주소를 공유합니다. 새 주소에서는 [설정] 탭에서 GitHub 토큰을 한 번 다시 등록해야 합니다.
+### 접속 방법
+1. 위 주소에 접속하면 **Cloudflare Access** 로그인 화면(`ssi-pr.cloudflareaccess.com`)이 나옵니다.
+2. 허용된 이메일을 입력하면 6자리 코드가 메일로 옵니다(10분 유효). 입력하면 24시간 동안 로그인이 유지됩니다.
+   - 네이버 메일은 코드 메일이 도착하지 않는 경우가 있어 Gmail·회사 메일을 권장합니다.
+3. 이어서 기존 관리자 비밀번호 화면이 나옵니다(2차 잠금).
+4. 처음 접속한 브라우저에서는 [설정] 탭에서 GitHub 토큰을 한 번 등록합니다.
 
-기존 관리자 비밀번호 화면은 이메일 인증 뒤의 2차 잠금으로 그대로 남습니다.
+### 구성 (Cloudflare)
+- **사이트**: Workers & Pages ▸ `ssi-pr` (Worker, 정적 파일). GitHub 저장소 main 에 연결되어 있어 main 이 바뀌면 자동으로 다시 배포됩니다.
+- **잠금**: Zero Trust ▸ Access ▸ Applications ▸ **PR 관리자 페이지**
+  - 보호 주소: `ssi-pr.sioll.workers.dev`, 미리보기 주소 `*-ssi-pr.sioll.workers.dev`
+  - 로그인 방식: One-time PIN(이메일 코드)
+  - 정책 **PR팀 담당자**(Allow): 허용 이메일 목록
+
+### 담당자 추가·삭제
+Cloudflare ▸ Zero Trust ▸ Access ▸ Applications ▸ **PR 관리자 페이지** ▸ Policies ▸ **PR팀 담당자** ▸ Include 의 Emails 에 이메일을 추가하거나 지우고 저장합니다.
